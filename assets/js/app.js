@@ -1,445 +1,164 @@
-var birchData = "assets/js/birchplot.geojson";
-
 var config = {
-    geojson: birchData, //birchplot.js needs to be saved to birchplot.geojson
-    title: "Guardian DMS",
-    layerName: "Plots",
-    hoverProperty: "PlotStatus", //add new property
-    sortProperty: "Tap_Stem", //
-    sortOrder: "desc"
+  geojson: "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94.geojson",
+  title: "SLC OneFiber Construction",
+  layerName: "Segments",
+  hoverProperty: "fqnid",
+  sortProperty: "fqnid",
+  sortOrder: "ascend"
 };
-
-var config_field = {
-    geojson: "assets/js/FieldNotes.geojson", //birchplot.js needs to be saved to birchplot.geojson
-    title: "Guardian Program Data Management System",
-    layerName: "Field Notes",
-};
-
-var fieldproperties = [{
-    value: "SITE_PLOT",
-    label: "Plot Unique ID",
-    table: {
-        visible: true,
-        sortable: true
-    },
-    filter: {
-        type: "string"
-    },
-    info: false
-}, {
-    value: "SITE_ID",
-    label: "Site Identifier",
-    table: {
-        visible: true,
-        sortable: true
-    },
-    filter: {
-        type: "integer"
-    }
-}, {
-    value: "Plot_ID",
-    label: "Plot Identifier",
-    table: {
-        visible: true,
-        sortable: true
-    },
-    filter: {
-        type: "integer",
-        input: "checkbox",
-        vertical: true,
-        multiple: true,
-        operators: ["in", "not_in", "equal", "not_equal"],
-        values: []
-    }
-}, {
-    value: "FMU_NAME",
-    label: "Forest Name",
-    table: {
-        visible: true,
-        sortable: true
-    },
-    filter: {
-        type: "string",
-        input: "checkbox",
-        vertical: true,
-        multiple: true,
-        operators: ["in", "not_in", "equal", "not_equal"],
-        values: []
-    }
-}, {
-    value: "FMU_CODE",
-    label: "Forest Code",
-    table: {
-        visible: true,
-        sortable: true
-    },
-    filter: {
-        type: "integer",
-        input: "checkbox",
-        vertical: true,
-        multiple: true,
-        operators: ["in", "not_in", "equal", "not_equal"],
-        values: []
-    }
-}, {
-    value: "GPS",
-    label: "Team",
-    table: {
-        visible: true,
-        sortable: true
-    }
-}, {
-    value: "CATEGORY",
-    label: "Observation Type",
-    table: {
-        visible: true,
-        sortable: true
-    }
-}, {
-    value: "name",
-    label: "Observation",
-    table: {
-        visible: false,
-        sortable: true
-    }
-}];
 
 var properties = [{
-    value: "SITE_PLOT",
-    label: "Plot Unique ID",
-    table: {
-        visible: true,
-        sortable: true
-    },
-    filter: {
-        type: "string"
-    },
-    info: false
-}, {
-    value: "SITE_ID",
-    label: "Site Identifier",
-    table: {
-        visible: true,
-        sortable: true
-    },
-    filter: {
-        type: "integer"
+  value: "record_id",
+  label: "Record ID",
+  table: {
+    visible: false,
+    sortable: true
+  },
+  filter: {
+    type: "string"
+  },
+  info: false
+},
+{
+  value: "status",
+  label: "Status",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    input: "checkbox",
+    vertical: true,
+    multiple: true,
+    operators: ["in", "not_in", "equal", "not_equal"],
+    values: []
+  }
+},
+{
+  value: "wpid",
+  label: "WPID",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    input: "checkbox",
+    vertical: true,
+    multiple: true,
+    operators: ["in", "not_in", "equal", "not_equal"],
+    values: []
+  }
+},
+{
+  value: "fqnid",
+  label: "FQNID",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string"
+  }
+},
+{
+  value: "ntp_date",
+  label: "Proposed Start Date",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string"
+  }
+},
+{
+  value: "proposed_type",
+  label: "Proposed Type",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string"
+  }
+},
+{
+  value: "proposed_product",
+  label: "Proposed Product",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string"
+  }
+},
+{
+  value: "proposed_footage",
+  label: "Proposed Footage",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "integer",
+    input: "radio",
+    operators: ["equal"],
+    values: {
+      "yes": "Yes",
+      "no": "No"
     }
-}, {
-    value: "Plot_ID",
-    label: "Plot Identifier",
-    table: {
-        visible: true,
-        sortable: true
-    },
-    filter: {
-        type: "integer",
-        input: "checkbox",
-        vertical: true,
-        multiple: true,
-        operators: ["in", "not_in", "equal", "not_equal"],
-        values: []
-    }
-}, {
-    value: "DateRecord",
-    label: "Date Recorded",
-    table: {
-        visible: true,
-        sortable: true
-    },
-    filter: {
-        type: "string",
-        input: "checkbox",
-        vertical: true,
-        multiple: true,
-        operators: ["in", "not_in", "equal", "not_equal"],
-        values: []
-    }
-}, {
-    value: "SiteStatus",
-    label: "Site Status",
-    table: {
-        visible: true,
-        sortable: true
-    },
-    filter: {
-        type: "string",
-        input: "checkbox",
-        vertical: true,
-        multiple: true,
-        operators: ["in", "not_in", "equal", "not_equal"],
-        values: []
-    }
-}, {
-    value: "PlotStatus",
-    label: "Plot Status",
-    table: {
-        visible: true,
-        sortable: true
-    },
-    filter: {
-        type: "string",
-        input: "checkbox",
-        vertical: true,
-        multiple: true,
-        operators: ["in", "not_in", "equal", "not_equal"],
-        values: []
-    }
-}, {
-    value: "Forest_Nam",
-    label: "Forest Name",
-    table: {
-        visible: true,
-        sortable: true
-    },
-    filter: {
-        type: "string",
-        input: "checkbox",
-        vertical: true,
-        multiple: true,
-        operators: ["in", "not_in", "equal", "not_equal"],
-        values: []
-    }
-}, {
-    value: "Forest_num",
-    label: "Forest Code",
-    table: {
-        visible: true,
-        sortable: true
-    },
-    filter: {
-        type: "integer",
-        input: "checkbox",
-        vertical: true,
-        multiple: true,
-        operators: ["in", "not_in", "equal", "not_equal"],
-        values: []
-    }
-}, {
-    value: "Tap_Stem",
-    label: "Stem Density (Trees/Ha) - Tap",
-    table: {
-        visible: true,
-        sortable: true
-    },
-    filter: {
-        type: "integer"
-    }
-}, {
-    value: "Tap_DBH",
-    label: "DBH Average (cm) - Tap",
-    table: {
-        visible: true,
-        sortable: true
-    },
-    filter: {
-        type: "integer"
-    }
-}, {
-    value: "HA",
-    label: "Site Size (Ha)",
-    table: {
-        visible: true,
-        sortable: true
-    },
-    filter: {
-        type: "integer"
-    }
-}, {
-    value: "Access1km",
-    label: "Site Accessibility within 1 km",
-    table: {
-        visible: true,
-        sortable: true
-    },
-    filter: {
-        type: "string",
-        input: "radio",
-        operators: ["equal"],
-        values: {
-            "y": "Yes",
-            "null": "No"
-        }
-    }
-}, {
-    value: "Tap_Class",
-    label: "Tappable",
-    table: {
-        visible: true,
-        sortable: true
-    },
-    filter: {
-        type: "string",
-        input: "radio",
-        operators: ["equal"],
-        values: {
-            "Tap": "Yes",
-            "No Tap": "No"
-        }
-    }
-}, {
-    value: "Prem_Class",
-    label: "Monitor for Growth 1-5 years",
-    table: {
-        visible: true,
-        sortable: true
-    },
-    filter: {
-        type: "string",
-        input: "radio",
-        operators: ["equal"],
-        values: {
-            "Monitor": "Yes",
-            "No Monitor": "No"
-        }
-    }
-}, {
-    value: "Dis_Chap",
-    label: "Distance to Chapleau, ON",
-    table: {
-        visible: false,
-        sortable: true
-    }
-}, {
-    value: "Dis_TL",
-    label: "Distance to Trout Lake, ON",
-    table: {
-        visible: false,
-        sortable: true
-    }
-}, {
-    value: "SPCOMP",
-    label: "Species Composition",
-    table: {
-        visible: false,
-        sortable: true
-    }
-}, {
-    value: "GPS_CodeG",
-    label: "Team",
-    table: {
-        visible: false,
-        sortable: true
-    }
-}, {
-    value: "SiteAccess",
-    label: "Access Type",
-    table: {
-        visible: false,
-        sortable: true
-    }
-}, {
-    value: "BW_DBH",
-    label: "BH Average (cm) - BW",
-    table: {
-        visible: false,
-        sortable: true
-    }
+  }
 }];
 
 function drawCharts() {
-    // Status
-    $(function() {
-        var result = alasql("SELECT PlotStatus AS label, COUNT(*) AS total FROM ? GROUP BY PlotStatus", [features]);
-        var columns = $.map(result, function(status) {
-            return [
-                [status.label, status.total]
-            ];
-        });
-        var chart = c3.generate({
-            bindto: "#status-chart",
-            data: {
-                type: "pie",
-                columns: columns
-            }
-        });
-    });
-
-
-    // Zones
-    $(function() {
-        var result = alasql("SELECT GPS_CodeG AS label, COUNT(*) AS total FROM ? GROUP BY GPS_CodeG", [features]);
-        var columns = $.map(result, function(team) {
-            return [
-                [team.label, team.total]
-            ];
-        });
-        var chart = c3.generate({
-            bindto: "#team-chart",
-            data: {
-                type: "pie",
-                columns: columns
-            }
-        });
-    });
-
-
-    // Size
-    $(function() {
-        var sizes = [];
-        var undersized = alasql("SELECT 'Undersized Trees (< 10 cm)' AS category, COUNT(*) AS total FROM ? WHERE SiteStatus = 'Sampled 2015' AND CAST(BW_DBH as INT) < 10", [features]);
-        var premature = alasql("SELECT 'Premature Trees (10-18 cm)' AS category, COUNT(*) AS total FROM ? WHERE SiteStatus = 'Sampled 2015' AND CAST(BW_DBH as INT) BETWEEN 11 AND 18", [features]);
-        var tapping = alasql("SELECT 'Tapping Trees (18-40 cm)' AS category, COUNT(*) AS total FROM ? WHERE SiteStatus = 'Sampled 2015' AND CAST(BW_DBH as INT) BETWEEN 19 AND 40", [features]);
-        var large = alasql("SELECT 'Large trees (> 40 cm)' AS category, COUNT(*) AS total FROM ? WHERE SiteStatus = 'Sampled 2015' AND CAST(BW_DBH as INT) > 41", [features]);
-        sizes.push(undersized, premature, tapping, large);
-        var columns = $.map(sizes, function(size) {
-            return [
-                [size[0].category, size[0].total]
-            ];
-        });
-        var chart = c3.generate({
-            bindto: "#size-chart",
-            data: {
-                type: "pie",
-                columns: columns
-            }
-        });
-
-        //append custom text 
-        /*var margin = {top: 0, right: 0, bottom: 0, left: 0},
-        width = 300;
-        height = 200;
-
-        var svg = d3.select("#size-chart").append("svg")
-        .attr("width")
-        .attr("height")
-        .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-        svg.append("text")
-        .text("Why Are We Leaving Facebook?");*/
-
-
-    });
-
-    /*
-  // Species
+  // Status
   $(function() {
-    var result = alasql("SELECT species_sim AS label, COUNT(*) AS total FROM ? GROUP BY species_sim ORDER BY label ASC", [features]);
+    var result = alasql("SELECT status AS label, COUNT(*) AS total FROM ? GROUP BY status", [features]);
+    var columns = $.map(result, function(status) {
+      return [[status.label, status.total]];
+    });
     var chart = c3.generate({
-        bindto: "#species-chart",
-        size: {
-          height: 2000
-        },
+        bindto: "#status-chart",
         data: {
-          json: result,
-          keys: {
-            x: "label",
-            value: ["total"]
-          },
-          type: "bar"
-        },
-        axis: {
-          rotated: true,
-          x: {
-            type: "category"
-          }
-        },
-        legend: {
-          show: false
+          type: "pie",
+          columns: columns
         }
     });
-  });*/
+  });
+
+  // WPID
+  $(function() {
+    var result = alasql("SELECT wpid AS label, COUNT(*) AS total FROM ? GROUP BY wpid", [features]);
+    var columns = $.map(result, function(wpid) {
+      return [[wpid.label, wpid.total]];
+    });
+    var chart = c3.generate({
+        bindto: "#wpid-chart",
+        data: {
+          type: "pie",
+          columns: columns
+        }
+    });
+  });
+
+
+  // FQNID
+  $(function() {
+    var result = alasql("SELECT fqnid AS label, COUNT(*) AS total FROM ? GROUP BY fqnid", [features]);
+    var columns = $.map(result, function(fqnid) {
+      return [[fqnid.label, fqnid.total]];
+    });
+    var chart = c3.generate({
+        bindto: "#fqnid-chart",
+        data: {
+          type: "pie",
+          columns: columns
+        }
+    });
+  });
 }
 
 $(function() {
@@ -692,28 +411,10 @@ var clusters = new L.MarkerClusterGroup({
     disableClusteringAtZoom: 14
 });
 
-// Fetch the GeoJSON file
-$.getJSON(config_field.geojson, function(data) {
-    field_geojson = data;
-    features = $.map(field_geojson.features, function(feature) {
-        return feature.properties;
-    });
-    fieldfeatureLayer.addData(data);
-    console.log('added fieldfeatureLayer')
-
-    //add clusterer
-    clusters.addLayer(fieldfeatureLayer);
-    map.addLayer(clusters);
-
-    buildConfigField();
-    //$("#loading-mask").hide();
-});
-
 
 // Fetch the GeoJSON file
 $.getJSON(config.geojson, function(data) {
     geojson = data;
-    console.log('birch_geojson called')
     features = $.map(geojson.features, function(feature) {
         return feature.properties;
     });
