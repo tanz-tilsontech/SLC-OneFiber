@@ -367,7 +367,7 @@ var featureLayer = L.geoJson(null, {
         mouseout: function (e) {
           $(".info-control").hide();
         }
-      }
+      });
     }
   }
 });
