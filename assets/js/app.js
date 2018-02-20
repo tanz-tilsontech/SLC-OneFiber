@@ -1,3 +1,7 @@
+var shareID = "fb96b48deb5cfb94"
+var hiddenSystemFields = ["marker-color", "Created At", "Updated At", "Created By", "Updated By", "System Created At", "System Updated At", "Version", "Assigned To", "Latitude", "Longitude", "Gps Altitude", "Gps Horizontal Accuracy", "Gps Vertical Accuracy", "Gps Speed", "Gps Course", "Address Sub Thoroughfare", "Address Thoroughfare", "Address Locality", "Address Sub Admin Area", "Address Admin Area", "Address Postal Code", "Address Suite", "Address Country"];
+
+
 var config = {
   geojson: "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94.geojson",
   title: "SLC OneFiber Construction",
@@ -300,8 +304,54 @@ var featureLayer = L.geoJson(null, {
   filter: function(feature, layer) {
     return feature.geometry.coordinates[0] !== 0 && feature.geometry.coordinates[1] !== 0;
   },
+  pointToLayer: function (feature, latlng) {
+    return L.marker(latlng, {
+      title: feature.properties[title],
+      riseOnHover: true,
+      icon: L.icon({
+        iconUrl: "assets/pictures/markers/cb0d0c.png",
+        iconSize: [30, 40],
+        iconAnchor: [15, 32]
+      })
+    });
+  },
   onEachFeature: function (feature, layer) {
     if (feature.properties) {
+      var title = title;
+      var content = "<table class='table table-striped table-bordered table-condensed'>";
+      $.each(feature.properties, function(index, prop) {
+        if (prop === null) {
+          prop = "";
+        } else if (prop.toString().indexOf("https://web.fulcrumapp.com/shares/" + shareID + "/photos/") === 0) {
+          prop = "<a href='#' onclick='photoGallery(\"" + prop + "\"); return false;'>View Photos</a>";
+        } else if (prop.toString().indexOf("https://web.fulcrumapp.com/shares/" + shareID + "/videos/") === 0) {
+          prop = "<a href='" + prop + "' target='blank'>View videos</a>";
+        } else if (prop.toString().indexOf("https://web.fulcrumapp.com/shares/" + shareID + "/signatures/") === 0) {
+          prop = "<a href='" + prop + "' target='blank'>View signatures</a>";
+        } else if (prop.toString().indexOf("https://") === 0 || prop.toString().indexOf("http://") === 0) {
+          prop = "<a href='" + prop + "' target='blank'>" + prop + "</a>";
+        }
+        if (userFields.length > 0) {
+          if ($.inArray(index, hiddenSystemFields) == -1 && $.inArray(index, userFields) !== -1 && index !== "Fulcrum Id") {
+            content += "<tr><th>" + index + "</th><td>" + prop + "</td></tr>";
+          }
+        } else {
+          if ($.inArray(index, hiddenSystemFields) == -1 && index !== "Fulcrum Id") {
+            content += "<tr><th>" + index + "</th><td>" + prop + "</td></tr>";
+          }
+        }
+      });
+      if (feature.properties["marker-color"]) {
+        layer.setIcon(
+          L.icon({
+            iconUrl: "assets/pictures/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
+            iconSize: [30, 40],
+            iconAnchor: [15, 32]
+          })
+        );
+        legendItems[feature.properties.Status] = feature.properties["marker-color"];
+      }
+      content += "<table>";
       layer.on({
         click: function (e) {
           identifyFeature(L.stamp(layer));
@@ -317,10 +367,11 @@ var featureLayer = L.geoJson(null, {
         mouseout: function (e) {
           $(".info-control").hide();
         }
-      });
+      }
     }
   }
 });
+
 
 // Fetch the GeoJSON file
 $.getJSON(config.geojson, function (data) {
@@ -540,103 +591,6 @@ L.easyPrint({
 }).addTo(map)
 
 $("#refresh-btn").click(function() {
-  $.getJSON(config.geojson, function (data) {
-    geojson = data;
-    features = $.map(geojson.features, function(feature) {
-      return feature.properties;
-    });
-    featureLayer.addData(data);
-    buildConfig();
-    $("#loading-mask").hide();
-  });
-  function buildConfig() {
-    filters = [];
-    table = [{
-      field: "action",
-      title: "<i class='fa fa-gear'></i>&nbsp;Action",
-      align: "center",
-      valign: "middle",
-      width: "75px",
-      cardVisible: false,
-      switchable: false,
-      formatter: function(value, row, index) {
-        return [
-          '<a class="zoom" href="javascript:void(0)" title="Zoom" style="margin-right: 10px;">',
-            '<i class="fa fa-search-plus"></i>',
-          '</a>',
-          '<a class="identify" href="javascript:void(0)" title="Identify">',
-            '<i class="fa fa-info-circle"></i>',
-          '</a>'
-        ].join("");
-      },
-      events: {
-        "click .zoom": function (e, value, row, index) {
-          map.fitBounds(featureLayer.getLayer(row.leaflet_stamp).getBounds());
-          highlightLayer.clearLayers();
-          highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
-        },
-        "click .identify": function (e, value, row, index) {
-          identifyFeature(row.leaflet_stamp);
-          highlightLayer.clearLayers();
-          highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
-        }
-      }
-    }];
-
-
-
-    $.each(properties, function(index, value) {
-      // Filter config
-      if (value.filter) {
-        var id;
-        if (value.filter.type == "integer") {
-          id = "cast(properties->"+ value.value +" as int)";
-        }
-        else if (value.filter.type == "double") {
-          id = "cast(properties->"+ value.value +" as double)";
-        }
-        else {
-          id = "properties->" + value.value;
-        }
-        filters.push({
-          id: id,
-          label: value.label
-        });
-        $.each(value.filter, function(key, val) {
-          if (filters[index]) {
-            // If values array is empty, fetch all distinct values
-            if (key == "values" && val.length === 0) {
-              alasql("SELECT DISTINCT(properties->"+value.value+") AS field FROM ? ORDER BY field ASC", [geojson.features], function(results){
-                distinctValues = [];
-                $.each(results, function(index, value) {
-                  distinctValues.push(value.field);
-                });
-              });
-              filters[index].values = distinctValues;
-            } else {
-              filters[index][key] = val;
-            }
-          }
-        });
-      }
-      // Table config
-      if (value.table) {
-        table.push({
-          field: value.value,
-          title: value.label
-        });
-        $.each(value.table, function(key, val) {
-          if (table[index+1]) {
-            table[index+1][key] = val;
-          }
-        });
-      }
-    });
-
-    buildFilters();
-    buildTable();
-  }
-});
 
 
 $("#filter-btn").click(function() {
@@ -716,3 +670,14 @@ $("#download-pdf-btn").click(function() {
 $("#chartModal").on("shown.bs.modal", function (e) {
   drawCharts();
 });
+
+
+function updateLegend() {
+  if (! $.isEmptyObject(legendItems)) {
+    $(".legend").remove();
+    $("#fulcrum-layer").append("<div class='legend'></div>");
+    $.each(legendItems, function(index, value) {
+      $(".legend").append("<div><img src='assets/pictures/markers/" + value.replace("#",'').toLowerCase() + ".png' height='20px' width='15px'>" + index + "</div>");
+    });
+  }
+}
