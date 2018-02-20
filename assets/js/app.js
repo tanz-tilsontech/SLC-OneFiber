@@ -296,6 +296,31 @@ function buildConfig() {
 }
 
 
+//field notes feature layer
+var featureLayer = L.geoJson(null, {
+    filter: function(feature, layer) {
+        return feature.geometry.coordinates[0] !== 0 && feature.geometry.coordinates[1] !== 0;
+    },
+
+    //removed point to layer 
+    /* pointToLayer: function (feature, latlng) {
+    return L.marker(latlng);
+  },*/
+
+    onEachFeature: function(feature, layer) {
+        if (feature.properties) {
+            layer.on({
+                click: function(e) {
+                    identifyFieldFeature(L.stamp(layer));
+                    highlightLayer.clearLayers();
+                    highlightLayer.addData(fieldfeatureLayer.getLayer(L.stamp(layer)).toGeoJSON());
+                }
+            });
+        }
+    }
+});
+
+
 var clusters = new L.MarkerClusterGroup({
     spiderfyOnMaxZoom: true,
     showCoverageOnHover: false,
