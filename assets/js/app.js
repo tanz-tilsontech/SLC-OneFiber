@@ -311,7 +311,15 @@ var featureLayer = L.geoJson(null, {
     } else {
       markerColor = "#FF0000";
     }
-    return L.Marker(latlng);
+    return L.marker(latlng, {
+      L.Icon({
+        options: {
+        iconSize: [27, 27],
+        iconAnchor: [13, 27],
+        popupAnchor:  [1, -24],
+        iconUrl: 'https://image.flaticon.com/icons/png/512/33/33622.png'
+      }
+    });
   },
   onEachFeature: function (feature, layer) {
     if (feature.properties) {
@@ -334,6 +342,7 @@ var featureLayer = L.geoJson(null, {
     }
   }
 });
+
 
 // Fetch the GeoJSON file
 $.getJSON(config.geojson, function (data) {
