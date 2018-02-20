@@ -541,13 +541,14 @@ L.easyPrint({
 
 $("#refresh-btn").click(function() {
   $.getJSON(config.geojson, function (data) {
-  geojson = data;
-  features = $.map(geojson.features, function(feature) {
-    return feature.properties;
+    geojson = data;
+    features = $.map(geojson.features, function(feature) {
+      return feature.properties;
+    });
+    featureLayer.addData(data);
+    buildConfig();
+    $("#loading-mask").hide();
   });
-  featureLayer.addData(data);
-  buildConfig();
-  $("#loading-mask").hide();
 });
 
 
