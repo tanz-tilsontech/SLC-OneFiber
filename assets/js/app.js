@@ -312,13 +312,7 @@ var featureLayer = L.geoJson(null, {
       markerColor = "#FF0000";
     }
     return L.marker(latlng, {
-      L.Icon({
-        options: {
-        iconSize: [27, 27],
-        iconAnchor: [13, 27],
-        popupAnchor:  [1, -24],
-        iconUrl: 'https://image.flaticon.com/icons/png/512/33/33622.png'
-      }
+      icon: mapIcon
     });
   },
   onEachFeature: function (feature, layer) {
@@ -343,6 +337,15 @@ var featureLayer = L.geoJson(null, {
   }
 });
 
+var mapIcon = L.icon({
+    iconUrl: 'https://image.flaticon.com/icons/png/512/33/33622.png',
+
+    iconSize:     [38, 95], // size of the icon
+    shadowSize:   [50, 64], // size of the shadow
+    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+    shadowAnchor: [4, 62],  // the same for the shadow
+    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+});
 
 // Fetch the GeoJSON file
 $.getJSON(config.geojson, function (data) {
