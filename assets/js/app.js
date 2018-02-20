@@ -352,7 +352,6 @@ var featureLayer = L.geoJson(null, {
         legendItems[feature.properties.Status] = feature.properties["marker-color"];
       }
       content += "<table>";
-      if (feature.properties) {
       layer.on({
         click: function (e) {
           identifyFeature(L.stamp(layer));
