@@ -1,6 +1,6 @@
 var shareID = "fb96b48deb5cfb94"
 var hiddenSystemFields = ["marker-color", "Created At", "Updated At", "Created By", "Updated By", "System Created At", "System Updated At", "Version", "Assigned To", "Latitude", "Longitude", "Gps Altitude", "Gps Horizontal Accuracy", "Gps Vertical Accuracy", "Gps Speed", "Gps Course", "Address Sub Thoroughfare", "Address Thoroughfare", "Address Locality", "Address Sub Admin Area", "Address Admin Area", "Address Postal Code", "Address Suite", "Address Country"];
-
+var legendItems = {};
 
 var config = {
   geojson: "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94.geojson",
@@ -373,15 +373,22 @@ var featureLayer = L.geoJson(null, {
 });
 
 // Fetch the GeoJSON file
-$.getJSON(config.geojson, function (data) {
-  geojson = data;
-  features = $.map(geojson.features, function(feature) {
-    return feature.properties;
+function fetchRecords() {
+  legendItems = {};
+  highlight.clearLayers();
+  markers.clearLayers()
+  $.getJSON(config.geojson, function (data) {
+    geojson = data;
+    markers.addData(data);
+    features = $.map(geojson.features, function(feature) {
+      return feature.properties;
+    });
+    featureLayer.addData(data);
+    buildConfig();
+    updateLegend();
+    $("#loading-mask").hide();
   });
-  featureLayer.addData(data);
-  buildConfig();
-  $("#loading-mask").hide();
-});
+}
 
 var map = L.map("map", {
   layers: [mapboxOSM, SLCHLDRoute, featureLayer, highlightLayer]
