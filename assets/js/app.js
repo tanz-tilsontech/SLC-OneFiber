@@ -300,21 +300,6 @@ var featureLayer = L.geoJson(null, {
   filter: function(feature, layer) {
     return feature.geometry.coordinates[0] !== 0 && feature.geometry.coordinates[1] !== 0;
   },
-  /*style: function (feature) {
-    return {
-      color: feature.properties.color
-    };
-  },*/
-  pointToLayer: function (feature, latlng) {
-    if (feature.properties && feature.properties["marker-color"]) {
-      markerColor = feature.properties["marker-color"];
-    } else {
-      markerColor = "#FF0000";
-    }
-    return L.marker(latlng, {
-      icon: mapIcon
-    });
-  },
   onEachFeature: function (feature, layer) {
     if (feature.properties) {
       layer.on({
@@ -335,16 +320,6 @@ var featureLayer = L.geoJson(null, {
       });
     }
   }
-});
-
-var mapIcon = L.icon({
-    iconUrl: 'https://image.flaticon.com/icons/png/512/33/33622.png',
-
-    iconSize:     [38, 95], // size of the icon
-    shadowSize:   [50, 64], // size of the shadow
-    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-    shadowAnchor: [4, 62],  // the same for the shadow
-    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
 });
 
 // Fetch the GeoJSON file
@@ -479,9 +454,7 @@ function syncTable() {
   featureLayer.eachLayer(function (layer) {
     layer.feature.properties.leaflet_stamp = L.stamp(layer);
     if (map.hasLayer(featureLayer)) {
-      if (map.getBounds().contains(layer.getBounds())) {
-        tableFeatures.push(layer.feature.properties);
-      }
+      tableFeatures.push(layer.feature.properties);
     }
   });
   $("#table").bootstrapTable("load", JSON.parse(JSON.stringify(tableFeatures)));
