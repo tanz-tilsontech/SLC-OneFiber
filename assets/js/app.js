@@ -323,15 +323,25 @@ var featureLayer = L.geoJson(null, {
 });
 
 // Fetch the GeoJSON file
-$.getJSON(config.geojson, function (data) {
-  geojson = data;
-  features = $.map(geojson.features, function(feature) {
-    return feature.properties;
+var previous = null;
+var current = null;
+setInterval(function() {
+  $.getJSON(config.geojson, function (data) {
+    current = JSON.stringify(json);
+    geojson = data;
+    features = $.map(geojson.features, function(feature) {
+      return feature.properties;
+    });
+    featureLayer.addData(data);
+    buildConfig();
+    $("#loading-mask").hide();
+    if (previous && current && previous !== current) {
+      console.log('refresh');
+      location.reload();
+    }
+    previous = current;
   });
-  featureLayer.addData(data);
-  buildConfig();
-  $("#loading-mask").hide();
-});
+}, 2000);
 
 var map = L.map("map", {
   layers: [mapboxOSM, SLCHLDRoute, featureLayer, highlightLayer]
@@ -539,6 +549,11 @@ L.easyPrint({
   elementsToHide: 'p, h2, .gitButton'
 }).addTo(map)
 
+$("#about-btn").click(function() {
+  $("#aboutModal").modal("show");
+  $(".navbar-collapse.in").collapse("hide");
+  return false;
+});
 
 $("#about-btn").click(function() {
   $("#aboutModal").modal("show");
