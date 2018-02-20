@@ -549,6 +549,20 @@ $("#refresh-btn").click(function() {
     buildConfig();
     $("#loading-mask").hide();
   });
+  tableFeatures = [];
+  featureLayer.eachLayer(function (layer) {
+    layer.feature.properties.leaflet_stamp = L.stamp(layer);
+    if (map.hasLayer(featureLayer)) {
+      tableFeatures.push(layer.feature.properties);
+    }
+  });
+  $("#table").bootstrapTable("load", JSON.parse(JSON.stringify(tableFeatures)));
+  var featureCount = $("#table").bootstrapTable("getData").length;
+  if (featureCount == 1) {
+    $("#feature-count").html($("#table").bootstrapTable("getData").length + " visible feature");
+  } else {
+    $("#feature-count").html($("#table").bootstrapTable("getData").length + " visible features");
+  }
 });
 
 
