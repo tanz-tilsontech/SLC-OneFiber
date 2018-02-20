@@ -352,6 +352,7 @@ var featureLayer = L.geoJson(null, {
         legendItems[feature.properties.Status] = feature.properties["marker-color"];
       }
       content += "<table>";
+      if (feature.properties) {
       layer.on({
         click: function (e) {
           identifyFeature(L.stamp(layer));
@@ -372,6 +373,28 @@ var featureLayer = L.geoJson(null, {
   }
 });
 
+
+  onEachFeature: function (feature, layer) {
+    if (feature.properties) {
+      layer.on({
+        click: function (e) {
+          identifyFeature(L.stamp(layer));
+          highlightLayer.clearLayers();
+          highlightLayer.addData(featureLayer.getLayer(L.stamp(layer)).toGeoJSON());
+        },
+        mouseover: function (e) {
+          if (config.hoverProperty) {
+            $(".info-control").html(feature.properties[config.hoverProperty]);
+            $(".info-control").show();
+          }
+        },
+        mouseout: function (e) {
+          $(".info-control").hide();
+        }
+      });
+    }
+  }
+});
 
 // Fetch the GeoJSON file
 $.getJSON(config.geojson, function (data) {
