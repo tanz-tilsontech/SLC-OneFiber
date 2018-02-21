@@ -573,7 +573,6 @@ $("#refresh-btn").click(function() {
       return feature.properties;
     });
     featureLayer.addData(data);
-    updateLegend();
     buildConfig();
     $("#loading-mask").hide();
   });
