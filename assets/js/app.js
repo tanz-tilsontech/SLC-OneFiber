@@ -237,9 +237,9 @@ function drawCharts() {
 
   // WPID
   $(function() {
-    var result1 = alasql("SELECT wpid AS label, SUM(proposed_footage::NUMBER) AS footage FROM ? GROUP BY wpid", [features]);
-    var result2 = alasql("SELECT wpid AS label, SUM(construction_footage_cx_final::NUMBER) AS footage FROM ? GROUP BY wpid", [features]);
-    var result3 = alasql("SELECT wpid AS label, SUM(cable_placement_total_footage_cx_final::NUMBER) AS footage FROM ? GROUP BY wpid", [features]);
+    var result1 = alasql("SELECT wpid AS label, SUM(COALESCE(proposed_footage::NUMBER)) AS footage FROM ? GROUP BY wpid", [features]);
+    var result2 = alasql("SELECT wpid AS label, SUM(COALESCE(construction_footage_cx_final::NUMBER)) AS footage FROM ? GROUP BY wpid", [features]);
+    var result3 = alasql("SELECT wpid AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? GROUP BY wpid", [features]);
     var columns1 = $.map(result1, function(proposed_footage) {
       return [[proposed_footage.label, proposed_footage.footage]];
     });
