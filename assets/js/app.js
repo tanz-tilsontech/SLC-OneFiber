@@ -237,34 +237,26 @@ function drawCharts() {
 
   // WPID
   $(function() {
-    var result = alasql("SELECT proposed_footage AS label, SUM(proposed_footage) AS Footage FROM ? GROUP BY wpid", [features]);
+    var result = alasql("SELECT wpid AS label, SUM(proposed_footage) AS Footage FROM ? GROUP BY wpid", [features]);
     var columns = $.map(result, function(wpid) {
       return [[proposed_footage.label, proposed_footage.Footage]];
     });
     var chart = c3.generate({
-        bindto: "#wpid-chart",
-        size: {
-          height: 2000
-        },
-        data: {
-          json: result,
-          keys: {
-            x: "label",
-            value: ["Footage"]
-          },
-          type: "bar"
-        },
-        axis: {
-          rotated: false,
-          x: {
-            type: "category"
-          }
-        },
-        legend: {
-          show: false
+      bindto: "#wpid-chart",
+      data: {
+        columns: columns
+        type: 'bar'
+      },
+      bar: {
+        width: {
+          ratio: 0.5 // this makes bar width 50% of length between ticks
         }
+        // or
+        //width: 100 // this makes bar width 100px
+      }
     });
-  });
+  })
+}
 
 
   // FQNID
