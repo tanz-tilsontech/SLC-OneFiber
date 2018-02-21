@@ -295,6 +295,19 @@ var highlightLayer = L.geoJson(null, {
   }
 });
 
+var legendItems = {};
+
+function updateLegend() {
+  if (! $.isEmptyObject(legendItems)) {
+    $(".legend").remove();
+    $("#fulcrum-layer").append("<div class='legend'></div>");
+    $.each(legendItems, function(index, value) {
+      $(".legend").append("<div><img src='assets/pictures/markers/" + value.replace("#",'').toLowerCase() + ".png' height='20px' width='15px'>" + index + "</div>");
+    });
+  }
+}
+
+updateLegend();
 
 var featureLayer = L.geoJson(null, {
   filter: function(feature, layer) {
@@ -337,6 +350,7 @@ var featureLayer = L.geoJson(null, {
             iconAnchor: [15, 32]
           })
         );
+        legendItems[feature.properties.Status] = feature.properties["marker-color"];
       }
     }
   }
@@ -345,6 +359,7 @@ var featureLayer = L.geoJson(null, {
 // Fetch the GeoJSON file
 $.getJSON(config.geojson, function (data) {
   geojson = data;
+  legendItems = {};
   features = $.map(geojson.features, function(feature) {
     return feature.properties;
   });
