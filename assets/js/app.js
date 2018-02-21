@@ -237,23 +237,16 @@ function drawCharts() {
 
   // WPID
   $(function() {
-    var result = alasql("SELECT proposed_footage AS label, SUM(proposed_footage) AS footage FROM ? GROUP BY wpid", [features]);
+    var result = alasql("SELECT wpid AS label, SUM(proposed_footage) AS total FROM ? GROUP BY wpid", [features]);
     var columns = $.map(result, function(wpid) {
-      return [[proposed_footage.label, proposed_footage.footage]];
+      return [[wpid.label, wpid.total]];
     });
     var chart = c3.generate({
-      bindto: "#wpid-chart",
-      data: {
-        columns: columns
-        type: 'bar'
-      },
-      bar: {
-        width: {
-          ratio: 0.5 // this makes bar width 50% of length between ticks
+        bindto: "#wpid-chart",
+        data: {
+          type: "bar",
+          columns: columns
         }
-        // or
-        //width: 100 // this makes bar width 100px
-      }
     });
   });
 
