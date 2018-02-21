@@ -70,7 +70,7 @@ var properties = [{
     sortable: true
   },
   filter: {
-    type: "string"
+    type: "date"
   }
 },
 {
@@ -104,12 +104,115 @@ var properties = [{
   },
   filter: {
     type: "integer",
-    input: "radio",
-    operators: ["equal"],
-    values: {
-      "yes": "Yes",
-      "no": "No"
-    }
+},
+{
+  value: "construction_type_cx_final",
+  label: "Construction Type",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string"
+  }
+},
+{
+  value: "construction_start_date_cx_final",
+  label: "Construction Start Date",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "date"
+  }
+},
+{
+  value: "construction_complete_date_cx_final",
+  label: "Construction Complete Date",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "date"
+  }
+},
+{
+  value: "construction_pass_date_qc_final",
+  label: "Construction QC Pass Date",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "date"
+  }
+},
+{
+  value: "construction_footage_cx_final",
+  label: "Construction Total Footage",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "integer",
+  }
+},
+{
+  value: "cable_placement_type_final",
+  label: "Cable Placement Type",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string"
+  }
+},
+{
+  value: "cable_placement_start_date_cx_final",
+  label: "Cable Placement Start Date",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "date"
+  }
+},
+{
+  value: "cable_placement_complete_date_cx_final",
+  label: "Cable Placement Complete Date",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "date"
+  }
+},
+{
+  value: "cable_placement_pass_date_qc_final",
+  label: "Cable Placement QC Pass Date",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "date"
+  }
+},
+{
+  value: "cable_placement_total_footage_cx_final",
+  label: "Cable Placement Total Footage",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "integer",
   }
 }];
 
