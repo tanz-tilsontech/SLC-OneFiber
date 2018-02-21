@@ -71,6 +71,10 @@ var properties = [{
   },
   filter: {
     type: "date"
+    view: "datepicker", 
+    value: new Date(2017,10,9), 
+    label: "Select Date", 
+    timepicker: true
   }
 },
 {
@@ -126,6 +130,10 @@ var properties = [{
   },
   filter: {
     type: "date"
+    view: "datepicker", 
+    value: new Date(2017,10,9), 
+    label: "Select Date", 
+    timepicker: true
   }
 },
 {
@@ -137,6 +145,10 @@ var properties = [{
   },
   filter: {
     type: "date"
+    view: "datepicker", 
+    value: new Date(2017,10,9), 
+    label: "Select Date", 
+    timepicker: true
   }
 },
 {
@@ -148,6 +160,10 @@ var properties = [{
   },
   filter: {
     type: "date"
+    view: "datepicker", 
+    value: new Date(2017,10,9), 
+    label: "Select Date", 
+    timepicker: true
   }
 },
 {
@@ -181,6 +197,10 @@ var properties = [{
   },
   filter: {
     type: "date"
+    view: "datepicker", 
+    value: new Date(2017,10,9), 
+    label: "Select Date", 
+    timepicker: true
   }
 },
 {
@@ -192,6 +212,10 @@ var properties = [{
   },
   filter: {
     type: "date"
+    view: "datepicker", 
+    value: new Date(2017,10,9), 
+    label: "Select Date", 
+    timepicker: true
   }
 },
 {
@@ -203,6 +227,10 @@ var properties = [{
   },
   filter: {
     type: "date"
+    view: "datepicker", 
+    value: new Date(2017,10,9), 
+    label: "Select Date", 
+    timepicker: true
   }
 },
 {
