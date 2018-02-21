@@ -1,7 +1,3 @@
-var shareID = "fb96b48deb5cfb94"
-var hiddenSystemFields = ["marker-color", "Created At", "Updated At", "Created By", "Updated By", "System Created At", "System Updated At", "Version", "Assigned To", "Latitude", "Longitude", "Gps Altitude", "Gps Horizontal Accuracy", "Gps Vertical Accuracy", "Gps Speed", "Gps Course", "Address Sub Thoroughfare", "Address Thoroughfare", "Address Locality", "Address Sub Admin Area", "Address Admin Area", "Address Postal Code", "Address Suite", "Address Country"];
-var legendItems = {};
-
 var config = {
   geojson: "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94.geojson",
   title: "SLC OneFiber Construction",
@@ -317,19 +313,6 @@ var featureLayer = L.geoJson(null, {
   },
   onEachFeature: function (feature, layer) {
     if (feature.properties) {
-      var title = title;
-      var content = "<table class='table table-striped table-bordered table-condensed'>";
-      if (feature.properties["marker-color"]) {
-        layer.setIcon(
-          L.icon({
-            iconUrl: "assets/pictures/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
-            iconSize: [30, 40],
-            iconAnchor: [15, 32]
-          })
-        );
-        legendItems[feature.properties.Status] = feature.properties["marker-color"];
-      }
-      content += "<table>";
       layer.on({
         click: function (e) {
           identifyFeature(L.stamp(layer));
@@ -346,27 +329,29 @@ var featureLayer = L.geoJson(null, {
           $(".info-control").hide();
         }
       });
+      if (feature.properties["marker-color"]) {
+        layer.setIcon(
+          L.icon({
+            iconUrl: "assets/pictures/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
+            iconSize: [30, 40],
+            iconAnchor: [15, 32]
+          })
+        );
+      }
     }
   }
 });
 
 // Fetch the GeoJSON file
-function fetchRecords() {
-  legendItems = {};
-  highlight.clearLayers();
-  markers.clearLayers()
-  $.getJSON(config.geojson, function (data) {
-    geojson = data;
-    markers.addData(data);
-    features = $.map(geojson.features, function(feature) {
-      return feature.properties;
-    });
-    featureLayer.addData(data);
-    buildConfig();
-    updateLegend();
-    $("#loading-mask").hide();
+$.getJSON(config.geojson, function (data) {
+  geojson = data;
+  features = $.map(geojson.features, function(feature) {
+    return feature.properties;
   });
-}
+  featureLayer.addData(data);
+  buildConfig();
+  $("#loading-mask").hide();
+});
 
 var map = L.map("map", {
   layers: [mapboxOSM, SLCHLDRoute, featureLayer, highlightLayer]
@@ -654,14 +639,3 @@ $("#download-pdf-btn").click(function() {
 $("#chartModal").on("shown.bs.modal", function (e) {
   drawCharts();
 });
-
-
-function updateLegend() {
-  if (! $.isEmptyObject(legendItems)) {
-    $(".legend").remove();
-    $("#fulcrum-layer").append("<div class='legend'></div>");
-    $.each(legendItems, function(index, value) {
-      $(".legend").append("<div><img src='assets/pictures/markers/" + value.replace("#",'').toLowerCase() + ".png' height='20px' width='15px'>" + index + "</div>");
-    });
-  }
-}
