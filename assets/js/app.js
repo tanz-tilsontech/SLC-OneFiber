@@ -542,7 +542,7 @@ function dateFilter() {
       value: '1991/11/17'
     }]
   };
-$('#builder-widgets').queryBuilder({
+$('#query-builder').queryBuilder({
     plugins: ['bt-tooltip-errors'],
     filters: [{
       id: 'date',
