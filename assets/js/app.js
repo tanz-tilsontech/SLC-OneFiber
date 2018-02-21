@@ -245,7 +245,7 @@ function drawCharts() {
         bindto: "#wpid-chart",
         data: {
           type: "bar",
-          columns: columns
+          columns: results
         }
     });
   });
