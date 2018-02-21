@@ -256,7 +256,6 @@ function drawCharts() {
       }
     });
   })
-}
 
 
   // FQNID
