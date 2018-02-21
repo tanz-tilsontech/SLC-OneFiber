@@ -408,6 +408,7 @@ var baseLayers = {
 var overlayLayers = {
   "<span id='layer-name'>GeoJSON Layer</span>": featureLayer,
   "<span id='layer-name2'>GeoJSON Layer</span>": SLCHLDRoute,
+  legendItems,
 };
 
 
