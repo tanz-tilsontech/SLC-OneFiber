@@ -2,13 +2,13 @@ var config = {
   geojson: "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94.geojson",
   title: "SLC OneFiber Construction",
   layerName: "Segments",
-  hoverProperty: "title",
+  hoverProperty: "status_title",
   sortProperty: "fqnid",
   sortOrder: "ascend"
 };
 
 var properties = [{
-  value: "record_id",
+  value: "id",
   label: "Record ID",
   table: {
     visible: false,
@@ -302,7 +302,7 @@ var featureLayer = L.geoJson(null, {
   },
   pointToLayer: function (feature, latlng) {
     return L.marker(latlng, {
-      title: feature.properties["title"],
+      title: feature.properties["status_title"],
       riseOnHover: true,
       icon: L.icon({
         iconUrl: "assets/pictures/markers/cb0d0c.png",
