@@ -2,7 +2,7 @@ var config = {
   geojson: "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94.geojson",
   title: "SLC OneFiber Construction",
   layerName: "Segments",
-  hoverProperty: "status_title",
+  hoverProperty: "fulcrum_title",
   sortProperty: "fqnid",
   sortOrder: "ascend"
 };
