@@ -352,7 +352,6 @@ $.getJSON(config.geojson, function (data) {
     return feature.properties;
   });
   featureLayer.addData(data);
-  updateLegend();
   buildConfig();
   $("#loading-mask").hide();
 });
