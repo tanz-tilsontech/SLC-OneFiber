@@ -242,7 +242,7 @@ function drawCharts() {
       return [[wpid.label, wpid.total]];
     });
     var chart = c3.generate({
-        bindto: "#species-chart",
+        bindto: "#wpid-chart",
         size: {
           height: 2000
         },
@@ -250,7 +250,7 @@ function drawCharts() {
           json: result,
           keys: {
             x: "label",
-            value: ["wpid"]
+            value: ["total"]
           },
           type: "bar"
         },
