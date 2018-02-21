@@ -237,9 +237,9 @@ function drawCharts() {
 
   // WPID
   $(function() {
-    var result = alasql("SELECT wpid AS label, SUM(proposed_footage) AS Footage FROM ? GROUP BY wpid", [features]);
+    var result = alasql("SELECT proposed_footage AS label, SUM(proposed_footage) AS footage FROM ? GROUP BY wpid", [features]);
     var columns = $.map(result, function(wpid) {
-      return [[proposed_footage.label, proposed_footage.Footage]];
+      return [[proposed_footage.label, proposed_footage.footage]];
     });
     var chart = c3.generate({
       bindto: "#wpid-chart",
@@ -255,7 +255,7 @@ function drawCharts() {
         //width: 100 // this makes bar width 100px
       }
     });
-  })
+  });
 
 
   // FQNID
