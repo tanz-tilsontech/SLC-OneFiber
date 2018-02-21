@@ -257,9 +257,6 @@ function drawCharts() {
             [columns1],
             [columns2],
             [columns3]
-          ],
-          groups: [
-            [columns1, columns2, columns3]
           ]
         }
     });
