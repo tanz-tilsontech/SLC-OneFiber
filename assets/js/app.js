@@ -238,8 +238,8 @@ function drawCharts() {
   // WPID
   $(function() {
     var result = alasql("SELECT wpid AS label, SUM(proposed_footage) AS total FROM ? GROUP BY wpid", [features]);
-    var columns = $.map(result, function(wpid) {
-      return [[wpid.label, proposed_footage.total]];
+    var columns = $.map(result, function(proposed_footage) {
+      return [[proposed_footage.label, proposed_footage.total]];
     });
     var chart = c3.generate({
         bindto: "#wpid-chart",
