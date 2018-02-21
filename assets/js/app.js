@@ -295,15 +295,15 @@ var highlightLayer = L.geoJson(null, {
   }
 });
 
-var fulcrumLegend = new L.control({
-  position: "bottomright"
+var fulcrumControl = new L.control({
+  position: "bottomleft"
 });
-fulcrumLegend.onAdd = function (map) {
+fulcrumControl.onAdd = function (map) {
   var div = L.DomUtil.create("div");
-  div.innerHTML = "<a<img src='assets/pictures/Contruction%20Legend.png'></a>";
+  div.innerHTML = "<a href='http://fulcrumapp.com/' target='_blank'><img src='assets/pictures/Contruction%20Legend.png'></a>";
   return div;
 };
-map.addControl(fulcrumLegend);
+map.addControl(fulcrumControl);
 
 var featureLayer = L.geoJson(null, {
   filter: function(feature, layer) {
