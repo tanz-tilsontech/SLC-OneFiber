@@ -565,6 +565,7 @@ L.easyPrint({
 
 $("#refresh-btn").click(function() {
   featureLayer.clearLayers();
+  map.setView([40.5912,-111.837],9)
   $.getJSON(config.geojson, function (data) {
     geojson = data;
     legendItems = {};
@@ -578,6 +579,9 @@ $("#refresh-btn").click(function() {
   });
   syncTable();
   buildTable();
+  $(".navbar-collapse.in").collapse("hide");
+  return false;
+  map.fitBounds(featureLayer.getBounds());
   $(".navbar-collapse.in").collapse("hide");
   return false;
 });
