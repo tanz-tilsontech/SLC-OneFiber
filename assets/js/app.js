@@ -295,7 +295,10 @@ var highlightLayer = L.geoJson(null, {
   }
 });
 
-var legendItems = {};
+
+var legendItems = L.control({
+  position: "bottomright"
+}).addTo(map);
 
 function updateLegend() {
   if (! $.isEmptyObject(legendItems)) {
@@ -408,7 +411,6 @@ var baseLayers = {
 var overlayLayers = {
   "<span id='layer-name'>GeoJSON Layer</span>": featureLayer,
   "<span id='layer-name2'>GeoJSON Layer</span>": SLCHLDRoute,
-  legendItems,
 };
 
 
