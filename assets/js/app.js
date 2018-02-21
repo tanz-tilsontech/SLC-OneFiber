@@ -295,14 +295,31 @@ var highlightLayer = L.geoJson(null, {
   }
 });
 
-var fulcrumControl = new L.control({
-  position: "bottomleft"
-});
-fulcrumControl.onAdd = function (map) {
-  var div = L.DomUtil.create("div");
-  div.innerHTML = "<a href='http://fulcrumapp.com/' target='_blank'><img src='assets/pictures/Contruction%20Legend.png'></a>";
+
+function getColour(d) {
+  switch (d) {
+    case 'Segment Ready': return '#e41a1c';
+    case 'Construction Started': return '#4daf4a';
+    case 'Tilson CX QC': return '#0000ff';
+    default: return '#fff';
+  }
+};
+  
+var legend = L.control({position: 'bottomright'});
+
+legend.onAdd = function (map) {
+  var div = L.DomUtil.create('div', 'info legend');
+    feature.properties.["status"] = ['Segment Ready', 'Construciton Started', 'Tilson CX QC'];
+    
+  // loop through the status values and generate a label with a coloured square for each value
+  for (var i = 0; i < feature.properties.["status"].length; i++) {
+    div.innerHTML +=
+      '<i class="circle" style="background:' + getColour(feature.properties.["status"][i]) + '"></i> ' + (feature.properties.["status"][i] ? feature.properties.["status"][i] + '<br>' : '+');
+  }
   return div;
-}.addTo(map);
+};
+legend.addTo(map);
+
 
 var featureLayer = L.geoJson(null, {
   filter: function(feature, layer) {
