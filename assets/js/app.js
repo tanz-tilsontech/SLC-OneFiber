@@ -296,9 +296,7 @@ var highlightLayer = L.geoJson(null, {
 });
 
 
-var legendItems = L.control({
-  position: "bottomright"
-}).addTo(map);
+var legendItems = {}
 
 function updateLegend() {
   if (! $.isEmptyObject(legendItems)) {
@@ -367,6 +365,7 @@ $.getJSON(config.geojson, function (data) {
     return feature.properties;
   });
   featureLayer.addData(data);
+  updateLegend();
   buildConfig();
   $("#loading-mask").hide();
 });
