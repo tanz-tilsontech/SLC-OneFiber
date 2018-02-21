@@ -104,6 +104,7 @@ var properties = [{
   },
   filter: {
     type: "integer",
+  }
 },
 {
   value: "construction_type_cx_final",
