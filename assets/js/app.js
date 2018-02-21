@@ -526,7 +526,23 @@ function urlFormatter (value, row, index) {
 function buildFilters() {
   $("#query-builder").queryBuilder({
     allow_empty: true,
-    filters: filters
+    filters: [{
+      filters
+    },{
+      id: 'date',
+      label: 'Datepicker',
+      type: 'date',
+      validation: {
+        format: 'YYYY/MM/DD'
+      },
+      plugin: 'datepicker',
+      plugin_config: {
+        format: 'yyyy/mm/dd',
+        todayBtn: 'linked',
+        todayHighlight: true,
+        autoclose: true
+      }
+    }]
   });
 }
 
