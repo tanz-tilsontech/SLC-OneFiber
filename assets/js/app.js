@@ -578,6 +578,7 @@ $("#refresh-btn").click(function() {
   });
   syncTable();
   buildTable();
+  buildFilters();
   map.fitBounds(featureLayer.getBounds());
   $(".navbar-collapse.in").collapse("hide");
   return false;
