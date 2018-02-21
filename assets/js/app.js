@@ -237,7 +237,7 @@ function drawCharts() {
 
   // WPID
   $(function() {
-    var result = alasql("SELECT wpid AS label, SUM(*) AS total FROM proposed_footage GROUP BY wpid", [features]);
+    var result = alasql("SELECT wpid AS label, SUM(proposed_footage) AS total FROM ? GROUP BY wpid", [features]);
     var columns = $.map(result, function(wpid) {
       return [[wpid.label, wpid.total]];
     });
