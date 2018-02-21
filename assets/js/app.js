@@ -295,37 +295,15 @@ var highlightLayer = L.geoJson(null, {
   }
 });
 
-var legend = L.control({position: 'bottomright'});
-
-legend.onAdd = function (map) {
-  var div = L.DomUtil.create('div', 'info legend'),
-    grades = ["Segment Ready","Contruction Started","Contractor CX QC","Tilson CX QC"],
-    labels = [];
-  // loop through our density intervals and generate a label with a colored square for each interval
-  for (var i = 0; i < grades.length; i++) {
-    div.innerHTML +=
-    '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-    grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
-  }
+var fulcrumLegend = new L.control({
+  position: "bottomright"
+});
+fulcrumLegend.onAdd = function (map) {
+  var div = L.DomUtil.create("div");
+  div.innerHTML = "<a<img src='assets/pictures/Contruction%20Legend.png'></a>";
   return div;
 };
-
-legend.addTo(map);
-
-
-var legendItems = {}
-
-function updateLegend() {
-  if (! $.isEmptyObject(legendItems)) {
-    $(".legend").remove();
-    $("#fulcrum-layer").append("<div class='legend'></div>");
-    $.each(legendItems, function(index, value) {
-      $(".legend").append("<div><img src='assets/pictures/markers/" + value.replace("#",'').toLowerCase() + ".png' height='20px' width='15px'>" + index + "</div>");
-    });
-  }
-}
-
-updateLegend();
+map.addControl(fulcrumLegend);
 
 var featureLayer = L.geoJson(null, {
   filter: function(feature, layer) {
