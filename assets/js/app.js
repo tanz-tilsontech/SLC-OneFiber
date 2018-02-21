@@ -408,7 +408,7 @@ var featureLayer = L.geoJson(null, {
   },
   pointToLayer: function (feature, latlng) {
     return L.marker(latlng, {
-      title: feature.properties["status_title"],
+      title: feature.properties["status_title_github"],
       riseOnHover: true,
       icon: L.icon({
         iconUrl: "assets/pictures/markers/cb0d0c.png",
