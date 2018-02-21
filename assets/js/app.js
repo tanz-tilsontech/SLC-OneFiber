@@ -245,6 +245,15 @@ var properties = [{
   }
 }];
 
+var datepicker = webix.ui({
+    view:"datepicker", 
+    value: new Date(2012, 6, 8), 
+    label: "Date", 
+    timepicker: true,
+    width: 300
+});
+
+
 function drawCharts() {
   // Status
   $(function() {
