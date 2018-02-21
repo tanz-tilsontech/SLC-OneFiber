@@ -71,10 +71,6 @@ var properties = [{
   },
   filter: {
     type: "date"
-    view: "datepicker", 
-    value: new Date(2017,10,9), 
-    label: "Select Date", 
-    timepicker: true
   }
 },
 {
@@ -130,10 +126,6 @@ var properties = [{
   },
   filter: {
     type: "date"
-    view: "datepicker", 
-    value: new Date(2017,10,9), 
-    label: "Select Date", 
-    timepicker: true
   }
 },
 {
@@ -145,10 +137,6 @@ var properties = [{
   },
   filter: {
     type: "date"
-    view: "datepicker", 
-    value: new Date(2017,10,9), 
-    label: "Select Date", 
-    timepicker: true
   }
 },
 {
@@ -160,10 +148,6 @@ var properties = [{
   },
   filter: {
     type: "date"
-    view: "datepicker", 
-    value: new Date(2017,10,9), 
-    label: "Select Date", 
-    timepicker: true
   }
 },
 {
@@ -197,10 +181,6 @@ var properties = [{
   },
   filter: {
     type: "date"
-    view: "datepicker", 
-    value: new Date(2017,10,9), 
-    label: "Select Date", 
-    timepicker: true
   }
 },
 {
@@ -212,10 +192,6 @@ var properties = [{
   },
   filter: {
     type: "date"
-    view: "datepicker", 
-    value: new Date(2017,10,9), 
-    label: "Select Date", 
-    timepicker: true
   }
 },
 {
@@ -227,10 +203,6 @@ var properties = [{
   },
   filter: {
     type: "date"
-    view: "datepicker", 
-    value: new Date(2017,10,9), 
-    label: "Select Date", 
-    timepicker: true
   }
 },
 {
@@ -245,13 +217,6 @@ var properties = [{
   }
 }];
 
-var datepicker = webix.ui({
-    view:"datepicker", 
-    value: new Date(2012, 6, 8), 
-    label: "Date", 
-    timepicker: true,
-    width: 300
-});
 
 
 function drawCharts() {
@@ -566,6 +531,38 @@ function buildFilters() {
     filters: filters
   });
 }
+
+
+function dateFilter() {
+  var rules_widgets = {
+    condition: 'OR',
+    rules: [{
+      id: 'date',
+      operator: 'equal',
+      value: '1991/11/17'
+    }]
+  };
+$('#builder-widgets').queryBuilder({
+    plugins: ['bt-tooltip-errors'],
+    filters: [{
+      id: 'date',
+      label: 'Datepicker',
+      type: 'date',
+      validation: {
+        format: 'YYYY/MM/DD'
+      },
+      plugin: 'datepicker',
+      plugin_config: {
+        format: 'yyyy/mm/dd',
+        todayBtn: 'linked',
+        todayHighlight: true,
+        autoclose: true
+      }
+    }],
+  });
+  rules: rules_widgets
+}
+
 
 function applyFilter() {
   var query = "SELECT * FROM ?";
