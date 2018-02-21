@@ -300,17 +300,6 @@ var featureLayer = L.geoJson(null, {
   filter: function(feature, layer) {
     return feature.geometry.coordinates[0] !== 0 && feature.geometry.coordinates[1] !== 0;
   },
-  pointToLayer: function (feature, latlng) {
-    return L.marker(latlng, {
-      title: feature.properties[fqnid],
-      riseOnHover: true,
-      icon: L.icon({
-        iconUrl: "assets/pictures/markers/cb0d0c.png",
-        iconSize: [30, 40],
-        iconAnchor: [15, 32]
-      })
-    });
-  },
   onEachFeature: function (feature, layer) {
     if (feature.properties) {
       layer.on({
@@ -552,7 +541,7 @@ L.easyPrint({
 
 $("#refresh-btn").click(function() {
 
-
+  
 $("#filter-btn").click(function() {
   $("#filterModal").modal("show");
   $(".navbar-collapse.in").collapse("hide");
