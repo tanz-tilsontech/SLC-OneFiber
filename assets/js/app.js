@@ -242,10 +242,26 @@ function drawCharts() {
       return [[wpid.label, wpid.total]];
     });
     var chart = c3.generate({
-        bindto: "#wpid-chart",
+        bindto: "#species-chart",
+        size: {
+          height: 2000
+        },
         data: {
-          type: "pie",
-          columns: columns
+          json: result,
+          keys: {
+            x: "label",
+            value: ["total"]
+          },
+          type: "bar"
+        },
+        axis: {
+          rotated: true,
+          x: {
+            type: "category"
+          }
+        },
+        legend: {
+          show: false
         }
     });
   });
