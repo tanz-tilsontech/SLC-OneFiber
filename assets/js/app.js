@@ -250,7 +250,7 @@ function drawCharts() {
           json: result,
           keys: {
             x: "label",
-            value: ["total"]
+            value: ["proposed_footage"]
           },
           type: "bar"
         },
