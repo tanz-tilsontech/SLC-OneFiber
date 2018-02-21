@@ -8,7 +8,7 @@ var config = {
 };
 
 var properties = [{
-  value: "id",
+  value: "fulcrum_id",
   label: "Record ID",
   table: {
     visible: false,
