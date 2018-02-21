@@ -579,8 +579,6 @@ $("#refresh-btn").click(function() {
   });
   syncTable();
   buildTable();
-  $(".navbar-collapse.in").collapse("hide");
-  return false;
   map.fitBounds(featureLayer.getBounds());
   $(".navbar-collapse.in").collapse("hide");
   return false;
