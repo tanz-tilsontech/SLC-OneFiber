@@ -579,6 +579,7 @@ L.easyPrint({
 
 
 $("#refresh-btn").click(function() {
+  featureLayer.clearLayers();
   $.getJSON(config.geojson, function (data) {
     geojson = data;
     legendItems = {};
