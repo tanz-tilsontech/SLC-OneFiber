@@ -242,8 +242,10 @@ function drawCharts() {
     var result3 = alasql("SELECT wpid AS label, SUM(cable_placement_total_footage_cx_final::NUMBER) AS footage FROM ? GROUP BY wpid", [features]);
     var columns1 = $.map(result1, function(proposed_footage) {
       return [[proposed_footage.label, proposed_footage.footage]];
+    });
     var columns2 = $.map(result2, function(construction_footage_cx_final) {
       return [[construction_footage_cx_final.label, construction_footage_cx_final.footage]];
+    });
     var columns3 = $.map(result3, function(cable_placement_total_footage_cx_final) {
       return [[cable_placement_total_footage_cx_final.label, cable_placement_total_footage_cx_final.footage]];
     });
