@@ -319,28 +319,6 @@ var featureLayer = L.geoJson(null, {
     if (feature.properties) {
       var title = title;
       var content = "<table class='table table-striped table-bordered table-condensed'>";
-      $.each(feature.properties, function(index, prop) {
-        if (prop === null) {
-          prop = "";
-        } else if (prop.toString().indexOf("https://web.fulcrumapp.com/shares/" + shareID + "/photos/") === 0) {
-          prop = "<a href='#' onclick='photoGallery(\"" + prop + "\"); return false;'>View Photos</a>";
-        } else if (prop.toString().indexOf("https://web.fulcrumapp.com/shares/" + shareID + "/videos/") === 0) {
-          prop = "<a href='" + prop + "' target='blank'>View videos</a>";
-        } else if (prop.toString().indexOf("https://web.fulcrumapp.com/shares/" + shareID + "/signatures/") === 0) {
-          prop = "<a href='" + prop + "' target='blank'>View signatures</a>";
-        } else if (prop.toString().indexOf("https://") === 0 || prop.toString().indexOf("http://") === 0) {
-          prop = "<a href='" + prop + "' target='blank'>" + prop + "</a>";
-        }
-        if (userFields.length > 0) {
-          if ($.inArray(index, hiddenSystemFields) == -1 && $.inArray(index, userFields) !== -1 && index !== "Fulcrum Id") {
-            content += "<tr><th>" + index + "</th><td>" + prop + "</td></tr>";
-          }
-        } else {
-          if ($.inArray(index, hiddenSystemFields) == -1 && index !== "Fulcrum Id") {
-            content += "<tr><th>" + index + "</th><td>" + prop + "</td></tr>";
-          }
-        }
-      });
       if (feature.properties["marker-color"]) {
         layer.setIcon(
           L.icon({
