@@ -8,7 +8,7 @@ var config = {
 };
 
 var properties = [{
-  value: "id",
+  value: "record_id",
   label: "Record ID",
   table: {
     visible: false,
@@ -539,9 +539,13 @@ L.easyPrint({
   elementsToHide: 'p, h2, .gitButton'
 }).addTo(map)
 
-$("#refresh-btn").click(function() {
 
-  
+$("#about-btn").click(function() {
+  $("#aboutModal").modal("show");
+  $(".navbar-collapse.in").collapse("hide");
+  return false;
+});
+
 $("#filter-btn").click(function() {
   $("#filterModal").modal("show");
   $(".navbar-collapse.in").collapse("hide");
