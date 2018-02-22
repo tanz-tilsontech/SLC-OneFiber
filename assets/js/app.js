@@ -252,14 +252,14 @@ var properties = [{
 
 
 function drawCharts() {
-  // Status
+  // HUB COMPLETE
   $(function() {
     var result = alasql("SELECT hub AS label, COUNT(status) AS total FROM ? WHERE status = 'Segment Ready' GROUP BY hub", [features]);
     var columns = $.map(result, function(status) {
       return [[status.label, status.total]];
     });
     var chart = c3.generate({
-        bindto: "#status-chart",
+        bindto: "#hub-complete-chart",
         data: {
           type: "gauge",
           columns: columns
@@ -274,7 +274,7 @@ function drawCharts() {
       return [[hub.label, hub.footage]];
     });
     var chart = c3.generate({
-        bindto: "#wpid-chart",
+        bindto: "#hub-footage-chart",
         data: {
           type: "bar",
           columns: columns
