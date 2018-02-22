@@ -235,9 +235,9 @@ function drawCharts() {
     });
   });
 
-  // WPID
+  // HUB FOOTAGE
   $(function() {
-    var result = alasql("SELECT wpid AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? GROUP BY wpid", [features]);
+    var result = alasql("SELECT hub AS label, SUM(COALESCE(proposed_footage::NUMBER)) AS footage FROM ? GROUP BY hub", [features]);
     var columns = $.map(result, function(proposed_footage) {
       return [[proposed_footage.label, proposed_footage.footage]];
     });
