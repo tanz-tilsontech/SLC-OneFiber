@@ -36,6 +36,38 @@ var properties = [{
   }
 },
 {
+  value: "hub",
+  label: "Hub",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    input: "checkbox",
+    vertical: true,
+    multiple: true,
+    operators: ["in", "not_in", "equal", "not_equal"],
+    values: []
+  }
+},
+{
+  value: "site",
+  label: "Site",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    input: "checkbox",
+    vertical: true,
+    multiple: true,
+    operators: ["in", "not_in", "equal", "not_equal"],
+    values: []
+  }
+},
+{
   value: "wpid",
   label: "WPID",
   table: {
@@ -238,8 +270,8 @@ function drawCharts() {
   // HUB FOOTAGE
   $(function() {
     var result = alasql("SELECT hub AS label, SUM(COALESCE(proposed_footage::NUMBER)) AS footage FROM ? GROUP BY hub", [features]);
-    var columns = $.map(result, function(proposed_footage) {
-      return [[proposed_footage.label, proposed_footage.footage]];
+    var columns = $.map(result, function(hub) {
+      return [[hub.label, hub.footage]];
     });
     var chart = c3.generate({
         bindto: "#wpid-chart",
