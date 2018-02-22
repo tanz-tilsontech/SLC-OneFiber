@@ -288,9 +288,7 @@ function drawCharts() {
           type: "bar",
           columns: [
             ['x', 'Proposed Footage', 'Construction Footage', 'Cable Footage'],
-            [columns1],
-            [columns2],
-            [columns3],
+            [columns1, columns2, columns3],
           ],
           groups: [
             [columns1, columns2, columns3]
