@@ -261,7 +261,7 @@ function drawCharts() {
     var chart = c3.generate({
         bindto: "#status-chart",
         data: {
-          type: "pie",
+          type: "bar",
           columns: columns
         }
     });
