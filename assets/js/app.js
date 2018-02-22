@@ -254,7 +254,7 @@ var properties = [{
 function drawCharts() {
   // Status
   $(function() {
-    var result = alasql("SELECT hub AS label, COUNT(*) AS total FROM ? GROUP BY status", [features]);
+    var result = alasql("SELECT status AS label, COUNT(*) AS total FROM ? GROUP BY hub", [features]);
     var columns = $.map(result, function(status) {
       return [[status.label, status.total]];
     });
