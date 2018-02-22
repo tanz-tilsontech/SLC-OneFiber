@@ -269,21 +269,43 @@ function drawCharts() {
 
   // HUB FOOTAGE
   $(function() {
-    var result = alasql("SELECT hub AS label, SUM(COALESCE(proposed_footage::NUMBER)) AS footage FROM ? GROUP BY hub", [features]);
-    var columns = $.map(result, function(hub) {
+    var result1 = alasql("SELECT hub AS label, SUM(COALESCE(proposed_footage::NUMBER)) AS footage FROM ? GROUP BY hub", [features]);
+    var columns1 = $.map(result1, function(hub) {
+      return [[hub.label, hub.footage]];
+    });
+    var result2 = alasql("SELECT hub AS label, SUM(COALESCE(construction_footage_cx_final::NUMBER)) AS footage FROM ? GROUP BY hub", [features]);
+    var columns2 = $.map(result2, function(hub) {
+      return [[hub.label, hub.footage]];
+    });
+    var result3 = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? GROUP BY hub", [features]);
+    var columns3 = $.map(result3, function(hub) {
       return [[hub.label, hub.footage]];
     });
     var chart = c3.generate({
         bindto: "#hub-footage-chart",
         data: {
+          x: 'x',
           type: "bar",
-          columns: columns
+          columns: [
+            ['x', 'Proposed Footage', 'Construction Footage', 'Cable Footage'],
+            [columns1],
+            [columns2],
+            [columns3],
+          ],
+          groups: [
+            [columns1, columns2, columns3]
+          ]
+        },
+        axis: {
+          x: {
+            type: 'category'
+          }
         }
     });
   });
 
 
-  // FQNID
+  // MONTHLY FOOTAGE 
   $(function() {
     var result = alasql("SELECT fqnid AS label, COUNT(*) AS total FROM ? GROUP BY fqnid", [features]);
     var columns = $.map(result, function(fqnid) {
