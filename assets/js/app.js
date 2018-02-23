@@ -477,6 +477,15 @@ var featureLayer = L.geoJson(null, {
           $(".info-control").hide();
         }
       });
+      if (feature.properties["marker-color"]) {
+        layer.setIcon(
+          L.icon({
+            iconUrl: "assets/pictures/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
+            iconSize: [30, 40],
+            iconAnchor: [15, 32]
+          })
+        );
+      }
     }
   }
 });
