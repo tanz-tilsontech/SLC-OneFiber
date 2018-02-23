@@ -490,7 +490,6 @@ $.getJSON(config.geojson, function (data) {
     return feature.properties;
   });
   featureLayer.addData(data);
-  markers.addData(data);
   buildConfig();
   $("#loading-mask").hide();
 });
@@ -648,7 +647,8 @@ function syncTable() {
   featureLayer.eachLayer(function (layer) {
     layer.feature.properties.leaflet_stamp = L.stamp(layer);
     if (map.hasLayer(featureLayer)) {
-      if (map.getBounds().contains(markers.getBounds())) {
+      featureLayer.getLayer();
+      if (map.getBounds().contains(layer.getBounds())) {
         tableFeatures.push(layer.feature.properties);
       }
     }
