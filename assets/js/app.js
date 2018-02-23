@@ -450,13 +450,14 @@ var featureLayer = L.geoJson(null, {
     } else {
       markerColor = "#FF0000";
     }
-    return L.circleMarker(latlng, {
-      radius: 4,
-      weight: 2,
-      fillColor: markerColor,
-      color: markerColor,
-      opacity: 1,
-      fillOpacity: 1
+    return L.marker(latlng, {
+      title: feature.properties["status_title_github"],
+      riseOnHover: true,
+      icon: L.icon({
+        iconUrl: "assets/pictures/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
+        iconSize: [30, 40],
+        iconAnchor: [15, 32]
+      })
     });
   },
   onEachFeature: function (feature, layer) {
@@ -477,15 +478,6 @@ var featureLayer = L.geoJson(null, {
           $(".info-control").hide();
         }
       });
-      if (feature.properties["marker-color"]) {
-        layer.setIcon(
-          L.icon({
-            iconUrl: "assets/pictures/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
-            iconSize: [30, 40],
-            iconAnchor: [15, 32]
-          })
-        );
-      }
     }
   }
 });
