@@ -481,6 +481,18 @@ var featureLayer = L.geoJson(null, {
   }
 });
 
+
+function WPIDLayer (feature, latlng) {
+    if (feature.properties["wpid"]) {
+      layer = feature.properties["wpid"];
+    }
+    return L.featureGroup(layer)
+    .bindPopup('Hello world!')
+    .on('click', function() { alert('Clicked on a member of the group!'); })
+    .addTo(map);
+  },
+
+
 // Fetch the GeoJSON file
 $.getJSON(config.geojson, function (data) {
   geojson = data;
