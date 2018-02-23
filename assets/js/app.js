@@ -490,6 +490,7 @@ $.getJSON(config.geojson, function (data) {
     return feature.properties;
   });
   featureLayer.addData(data);
+  markers.addData(data);
   buildConfig();
   $("#loading-mask").hide();
 });
