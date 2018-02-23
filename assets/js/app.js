@@ -627,7 +627,7 @@ function buildTable() {
     showToggle: true,
     columns: table,
     onClickRow: function (row) {
-      // do something!
+      identifyFeature();
     },
     onDblClickRow: function (row) {
       // do something!
@@ -648,7 +648,9 @@ function syncTable() {
   featureLayer.eachLayer(function (layer) {
     layer.feature.properties.leaflet_stamp = L.stamp(layer);
     if (map.hasLayer(featureLayer)) {
-      tableFeatures.push(layer.feature.properties);
+      if (map.getBounds().contains(layer.getBounds())) {
+        tableFeatures.push(layer.feature.properties);
+      }
     }
   });
   $("#table").bootstrapTable("load", JSON.parse(JSON.stringify(tableFeatures)));
