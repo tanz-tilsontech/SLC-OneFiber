@@ -436,33 +436,54 @@ var highlightLayer = L.geoJson(null, {
 
 
 var featureLayer = L.geoJson(null, {
-    filter: function(feature, layer) {
-        return feature.geometry.coordinates[0] !== 0 && feature.geometry.coordinates[1] !== 0;
-    },
-
-    //removed point to layer 
-    /* pointToLayer: function (feature, latlng) {
-    return L.marker(latlng);
+  filter: function(feature, layer) {
+    return feature.geometry.coordinates[0] !== 0 && feature.geometry.coordinates[1] !== 0;
+  },
+  /*style: function (feature) {
+    return {
+      color: feature.properties.color
+    };
   },*/
-
-    onEachFeature: function(feature, layer) {
-        if (feature.properties) {
-            layer.on({
-                click: function(e) {
-                    identifyFieldFeature(L.stamp(layer));
-                    highlightLayer.clearLayers();
-                    highlightLayer.addData(fieldfeatureLayer.getLayer(L.stamp(layer)).toGeoJSON());
-                }
-            });
-        }
+  pointToLayer: function (feature, latlng) {
+    if (feature.properties && feature.properties["marker-color"]) {
+      markerColor = feature.properties["marker-color"];
+    } else {
+      markerColor = "#FF0000";
     }
+    return L.circleMarker(latlng, {
+      radius: 4,
+      weight: 2,
+      fillColor: markerColor,
+      color: markerColor,
+      opacity: 1,
+      fillOpacity: 1
+    });
+  },
+  onEachFeature: function (feature, layer) {
+    if (feature.properties) {
+      layer.on({
+        click: function (e) {
+          identifyFeature(L.stamp(layer));
+          highlightLayer.clearLayers();
+          highlightLayer.addData(featureLayer.getLayer(L.stamp(layer)).toGeoJSON());
+        },
+        mouseover: function (e) {
+          if (config.hoverProperty) {
+            $(".info-control").html(feature.properties[config.hoverProperty]);
+            $(".info-control").show();
+          }
+        },
+        mouseout: function (e) {
+          $(".info-control").hide();
+        }
+      });
+    }
+  }
 });
 
 // Fetch the GeoJSON file
-
 $.getJSON(config.geojson, function (data) {
   geojson = data;
-  legendItems = {};
   features = $.map(geojson.features, function(feature) {
     return feature.properties;
   });
@@ -512,8 +533,6 @@ var overlayLayers = {
   "<span id='layer-name'>GeoJSON Layer</span>": featureLayer,
   "<span id='layer-name2'>GeoJSON Layer</span>": SLCHLDRoute,
 };
-
-
 var layerControl = L.control.layers(baseLayers, overlayLayers, {
   collapsed: isCollapsed
 }).addTo(map);
@@ -541,38 +560,6 @@ function buildFilters() {
   });
 }
 
-
-function dateFilter() {
-  var rules_widgets = {
-    condition: 'OR',
-    rules: [{
-      id: 'date',
-      operator: 'equal',
-      value: '1991/11/17'
-    }]
-  };
-$('#query-builder').queryBuilder({
-    plugins: ['bt-tooltip-errors'],
-    filters: [{
-      id: 'date',
-      label: 'Datepicker',
-      type: 'date',
-      validation: {
-        format: 'YYYY/MM/DD'
-      },
-      plugin: 'datepicker',
-      plugin_config: {
-        format: 'yyyy/mm/dd',
-        todayBtn: 'linked',
-        todayHighlight: true,
-        autoclose: true
-      }
-    }],
-  });
-  rules: rules_widgets
-}
-
-
 function applyFilter() {
   var query = "SELECT * FROM ?";
   var sql = $("#query-builder").queryBuilder("getSQL", false, false).sql;
@@ -580,10 +567,10 @@ function applyFilter() {
     query += " WHERE " + sql;
   }
   alasql(query, [geojson.features], function(features){
-    featureLayer.clearLayers();
-    featureLayer.addData(features);
-    syncTable();
-  });
+		featureLayer.clearLayers();
+		featureLayer.addData(features);
+		syncTable();
+	});
 }
 
 function buildTable() {
@@ -603,7 +590,7 @@ function buildTable() {
     showToggle: true,
     columns: table,
     onClickRow: function (row) {
-      identifyFeature();
+      // do something!
     },
     onDblClickRow: function (row) {
       // do something!
@@ -706,38 +693,6 @@ $("[name='view']").click(function() {
   }
 });
 
-L.easyPrint({
-  title: 'My awesome print button',
-  elementsToHide: 'p, h2, .gitButton'
-}).addTo(map)
-
-
-$("#refresh-btn").click(function() {
-  featureLayer.clearLayers();
-  map.setView([40.5912,-111.837],9)
-  $.getJSON(config.geojson, function (data) {
-    geojson = data;
-    legendItems = {};
-    features = $.map(geojson.features, function(feature) {
-      return feature.properties;
-    });
-    featureLayer.addData(data);
-    buildConfig();
-    $("#loading-mask").hide();
-  });
-  syncTable();
-  buildTable();
-  buildFilters();
-  map.fitBounds(featureLayer.getBounds());
-  $(".navbar-collapse.in").collapse("hide");
-  return false;
-});
-
-$("#about-btn").click(function() {
-  $("#aboutModal").modal("show");
-  $(".navbar-collapse.in").collapse("hide");
-  return false;
-});
 
 $("#filter-btn").click(function() {
   $("#filterModal").modal("show");
