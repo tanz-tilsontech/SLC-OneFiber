@@ -458,8 +458,6 @@ var featureLayer = L.geoJson(null, {
         }
       });
     }
-  },
-  pointToLayer: function (feature, latlng) {
     if (feature.properties["marker-color"]) {
       layer.setIcon(
         L.icon({
