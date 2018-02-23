@@ -435,6 +435,9 @@ var highlightLayer = L.geoJson(null, {
 });
 
 
+var latiLongs = [ marker.getLatLng() ];
+var markerBounds = L.latLngBounds(latiLongs); 
+
 var featureLayer = L.geoJson(null, {
   filter: function(feature, layer) {
     return feature.geometry.coordinates[0] !== 0 && feature.geometry.coordinates[1] !== 0;
@@ -643,18 +646,12 @@ function buildTable() {
   });
 }
 
-
-function centerLeafletMapOnMarker(map, marker) {
-  var latLngs = [ marker.getLatLng() ];
-  var markerBounds = L.latLngBounds(latLngs);
-}
-
 function syncTable() {
   tableFeatures = [];
   featureLayer.eachLayer(function (layer) {
     layer.feature.properties.leaflet_stamp = L.stamp(layer);
     if (map.hasLayer(featureLayer)) {
-      if (map.getBounds().contains(markerBounds())) {
+      if (map.getBounds().contains(markerBounds.getBounds())) {
         tableFeatures.push(layer.feature.properties);
       }
     }
