@@ -466,16 +466,7 @@ var featureLayer = L.geoJson(null, {
           iconAnchor: [15, 32]
         })
       );
-    }
-    return L.marker(latlng, {
-      title: feature.properties["status_title_github"],
-      riseOnHover: true,
-      icon: L.icon({
-        iconUrl: "assets/pictures/markers/cb0d0c.png",
-        iconSize: [30, 40],
-        iconAnchor: [15, 32]
-      })
-    });
+    };
   }
 });
 
