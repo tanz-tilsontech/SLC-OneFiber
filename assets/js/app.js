@@ -453,7 +453,7 @@ var featureLayer = L.geoJson(null, {
     return L.icon(latlng, {
       iconUrl: "assets/pictures/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
       iconSize: [30, 40],
-      iconAnchor: [15, 32]1
+      iconAnchor: [15, 32]
     });
   },
   onEachFeature: function (feature, layer) {
