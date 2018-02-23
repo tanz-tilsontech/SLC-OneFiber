@@ -450,14 +450,13 @@ var featureLayer = L.geoJson(null, {
     } else {
       markerColor = "#FF0000";
     }
-    return L.marker(latlng, {
-      title: feature.properties["status_title_github"],
-      riseOnHover: true,
-      icon: L.icon({
-        iconUrl: "assets/pictures/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
-        iconSize: [30, 40],
-        iconAnchor: [15, 32]
-      })
+    return L.circleMarker(latlng, {
+      radius: 6,
+      weight: 4,
+      fillColor: markerColor,
+      color: markerColor,
+      opacity: 1,
+      fillOpacity: 1
     });
   },
   onEachFeature: function (feature, layer) {
