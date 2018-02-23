@@ -448,6 +448,7 @@ var featureLayer = L.geoJson(null, {
           iconAnchor: [15, 32]
         })
       );
+    }
     return L.marker(latlng, {
       title: feature.properties["status_title_github"],
       riseOnHover: true,
