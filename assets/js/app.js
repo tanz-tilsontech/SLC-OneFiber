@@ -439,6 +439,23 @@ var featureLayer = L.geoJson(null, {
   filter: function(feature, layer) {
     return feature.geometry.coordinates[0] !== 0 && feature.geometry.coordinates[1] !== 0;
   },
+  /*style: function (feature) {
+    return {
+      color: feature.properties.color
+    };
+  },*/
+  pointToLayer: function (feature, latlng) {
+    if (feature.properties && feature.properties["marker-color"]) {
+      markerColor = feature.properties["marker-color"];
+    } else {
+      markerColor = "#FF0000";
+    }
+    return L.icon(latlng, {
+      iconUrl: "assets/pictures/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
+      iconSize: [30, 40],
+      iconAnchor: [15, 32]1
+    });
+  },
   onEachFeature: function (feature, layer) {
     if (feature.properties) {
       layer.on({
@@ -458,17 +475,8 @@ var featureLayer = L.geoJson(null, {
         }
       });
     }
-    if (feature.properties["marker-color"]) {
-      layer.setIcon(
-        L.icon({
-          iconUrl: "assets/pictures/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
-          iconSize: [30, 40],
-          iconAnchor: [15, 32]
-        })
-      );
-    };
   }
-});
+})
 
 // Fetch the GeoJSON file
 
