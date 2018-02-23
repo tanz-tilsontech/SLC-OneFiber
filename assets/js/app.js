@@ -254,7 +254,7 @@ var properties = [{
 function drawCharts() {
   // HUB COMPLETE
   $(function() {
-    var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER / proposed_footage::NUMBER)) AS total FROM ? WHERE status = 'Segment Ready' GROUP BY hub", [features]);
+    var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER / proposed_footage::NUMBER)) AS total FROM ? GROUP BY hub", [features]);
     var columns = $.map(result, function(status) {
       return [[status.label, status.total]];
     });
