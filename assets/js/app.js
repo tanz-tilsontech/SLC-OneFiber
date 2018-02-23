@@ -434,9 +434,10 @@ var highlightLayer = L.geoJson(null, {
   }
 });
 
-
-var latiLongs = [ marker.getLatLng() ];
-var markerBounds = L.latLngBounds(latiLongs); 
+function centerLeafletMapOnMarker(map, marker) {
+  var latiLongs = [ marker.getLatLng() ];
+  var markerBounds = L.latLngBounds(latiLongs);
+}
 
 var featureLayer = L.geoJson(null, {
   filter: function(feature, layer) {
