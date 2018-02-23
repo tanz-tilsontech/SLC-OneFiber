@@ -451,9 +451,12 @@ var featureLayer = L.geoJson(null, {
       markerColor = "#FF0000";
     }
     return L.icon(latlng, {
-      iconUrl: "assets/pictures/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
-      iconSize: [30, 40],
-      iconAnchor: [15, 32]
+      radius: 4,
+      weight: 2,
+      fillColor: markerColor,
+      color: markerColor,
+      opacity: 1,
+      fillOpacity: 1
     });
   },
   onEachFeature: function (feature, layer) {
@@ -476,7 +479,7 @@ var featureLayer = L.geoJson(null, {
       });
     }
   }
-})
+});
 
 // Fetch the GeoJSON file
 
