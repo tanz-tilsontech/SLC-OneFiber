@@ -643,12 +643,18 @@ function buildTable() {
   });
 }
 
+
+function centerLeafletMapOnMarker(map, marker) {
+  var latLngs = [ marker.getLatLng() ];
+  var markerBounds = L.latLngBounds(latLngs);
+}
+
 function syncTable() {
   tableFeatures = [];
   featureLayer.eachLayer(function (layer) {
     layer.feature.properties.leaflet_stamp = L.stamp(layer);
     if (map.hasLayer(featureLayer)) {
-      if (map.getBounds().contains(L.marker.getBounds())) {
+      if (map.getBounds().contains(markerBounds.getBounds())) {
         tableFeatures.push(layer.feature.properties);
       }
     }
