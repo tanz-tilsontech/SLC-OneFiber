@@ -436,49 +436,26 @@ var highlightLayer = L.geoJson(null, {
 
 
 var featureLayer = L.geoJson(null, {
-  filter: function(feature, layer) {
-    return feature.geometry.coordinates[0] !== 0 && feature.geometry.coordinates[1] !== 0;
-  },
-  pointToLayer: function (feature, latlng) {
-    return L.marker(latlng, {
-      title: feature.properties["status_title_github"],
-      riseOnHover: true,
-      icon: L.icon({
-        iconUrl: "assets/pictures/markers/cb0d0c.png",
-        iconSize: [30, 40],
-        iconAnchor: [15, 32]
-      })
-    });
-  },
-  onEachFeature: function (feature, layer) {
-    if (feature.properties) {
-      layer.on({
-        click: function (e) {
-          identifyFeature(L.stamp(layer));
-          highlightLayer.clearLayers();
-          highlightLayer.addData(featureLayer.getLayer(L.stamp(layer)).toGeoJSON());
-        },
-        mouseover: function (e) {
-          if (config.hoverProperty) {
-            $(".info-control").html(feature.properties[config.hoverProperty]);
-            $(".info-control").show();
-          }
-        },
-        mouseout: function (e) {
-          $(".info-control").hide();
+    filter: function(feature, layer) {
+        return feature.geometry.coordinates[0] !== 0 && feature.geometry.coordinates[1] !== 0;
+    },
+
+    //removed point to layer 
+    /* pointToLayer: function (feature, latlng) {
+    return L.marker(latlng);
+  },*/
+
+    onEachFeature: function(feature, layer) {
+        if (feature.properties) {
+            layer.on({
+                click: function(e) {
+                    identifyFieldFeature(L.stamp(layer));
+                    highlightLayer.clearLayers();
+                    highlightLayer.addData(fieldfeatureLayer.getLayer(L.stamp(layer)).toGeoJSON());
+                }
+            });
         }
-      });
-      if (feature.properties["marker-color"]) {
-        layer.setIcon(
-          L.icon({
-            iconUrl: "assets/pictures/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
-            iconSize: [30, 40],
-            iconAnchor: [15, 32]
-          })
-        );
-      }
     }
-  }
 });
 
 // Fetch the GeoJSON file
@@ -646,8 +623,10 @@ function syncTable() {
   tableFeatures = [];
   featureLayer.eachLayer(function (layer) {
     layer.feature.properties.leaflet_stamp = L.stamp(layer);
-    if (map.getBounds().contains(layer.getBounds())) {
-      tableFeatures.push(layer.feature.properties);
+    if (map.hasLayer(featureLayer)) {
+      if (map.getBounds().contains(layer.getBounds())) {
+        tableFeatures.push(layer.feature.properties);
+      }
     }
   });
   $("#table").bootstrapTable("load", JSON.parse(JSON.stringify(tableFeatures)));
