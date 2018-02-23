@@ -654,7 +654,7 @@ function syncTable() {
   featureLayer.eachLayer(function (layer) {
     layer.feature.properties.leaflet_stamp = L.stamp(layer);
     if (map.hasLayer(featureLayer)) {
-      if (map.getBounds().contains(markerBounds.getBounds())) {
+      if (map.getBounds().contains(markerBounds())) {
         tableFeatures.push(layer.feature.properties);
       }
     }
