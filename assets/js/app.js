@@ -476,7 +476,6 @@ var featureLayer = L.geoJson(null, {
             iconAnchor: [15, 32]
           })
         );
-        legendItems[feature.properties.Status] = feature.properties["marker-color"];
       }
     }
   }
@@ -648,7 +647,9 @@ function syncTable() {
   featureLayer.eachLayer(function (layer) {
     layer.feature.properties.leaflet_stamp = L.stamp(layer);
     if (map.hasLayer(featureLayer)) {
-      tableFeatures.push(layer.feature.properties);
+      if (map.getBounds().contains(markers.getBounds())) {
+        tableFeatures.push(layer.feature.properties);
+      }
     }
   });
   $("#table").bootstrapTable("load", JSON.parse(JSON.stringify(tableFeatures)));
