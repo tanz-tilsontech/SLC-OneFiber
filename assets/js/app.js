@@ -331,7 +331,7 @@ function buildConfig() {
       "click .zoom": function (e, value, row, index) {
         function zoomToFeature(id) {
           markers.eachLayer(function (layer) {
-            if (layer.feature.properties["fulcrum_id"] == id) {
+            if (layer.feature.properties["fulcrum_id"] == []) {
               map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 18);
             }
           });
