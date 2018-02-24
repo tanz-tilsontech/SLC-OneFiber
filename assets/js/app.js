@@ -483,7 +483,7 @@ var featureLayer = L.geoJson(null, {
 
 
 //legend
-var legend = L.control({position: 'bottomright'});
+var legend = L.control({position: 'bottomleft'});
 
 legend.onAdd = function (map) {
   var div = L.DomUtil.create("div");
