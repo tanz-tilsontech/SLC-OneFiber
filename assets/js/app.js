@@ -482,16 +482,6 @@ var featureLayer = L.geoJson(null, {
 });
 
 
-var fulcrumControl = new L.control({
-  position: "bottomleft"
-});
-fulcrumControl.onAdd = function (map) {
-  var div = L.DomUtil.create("div");
-  div.innerHTML = "<a href='assets/pictures/Contruction%20Legend.png'></a>";
-  return div;
-}.addTo(map);
-
-
 // Fetch the GeoJSON file
 $.getJSON(config.geojson, function (data) {
   geojson = data;
