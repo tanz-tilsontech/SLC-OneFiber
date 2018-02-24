@@ -489,7 +489,7 @@ fulcrumControl.onAdd = function (map) {
   var div = L.DomUtil.create("div");
   div.innerHTML = "<a href='assets/pictures/Contruction%20Legend.png'></a>";
   return div;
-};.addTo(map);
+}.addTo(map);
 
 
 // Fetch the GeoJSON file
