@@ -332,6 +332,7 @@ function buildConfig() {
         function zoomClick(id) {
           var layer = featureLayer.getLayer(id);
           map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 18);
+        };
         highlightLayer.clearLayers();
         highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
       },
