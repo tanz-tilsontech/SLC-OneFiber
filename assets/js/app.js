@@ -439,24 +439,15 @@ var featureLayer = L.geoJson(null, {
   filter: function(feature, layer) {
     return feature.geometry.coordinates[0] !== 0 && feature.geometry.coordinates[1] !== 0;
   },
-  /*style: function (feature) {
-    return {
-      color: feature.properties.color
-    };
-  },*/
   pointToLayer: function (feature, latlng) {
-    if (feature.properties && feature.properties["marker-color"]) {
-      markerColor = feature.properties["marker-color"];
-    } else {
-      markerColor = "#FF0000";
-    }
-    return L.circleMarker(latlng, {
-      radius: 5,
-      weight: 2,
-      fillColor: markerColor,
-      color: markerColor,
-      opacity: 1,
-      fillOpacity: 1
+    return L.marker(latlng, {
+      title: feature.properties["status_title_github"],
+      riseOnHover: true,
+      icon: L.icon({
+        iconUrl: "assets/pictures/markers/cb0d0c.png",
+        iconSize: [30, 40],
+        iconAnchor: [15, 32]
+      })
     });
   },
   onEachFeature: function (feature, layer) {
@@ -477,14 +468,24 @@ var featureLayer = L.geoJson(null, {
           $(".info-control").hide();
         }
       });
+      if (feature.properties["marker-color"]) {
+        layer.setIcon(
+          L.icon({
+            iconUrl: "assets/pictures/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
+            iconSize: [30, 40],
+            iconAnchor: [15, 32]
+          })
+        );
+      }
     }
   }
 });
 
-
 // Fetch the GeoJSON file
+
 $.getJSON(config.geojson, function (data) {
   geojson = data;
+  legendItems = {};
   features = $.map(geojson.features, function(feature) {
     return feature.properties;
   });
@@ -534,6 +535,8 @@ var overlayLayers = {
   "<span id='layer-name'>GeoJSON Layer</span>": featureLayer,
   "<span id='layer-name2'>GeoJSON Layer</span>": SLCHLDRoute,
 };
+
+
 var layerControl = L.control.layers(baseLayers, overlayLayers, {
   collapsed: isCollapsed
 }).addTo(map);
@@ -561,6 +564,38 @@ function buildFilters() {
   });
 }
 
+
+function dateFilter() {
+  var rules_widgets = {
+    condition: 'OR',
+    rules: [{
+      id: 'date',
+      operator: 'equal',
+      value: '1991/11/17'
+    }]
+  };
+$('#query-builder').queryBuilder({
+    plugins: ['bt-tooltip-errors'],
+    filters: [{
+      id: 'date',
+      label: 'Datepicker',
+      type: 'date',
+      validation: {
+        format: 'YYYY/MM/DD'
+      },
+      plugin: 'datepicker',
+      plugin_config: {
+        format: 'yyyy/mm/dd',
+        todayBtn: 'linked',
+        todayHighlight: true,
+        autoclose: true
+      }
+    }],
+  });
+  rules: rules_widgets
+}
+
+
 function applyFilter() {
   var query = "SELECT * FROM ?";
   var sql = $("#query-builder").queryBuilder("getSQL", false, false).sql;
@@ -568,8 +603,10 @@ function applyFilter() {
     query += " WHERE " + sql;
   }
   alasql(query, [geojson.features], function(features){
-		syncTable();
-	});
+    featureLayer.clearLayers();
+    featureLayer.addData(features);
+    syncTable();
+  });
 }
 
 function buildTable() {
@@ -589,7 +626,7 @@ function buildTable() {
     showToggle: true,
     columns: table,
     onClickRow: function (row) {
-      // do something!
+      identifyFeature();
     },
     onDblClickRow: function (row) {
       // do something!
@@ -610,9 +647,7 @@ function syncTable() {
   featureLayer.eachLayer(function (layer) {
     layer.feature.properties.leaflet_stamp = L.stamp(layer);
     if (map.hasLayer(featureLayer)) {
-      if (map.getBounds().contains(layer.getBounds())) {
-        tableFeatures.push(layer.feature.properties);
-      }
+      tableFeatures.push(layer.feature.properties);
     }
   });
   $("#table").bootstrapTable("load", JSON.parse(JSON.stringify(tableFeatures)));
@@ -692,6 +727,38 @@ $("[name='view']").click(function() {
   }
 });
 
+L.easyPrint({
+  title: 'My awesome print button',
+  elementsToHide: 'p, h2, .gitButton'
+}).addTo(map)
+
+
+$("#refresh-btn").click(function() {
+  featureLayer.clearLayers();
+  map.setView([40.5912,-111.837],9)
+  $.getJSON(config.geojson, function (data) {
+    geojson = data;
+    legendItems = {};
+    features = $.map(geojson.features, function(feature) {
+      return feature.properties;
+    });
+    featureLayer.addData(data);
+    buildConfig();
+    $("#loading-mask").hide();
+  });
+  syncTable();
+  buildTable();
+  buildFilters();
+  map.fitBounds(featureLayer.getBounds());
+  $(".navbar-collapse.in").collapse("hide");
+  return false;
+});
+
+$("#about-btn").click(function() {
+  $("#aboutModal").modal("show");
+  $(".navbar-collapse.in").collapse("hide");
+  return false;
+});
 
 $("#filter-btn").click(function() {
   $("#filterModal").modal("show");
