@@ -329,9 +329,13 @@ function buildConfig() {
     },
     events: {
       "click .zoom": function (e, value, row, index) {
-        featureLayer.eachLayer(function (layer) {
-          map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 18);
-        });
+        function zoomToFeature(id) {
+          markers.eachLayer(function (layer) {
+            if (layer.feature.properties["fulcrum_id"] == id) {
+              map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 18);
+            }
+          });
+        }
         highlightLayer.clearLayers();
         highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
       },
