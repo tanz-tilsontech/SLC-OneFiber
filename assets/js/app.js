@@ -306,7 +306,6 @@ $(function() {
   $("#layer-name2").html("SLC HLD Route");
 });
 
-
 function buildConfig() {
   filters = [];
   table = [{
@@ -329,9 +328,7 @@ function buildConfig() {
     },
     events: {
       "click .zoom": function (e, value, row, index) {
-        featureLayer.getLayer(function (layer) {
-          map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 18);
-        });
+        map.fitBounds(featureLayer.getLayer(row.leaflet_stamp));
         highlightLayer.clearLayers();
         highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
       },
