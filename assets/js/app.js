@@ -496,12 +496,13 @@ $.getJSON(config.geojson, function (data) {
   });
   featureLayer.addData(data);
   markerClusters.addLayer(featureLayer);
+  map.addLayer(markerClusters);
   buildConfig();
   $("#loading-mask").hide();
 });
 
 var map = L.map("map", {
-  layers: [mapboxOSM, SLCHLDRoute, featureLayer, highlightLayer]
+  layers: [mapboxOSM, SLCHLDRoute, featureLayer, markerClusters, highlightLayer]
 }).fitWorld();
 
 // ESRI geocoder
@@ -540,6 +541,7 @@ var baseLayers = {
 var overlayLayers = {
   "<span id='layer-name'>GeoJSON Layer</span>": featureLayer,
   "<span id='layer-name2'>GeoJSON Layer</span>": SLCHLDRoute,
+  "<span id='layer-name3'>GeoJSON Layer</span>": markerClusters,
 };
 var layerControl = L.control.layers(baseLayers, overlayLayers, {
   collapsed: isCollapsed
