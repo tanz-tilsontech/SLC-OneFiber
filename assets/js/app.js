@@ -451,8 +451,10 @@ var featureLayer = L.geoJson(null, {
       markerColor = "#FF0000";
     }
     return L.circleMarker(latlng, {
-      radius: 6,
-      weight: 4,
+      title: feature.properties["status_title_github"],
+      riseOnHover: true,
+      radius: 5,
+      weight: 2,
       fillColor: markerColor,
       color: markerColor,
       opacity: 1,
@@ -480,17 +482,6 @@ var featureLayer = L.geoJson(null, {
     }
   }
 });
-
-
-function WPIDLayer (feature, latlng) {
-  if (feature.properties["wpid"]) {
-    layer = feature.properties["wpid"];
-  }
-  return L.featureGroup(layer)
-  .bindPopup('Hello world!')
-  .on('click', function() { alert('Clicked on a member of the group!'); })
-  .addTo(map);
-}
 
 
 // Fetch the GeoJSON file
