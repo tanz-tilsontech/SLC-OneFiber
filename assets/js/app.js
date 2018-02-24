@@ -330,9 +330,8 @@ function buildConfig() {
     events: {
       "click .zoom": function (e, value, row, index) {
         function zoomClick(id) {
-          var layer = markers.getLayer(id);
+          var layer = featureLayer.getLayer(id);
           map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 18);
-        };
         highlightLayer.clearLayers();
         highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
       },
