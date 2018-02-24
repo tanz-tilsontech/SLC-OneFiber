@@ -490,7 +490,7 @@ fulcrumControl.onAdd = function (map) {
   div.innerHTML = "<a href='assets/pictures/Contruction%20Legend.png'></a>";
   return div;
 };
-map.addControl(fulcrumControl);
+fulcrumControl.addTo(map);
 
 
 // Fetch the GeoJSON file
