@@ -434,12 +434,6 @@ var highlightLayer = L.geoJson(null, {
   }
 });
 
-var markerClusters = new L.MarkerClusterGroup({
-    spiderfyOnMaxZoom: true,
-    showCoverageOnHover: false,
-    zoomToBoundsOnClick: true,
-    disableClusteringAtZoom: 14
-});
 
 var featureLayer = L.geoJson(null, {
   filter: function(feature, layer) {
@@ -488,22 +482,31 @@ var featureLayer = L.geoJson(null, {
 });
 
 
+//legend
+var legend = L.control({position: 'bottomright'});
+
+legend.onAdd = function (map) {
+  var div = L.DomUtil.create("div");
+  div.innerHTML = "<a href='assets/pictures/Contruction%20Legend.png'></a>";
+  return div;
+};
+
+legend.addTo(map);
+
+
 // Fetch the GeoJSON file
 $.getJSON(config.geojson, function (data) {
   geojson = data;
-  markerClusters.clearLayers();
   features = $.map(geojson.features, function(feature) {
     return feature.properties;
   });
   featureLayer.addData(data);
-  markerClusters.addLayer(featureLayer);
-  map.addLayer(markerClusters);
   buildConfig();
   $("#loading-mask").hide();
 });
 
 var map = L.map("map", {
-  layers: [mapboxOSM, SLCHLDRoute, featureLayer, markerClusters, highlightLayer]
+  layers: [mapboxOSM, SLCHLDRoute, featureLayer, highlightLayer]
 }).fitWorld();
 
 // ESRI geocoder
