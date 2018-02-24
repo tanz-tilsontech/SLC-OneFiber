@@ -434,6 +434,11 @@ var highlightLayer = L.geoJson(null, {
   }
 });
 
+var markerClusters = new L.MarkerClusterGroup({
+  spiderfyOnMaxZoom: true,
+  showCoverageOnHover: false,
+  zoomToBoundsOnClick: true
+});
 
 var featureLayer = L.geoJson(null, {
   filter: function(feature, layer) {
@@ -485,10 +490,12 @@ var featureLayer = L.geoJson(null, {
 // Fetch the GeoJSON file
 $.getJSON(config.geojson, function (data) {
   geojson = data;
+  markerClusters.clearLayers();
   features = $.map(geojson.features, function(feature) {
     return feature.properties;
   });
   featureLayer.addData(data);
+  markerClusters.addLayer(featureLayer);
   buildConfig();
   $("#loading-mask").hide();
 });
