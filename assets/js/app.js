@@ -542,6 +542,8 @@ var layerControl = L.control.layers(baseLayers, overlayLayers, {
 
 // Filter table to only show features in current map bounds
 map.on("moveend", function (e) {
+  featureLayer.clearLayers();
+  featureLayer.addData(features);
   syncTable();
 });
 
