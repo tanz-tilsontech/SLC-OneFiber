@@ -355,7 +355,7 @@ function buildConfig() {
       },
       "click .edit": function (e, value, row, index) {
         var layer = featureLayer.getLayer(row.leaflet_stamp);
-        var recordLink = feature.properties["fulcrum_record_link"];
+        var recordLink = layer.feature.properties["fulcrum_record_link"];
         window.open(link, recordLink);
       }
     }
