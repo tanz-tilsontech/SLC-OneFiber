@@ -498,7 +498,7 @@ var map = L.map("map", {
   layers: [mapboxOSM, SLCHLDRoute, featureLayer, highlightLayer]
 }).fitWorld();
 
-var fulcrumControl = L.control({
+var fulcrumControl = new L.control({
   position: "bottomleft"
 });
 fulcrumControl.onAdd = function (map) {
@@ -506,7 +506,7 @@ fulcrumControl.onAdd = function (map) {
   div.innerHTML = "<a<img src='assets/img/fulcrum-power.png'></a>";
   return div;
 };
-fulcrumControl.addTo(map);
+map.addControl(fulcrumControl);
 
 // ESRI geocoder
 var searchControl = L.esri.Geocoding.Controls.geosearch({
