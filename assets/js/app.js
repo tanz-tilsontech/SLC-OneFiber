@@ -499,11 +499,11 @@ var map = L.map("map", {
 }).fitWorld();
 
 var fulcrumControl = new L.control({
-  position: "bottomleft"
+  position: "bottomright"
 });
 fulcrumControl.onAdd = function (map) {
   var div = L.DomUtil.create("div");
-  div.innerHTML = "<a<img src='assets/img/fulcrum-power.png'></a>";
+  div.innerHTML = "<a href='http://fulcrumapp.com/' target='_blank'><img src='assets/img/fulcrum-power.png'></a>";
   return div;
 };
 map.addControl(fulcrumControl);
