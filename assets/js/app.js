@@ -462,6 +462,19 @@ var featureLayer = L.geoJson(null, {
   },
   onEachFeature: function (feature, layer) {
     if (feature.properties) {
+      $.each(feature.properties, function(index, prop) {
+        if (prop === null) {
+          prop = "";
+        } else if (prop.toString().indexOf("https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/photos/") === 0) {
+          prop = "<a href='#' onclick='photoGallery(\"" + prop + "\"); return false;'>View Photos</a>";
+        } else if (prop.toString().indexOf("https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/videos/") === 0) {
+          prop = "<a href='" + prop + "' target='blank'>View videos</a>";
+        } else if (prop.toString().indexOf("https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/signatures/") === 0) {
+          prop = "<a href='" + prop + "' target='blank'>View signatures</a>";
+        } else if (prop.toString().indexOf("https://") === 0 || prop.toString().indexOf("http://") === 0) {
+          prop = "<a href='" + prop + "' target='blank'>" + prop + "</a>";
+        }
+      });
       layer.on({
         click: function (e) {
           identifyFeature(L.stamp(layer));
@@ -491,6 +504,24 @@ var featureLayer = L.geoJson(null, {
   }
 });
 
+
+function photoGallery(photos) {
+  var photoArray = [];
+  var photoIDs = photos.split("photos=")[1];
+  $.each(photoIDs.split("%2C"), function(index, id) {
+    photoArray.push({href: "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/photos/" + id});
+  });
+  $.fancybox(photoArray, {
+    "type": "image",
+    "showNavArrows": true,
+    "padding": 0,
+    "scrolling": "no",
+    beforeShow: function () {
+      this.title = "Photo " + (this.index + 1) + " of " + this.group.length + (this.title ? " - " + this.title : "");
+    }
+  });
+  return false;
+}
 
 // Fetch the GeoJSON file
 
@@ -638,7 +669,7 @@ function buildTable() {
     showToggle: true,
     columns: table,
     onClickRow: function (row) {
-      identifyFeature(id);
+
     },
     onDblClickRow: function (row) {
       // do something!
