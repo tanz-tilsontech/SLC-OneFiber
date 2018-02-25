@@ -249,7 +249,7 @@ var properties = [{
   }
 }];
 
-
+var legendItems = {};
 
 function drawCharts() {
   // HUB COMPLETE
@@ -329,7 +329,7 @@ function buildConfig() {
     events: {
       "click .zoom": function (e, value, row, index) {
         var layer = featureLayer.getLayer(row.leaflet_stamp);
-        map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 18);
+        map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 19);
         highlightLayer.clearLayers();
         highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
       },
@@ -475,6 +475,7 @@ var featureLayer = L.geoJson(null, {
             iconAnchor: [15, 32]
           })
         );
+        legendItems[feature.properties.Status] = feature.properties["marker-color"];
       }
     }
   }
@@ -492,6 +493,17 @@ $.getJSON(config.geojson, function (data) {
   buildConfig();
   $("#loading-mask").hide();
 });
+
+
+function updateLegend() {
+  if (! $.isEmptyObject(legendItems)) {
+    $(".legend").remove();
+    $("#layer-name").append("<div class='legend'></div>");
+    $.each(legendItems, function(index, value) {
+      $(".legend").append("<div><img src='assets/img/markers/" + value.replace("#",'').toLowerCase() + ".png' height='20px' width='15px'>" + index + "</div>");
+    });
+  }
+}
 
 var map = L.map("map", {
   layers: [mapboxOSM, SLCHLDRoute, featureLayer, highlightLayer]
