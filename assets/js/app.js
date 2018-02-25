@@ -633,7 +633,7 @@ function buildTable() {
     }
   });
 
-  map.fitBounds(featureLayer.getLatLng());
+  map.fitBounds(featureLayer.getBounds());
 
   $(window).resize(function () {
     $("#table").bootstrapTable("resetView", {
