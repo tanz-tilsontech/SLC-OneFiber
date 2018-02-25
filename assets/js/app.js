@@ -329,16 +329,10 @@ function buildConfig() {
     events: {
       "click .zoom": function (e, value, row, index) {
         featureLayer.eachLayer(function (layer) {
-          layer.feature.properties.leaflet_stamp = L.stamp(layer);
-          if (map.hasLayer(featureLayer)) {
-            featureLayer.getLayer()
-            layer.feature.geometry.type === "Point"
-            if (map.getBounds().contains(layer.getLatLng())) {
-              map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 19);
-              highlightLayer.clearLayers();
-              highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
-            }
-          }
+          layer.feature.geometry.type === "Point"
+          map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 19);
+          highlightLayer.clearLayers();
+          highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
         });  
       },
       "click .identify": function (e, value, row, index) {
