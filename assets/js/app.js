@@ -500,7 +500,7 @@ function updateLegend() {
     $(".legend").remove();
     $("#layer-name").append("<div class='legend'></div>");
     $.each(legendItems, function(index, value) {
-      $(".legend").append("<div><img src='assets/img/markers/" + value.replace("#",'').toLowerCase() + ".png' height='20px' width='15px'>" + index + "</div>");
+      $(".legend").append("<div><img src='assets/pictures/markers/" + value.replace("#",'').toLowerCase() + ".png' height='20px' width='15px'>" + index + "</div>");
     });
   }
 }
