@@ -503,7 +503,7 @@ var fulcrumControl = new L.control({
 });
 fulcrumControl.onAdd = function (map) {
   var div = L.DomUtil.create("div");
-  div.innerHTML = "<a href='http://fulcrumapp.com/' target='_blank'><img src='assets/pictures/Contruction%20Legend.png'></a>";
+  div.innerHTML = "<a href='http://fulcrumapp.com/' target='_blank'><img src='assets/pictures/2018-02-24%2022_08_43-Fulcrum%20-%20Mobile%20Location%20Leverage.png'></a>";
   return div;
 };
 map.addControl(fulcrumControl);
