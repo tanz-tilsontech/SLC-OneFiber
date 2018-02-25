@@ -356,7 +356,7 @@ function buildConfig() {
       "click .edit": function (e, value, row, index) {
         var layer = featureLayer.getLayer(row.leaflet_stamp);
         window.open(link, "fulcrum_record_link");
-        
+      }
     }
   }];
 
