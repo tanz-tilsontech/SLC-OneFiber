@@ -23,7 +23,7 @@ var properties = [{
   value: "fulcrum_record_link",
   label: "Edit Record",
   table: {
-    visible: false,
+    visible: true,
     sortable: true
   },
   filter: {
@@ -333,11 +333,8 @@ function buildConfig() {
         '<a class="zoom" href="javascript:void(0)" title="Zoom" style="margin-right: 10px;">',
           '<i class="fa fa-search-plus"></i>',
         '</a>',
-        '<a class="identify" href="javascript:void(0)" title="Identify">',
+        '<a class="identify" href="javascript:void(0)" title="Identify" style="margin-right: 10px;">',
           '<i class="fa fa-info-circle"></i>',
-        '</a>',
-        '<a class="edit" href="javascript:void(0)" title="Edit Record">',
-          '<i class="fa fa-edit"></i>',
         '</a>'
       ].join("");
     },
@@ -352,11 +349,6 @@ function buildConfig() {
         identifyFeature(row.leaflet_stamp);
         highlightLayer.clearLayers();
         highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
-      },
-      "click .edit": function (e, value, row, index) {
-        var layer = featureLayer.getLayer(row.leaflet_stamp);
-        var recordLink = layer.feature.properties["fulcrum_record_link"];
-        window.open(link, recordLink);
       }
     }
   }];
@@ -647,7 +639,7 @@ function buildTable() {
     showToggle: true,
     columns: table,
     onClickRow: function (row) {
-      identifyFeature();
+      identifyFeature(id);
     },
     onDblClickRow: function (row) {
       // do something!
