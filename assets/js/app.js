@@ -23,13 +23,12 @@ var properties = [{
   value: "fulcrum_record_link",
   label: "Edit Record",
   table: {
-    visible: true,
+    visible: false,
     sortable: true
   },
   filter: {
     type: "string"
-  },
-  info: false
+  }
 },
 {
   value: "status",
