@@ -328,15 +328,12 @@ function buildConfig() {
     },
     events: {
       "click .zoom": function (e, value, row, index) {
-        function zoomToFeature(id) {
-          featureLayer.eachLayer(function (layer) {
-            if (layer.feature.properties["Fulcrum Id"] == id) {
-              map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 18);
-              highlightLayer.clearLayers();
-              highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
-            }
-          });
-        }
+        featureLayer.eachLayer(function (layer) {
+          layer.feature.properties.leaflet_stamp = L.stamp(layer);
+          map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 18);
+          highlightLayer.clearLayers();
+          highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
+        };
       },
       "click .identify": function (e, value, row, index) {
         identifyFeature(row.leaflet_stamp);
