@@ -328,11 +328,10 @@ function buildConfig() {
     },
     events: {
       "click .zoom": function (e, value, row, index) {
-          var layer = featureLayer.getLayer(row.leaflet_stamp);
-          map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 18);
-          highlightLayer.clearLayers();
-          highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
-        });
+        var layer = featureLayer.getLayer(row.leaflet_stamp);
+        map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 18);
+        highlightLayer.clearLayers();
+        highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
       },
       "click .identify": function (e, value, row, index) {
         identifyFeature(row.leaflet_stamp);
