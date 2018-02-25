@@ -328,10 +328,18 @@ function buildConfig() {
     },
     events: {
       "click .zoom": function (e, value, row, index) {
-        layer.feature.geometry.type === "Point"
-        map.fitBounds(featureLayer.getLayer(row.leaflet_stamp).getLatLng());
-        highlightLayer.clearLayers();
-        highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
+        featureLayer.eachLayer(function (layer) {
+          layer.feature.properties.leaflet_stamp = L.stamp(layer);
+          if (map.hasLayer(featureLayer)) {
+            featureLayer.getLayer()
+            layer.feature.geometry.type === "Point"
+            if (map.getBounds().contains(layer.getLatLng())) {
+              map.fitBounds(featureLayer.getLayer(row.leaflet_stamp).getLatLng());
+              highlightLayer.clearLayers();
+              highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
+            }
+          }
+        }
       },
       "click .identify": function (e, value, row, index) {
         identifyFeature(row.leaflet_stamp);
