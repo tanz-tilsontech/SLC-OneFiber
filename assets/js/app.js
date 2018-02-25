@@ -328,7 +328,7 @@ function buildConfig() {
     },
     events: {
       "click .zoom": function (e, value, row, index) {
-        map.fitBounds(featureLayer.getLayer(row.leaflet_stamp).getBounds());
+        map.fitBounds(featureLayer.getLayer(row.leaflet_stamp).getLatLng());
         highlightLayer.clearLayers();
         highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
       },
@@ -633,7 +633,7 @@ function buildTable() {
     }
   });
 
-  map.fitBounds(featureLayer.getBounds());
+  map.fitBounds(featureLayer.getLatLng());
 
   $(window).resize(function () {
     $("#table").bootstrapTable("resetView", {
