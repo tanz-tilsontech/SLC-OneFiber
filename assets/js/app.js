@@ -482,14 +482,14 @@ var featureLayer = L.geoJson(null, {
 });
 
 // Fetch the GeoJSON file
-
+  legendItems = {};
 $.getJSON(config.geojson, function (data) {
   geojson = data;
-  legendItems = {};
   features = $.map(geojson.features, function(feature) {
     return feature.properties;
   });
   featureLayer.addData(data);
+  updateLegend();
   buildConfig();
   $("#loading-mask").hide();
 });
@@ -504,6 +504,8 @@ function updateLegend() {
     });
   }
 }
+
+updateLegend();
 
 var map = L.map("map", {
   layers: [mapboxOSM, SLCHLDRoute, featureLayer, highlightLayer]
