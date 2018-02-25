@@ -339,7 +339,7 @@ function buildConfig() {
               highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
             }
           }
-        }
+        });
       },
       "click .identify": function (e, value, row, index) {
         identifyFeature(row.leaflet_stamp);
@@ -348,8 +348,6 @@ function buildConfig() {
       }
     }
   }];
-
-
 
   $.each(properties, function(index, value) {
     // Filter config
