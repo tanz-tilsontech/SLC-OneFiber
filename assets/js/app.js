@@ -480,16 +480,6 @@ var featureLayer = L.geoJson(null, {
   }
 });
 
-var fulcrumControl = L.control({
-  position: "bottomleft"
-});
-fulcrumControl.onAdd = function (map) {
-  var div = L.DomUtil.create("div");
-  div.innerHTML = "<a<img src='assets/img/fulcrum-power.png'></a>";
-  return div;
-};
-fulcrumControl.addTo(map);
-
 
 // Fetch the GeoJSON file
 
@@ -507,6 +497,16 @@ $.getJSON(config.geojson, function (data) {
 var map = L.map("map", {
   layers: [mapboxOSM, SLCHLDRoute, featureLayer, highlightLayer]
 }).fitWorld();
+
+var fulcrumControl = L.control({
+  position: "bottomleft"
+});
+fulcrumControl.onAdd = function (map) {
+  var div = L.DomUtil.create("div");
+  div.innerHTML = "<a<img src='assets/img/fulcrum-power.png'></a>";
+  return div;
+};
+fulcrumControl.addTo(map);
 
 // ESRI geocoder
 var searchControl = L.esri.Geocoding.Controls.geosearch({
