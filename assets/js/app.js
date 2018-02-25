@@ -328,6 +328,7 @@ function buildConfig() {
     },
     events: {
       "click .zoom": function (e, value, row, index) {
+        layer.feature.geometry.type === "Point"
         map.fitBounds(featureLayer.getLayer(row.leaflet_stamp).getLatLng());
         highlightLayer.clearLayers();
         highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
