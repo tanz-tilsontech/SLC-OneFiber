@@ -337,7 +337,7 @@ function buildConfig() {
           '<i class="fa fa-info-circle"></i>',
         '</a>',
         '<a class="edit" href="javascript:void(0)" title="Edit Record">',
-          '<i class="fas fa-edit"></i>',
+          '<i class="fa fa-edit"></i>',
         '</a>'
       ].join("");
     },
@@ -355,7 +355,8 @@ function buildConfig() {
       },
       "click .edit": function (e, value, row, index) {
         var layer = featureLayer.getLayer(row.leaflet_stamp);
-        window.open(link, "fulcrum_record_link");
+        var recordLink = feature.properties["fulcrum_record_link"];
+        window.open(link, recordLink);
       }
     }
   }];
