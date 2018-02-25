@@ -249,7 +249,7 @@ var properties = [{
   }
 }];
 
-var legendItems = {};
+
 
 function drawCharts() {
   // HUB COMPLETE
@@ -475,37 +475,34 @@ var featureLayer = L.geoJson(null, {
             iconAnchor: [15, 32]
           })
         );
-        legendItems[feature.properties.Status] = feature.properties["marker-color"];
       }
     }
   }
 });
 
+var fulcrumControl = new L.control({
+  position: "bottomleft"
+});
+fulcrumControl.onAdd = function (map) {
+  var div = L.DomUtil.create("div");
+  div.innerHTML = "<a<img src='assets/pictures/Contruction%20Legend.png'></a>";
+  return div;
+};
+map.addControl(fulcrumControl);
+
+
 // Fetch the GeoJSON file
-  legendItems = {};
+
 $.getJSON(config.geojson, function (data) {
   geojson = data;
+  legendItems = {};
   features = $.map(geojson.features, function(feature) {
     return feature.properties;
   });
   featureLayer.addData(data);
-  updateLegend();
   buildConfig();
   $("#loading-mask").hide();
 });
-
-
-function updateLegend() {
-  if (! $.isEmptyObject(legendItems)) {
-    $(".legend").remove();
-    $("#layer-name").append("<div class='legend'></div>");
-    $.each(legendItems, function(index, value) {
-      $(".legend").append("<div><img src='assets/pictures/markers/" + value.replace("#",'').toLowerCase() + ".png' height='20px' width='15px'>" + "status" + "</div>");
-    });
-  }
-}
-
-updateLegend();
 
 var map = L.map("map", {
   layers: [mapboxOSM, SLCHLDRoute, featureLayer, highlightLayer]
