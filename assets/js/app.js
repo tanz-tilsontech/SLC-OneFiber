@@ -480,15 +480,27 @@ var featureLayer = L.geoJson(null, {
   }
 });
 
-var fulcrumControl = new L.control({
-  position: "bottomleft"
-});
-fulcrumControl.onAdd = function (map) {
-  var div = L.DomUtil.create("div");
-  div.innerHTML = "<a href='http://fulcrumapp.com/' target='_blank'><img src='assets/img/fulcrum-power.png'></a>";
-  return div;
+//legend
+var legend = L.control({position: 'bottomleft'});
+
+legend.onAdd = function (map) {
+
+    var div = L.DomUtil.create('div', 'legend'),
+        grades = [58, 72, 90, 100, 114, 128],
+        labels = [];
+    div.innerHTML += '<b>Site Stem Density<br>(Trees/HA)</b><br>';
+    
+    // loop through our density intervals and generate a label with a colored square for each interval
+    for (var i = 0; i < grades.length - 1; i++) {
+        div.innerHTML +=
+            '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+            grades[i] + '&ndash;' + grades[i + 1] + '<br>' ;
+    }
+
+    return div;
 };
-map.addControl(fulcrumControl);
+
+legend.addTo(map);
 
 
 // Fetch the GeoJSON file
