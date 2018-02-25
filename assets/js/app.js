@@ -334,7 +334,7 @@ function buildConfig() {
             featureLayer.getLayer()
             layer.feature.geometry.type === "Point"
             if (map.getBounds().contains(layer.getLatLng())) {
-              map.fitBounds(featureLayer.getLayer(row.leaflet_stamp).getLatLng());
+              map.fitBounds(featureLayer.getLayer(row.leaflet_stamp).getBounds());
               highlightLayer.clearLayers();
               highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
             }
