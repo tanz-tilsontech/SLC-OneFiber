@@ -334,12 +334,12 @@ function buildConfig() {
             featureLayer.getLayer()
             layer.feature.geometry.type === "Point"
             if (map.getBounds().contains(layer.getLatLng())) {
-              map.fitBounds(featureLayer.getLayer(row.leaflet_stamp).getBounds());
+              map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 18);
               highlightLayer.clearLayers();
               highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
             }
           }
-        });
+        });  
       },
       "click .identify": function (e, value, row, index) {
         identifyFeature(row.leaflet_stamp);
