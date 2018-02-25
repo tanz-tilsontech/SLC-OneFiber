@@ -328,7 +328,6 @@ function buildConfig() {
     },
     events: {
       "click .zoom": function (e, value, row, index) {
-        map.fitBounds(featureLayer.getBounds());
         featureLayer.eachLayer(function (layer) {
           layer.feature.properties.leaflet_stamp = L.stamp(layer);
           if (map.hasLayer(featureLayer)) {
