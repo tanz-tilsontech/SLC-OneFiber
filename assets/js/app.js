@@ -328,8 +328,7 @@ function buildConfig() {
     },
     events: {
       "click .zoom": function (e, value, row, index) {
-        featureLayer.eachLayer(function (layer) {
-          layer.feature.properties.row.leaflet_stamp = L.stamp(layer);
+          var layer = featureLayer.getLayer(row.leaflet_stamp);
           map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 18);
           highlightLayer.clearLayers();
           highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
