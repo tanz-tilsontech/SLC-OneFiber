@@ -20,6 +20,18 @@ var properties = [{
   info: false
 },
 {
+  value: "fulcrum_record_link",
+  label: "Edit Record",
+  table: {
+    visible: false,
+    sortable: true
+  },
+  filter: {
+    type: "string"
+  },
+  info: false
+},
+{
   value: "status",
   label: "Status",
   table: {
@@ -323,6 +335,9 @@ function buildConfig() {
         '</a>',
         '<a class="identify" href="javascript:void(0)" title="Identify">',
           '<i class="fa fa-info-circle"></i>',
+        '</a>',
+        '<a class="edit" href="javascript:void(0)" title="Edit Record">',
+          '<i class="fas fa-edit"></i>',
         '</a>'
       ].join("");
     },
@@ -337,7 +352,11 @@ function buildConfig() {
         identifyFeature(row.leaflet_stamp);
         highlightLayer.clearLayers();
         highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
-      }
+      },
+      "click .edit": function (e, value, row, index) {
+        var layer = featureLayer.getLayer(row.leaflet_stamp);
+        window.open(link, "fulcrum_record_link");
+        
     }
   }];
 
@@ -498,15 +517,6 @@ var map = L.map("map", {
   layers: [mapboxOSM, SLCHLDRoute, featureLayer, highlightLayer]
 }).fitWorld();
 
-var fulcrumControl = new L.control({
-  position: "bottomright"
-});
-fulcrumControl.onAdd = function (map) {
-  var div = L.DomUtil.create("div");
-  div.innerHTML = "<a href='http://fulcrumapp.com/' target='_blank'><img src='assets/pictures/2018-02-24%2022_08_43-Fulcrum%20-%20Mobile%20Location%20Leverage.png'></a>";
-  return div;
-};
-map.addControl(fulcrumControl);
 
 // ESRI geocoder
 var searchControl = L.esri.Geocoding.Controls.geosearch({
