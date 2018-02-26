@@ -580,8 +580,7 @@ L.control.layers(featureLayer, overlayLayers, {position: 'topright'}).addTo(map)
       "<b>Graffiti Material: </b>"+entry[6]+"<br>"+
       "<b>Image: </b><a href='"+entry[0]+"' target=\"_blank\">"+"<img src='assets/pictures/2018-02-24%2022_08_43-Fulcrum%20-%20Mobile%20Location%20Leverage.png'</img></a>";
     return popupText;
-  }
-map.spin(true);
+  };
 
 
 function buildFilters() {
