@@ -1,461 +1,63 @@
-var config = {
-  geojson: "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94.geojson",
-  title: "SLC OneFiber Construction",
-  layerName: "Segments",
-  hoverProperty: "status_title_github",
-  sortProperty: "fqnid",
-  sortOrder: "ascend"
-};
+var map, autoRefresh, featureList, activeRecord, titleField, cluster;
+var hiddenSystemFields = ["marker-color", "Created At", "Updated At", "Created By", "Updated By", "System Created At", "System Updated At", "Version", "Assigned To", "Latitude", "Longitude", "Gps Altitude", "Gps Horizontal Accuracy", "Gps Vertical Accuracy", "Gps Speed", "Gps Course", "Address Sub Thoroughfare", "Address Thoroughfare", "Address Locality", "Address Sub Admin Area", "Address Admin Area", "Address Postal Code", "Address Suite", "Address Country"];
+var userFields = [];
+var legendItems = {};
 
-var properties = [{
-  value: "fulcrum_id",
-  label: "Record ID",
-  table: {
-    visible: false,
-    sortable: true
-  },
-  filter: {
-    type: "string"
-  },
-  info: false
-},
-{
-  value: "fulcrum_record_link",
-  label: "Edit Record",
-  description: "Click To Edit",
-  table: {
-    visible: false,
-    sortable: true
-  },
-  filter: {
-    type: "string"
-  }
-},
-{
-  value: "status",
-  label: "Status",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string",
-    input: "checkbox",
-    vertical: true,
-    multiple: true,
-    operators: ["in", "not_in", "equal", "not_equal"],
-    values: []
-  }
-},
-{
-  value: "hub",
-  label: "Hub",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string",
-    input: "checkbox",
-    vertical: true,
-    multiple: true,
-    operators: ["in", "not_in", "equal", "not_equal"],
-    values: []
-  }
-},
-{
-  value: "site",
-  label: "Site",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string",
-    input: "checkbox",
-    vertical: true,
-    multiple: true,
-    operators: ["in", "not_in", "equal", "not_equal"],
-    values: []
-  }
-},
-{
-  value: "wpid",
-  label: "WPID",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string",
-    input: "checkbox",
-    vertical: true,
-    multiple: true,
-    operators: ["in", "not_in", "equal", "not_equal"],
-    values: []
-  }
-},
-{
-  value: "fqnid",
-  label: "FQNID",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string"
-  }
-},
-{
-  value: "ntp_date",
-  label: "Proposed Start Date",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "date"
-  }
-},
-{
-  value: "proposed_type",
-  label: "Proposed Type",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string"
-  }
-},
-{
-  value: "proposed_product",
-  label: "Proposed Product",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string"
-  }
-},
-{
-  value: "proposed_footage",
-  label: "Proposed Footage",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "integer",
-  }
-},
-{
-  value: "construction_type_cx_final",
-  label: "Construction Type",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string"
-  }
-},
-{
-  value: "construction_start_date_cx_final",
-  label: "Construction Start Date",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "date"
-  }
-},
-{
-  value: "construction_complete_date_cx_final",
-  label: "Construction Complete Date",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "date"
-  }
-},
-{
-  value: "construction_pass_date_qc_final",
-  label: "Construction QC Pass Date",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "date"
-  }
-},
-{
-  value: "construction_footage_cx_final",
-  label: "Construction Total Footage",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "integer",
-  }
-},
-{
-  value: "cable_placement_type_final",
-  label: "Cable Placement Type",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string"
-  }
-},
-{
-  value: "cable_placement_start_date_cx_final",
-  label: "Cable Placement Start Date",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "date"
-  }
-},
-{
-  value: "cable_placement_complete_date_cx_final",
-  label: "Cable Placement Complete Date",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "date"
-  }
-},
-{
-  value: "cable_placement_pass_date_qc_final",
-  label: "Cable Placement QC Pass Date",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "date"
-  }
-},
-{
-  value: "cable_placement_total_footage_cx_final",
-  label: "Cable Placement Total Footage",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "integer",
-  },
-}];
+/* Get URL parameters */
+var urlParams = {};
 
+if (location.search) {
+  var parts = location.search.substring(1).split("&");
+  for (var i = 0; i < parts.length; i++) {
+    var nv = parts[i].split("=");
+    if (!nv[0]) continue;
+    urlParams[nv[0]] = nv[1] || true;
+  }
+}
 
+if (urlParams.title_field) {
+  titleField = decodeURI(urlParams.title_field);
+} else {
+  titleField = "Fulcrum Id";
+}
 
-function drawCharts() {
-  // HUB COMPLETE
-  $(function() {
-    var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER / proposed_footage::NUMBER)) AS total FROM ? GROUP BY hub", [features]);
-    var columns = $.map(result, function(status) {
-      return [[status.label, status.total]];
-    });
-    var chart = c3.generate({
-        bindto: "#hub-complete-chart",
-        data: {
-          type: "gauge",
-          columns: columns
-        }
-    });
-  });
-
-  // HUB FOOTAGE
-  $(function() {
-    var result = alasql("SELECT hub AS label, SUM(COALESCE(proposed_footage::NUMBER)) AS footage FROM ? GROUP BY hub", [features]);
-    var columns = $.map(result, function(hub) {
-      return [[hub.label, hub.footage]];
-    });
-    var chart = c3.generate({
-        bindto: "#hub-footage-chart",
-        data: {
-
-          type: "bar",
-          columns: columns
-        }
-    });
-  });
-
-
-  // MONTHLY FOOTAGE 
-  $(function() {
-    var result = alasql("SELECT fqnid AS label, COUNT(*) AS total FROM ? GROUP BY fqnid", [features]);
-    var columns = $.map(result, function(fqnid) {
-      return [[fqnid.label, fqnid.total]];
-    });
-    var chart = c3.generate({
-        bindto: "#fqnid-chart",
-        data: {
-          type: "pie",
-          columns: columns
-        }
-    });
+if (urlParams.fields) {
+  fields = urlParams.fields.split(",");
+  $.each(fields, function(index, field) {
+    field = decodeURI(field);
+    userFields.push(field);
   });
 }
 
-$(function() {
-  $(".title").html(config.title);
-  $("#layer-name").html(config.layerName);
-  $("#layer-name2").html("SLC HLD Route");
-});
-
-function buildConfig() {
-  filters = [];
-  table = [{
-    field: "action",
-    title: "<i class='fa fa-gear'></i>&nbsp;Action",
-    align: "center",
-    valign: "middle",
-    width: "75px",
-    cardVisible: false,
-    switchable: false,
-    formatter: function(value, row, index) {
-      return [
-        '<a class="zoom" href="javascript:void(0)" title="Zoom" style="margin-right: 10px;">',
-          '<i class="fa fa-search-plus"></i>',
-        '</a>',
-        '<a class="identify" href="javascript:void(0)" title="Identify" style="margin-right: 10px;">',
-          '<i class="fa fa-info-circle"></i>',
-        '</a>'
-      ].join("");
-    },
-    events: {
-      "click .zoom": function (e, value, row, index) {
-        var layer = featureLayer.getLayer(row.leaflet_stamp);
-        map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 19);
-        highlightLayer.clearLayers();
-        highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
-      },
-      "click .identify": function (e, value, row, index) {
-        identifyFeature(row.leaflet_stamp);
-        highlightLayer.clearLayers();
-        highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
-      }
-    }
-  }];
-
-  $.each(properties, function(index, value) {
-    // Filter config
-    if (value.filter) {
-      var id;
-      if (value.filter.type == "integer") {
-        id = "cast(properties->"+ value.value +" as int)";
-      }
-      else if (value.filter.type == "double") {
-        id = "cast(properties->"+ value.value +" as double)";
-      }
-      else {
-        id = "properties->" + value.value;
-      }
-      filters.push({
-        id: id,
-        label: value.label
-      });
-      $.each(value.filter, function(key, val) {
-        if (filters[index]) {
-          // If values array is empty, fetch all distinct values
-          if (key == "values" && val.length === 0) {
-            alasql("SELECT DISTINCT(properties->"+value.value+") AS field FROM ? ORDER BY field ASC", [geojson.features], function(results){
-              distinctValues = [];
-              $.each(results, function(index, value) {
-                distinctValues.push(value.field);
-              });
-            });
-            filters[index].values = distinctValues;
-          } else {
-            filters[index][key] = val;
-          }
-        }
-      });
-    }
-    // Table config
-    if (value.table) {
-      table.push({
-        field: value.value,
-        title: value.label
-      });
-      $.each(value.table, function(key, val) {
-        if (table[index+1]) {
-          table[index+1][key] = val;
-        }
-      });
-    }
-  });
-
-  buildFilters();
-  buildTable();
+if (urlParams.cluster && (urlParams.cluster === "false" || urlParams.cluster === "False" || urlParams.cluster === "0")) {
+  cluster = false;
+} else {
+  cluster = true;
 }
 
-// Basemap Layers
-var mapboxOSM = L.tileLayer('http://{s}.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZWNvdHJ1c3QiLCJhIjoibGo4TG5nOCJ9.QJnT2dgjL4_4EA7WlK8Zkw', {
-    maxZoom: 19
+/* Basemap Layers */
+var cartoVoyager = L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}@2x.png", {
+  maxZoom: 19,
+  subdomains: ["a", "b", "c"],
+  attribution: 'Basemap © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, © <a href="https://carto.com/attribution">CARTO</a>'
 });
 
+/* Overlay Layers */
+var highlight = L.geoJson(null);
 
-var mapboxSat = L.tileLayer('https://api.mapbox.com/v4/cfritz1387.573ca1ee/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiY2ZyaXR6MTM4NyIsImEiOiJjaWphZTZ0eHkwMDVwdWlseGx5aWhhbXlwIn0._lgb3vbGMSx1-jdZCufdgg', {
-    maxZoom: 19
+var markerClusters = new L.MarkerClusterGroup({
+  spiderfyOnMaxZoom: true,
+  showCoverageOnHover: false,
+  zoomToBoundsOnClick: true
 });
 
-
-var SLCHLDRoute = L.tileLayer('https://ttm-tileify-proxy.herokuapp.com/tiles/{z}/{x}/{y}?url=https%3A%2F%2Ftilsonweb.3-gislive.com%2Farcgis%2Frest%2Fservices%2FSLC%2FTilsonslc%2FMapServer&transparent=true&layers=show%3A1%2C3%2C4%2C9%2C43%2C48', {
-    maxZoom: 19
-});
-
-
-var highlightLayer = L.geoJson(null, {
-  pointToLayer: function (feature, latlng) {
-    return L.circleMarker(latlng, {
-      radius: 5,
-      color: "#FFF",
-      weight: 2,
-      opacity: 1,
-      fillColor: "#00FFFF",
-      fillOpacity: 1,
-      clickable: false
-    });
-  },
-  style: function (feature) {
-    return {
-      color: "#00FFFF",
-      weight: 2,
-      opacity: 1,
-      fillColor: "#00FFFF",
-      fillOpacity: 0.5,
-      clickable: false
-    };
-  }
-});
-
-
-var featureLayer = L.geoJson(null, {
-  filter: function(feature, layer) {
-    return feature.geometry.coordinates[0] !== 0 && feature.geometry.coordinates[1] !== 0;
-  },
+var markers = L.geoJson(null, {
   pointToLayer: function (feature, latlng) {
     return L.marker(latlng, {
-      title: feature.properties["status_title_github"],
+      title: feature.properties[titleField],
       riseOnHover: true,
       icon: L.icon({
-        iconUrl: "assets/pictures/markers/cb0d0c.png",
+        iconUrl: "assets/img/markers/cb0d0c.png",
         iconSize: [30, 40],
         iconAnchor: [15, 32]
       })
@@ -463,394 +65,313 @@ var featureLayer = L.geoJson(null, {
   },
   onEachFeature: function (feature, layer) {
     if (feature.properties) {
-      layer.on({
-        click: function (e) {
-          identifyFeature(L.stamp(layer));
-          highlightLayer.clearLayers();
-          highlightLayer.addData(featureLayer.getLayer(L.stamp(layer)).toGeoJSON());
-        },
-        mouseover: function (e) {
-          if (config.hoverProperty) {
-            $(".info-control").html(feature.properties[config.hoverProperty]);
-            $(".info-control").show();
+      var title = titleField;
+      var content = "<table class='table table-striped table-bordered table-condensed'>";
+      $.each(feature.properties, function(index, prop) {
+        if (prop === null) {
+          prop = "";
+        } else if (prop.toString().indexOf("https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/photos/") === 0) {
+          prop = "<a href='#' onclick='photoGallery(\"" + prop + "\"); return false;'>View Photos</a>";
+        } else if (prop.toString().indexOf("https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/videos/") === 0) {
+          prop = "<a href='" + prop + "' target='blank'>View videos</a>";
+        } else if (prop.toString().indexOf("https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/signatures/") === 0) {
+          prop = "<a href='" + prop + "' target='blank'>View signatures</a>";
+        } else if (prop.toString().indexOf("https://") === 0 || prop.toString().indexOf("http://") === 0) {
+          prop = "<a href='" + prop + "' target='blank'>" + prop + "</a>";
+        }
+        if (userFields.length > 0) {
+          if ($.inArray(index, hiddenSystemFields) == -1 && $.inArray(index, userFields) !== -1 && index !== "Fulcrum Id") {
+            content += "<tr><th>" + index + "</th><td>" + prop + "</td></tr>";
           }
-        },
-        mouseout: function (e) {
-          $(".info-control").hide();
+        } else {
+          if ($.inArray(index, hiddenSystemFields) == -1 && index !== "Fulcrum Id") {
+            content += "<tr><th>" + index + "</th><td>" + prop + "</td></tr>";
+          }
         }
       });
       if (feature.properties["marker-color"]) {
         layer.setIcon(
           L.icon({
-            iconUrl: "assets/pictures/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
+            iconUrl: "assets/img/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
             iconSize: [30, 40],
             iconAnchor: [15, 32]
           })
         );
+        legendItems[feature.properties.Status] = feature.properties["marker-color"];
       }
+      content += "<table>";
+      layer.on({
+        click: function (e) {
+          $("#feature-title").html(feature.properties[title]);
+          $("#feature-info").html(content);
+          $("#featureModal").modal("show");
+          activeRecord = feature.properties["Fulcrum Id"];
+          highlight.clearLayers().addLayer(L.circleMarker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], {
+            stroke: false,
+            fillColor: "#00FFFF",
+            fillOpacity: 0.7,
+            radius: 10
+          }));
+        }
+      });
+      $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '"><td class="feature-name">' + layer.feature.properties[title] + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
     }
   }
 });
 
-
-// Fetch the GeoJSON file
-
-$.getJSON(config.geojson, function (data) {
-  geojson = data;
-  legendItems = {};
-  features = $.map(geojson.features, function(feature) {
-    return feature.properties;
-  });
-  featureLayer.addData(data);
-  buildConfig();
-  $("#loading-mask").hide();
+$(document).on("click", ".feature-row", function(e) {
+  sidebarClick(parseInt($(this).attr("id"), 10));
 });
 
-var map = L.map("map", {
-  layers: [mapboxOSM, SLCHLDRoute, featureLayer, highlightLayer]
+$(document).ready(function() {
+  if (!urlParams.id) {
+    alert("URL missing data share 'id' parameter!");
+  } else {
+    fetchRecords();
+  }
+});
+
+$("#refresh-btn").click(function() {
+  fetchRecords();
+  $(".navbar-collapse.in").collapse("hide");
+  return false;
+});
+
+$("#auto-refresh").click(function() {
+  fetchRecords();
+  if ($(this).prop("checked")) {
+    autoRefresh = window.setInterval(fetchRecords, 60 * 1000);
+  } else {
+    clearInterval(autoRefresh);
+  }
+});
+
+$("#full-extent-btn").click(function() {
+  map.fitBounds(markers.getBounds());
+  $(".navbar-collapse.in").collapse("hide");
+  return false;
+});
+
+$("#list-btn").click(function() {
+  $('#sidebar').toggle();
+  map.invalidateSize();
+  return false;
+});
+
+$("#nav-btn").click(function() {
+  $(".navbar-collapse").collapse("toggle");
+  return false;
+});
+
+$("#sidebar-toggle-btn").click(function() {
+  $("#sidebar").toggle();
+  map.invalidateSize();
+  return false;
+});
+
+$("#sidebar-hide-btn").click(function() {
+  $('#sidebar').hide();
+  map.invalidateSize();
+});
+
+$("#share-btn").click(function() {
+  var link = location.toString() + "&fulcrum_id=" + activeRecord;
+  $("#share-hyperlink").attr("href", link);
+  $("#share-twitter").attr("href", "https://twitter.com/intent/tweet?url=" + encodeURIComponent(link) + "&via=fulcrumapp");
+  $("#share-facebook").attr("href", "https://facebook.com/sharer.php?u=" + encodeURIComponent(link));
+});
+
+function photoGallery(photos) {
+  var photoArray = [];
+  var photoIDs = photos.split("photos=")[1];
+  $.each(photoIDs.split("%2C"), function(index, id) {
+    photoArray.push({href: "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/photos/" + id});
+  });
+  $.fancybox(photoArray, {
+    "type": "image",
+    "showNavArrows": true,
+    "padding": 0,
+    "scrolling": "no",
+    beforeShow: function () {
+      this.title = "Photo " + (this.index + 1) + " of " + this.group.length + (this.title ? " - " + this.title : "");
+    }
+  });
+  return false;
+}
+
+function zoomToFeature(id) {
+  markers.eachLayer(function (layer) {
+    if (layer.feature.properties["Fulcrum Id"] == id) {
+      map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 18);
+      layer.fire("click");
+    }
+  });
+}
+
+function sidebarClick(id) {
+  var layer = markers.getLayer(id);
+  map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 18);
+  layer.fire("click");
+  /* Hide sidebar and go to the map on small screens */
+  if (document.body.clientWidth <= 767) {
+    $("#sidebar").hide();
+    map.invalidateSize();
+  }
+}
+
+function fetchRecords() {
+  $("#loading").show();
+  highlight.clearLayers();
+  markers.clearLayers();
+  markerClusters.clearLayers();
+  legendItems = {};
+  $("#feature-list tbody").empty();
+  $.getJSON("https://web.fulcrumapp.com/shares/" + urlParams.id + ".geojson?human_friendly=true", function (data) {
+    markers.addData(data);
+    markerClusters.addLayer(markers);
+    featureList = new List("features", {valueNames: ["feature-name"]});
+    featureList.sort("feature-name", {order:"asc"});
+    updateLegend();
+    $("#loading").hide();
+  });
+}
+
+function updateLegend() {
+  if (! $.isEmptyObject(legendItems)) {
+    $(".legend").remove();
+    $("#fulcrum-layer").append("<div class='legend'></div>");
+    $.each(legendItems, function(index, value) {
+      $(".legend").append("<div><img src='assets/img/markers/" + value.replace("#",'').toLowerCase() + ".png' height='20px' width='15px'>" + index + "</div>");
+    });
+  }
+}
+
+map = L.map("map", {
+  zoom: 10,
+  layers: [cartoVoyager, highlight],
+  zoomControl: false
 }).fitWorld();
+map.attributionControl.setPrefix("");
 
-
-// ESRI geocoder
-var searchControl = L.esri.Geocoding.Controls.geosearch({
-  useMapBounds: 17
-}).addTo(map);
-
-// Info control
-var info = L.control({
+var fulcrumControl = new L.control({
   position: "bottomleft"
 });
-
-// Custom info hover control
-info.onAdd = function (map) {
-  this._div = L.DomUtil.create("div", "info-control");
-  this.update();
-  return this._div;
+fulcrumControl.onAdd = function (map) {
+  var div = L.DomUtil.create("div");
+  div.innerHTML = "<a href='http://fulcrumapp.com/' target='_blank'><img src='assets/img/fulcrum-power.png'></a>";
+  return div;
 };
-info.update = function (props) {
-  this._div.innerHTML = "";
-};
-info.addTo(map);
-$(".info-control").hide();
+map.addControl(fulcrumControl);
 
-// Larger screens get expanded layer control
+/* Clear feature highlight when map is clicked */
+map.on("click", function(e) {
+  highlight.clearLayers();
+});
+
+var zoomControl = L.control.zoom({
+  position: "bottomright"
+}).addTo(map);
+
+
+L.control.layers(baselayers, overlays, {position: 'topright'}).addTo(map);
+  function definePopup(entry) {
+    var popupText =  
+      "<b>Location Description: </b>"+entry[2]+"<br>"+
+      "<b>Work Date: </b>"+entry[3]+"<br>"+
+      "<b>Graffiti Type: </b>"+entry[5]+"<br>"+
+      "<b>Graffiti Material: </b>"+entry[6]+"<br>"+
+      "<b>Image: </b><a href='"+entry[0]+"' target=\"_blank\">"+"<img src='assets/pictures/2018-02-24%2022_08_43-Fulcrum%20-%20Mobile%20Location%20Leverage.png'</img></a>";
+    return popupText;
+  }
+map.spin(true);
+
+/* GPS enabled geolocation control set to follow the user's location */
+var locateControl = L.control.locate({
+  position: "bottomright",
+  drawCircle: true,
+  follow: true,
+  setView: true,
+  keepCurrentZoomLevel: true,
+  markerStyle: {
+    weight: 1,
+    opacity: 0.8,
+    fillOpacity: 0.8
+  },
+  circleStyle: {
+    weight: 1,
+    clickable: false
+  },
+  icon: "icon-direction",
+  metric: false,
+  strings: {
+    title: "My location",
+    popup: "You are within {distance} {unit} from this point",
+    outsideMapBoundsMsg: "You seem located outside the boundaries of the map"
+  },
+  locateOptions: {
+    maxZoom: 18,
+    watch: true,
+    enableHighAccuracy: true,
+    maximumAge: 10000,
+    timeout: 10000
+  }
+}).addTo(map);
+
+/* Larger screens get expanded layer control and visible sidebar */
 if (document.body.clientWidth <= 767) {
-  isCollapsed = true;
+  var isCollapsed = true;
 } else {
-  isCollapsed = false;
+  var isCollapsed = false;
 }
+
 var baseLayers = {
-  "Street Map": mapboxOSM,
-  "Satellite Map": mapboxSat,
-  "SLC HLD Route": SLCHLDRoute,
-};
-var overlayLayers = {
-  "<span id='layer-name'>GeoJSON Layer</span>": featureLayer,
-  "<span id='layer-name2'>GeoJSON Layer</span>": SLCHLDRoute,
+  "Street Map": cartoVoyager
 };
 
+var overlays = {};
 
-var layerControl = L.control.layers(baseLayers, overlayLayers, {
+var layerControl = L.control.layers(null, overlays, {
   collapsed: isCollapsed
 }).addTo(map);
 
-// Filter table to only show features in current map bounds
-map.on("moveend", function (e) {
-  syncTable();
-});
+if (cluster === true) {
+  map.addLayer(markerClusters);
+  layerControl.addOverlay(markerClusters, "<span name='title' id='fulcrum-layer'>Fulcrum Data</span>");
+} else {
+  map.addLayer(markers);
+  layerControl.addOverlay(markers, "<span name='title' id='fulcrum-layer'>Fulcrum Data</span>");
+}
 
-map.on("click", function(e) {
-  highlightLayer.clearLayers();
-});
+/* After GeoJSON loads */
+$(document).one("ajaxStop", function () {
+  /* Build social share button links */
+  $("#twitter-share").attr("src", "//platform.twitter.com/widgets/tweet_button.html?url="+document.URL+"&via=fulcrumapp");
+  $(".fb-share-button").attr("data-href", document.URL);
 
-// Table formatter to make links clickable
-function urlFormatter (value, row, index) {
-  if (typeof value == "string" && (value.indexOf("http") === 0 || value.indexOf("https") === 0)) {
-    return "<a href='"+value+"' target='_blank'>"+value+"</a>";
+  /* Update navbar & layer title from URL parameter */
+  if (urlParams.title && urlParams.title.length > 0) {
+    var title = decodeURI(urlParams.title);
+    $("[name='title']").html(title);
   }
-}
 
-function buildFilters() {
-  $("#query-builder").queryBuilder({
-    allow_empty: true,
-    filters: filters
-  });
-}
+  /* Add legend with status values */
+  updateLegend();
 
-
-function dateFilter() {
-  var rules_widgets = {
-    condition: 'OR',
-    rules: [{
-      id: 'date',
-      operator: 'equal',
-      value: '1991/11/17'
-    }]
-  };
-$('#query-builder').queryBuilder({
-    plugins: ['bt-tooltip-errors'],
-    filters: [{
-      id: 'date',
-      label: 'Datepicker',
-      type: 'date',
-      validation: {
-        format: 'YYYY/MM/DD'
-      },
-      plugin: 'datepicker',
-      plugin_config: {
-        format: 'yyyy/mm/dd',
-        todayBtn: 'linked',
-        todayHighlight: true,
-        autoclose: true
-      }
-    }],
-  });
-  rules: rules_widgets
-}
-
-
-function applyFilter() {
-  var query = "SELECT * FROM ?";
-  var sql = $("#query-builder").queryBuilder("getSQL", false, false).sql;
-  if (sql.length > 0) {
-    query += " WHERE " + sql;
+  /* Add navbar logo from URL parameter */
+  if (urlParams.logo && urlParams.logo.length > 0) {
+    $("#navbar-title").prepend("<img src='" + urlParams.logo + "'>");
   }
-  alasql(query, [geojson.features], function(features){
-    featureLayer.clearLayers();
-    featureLayer.addData(features);
-    syncTable();
-  });
-}
 
-function buildTable() {
-  $("#table").bootstrapTable({
-    cache: false,
-    height: $("#table-container").height(),
-    undefinedText: "",
-    striped: false,
-    pagination: false,
-    minimumCountColumns: 1,
-    sortName: config.sortProperty,
-    sortOrder: config.sortOrder,
-    toolbar: "#toolbar",
-    search: true,
-    trimOnSearch: false,
-    showColumns: true,
-    showToggle: true,
-    columns: table,
-    onClickRow: function (row) {
+  /* Build data download links */
+  $("#csv-download").attr("href", "https://web.fulcrumapp.com/shares/" + urlParams.id + ".csv");
+  $("#geojson-download").attr("href", "https://web.fulcrumapp.com/shares/" + urlParams.id + ".geojson");
+  $("#raw-kml-download").attr("href", "https://web.fulcrumapp.com/shares/" + urlParams.id + ".kml");
+  $("#kml-feed-download").attr("href", "https://web.fulcrumapp.com/shares/" + urlParams.id + "feed");
 
-    },
-    onDblClickRow: function (row) {
-      // do something!
-    }
-  });
-
-  map.fitBounds(featureLayer.getBounds());
-
-  $(window).resize(function () {
-    $("#table").bootstrapTable("resetView", {
-      height: $("#table-container").height()
-    });
-  });
-}
-
-function syncTable() {
-  tableFeatures = [];
-  featureLayer.eachLayer(function (layer) {
-    layer.feature.properties.leaflet_stamp = L.stamp(layer);
-    if (map.hasLayer(featureLayer)) {
-      featureLayer.getLayer()
-      layer.feature.geometry.type === "Point"
-      if (map.getBounds().contains(layer.getLatLng())) {
-        tableFeatures.push(layer.feature.properties);
-      }
-    }
-  });
-  $("#table").bootstrapTable("load", JSON.parse(JSON.stringify(tableFeatures)));
-  var featureCount = $("#table").bootstrapTable("getData").length;
-  if (featureCount == 1) {
-    $("#feature-count").html($("#table").bootstrapTable("getData").length + " visible feature");
+  /* If fulcrum_id param passed in URL, zoom to feature, else fit to cluster bounds */
+  if (urlParams.fulcrum_id && urlParams.fulcrum_id.length > 0) {
+    zoomToFeature(urlParams.fulcrum_id);
   } else {
-    $("#feature-count").html($("#table").bootstrapTable("getData").length + " visible features");
+    map.fitBounds(markerClusters.getBounds());
   }
-}
-
-function identifyFeature(id) {
-  var featureProperties = featureLayer.getLayer(id).feature.properties;
-  var content = "<table class='table table-striped table-bordered table-condensed'>";
-  $.each(featureProperties, function(key, value) {
-    if (!value) {
-      value = "";
-    }
-    if (typeof value == "string" && (value.indexOf("http") === 0 || value.indexOf("https") === 0)) {
-      value = "<a href='" + value + "' target='_blank'>" + value + "</a>";
-    }
-    $.each(properties, function(index, property) {
-      if (key == property.value) {
-        if (property.info !== false) {
-          content += "<tr><th>" + property.label + "</th><td>" + value + "</td></tr>";
-        }
-      }
-    });
-  });
-  content += "<table>";
-  $("#feature-info").html(content);
-  $("#featureModal").modal("show");
-}
-
-function switchView(view) {
-  if (view == "split") {
-    $("#view").html("Split View");
-    location.hash = "#split";
-    $("#table-container").show();
-    $("#table-container").css("height", "55%");
-    $("#map-container").show();
-    $("#map-container").css("height", "45%");
-    $(window).resize();
-    if (map) {
-      map.invalidateSize();
-    }
-  } else if (view == "map") {
-    $("#view").html("Map View");
-    location.hash = "#map";
-    $("#map-container").show();
-    $("#map-container").css("height", "100%");
-    $("#table-container").hide();
-    if (map) {
-      map.invalidateSize();
-    }
-  } else if (view == "table") {
-    $("#view").html("Table View");
-    location.hash = "#table";
-    $("#table-container").show();
-    $("#table-container").css("height", "100%");
-    $("#map-container").hide();
-    $(window).resize();
-  }
-}
-
-$("[name='view']").click(function() {
-  $(".in,.open").removeClass("in open");
-  if (this.id === "map-graph") {
-    switchView("split");
-    return false;
-  } else if (this.id === "map-only") {
-    switchView("map");
-    return false;
-  } else if (this.id === "graph-only") {
-    switchView("table");
-    return false;
-  }
-});
-
-L.easyPrint({
-  title: 'My awesome print button',
-  elementsToHide: 'p, h2, .gitButton'
-}).addTo(map)
-
-
-$("#refresh-btn").click(function() {
-  featureLayer.clearLayers();
-  map.setView([40.5912,-111.837],9)
-  $.getJSON(config.geojson, function (data) {
-    geojson = data;
-    legendItems = {};
-    features = $.map(geojson.features, function(feature) {
-      return feature.properties;
-    });
-    featureLayer.addData(data);
-    buildConfig();
-    $("#loading-mask").hide();
-  });
-  syncTable();
-  buildTable();
-  buildFilters();
-  map.fitBounds(featureLayer.getBounds());
-  $(".navbar-collapse.in").collapse("hide");
-  return false;
-});
-
-$("#about-btn").click(function() {
-  $("#aboutModal").modal("show");
-  $(".navbar-collapse.in").collapse("hide");
-  return false;
-});
-
-$("#filter-btn").click(function() {
-  $("#filterModal").modal("show");
-  $(".navbar-collapse.in").collapse("hide");
-  return false;
-});
-
-$("#chart-btn").click(function() {
-  $("#chartModal").modal("show");
-  $(".navbar-collapse.in").collapse("hide");
-  return false;
-});
-
-$("#view-sql-btn").click(function() {
-  alert($("#query-builder").queryBuilder("getSQL", false, false).sql);
-});
-
-$("#apply-filter-btn").click(function() {
-  applyFilter();
-});
-
-$("#reset-filter-btn").click(function() {
-  $("#query-builder").queryBuilder("reset");
-  applyFilter();
-});
-
-$("#extent-btn").click(function() {
-  map.fitBounds(featureLayer.getBounds());
-  $(".navbar-collapse.in").collapse("hide");
-  return false;
-});
-
-$("#download-csv-btn").click(function() {
-  $("#table").tableExport({
-    type: "csv",
-    ignoreColumn: [0],
-    fileName: "data"
-  });
-  $(".navbar-collapse.in").collapse("hide");
-  return false;
-});
-
-$("#download-excel-btn").click(function() {
-  $("#table").tableExport({
-    type: "excel",
-    ignoreColumn: [0],
-    fileName: "data"
-  });
-  $(".navbar-collapse.in").collapse("hide");
-  return false;
-});
-
-$("#download-pdf-btn").click(function() {
-  $("#table").tableExport({
-    type: "pdf",
-    ignoreColumn: [0],
-    fileName: "data",
-    jspdf: {
-      format: "bestfit",
-      margins: {
-        left: 20,
-        right: 10,
-        top: 20,
-        bottom: 20
-      },
-      autotable: {
-        extendWidth: false,
-        overflow: "linebreak"
-      }
-    }
-  });
-  $(".navbar-collapse.in").collapse("hide");
-  return false;
-});
-
-$("#chartModal").on("shown.bs.modal", function (e) {
-  drawCharts();
 });
