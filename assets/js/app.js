@@ -571,14 +571,6 @@ function urlFormatter (value, row, index) {
 }
 
 
-L.control.layers(featureLayer, overlayLayers, {position: 'topright'}).addTo(map);
-  function definePopup() {
-    var popupText =  
-      "<b>Image: </b><a target=\"_blank\">"+"<img src='assets/pictures/2018-02-24%2022_08_43-Fulcrum%20-%20Mobile%20Location%20Leverage.png'</img></a>";
-    return popupText;
-  };
-
-
 function buildFilters() {
   $("#query-builder").queryBuilder({
     allow_empty: true,
@@ -757,6 +749,13 @@ L.easyPrint({
   title: 'My awesome print button',
   elementsToHide: 'p, h2, .gitButton'
 }).addTo(map)
+
+
+var helloPopup = L.popup().setContent('<img src="assets/pictures/2018-02-24%2022_08_43-Fulcrum%20-%20Mobile%20Location%20Leverage.png">');
+ 
+L.easyButton('fa-globe', function(btn, map){
+    helloPopup.setLatLng(map.getCenter()).openOn(map);
+}).addTo(map);
 
 
 $("#refresh-btn").click(function() {
