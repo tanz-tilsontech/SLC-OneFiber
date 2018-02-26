@@ -298,42 +298,16 @@ function drawCharts() {
 
   // HUB STATUS 
   $(function() {
-    var result = alasql("SELECT status AS label, COUNT(*) AS total FROM ? GROUP BY status", [features]);
+    var result = alasql("SELECT status, hub AS label, COUNT(*) AS total FROM ? GROUP BY hub", [features]);
     var columns = $.map(result, function(fqnid) {
-      return [[fqnid.label, fqnid.total]];
+      return [[status.label, hub.label, status.total]];
     });
-    Highcharts.chart('container', {
-      chart: {
-        type: 'pie',
-        options3d: {
-            enabled: true,
-            alpha: 45,
-            beta: 0
+    var chart = c3.generate({
+        bindto: "#hub-status-chart",
+        data: {
+          type: "pie",
+          columns: columns
         }
-      },
-      title: {
-        text: 'HUB STATUS'
-      },
-      tooltip: {
-        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-      },
-      plotOptions: {
-        pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            depth: 35,
-            dataLabels: {
-                enabled: true,
-                format: '{point.name}'
-            }
-        }
-      },
-      bindto: "#hub-status-chart",
-      series: [{
-        type: 'pie',
-        name: 'HUB STATUS',
-        data: columns
-      }]
     });
   });
 }
