@@ -488,15 +488,6 @@ var featureLayer = L.geoJson(null, {
         } else if (prop.toString().indexOf("https://") === 0 || prop.toString().indexOf("http://") === 0) {
           prop = "<a href='" + prop + "' target='blank'>" + prop + "</a>";
         }
-        if (userFields.length > 0) {
-          if ($.inArray(index, hiddenSystemFields) == -1 && $.inArray(index, userFields) !== -1 && index !== "Fulcrum Id") {
-            content += "<tr><th>" + index + "</th><td>" + prop + "</td></tr>";
-          }
-        } else {
-          if ($.inArray(index, hiddenSystemFields) == -1 && index !== "Fulcrum Id") {
-            content += "<tr><th>" + index + "</th><td>" + prop + "</td></tr>";
-          }
-        }
       });
       layer.on({
         click: function (e) {
