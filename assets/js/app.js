@@ -22,6 +22,7 @@ var properties = [{
 {
   value: "fulcrum_record_link",
   label: "Edit Record",
+  name: "Click To Edit",
   table: {
     visible: false,
     sortable: true
