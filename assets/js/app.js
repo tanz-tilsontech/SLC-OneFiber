@@ -328,7 +328,7 @@ function drawCharts() {
             }
         }
       },
-      bindto: "#hub-footage-chart",
+      bindto: "#hub-status-chart",
       series: [{
         type: 'pie',
         name: 'HUB STATUS',
