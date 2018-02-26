@@ -756,7 +756,7 @@ var fulcrumControl = new L.control({
 });
 fulcrumControl.onAdd = function (map) {
   var div = L.DomUtil.create("div");
-  div.innerHTML = "<a target='_blank'><img src=\"assets/pictures/Contruction%20Legend2.png\" width=\"100px\" height=\"160px\"></a>";
+  div.innerHTML = "<a target='_blank'><img src=\"assets/pictures/Contruction%20Legend2.png\" width=\"110px\" height=\"160px\"></a>";
   return div;
 };
 map.addControl(fulcrumControl);
