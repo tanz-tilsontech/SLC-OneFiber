@@ -296,18 +296,45 @@ function drawCharts() {
   });
 
 
-  // MONTHLY FOOTAGE 
+  // HUB STATUS 
   $(function() {
-    var result = alasql("SELECT fqnid AS label, COUNT(*) AS total FROM ? GROUP BY fqnid", [features]);
+    var result = alasql("SELECT status AS label, COUNT(*) AS total FROM ? GROUP BY status", [features]);
     var columns = $.map(result, function(fqnid) {
       return [[fqnid.label, fqnid.total]];
     });
-    var chart = c3.generate({
-        bindto: "#fqnid-chart",
-        data: {
-          type: "pie",
-          columns: columns
+    Highcharts.chart('container', {
+      chart: {
+        type: 'pie',
+        options3d: {
+            enabled: true,
+            alpha: 45,
+            beta: 0
         }
+      },
+      title: {
+        text: 'HUB STATUS'
+      },
+      tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+      },
+      plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            depth: 35,
+            dataLabels: {
+                enabled: true,
+                format: '{point.name}'
+            }
+        }
+      },
+      bindto: "#hub-footage-chart",
+      series: [{
+        type: 'pie',
+        name: 'HUB STATUS',
+        data: columns
+        ]
+      }]
     });
   });
 }
