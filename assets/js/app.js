@@ -752,11 +752,11 @@ L.easyPrint({
 
 
 var fulcrumControl = new L.control({
-  position: "bottomright"
+  position: "bottomleft"
 });
 fulcrumControl.onAdd = function (map) {
   var div = L.DomUtil.create("div");
-  div.innerHTML = "<a target='_blank'><img src=\"assets/pictures/Contruction%20Legend.png\" width=\"150px\" height=\"200px\"></a>";
+  div.innerHTML = "<a target='_blank'><img src=\"assets/pictures/Contruction%20Legend.png\" width=\"100px\" height=\"200px\"></a>";
   return div;
 };
 map.addControl(fulcrumControl);
