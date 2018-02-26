@@ -762,7 +762,7 @@ fulcrumControl.onAdd = function (map) {
 map.addControl(fulcrumControl);
 
 
-var Core = L.Control.LinearCore.extend({ onSelect: function(e){ if(!e.total){ return; }
+var Core = L.Control.LinearCore({ onSelect: function(e){ if(!e.total){ return; }
   var distance = e.total.scalar;
 
   if(e.total.unit === 'mi'){
