@@ -764,12 +764,12 @@ map.addControl(fulcrumControl);
 
 L.control.polylineMeasure(options).addTo(map);
 
-options = {
+var options = {
     bearingTextIn: 'In'                     // language dependend label for inbound bearings
     bearingTextOut: 'Out',                  // language dependend label for outbound bearings
     bearingTextOut: 'Out',                  // language dependend label for outbound bearings
     bindTooltipText: "Click and drag to <b>move point</b><br>Press CTRL-key and click to <b>resume line</b>",
-                                            // language dependend label for last point's tooltip
+                                           // language dependend label for last point's tooltip
     changeUnitsText: 'Change Units',        // language dependend label for "Change units"-button
     position: 'topleft',                    // Position to show the control. Possible values are: 'topright', 'topleft', 'bottomright', 'bottomleft'
     unit: 'imperial',                         // Show imperial or metric distances. Values: 'metres', 'landmiles', 'nauticalmiles'
