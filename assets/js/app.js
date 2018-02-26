@@ -205,20 +205,19 @@ var properties = [{
   }
 },
 {
-  value: "locates_cx",
-  label: "Construction Locates",
+  value: "cable_placement_type_final",
+  label: "Cable Placement Type",
   table: {
     visible: true,
-    sortable: true,
-    formatter: urlFormatter
+    sortable: true
   },
   filter: {
-    type: "integer",
+    type: "string"
   }
 },
 {
-  value: "cable_placement_type_final",
-  label: "Cable Placement Type",
+  value: "locates_cx_url",
+  label: "Construction Locates",
   table: {
     visible: true,
     sortable: true
@@ -269,7 +268,7 @@ var properties = [{
   },
   filter: {
     type: "integer",
-  }
+  },
 }];
 
 
@@ -502,7 +501,6 @@ var featureLayer = L.geoJson(null, {
     }
   }
 });
-
 
 
 // Fetch the GeoJSON file
