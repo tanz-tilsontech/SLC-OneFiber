@@ -333,7 +333,6 @@ function drawCharts() {
         type: 'pie',
         name: 'HUB STATUS',
         data: columns
-        ]
       }]
     });
   });
