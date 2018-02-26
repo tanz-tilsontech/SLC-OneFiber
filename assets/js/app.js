@@ -762,6 +762,51 @@ fulcrumControl.onAdd = function (map) {
 map.addControl(fulcrumControl);
 
 
+var Core = L.Control.LinearCore.extend({ onSelect: function(e){ if(!e.total){ return; }
+  var distance = e.total.scalar;
+
+  if(e.total.unit === 'mi'){
+    distance *= e.sub_unit;
+  } else if(e.total.unit === 'km'){
+    distance *= 3280.84;
+  } else if(e.total.unit === 'm'){
+    distance *= 3.28084;
+  }
+
+  var days_underground = 350,
+      days_above_ground = 900,
+      html = [
+          '<table>',
+          ' <tr><td class="cost_label">Days Underground Build:</td><td class="cost_value">${days_underground}</td></tr>',
+          ' <tr><td class="cost_label">Days Aerial Build:</td><td class="cost_value">${days_above_ground}</td></tr>',
+          '</table>'
+      ].join(''),
+      numberWithCommas = function(x) {
+          return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      };
+
+  var data = {
+      total_days_underground: numberWithCommas(L.Util.formatNum(distance / days_underground, 2)),
+      total_days_above_ground: numberWithCommas(L.Util.formatNum(distance / days_above_ground, 2))
+  };
+
+  if(e.rulerOn){
+      var content = L.Util.template(html, data),
+          popup = L.popup().setContent(content);
+
+      e.total_label.bindPopup(popup, { offset: [45, 0] });
+      e.total_label.openPopup();
+  }
+}
+});
+
+map.addControl(new Core({
+  unitSystem: 'imperial',
+  color: '#FF0080',
+  type: 'line'
+}));
+
+
 $("#refresh-btn").click(function() {
   featureLayer.clearLayers();
   map.setView([40.5912,-111.837],9)
