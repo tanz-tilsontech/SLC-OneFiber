@@ -315,7 +315,7 @@ function drawCharts() {
 $(function() {
   $(".title").html(config.title);
   $("#layer-name").html(config.layerName);
-  $("#layer-name2").html("SLC HLD Route");
+  $("#layer-name2").html("SLC LLD Route");
 });
 
 function buildConfig() {
@@ -416,7 +416,7 @@ var mapboxSat = L.tileLayer('https://api.mapbox.com/v4/cfritz1387.573ca1ee/{z}/{
 });
 
 
-var SLCHLDRoute = L.tileLayer('https://ttm-tileify-proxy.herokuapp.com/tiles/{z}/{x}/{y}?url=https%3A%2F%2Ftilsonweb.3-gislive.com%2Farcgis%2Frest%2Fservices%2FSLC%2FTilsonslc%2FMapServer&transparent=true&layers=show%3A1%2C3%2C4%2C9%2C43%2C48', {
+var SLCLLDRoute = L.tileLayer('http://ttm-tileify-proxy.herokuapp.com/tiles/{z}/{x}/{y}?url=https%3A%2F%2Ftilsonweb.3-gislive.com%2Farcgis%2Frest%2Fservices%2FSLClld%2FTilsonslc_lld%2FMapServer&transparent=true&layers=show%3A3%2C10%2C31%2C44%2C47%2C49', {
     maxZoom: 19
 });
 
@@ -507,7 +507,7 @@ $.getJSON(config.geojson, function (data) {
 });
 
 var map = L.map("map", {
-  layers: [mapboxOSM, SLCHLDRoute, featureLayer, highlightLayer]
+  layers: [mapboxOSM, SLCLLDRoute, featureLayer, highlightLayer]
 }).fitWorld();
 
 
@@ -542,11 +542,11 @@ if (document.body.clientWidth <= 767) {
 var baseLayers = {
   "Street Map": mapboxOSM,
   "Satellite Map": mapboxSat,
-  "SLC HLD Route": SLCHLDRoute,
+  "SLC LLD Route": SLCLLDRoute,
 };
 var overlayLayers = {
   "<span id='layer-name'>GeoJSON Layer</span>": featureLayer,
-  "<span id='layer-name2'>GeoJSON Layer</span>": SLCHLDRoute,
+  "<span id='layer-name2'>GeoJSON Layer</span>": SLCLLDRoute,
 };
 
 
@@ -751,11 +751,15 @@ L.easyPrint({
 }).addTo(map)
 
 
-var helloPopup = L.popup().setContent('<img src="assets/pictures/2018-02-24%2022_08_43-Fulcrum%20-%20Mobile%20Location%20Leverage.png">');
- 
-L.easyButton('fa-globe', function(btn, map){
-    helloPopup.setLatLng(map.getCenter()).openOn(map);
-}).addTo(map);
+var fulcrumControl = new L.control({
+  position: "bottomleft"
+});
+fulcrumControl.onAdd = function (map) {
+  var div = L.DomUtil.create("div");
+  div.innerHTML = "<a target='_blank'><img src=\"assets/pictures/Contruction%20Legend.png\" width=\"400px\" height=\"150px\"></a>";
+  return div;
+};
+map.addControl(fulcrumControl);
 
 
 $("#refresh-btn").click(function() {
