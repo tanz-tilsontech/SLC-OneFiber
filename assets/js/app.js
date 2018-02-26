@@ -298,9 +298,9 @@ function drawCharts() {
 
   // HUB STATUS 
   $(function() {
-    var result = alasql("SELECT * AS label, COUNT(status) AS total FROM ? GROUP BY hub", [features]);
+    var result = alasql("SELECT status AS label1, hub AS label2, COUNT(status) AS total FROM ? GROUP BY hub", [features]);
     var columns = $.map(result, function(status) {
-      return [[status.label, status.total]];
+      return [[status.label1, status.label2, status.total]];
     });
     var chart = c3.generate({
         bindto: "#hub-status-chart",
