@@ -572,13 +572,9 @@ function urlFormatter (value, row, index) {
 
 
 L.control.layers(featureLayer, overlayLayers, {position: 'topright'}).addTo(map);
-  function definePopup(entry) {
+  function definePopup() {
     var popupText =  
-      "<b>Location Description: </b>"+entry[2]+"<br>"+
-      "<b>Work Date: </b>"+entry[3]+"<br>"+
-      "<b>Graffiti Type: </b>"+entry[5]+"<br>"+
-      "<b>Graffiti Material: </b>"+entry[6]+"<br>"+
-      "<b>Image: </b><a href='"+entry[0]+"' target=\"_blank\">"+"<img src='assets/pictures/2018-02-24%2022_08_43-Fulcrum%20-%20Mobile%20Location%20Leverage.png'</img></a>";
+      "<b>Image: </b><a target=\"_blank\">"+"<img src='assets/pictures/2018-02-24%2022_08_43-Fulcrum%20-%20Mobile%20Location%20Leverage.png'</img></a>";
     return popupText;
   };
 
