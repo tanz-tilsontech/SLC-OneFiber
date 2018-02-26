@@ -407,17 +407,17 @@ function buildConfig() {
 
 // Basemap Layers
 var mapboxOSM = L.tileLayer('http://{s}.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZWNvdHJ1c3QiLCJhIjoibGo4TG5nOCJ9.QJnT2dgjL4_4EA7WlK8Zkw', {
-    maxZoom: 19
+    maxZoom: 20
 });
 
 
 var mapboxSat = L.tileLayer('https://api.mapbox.com/v4/cfritz1387.573ca1ee/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiY2ZyaXR6MTM4NyIsImEiOiJjaWphZTZ0eHkwMDVwdWlseGx5aWhhbXlwIn0._lgb3vbGMSx1-jdZCufdgg', {
-    maxZoom: 19
+    maxZoom: 20
 });
 
 
 var SLCLLDRoute = L.tileLayer('http://ttm-tileify-proxy.herokuapp.com/tiles/{z}/{x}/{y}?url=https%3A%2F%2Ftilsonweb.3-gislive.com%2Farcgis%2Frest%2Fservices%2FSLClld%2FTilsonslc_lld%2FMapServer&transparent=true&layers=show%3A3%2C10%2C31%2C44%2C47%2C49', {
-    maxZoom: 19
+    maxZoom: 20
 });
 
 
