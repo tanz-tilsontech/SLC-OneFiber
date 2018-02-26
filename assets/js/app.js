@@ -1,3 +1,6 @@
+var hiddenSystemFields = ["marker-color", "Created At", "Updated At", "Created By", "Updated By", "System Created At", "System Updated At", "Version", "Assigned To", "Latitude", "Longitude", "Gps Altitude", "Gps Horizontal Accuracy", "Gps Vertical Accuracy", "Gps Speed", "Gps Course", "Address Sub Thoroughfare", "Address Thoroughfare", "Address Locality", "Address Sub Admin Area", "Address Admin Area", "Address Postal Code", "Address Suite", "Address Country"];
+
+
 var config = {
   geojson: "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94.geojson",
   title: "SLC OneFiber Construction",
@@ -473,6 +476,28 @@ var featureLayer = L.geoJson(null, {
   },
   onEachFeature: function (feature, layer) {
     if (feature.properties) {
+      $.each(feature.properties, function(index, prop) {
+        if (prop === null) {
+          prop = "";
+        } else if (prop.toString().indexOf("https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/photos/") === 0) {
+          prop = "<a href='#' onclick='photoGallery(\"" + prop + "\"); return false;'>View Photos</a>";
+        } else if (prop.toString().indexOf("https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/videos/") === 0) {
+          prop = "<a href='" + prop + "' target='blank'>View videos</a>";
+        } else if (prop.toString().indexOf("https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/signatures/") === 0) {
+          prop = "<a href='" + prop + "' target='blank'>View signatures</a>";
+        } else if (prop.toString().indexOf("https://") === 0 || prop.toString().indexOf("http://") === 0) {
+          prop = "<a href='" + prop + "' target='blank'>" + prop + "</a>";
+        }
+        if (userFields.length > 0) {
+          if ($.inArray(index, hiddenSystemFields) == -1 && $.inArray(index, userFields) !== -1 && index !== "Fulcrum Id") {
+            content += "<tr><th>" + index + "</th><td>" + prop + "</td></tr>";
+          }
+        } else {
+          if ($.inArray(index, hiddenSystemFields) == -1 && index !== "Fulcrum Id") {
+            content += "<tr><th>" + index + "</th><td>" + prop + "</td></tr>";
+          }
+        }
+      });
       layer.on({
         click: function (e) {
           identifyFeature(L.stamp(layer));
@@ -578,6 +603,25 @@ function urlFormatter (value, row, index) {
   if (typeof value == "string" && (value.indexOf("http") === 0 || value.indexOf("https") === 0)) {
     return "<a href='"+value+"' target='_blank'>"+value+"</a>";
   }
+}
+
+
+function photoGallery(photos) {
+  var photoArray = [];
+  var photoIDs = photos.split("photos=")[1];
+  $.each(photoIDs.split("%2C"), function(index, id) {
+    photoArray.push({href: "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/photos/" + id});
+  });
+  $.fancybox(photoArray, {
+    "type": "image",
+    "showNavArrows": true,
+    "padding": 0,
+    "scrolling": "no",
+    beforeShow: function () {
+      this.title = "Photo " + (this.index + 1) + " of " + this.group.length + (this.title ? " - " + this.title : "");
+    }
+  });
+  return false;
 }
 
 function buildFilters() {
