@@ -406,7 +406,7 @@ function buildConfig() {
 }
 
 // Basemap Layers
-var mapboxOSM = L.tileLayer('http://{s}.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZWNvdHJ1c3QiLCJhIjoibGo4TG5nOCJ9.QJnT2dgjL4_4EA7WlK8Zkw', {
+var mapboxOSM = L.tileLayer('https://maps.googleapis.com/maps/api/js?v=3.exp&use_slippy=true&libraries=places&key=AIzaSyBD-VYZnlbtRVWB7iFXDovJn4nIg7cQ-tI', {
     maxZoom: 20
 });
 
@@ -816,6 +816,12 @@ $("#reset-filter-btn").click(function() {
 
 $("#extent-btn").click(function() {
   map.fitBounds(featureLayer.getBounds());
+  $(".navbar-collapse.in").collapse("hide");
+  return false;
+});
+
+$("#legend-btn").click(function() {
+  $("#legend-modal").modal("show");
   $(".navbar-collapse.in").collapse("hide");
   return false;
 });
