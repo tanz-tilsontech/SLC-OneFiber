@@ -648,7 +648,13 @@ function buildTable() {
       identifyFeature(row.leaflet_stamp);
       highlightLayer.clearLayers();
       highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
-    }
+    },
+    onSearch: function(row, $element) {
+      var layer = featureLayer.eachLayer(row.leaflet_stamp);
+      map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 16);
+      highlightLayer.clearLayers();
+      highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
+    },
   });
 
   map.fitBounds(featureLayer.getBounds());
