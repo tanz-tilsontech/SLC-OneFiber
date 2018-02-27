@@ -766,6 +766,17 @@ fulcrumControl.onAdd = function (map) {
 map.addControl(fulcrumControl);
 
 
+var fulcrumControl1 = new L.control({
+  position: "bottomleft"
+});
+fulcrumControl1.onAdd = function (map) {
+  var div = L.DomUtil.create("div");
+  div.innerHTML = "<a target='_blank'><img src=\"assets/pictures/tilson-logo.png\" width=\"120px\" height=\"160px\"></a>";
+  return div;
+};
+map.addControl(fulcrumControl1);
+
+
 $("#refresh-btn").click(function() {
   featureLayer.clearLayers();
   map.setView([40.5912,-111.837],9)
