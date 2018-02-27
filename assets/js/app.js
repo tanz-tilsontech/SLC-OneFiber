@@ -676,37 +676,9 @@ function buildTable() {
       identifyFeature(row.leaflet_stamp);
       highlightLayer.clearLayers();
       highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
-    },
-    onSearch: function(text) {
-      var data = $("#table").bootstrapTable("getData");
-      var visibleIDs = data.map(function(feature) {
-        return (feature._id_);
-      });
-      bounds = layer.feature.geometry.type === "Point"
-      map.data.forEach(function(feature) {
-        if ($.inArray(feature.getId(), visibleIDs) == -1) {
-          map.data.overrideStyle(feature, {
-            visible: false
-          });
-        } else {
-          map.data.overrideStyle(feature, {
-            visible: true
-          });
-          if (feature.getGeometry()) {
-            feature.getGeometry().forEachLatLng(function(latLng){
-              bounds.extend(latLng);
-            });
-          }
-        }
-      });
-      $("#feature-count").html(data.length);
     }
   });
-
-    $(".fixed-table-toolbar").append("<div class='columns columns-left pull-left text-muted' style='padding-left: 10px;'><span id='feature-count'></span> / <span id='total-count'></span></div>");
-    $("#feature-count").html(data.length);
-    $("#total-count").html(data.length);
-
+  
   map.fitBounds(featureLayer.getBounds());
 
   $(window).resize(function () {
