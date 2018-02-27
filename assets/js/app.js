@@ -530,31 +530,6 @@ $.getJSON(config.geojson, function (data) {
         $("#legend").append("<p><i style='background:" + value + "'></i> " + property + "</p>");
       }
     });
-    $.each(table, function(index, value) {
-      if (value.field == style.property) {
-        table[index].cellStyle = function cellStyle(value, row, index, field) {
-          if (style.values[row[style.property]] && style.values[row[style.property]].startsWith("http")) {
-            return {
-              css: {
-                "background-image": "url(" + style.values[row[style.property]] + ")",
-                "background-repeat": "no-repeat",
-                "background-size": "16px",
-                "padding-left": "22px",
-                "background-position": "left center",
-                "background-position-x": "3px"
-              }
-            };
-          } else {
-            return {
-              css: {
-                "box-shadow": "inset 10px 0em " + (style.values[row[style.property]] ? style.values[row[style.property]] : "black"),
-                "padding-left": "18px"
-              }
-            };
-          }
-        };
-      }
-    });
   }
 });
 
@@ -691,13 +666,46 @@ function buildTable() {
     showColumns: true,
     showToggle: true,
     columns: table,
-    onClickRow: function (row) {
-
+    onClickRow: function(row, $element) {
+      var layer = featureLayer.getLayer(row.leaflet_stamp);
+      map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 19);
+      highlightLayer.clearLayers();
+      highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
     },
-    onDblClickRow: function (row) {
-      // do something!
+    onDblClickRow: function(row) {
+      identifyFeature(row.leaflet_stamp);
+      highlightLayer.clearLayers();
+      highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
+    },
+    onSearch: function(text) {
+      var data = $("#table").bootstrapTable("getData");
+      var visibleIDs = data.map(function(feature) {
+        return (feature._id_);
+      });
+      bounds = layer.feature.geometry.type === "Point"
+      map.data.forEach(function(feature) {
+        if ($.inArray(feature.getId(), visibleIDs) == -1) {
+          map.data.overrideStyle(feature, {
+            visible: false
+          });
+        } else {
+          map.data.overrideStyle(feature, {
+            visible: true
+          });
+          if (feature.getGeometry()) {
+            feature.getGeometry().forEachLatLng(function(latLng){
+              bounds.extend(latLng);
+            });
+          }
+        }
+      });
+      $("#feature-count").html(data.length);
     }
   });
+
+    $(".fixed-table-toolbar").append("<div class='columns columns-left pull-left text-muted' style='padding-left: 10px;'><span id='feature-count'></span> / <span id='total-count'></span></div>");
+    $("#feature-count").html(data.length);
+    $("#total-count").html(data.length);
 
   map.fitBounds(featureLayer.getBounds());
 
