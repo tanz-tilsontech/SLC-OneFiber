@@ -751,7 +751,7 @@ $("[name='view']").click(function() {
 
 L.easyPrint({
   title: 'My awesome print button',
-  elementsToHide: 'p, h2'
+  elementsToHide: 'p, h2, .gitButton'
 }).addTo(map)
 
 
