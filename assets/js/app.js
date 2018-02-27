@@ -20,7 +20,7 @@ var properties = [{
   info: false
 },
 {
-  value: "fulcrum_record_link">Edit Record,
+  value: "fulcrum_record_link",
   label: "Edit Record",
   description: "Click To Edit",
   table: {
