@@ -76,7 +76,18 @@
                 <li><a href="https://web.fulcrumapp.com/shares/fb96b48deb5cfb94.kml" id="raw-kml-download" download="" target="_blank" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-download"></i>&nbsp;&nbsp;Raw KML</a></li>
                 <li><a href="https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/feed.kml" id="kml-feed-download" download="feed.kml" target="_blank" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-download"></i>&nbsp;&nbsp;KML Feed</a></li>
               </ul>
-          </li> 
+          </li>
+          <li class="hidden" id="legend-item">
+              <a href="#" id="legend-btn" data-toggle="collapse" data-target=".navbar-collapse.in" title="Show Legend">
+                <span class="hidden-xs">
+                  <i class="glyphicon glyphicon-list-alt"></i>
+                </span>
+                <span class="visible-xs">
+                  <i class="glyphicon glyphicon-list-alt"></i>
+                  &nbsp;Show Legend
+                </span>
+              </a>
+            </li>
         </ul>
       </div>
     </div>
@@ -215,12 +226,30 @@
           <div class="modal-body" id="feature-info"></div>
           <div class="modal-footer">
             <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary"><a href="#" target="_blank" id="share-maps">Driving Directions</a></button>
           </div>
         </div>
       </div>
     </div>
+
+    <div class="modal fade" id="legend-modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title text-primary" id="legend-title">Legend</h4>
+          </div>
+          <div class="modal-body legend" id="legend"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!--script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.0-beta.7/esri-leaflet.js"></script-->
     <!--script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script-->
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&use_slippy=true&libraries=places&key=AIzaSyBD-VYZnlbtRVWB7iFXDovJn4nIg7cQ-tI"></script>
     <script src='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.js'></script>
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
