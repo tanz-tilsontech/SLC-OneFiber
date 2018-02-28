@@ -106,21 +106,18 @@ body {
 }
 
 .legend {
-    line-height: 18px;
-    color: #555;
-    background: #ffffff;
-    margin-top: 80px;
-    background-color:white;
-    border-radius: 5px;
-    box-shadow: 11px 11px 24px 0px rgba(0,0,0,0.6);
-    padding: 5px;
+  text-align: left;
+  line-height: 18px;
 }
-
 .legend i {
-    width: 15px;
-    height: 15px;
-    float: left;
-    margin-right: 8px;
-    opacity: 0.9;
-    outline: 1px solid;
+  width: 18px;
+  height: 18px;
+  float: left;
+  margin-right: 8px;
+}
+.legend img {
+  max-width: 18px;
+  max-height: 18px;
+  float: left;
+  margin-right: 8px;
 }
