@@ -688,7 +688,7 @@ function identifyFeature(id) {
     if (!value) {
       value = "";
     }
-    if (value == "fulcrum_record_link" && (value.indexOf("http") === 0 || value.indexOf("https") === 0)) {
+    if (label == "Edit Record" && (value.indexOf("http") === 0 || value.indexOf("https") === 0)) {
       value = "<a href='" + value + "' target='_blank'>" + "Edit Record" + "</a>";
     }
     $.each(properties, function(index, property) {
