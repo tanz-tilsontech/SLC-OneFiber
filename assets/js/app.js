@@ -689,7 +689,7 @@ function identifyFeature(id) {
       value = "";
     }
     if (typeof value == "string" && (value.indexOf("http") === 0 || value.indexOf("https") === 0)) {
-      value = "<a href='" + value + "' target='_blank'>" + value + "</a>";
+      value = "<a href='" + value + "' target='_blank'>" + "Edit Record" + "</a>";
     }
     $.each(properties, function(index, property) {
       if (key == property.value) {
