@@ -684,11 +684,11 @@ function syncTable() {
 function identifyFeature(id) {
   var featureProperties = featureLayer.getLayer(id).feature.properties;
   var content = "<table class='table table-striped table-bordered table-condensed'>";
-  $.each(featureProperties, function(key, value, label) {
+  $.each(featureProperties, function(key, value) {
     if (!value) {
       value = "";
     }
-    if (label == "Edit Record" && (value.indexOf("http") === 0 || value.indexOf("https") === 0)) {
+    if (value.indexOf(edit-record) && (value.indexOf("http") === 0 || value.indexOf("https") === 0)) {
       value = "<a href='" + value + "' target='_blank'>" + "Edit Record" + "</a>";
     }
     $.each(properties, function(index, property) {
