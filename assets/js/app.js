@@ -730,7 +730,7 @@ function identifyFeature(id) {
     if (typeof value == "string"  && (value.indexOf("mode=view") && value.indexOf("http") === 0 || value.indexOf("https") === 0)) {
       value = "<a href='" + value + "' target='_blank'>" + "View Record" + "</a>";
     }
-    if (typeof value == "string"  && (value.indexOf("maps/search") && value.indexOf("http") === 0 || value.indexOf("https") === 0)) {
+    if (typeof value == "string"  && (value.indexOf("google.com") && value.indexOf("http") === 0 || value.indexOf("https") === 0)) {
       value = "<a href='" + value + "' target='_blank'>" + "GPS Directions" + "</a>";
     }
     $.each(properties, function(index, property) {
