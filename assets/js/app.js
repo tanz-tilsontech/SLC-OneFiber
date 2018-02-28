@@ -20,17 +20,6 @@ var properties = [{
   info: false
 },
 {
-  value: "fulcrum_record_link",
-  label: "View Record",
-  table: {
-    visible: false,
-    sortable: false
-  },
-  filter: {
-    type: "string"
-  }
-},
-{
   value: "gps_directions_1",
   label: "GPS Directions",
   table: {
@@ -726,9 +715,6 @@ function identifyFeature(id) {
   $.each(featureProperties, function(key, value) {
     if (!value) {
       value = "";
-    }
-    if (typeof value == "string"  && value.indexOf("https://web.fulcrumapp") === 0) {
-      value = "<a href='" + value + "' target='_blank'>" + "View Record" + "</a>";
     }
     if (typeof value == "string"  && value.indexOf("https://www.google") === 0) {
       value = "<a href='" + value + "' target='_blank'>" + "GPS Directions" + "</a>";
