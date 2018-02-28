@@ -21,11 +21,10 @@ var properties = [{
 },
 {
   value: "fulcrum_record_link",
-  label: "Edit Record",
-  description: "Click To Edit",
+  label: "View Record",
   table: {
     visible: false,
-    sortable: true
+    sortable: false
   },
   filter: {
     type: "string"
@@ -717,8 +716,8 @@ function identifyFeature(id) {
     if (!value) {
       value = "";
     }
-    if (typeof value == "string"  && (value.indexOf("edit-record") && value.indexOf("http") === 0 || value.indexOf("https") === 0)) {
-      value = "<a href='" + value + "' target='_blank'>" + "Edit Record" + "</a>";
+    if (typeof value == "string"  && (value.indexOf("mode=view") && value.indexOf("http") === 0 || value.indexOf("https") === 0)) {
+      value = "<a href='" + value + "' target='_blank'>" + "View Record" + "</a>";
     }
     $.each(properties, function(index, property) {
       if (key == property.value) {
@@ -779,7 +778,7 @@ $("[name='view']").click(function() {
 });
 
 L.easyPrint({
-  title: 'My awesome print button',
+  title: 'Print',
   elementsToHide: 'p, h2, .gitButton'
 }).addTo(map)
 
