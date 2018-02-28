@@ -531,33 +531,6 @@ $.getJSON(config.geojson, function (data) {
         $("#legend").append("<p><i style='background:" + value + "'></i> " + property + "</p>");
       }
     });
-    $("#table").bootstrapTable("load", JSON.parse(JSON.stringify(tableFeatures)));
-    $.each(tableFeatures, function(index, value) {
-      tableFeatures = [];
-      if (value.field == style.property) {
-        tableFeatures[index].cellStyle = function cellStyle(value, row, index, field) {
-          if (style.values[row[style.property]] && style.values[row[style.property]].startsWith("http")) {
-            return {
-              css: {
-                "background-image": "url(" + style.values[row[style.property]] + ")",
-                "background-repeat": "no-repeat",
-                "background-size": "16px",
-                "padding-left": "22px",
-                "background-position": "left center",
-                "background-position-x": "3px"
-              }
-            };
-          } else {
-            return {
-              css: {
-                "box-shadow": "inset 10px 0em " + (style.values[row[style.property]] ? style.values[row[style.property]] : "black"),
-                "padding-left": "18px"
-              }
-            };
-          }
-        };
-      }
-    });
   }
 });
 
@@ -809,17 +782,6 @@ L.easyPrint({
   title: 'My awesome print button',
   elementsToHide: 'p, h2, .gitButton'
 }).addTo(map)
-
-
-var fulcrumControl = new L.control({
-  position: "bottomright"
-});
-fulcrumControl.onAdd = function (map) {
-  var div = L.DomUtil.create("div");
-  div.innerHTML = "<a target='_blank'><img src=\"assets/pictures/Contruction%20Legend2.png\" width=\"120px\" height=\"160px\"></a>";
-  return div;
-};
-map.addControl(fulcrumControl);
 
 
 var fulcrumControl1 = new L.control({
