@@ -531,7 +531,9 @@ $.getJSON(config.geojson, function (data) {
         $("#legend").append("<p><i style='background:" + value + "'></i> " + property + "</p>");
       }
     });
+    $("#table").bootstrapTable("load", JSON.parse(JSON.stringify(tableFeatures)));
     $.each(tableFeatures, function(index, value) {
+      tableFeatures = [];
       if (value.field == style.property) {
         tableFeatures[index].cellStyle = function cellStyle(value, row, index, field) {
           if (style.values[row[style.property]] && style.values[row[style.property]].startsWith("http")) {
