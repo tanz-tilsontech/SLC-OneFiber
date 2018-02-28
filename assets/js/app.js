@@ -727,10 +727,10 @@ function identifyFeature(id) {
     if (!value) {
       value = "";
     }
-    if (typeof value == "string"  && value.indexOf("mode=view")) {
+    if (typeof value == "string"  && (value.indexOf("http") === 0 || value.indexOf("https://web.fulcrumapp") === 0)) {
       value = "<a href='" + value + "' target='_blank'>" + "View Record" + "</a>";
     }
-    if (typeof value == "string"  && value.indexOf("google.com")) {
+    if (typeof value == "string"  && (value.indexOf("http") === 0 || value.indexOf("https://www.google") === 0)) {
       value = "<a href='" + value + "' target='_blank'>" + "GPS Directions" + "</a>";
     }
     $.each(properties, function(index, property) {
