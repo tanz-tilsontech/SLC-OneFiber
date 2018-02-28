@@ -829,6 +829,8 @@ $("#view-sql-btn").click(function() {
 
 $("#apply-filter-btn").click(function() {
   applyFilter();
+  $(".navbar-collapse.in").collapse("hide");
+  return false;
 });
 
 $("#reset-filter-btn").click(function() {
@@ -850,9 +852,10 @@ $("#legend-btn").click(function() {
 
 $("#download-csv-btn").click(function() {
   $("#table").tableExport({
+    headings: true,
     type: "csv",
     ignoreColumn: [0],
-    fileName: "data"
+    fileName: "SLC OneFiber Construction"
   });
   $(".navbar-collapse.in").collapse("hide");
   return false;
@@ -860,9 +863,10 @@ $("#download-csv-btn").click(function() {
 
 $("#download-excel-btn").click(function() {
   $("#table").tableExport({
+    headings: true,
     type: "excel",
     ignoreColumn: [0],
-    fileName: "data"
+    fileName: "SLC OneFiber Construction"
   });
   $(".navbar-collapse.in").collapse("hide");
   return false;
@@ -872,7 +876,7 @@ $("#download-pdf-btn").click(function() {
   $("#table").tableExport({
     type: "pdf",
     ignoreColumn: [0],
-    fileName: "data",
+    fileName: "SLC OneFiber Construction",
     jspdf: {
       format: "bestfit",
       margins: {
