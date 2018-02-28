@@ -684,7 +684,7 @@ function syncTable() {
 function identifyFeature(id) {
   var featureProperties = featureLayer.getLayer(id).feature.properties;
   var content = "<table class='table table-striped table-bordered table-condensed'>";
-  $.each(featureProperties, function(key, value) {
+  $.each(featureProperties, function(key, value, label) {
     if (!value) {
       value = "";
     }
