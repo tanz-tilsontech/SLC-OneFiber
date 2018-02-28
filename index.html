@@ -32,6 +32,17 @@
       <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+  <style>
+  .dropdown-submenu {
+      position: relative;
+  }
+
+  .dropdown-submenu .dropdown-menu {
+      top: 0;
+      left: 100%;
+      margin-top: -1px;
+  }
+  </style>
   </head>
 
   <body>
@@ -58,40 +69,36 @@
           <ul class="nav navbar-nav">
             <li><a href="#" id="refresh-btn" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-refresh"></i>&nbsp;&nbsp;Refresh Now</a></li>
             <li class="hidden-md hidden-lg"><a id="filter-btn" href="#" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Filter Data</a></li>
-            <li class="dropdown">
-                <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars fa-white"></i> <span id="view">Menu </span><b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li><a id="extent-btn" href="#" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-arrows-alt"></i> Feature Extent</a></li>
-                  <li><a id="chart-btn" href="#" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-bar-chart"></i> Data Charts</a></li>
-                  <li class="dropdown">
-                    <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-laptop"></i> <span id="view">Page Views </span><b class="caret"></b></a>
-                    <ul class="dropdown-submenu">
-                      <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" name="view" id="map-graph"><i class="fa fa-th-large"></i> Split View</a></li>
-                      <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" name="view" id="map-only"><i class="fa fa-globe"></i> Map View</a></li>
-                      <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" name="view" id="graph-only"><i class="fa fa-table"></i> Table View</a></li>
-                    </ul>
-                  </li>
-                  <li class="dropdown">
-                    <a class="dropdown-toggle" id="downloadDrop" href="#" role="button" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-cloud-download"></i>&nbsp;&nbsp;Download <b class="caret"></b></a>
-                    <ul class="dropdown-submenu">
-                      <li><a href="https://web.fulcrumapp.com/shares/fb96b48deb5cfb94.kml" id="raw-kml-download" download="" target="_blank" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-download"></i>&nbsp;&nbsp;Raw KML</a></li>
-                      <li><a href="https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/feed.kml" id="kml-feed-download" download="feed.kml" target="_blank" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-download"></i>&nbsp;&nbsp;KML Feed</a></li>
-                    </ul>
+            <div class="dropdown">
+              <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars fa-white"></i> <span id="view">Menu </span><b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a tabindex="-1" id="extent-btn" href="#" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-arrows-alt"></i> Feature Extent</a></li>
+                <li><a tabindex="-1" id="chart-btn" href="#" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-bar-chart"></i> Data Charts</a></li>
+                <li class="dropdown-submenu">
+                  <a tabindex="-1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-laptop"></i> <span id="view">Page Views </span><b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li><a tabindex="-1" href="#" data-toggle="collapse" data-target=".navbar-collapse.in" name="view" id="map-graph"><i class="fa fa-th-large"></i> Split View</a></li>
+                    <li><a tabindex="-1" href="#" data-toggle="collapse" data-target=".navbar-collapse.in" name="view" id="map-only"><i class="fa fa-globe"></i> Map View</a></li>
+                    <li><a tabindex="-1" href="#" data-toggle="collapse" data-target=".navbar-collapse.in" name="view" id="graph-only"><i class="fa fa-table"></i> Table View</a></li>
+                  </ul>
                 </li>
-                <li class="hidden" id="legend-item">
-                    <a href="#" id="legend-btn" data-toggle="collapse" data-target=".navbar-collapse.in" title="Show Legend"><i class="glyphicon glyphicon-list-alt"></i> Show Legend
-                      <span class="hidden-xs">
-                      </span>
-                      <span class="visible-xs">
-                        Show Legend
-                      </span>
-                  </a>
+                <li class="dropdown-subment">
+                  <a class="dropdown-toggle" id="downloadDrop" href="#" role="button" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-cloud-download"></i>&nbsp;&nbsp;Download <b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="https://web.fulcrumapp.com/shares/fb96b48deb5cfb94.kml" id="raw-kml-download" download="" target="_blank" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-download"></i>&nbsp;&nbsp;Raw KML</a></li>
+                    <li><a href="https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/feed.kml" id="kml-feed-download" download="feed.kml" target="_blank" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-download"></i>&nbsp;&nbsp;KML Feed</a></li>
+                  </ul>
                 </li>
-            </li>
-        </ul>
+              </ul>  
+              <li class="hidden" id="legend-item">
+                  <a href="#" id="legend-btn" data-toggle="collapse" data-target=".navbar-collapse.in" title="Show Legend"><i class="glyphicon glyphicon-list-alt"></i> Show Legend
+                    <span class="hidden-xs"></span><span class="visible-xs">Show Legend</span></a>
+              </li>
+            </div>  
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
 
     <div id="map-container">
       <div id="map"></div>
@@ -225,6 +232,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/6.0.7/highcharts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/6.0.7/highcharts-3d.js"></script>
     <!--script src="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js"></script-->
-   
   </body>
 </html>
