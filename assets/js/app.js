@@ -882,7 +882,7 @@ $("#download-pdf-btn").click(function() {
         bottom: 20
       },
       autotable: {
-        extendWidth: false,
+        extendWidth: true,
         overflow: "linebreak"
       }
     }
