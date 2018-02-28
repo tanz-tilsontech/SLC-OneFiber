@@ -31,7 +31,18 @@ var properties = [{
   }
 },
 {
-  value: "status",
+  value: "gps_directions_1",
+  label: "GPS Directions",
+  table: {
+    visible: false,
+    sortable: false
+  },
+  filter: {
+    type: "string"
+  }
+},
+{
+  value: "status_title",
   label: "Status",
   table: {
     visible: true,
@@ -718,6 +729,9 @@ function identifyFeature(id) {
     }
     if (typeof value == "string"  && (value.indexOf("mode=view") && value.indexOf("http") === 0 || value.indexOf("https") === 0)) {
       value = "<a href='" + value + "' target='_blank'>" + "View Record" + "</a>";
+    }
+    if (typeof value == "string"  && (value.indexOf("maps/search") && value.indexOf("http") === 0 || value.indexOf("https") === 0)) {
+      value = "<a href='" + value + "' target='_blank'>" + "GPS Directions" + "</a>";
     }
     $.each(properties, function(index, property) {
       if (key == property.value) {
