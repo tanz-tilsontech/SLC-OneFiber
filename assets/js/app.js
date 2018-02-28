@@ -688,7 +688,7 @@ function identifyFeature(id) {
     if (!value) {
       value = "";
     }
-    if (value.indexOf(edit-record) && (value.indexOf("http") === 0 || value.indexOf("https") === 0)) {
+    if (value.indexOf("edit-record") && (value.indexOf("http") === 0 || value.indexOf("https") === 0)) {
       value = "<a href='" + value + "' target='_blank'>" + "Edit Record" + "</a>";
     }
     $.each(properties, function(index, property) {
