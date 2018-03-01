@@ -304,7 +304,7 @@ function drawCharts() {
     var chart = c3.generate({
         bindto: "#hub-status-chart",
         data: {
-          type: "pie",
+          type: "bar",
           columns: columns
         }
     });
