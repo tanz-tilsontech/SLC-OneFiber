@@ -280,12 +280,9 @@ function drawCharts() {
 
   // HUB FOOTAGE
   $(function() {
-    var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ?", [features]);
+    var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? GROUP BY hub", [features]);
     var columns1 = $.map(result, function(hub) {
       return [[hub.label, hub.footage]];
-    });
-    var columns2 = $.map(result, function(hub) {
-      return [hub.label];
     });
     var chart = c3.generate({
         bindto: "#hub-footage-chart",
@@ -297,7 +294,7 @@ function drawCharts() {
         axis: {
           x: {
             type: 'category',
-            categories: columns2
+            categories: "Cable Placement Footage"
           }
         }
     });
