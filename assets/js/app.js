@@ -287,7 +287,6 @@ function drawCharts() {
     var columns2 = $.map(result, function(hub) {
       return [hub.label];
     });
-    var hub = hub.label
     var chart = c3.generate({
         bindto: "#hub-footage-chart",
         data: {
