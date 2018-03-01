@@ -265,7 +265,7 @@ var properties = [{
 function drawCharts() {
   // HUB COMPLETE
   $(function() {
-    var result = alasql("SELECT hub AS label, COUNT(CASE WHEN cable_placement_pass_date_qc_final is null THEN 0 ELSE 1) AS total FROM ? GROUP BY hub", [features]);
+    var result = alasql("SELECT hub AS label, COUNT(CASE WHEN cable_placement_total_footage_cx_final::NUMBER is null THEN 0 ELSE 1) AS total FROM ? GROUP BY hub", [features]);
     var columns = $.map(result, function(status) {
       return [[status.label, status.total]];
     });
