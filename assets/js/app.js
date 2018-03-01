@@ -280,7 +280,7 @@ function drawCharts() {
 
   // HUB FOOTAGE
   $(function() {
-    var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? GROUP BY hub", [features]);
+    var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ?", [features]);
     var columns1 = $.map(result, function(hub) {
       return [[hub.label, hub.footage]];
     });
