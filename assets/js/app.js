@@ -294,7 +294,7 @@ function drawCharts() {
         axis: {
           x: {
             type: 'category',
-            categories: "Cable Placement Footage"
+            categories: ["Cable Footage"]
           }
         }
     });
