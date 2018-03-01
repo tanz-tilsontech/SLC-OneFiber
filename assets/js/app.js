@@ -297,14 +297,14 @@ function drawCharts() {
 
   // HUB STATUS 
   $(function() {
-    var result = alasql("SELECT hub AS label, COUNT(status) AS total FROM ? GROUP BY hub, status", [features]);
+    var result = alasql("SELECT status AS label, COUNT(status) AS total FROM ? GROUP BY status", [features]);
     var columns = $.map(result, function(status) {
       return [[status.label, status.total]];
     });
     var chart = c3.generate({
         bindto: "#hub-status-chart",
         data: {
-          type: "bar",
+          type: "pie",
           columns: columns
         }
     });
