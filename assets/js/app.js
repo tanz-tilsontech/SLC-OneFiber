@@ -284,12 +284,19 @@ function drawCharts() {
     var columns = $.map(result, function(hub) {
       return [[hub.label, hub.footage]];
     });
+    var hub = hub.label
     var chart = c3.generate({
         bindto: "#hub-footage-chart",
         data: {
 
           type: "bar",
           columns: columns
+        },
+        axis: {
+          x: {
+            type: 'category',
+            categories: hub
+          }
         }
     });
   });
