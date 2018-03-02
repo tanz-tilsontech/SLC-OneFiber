@@ -278,7 +278,30 @@ function drawCharts() {
     });
   });
 
-  // HUB FOOTAGE
+  // HUB TOTAL FOOTAGE
+  $(function() {
+    var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? GROUP BY hub", [features]);
+    var columns1 = $.map(result, function(hub) {
+      return [[hub.label, hub.footage]];
+    });
+    var chart = c3.generate({
+        bindto: "#hub-footage-chart",
+        data: {
+
+          type: "bar",
+          columns: columns1
+        },
+        axis: {
+          x: {
+            type: 'category',
+            categories: ["Cable Footage"]
+          }
+        }
+    });
+  });
+
+
+    // HUB MONTHLY FOOTAGE
   $(function() {
     var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? GROUP BY hub", [features]);
     var columns1 = $.map(result, function(hub) {
@@ -824,6 +847,12 @@ $("#filter-btn").click(function() {
 
 $("#chart-btn").click(function() {
   $("#chartModal").modal("show");
+  $(".navbar-collapse.in").collapse("hide");
+  return false;
+});
+
+$("#sheets-btn").click(function() {
+  $("#sheetsModal").modal("show");
   $(".navbar-collapse.in").collapse("hide");
   return false;
 });
