@@ -961,22 +961,21 @@ $(document).ready(function() {
   initializeTabletopObject2();
 
   function writeTable2(data) {
-    $("#graphic2").bootstrapTable({
-      cache: false,
-      height: $("#table-container").height(),
-      undefinedText: "",
-      striped: false,
-      pagination: false,
-      minimumCountColumns: 1,
-      sortName: config.sortProperty,
-      sortOrder: config.sortOrder,
-      toolbar: "#toolbar",
-      search: true,
-      trimOnSearch: false,
-      showColumns: true,
-      showToggle: true,
-      columns: columns2,
-      data: data,
+    //select main div and put a table there
+    //use bootstrap css to customize table style: http://getbootstrap.com/css/#tables
+    $('#graphic2').html(
+      '<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-condensed table-responsive" id="mySelection"></table>'
+    );
+
+    //initialize the DataTable object and put settings in
+    $("#mySelection").DataTable({
+      "autoWidth": false,
+      "data": data,
+      "columns": columns2,
+      "order": false,
+      "pagingType": "simple",
+      "paging": false,
+      "searching": false,
     });
   }
 });
