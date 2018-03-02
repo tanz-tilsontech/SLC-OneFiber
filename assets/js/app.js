@@ -972,7 +972,7 @@ $(document).ready(function() {
       "autoWidth": true,
       "data": data,
       "columns": columns2,
-      "pagingType": "simple" //no page numbers
+      "pagingType": "simple", //no page numbers
         //uncomment these options to simplify your table
       "paging": false,
       "searching": false,
