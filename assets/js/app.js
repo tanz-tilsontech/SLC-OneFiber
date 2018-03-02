@@ -831,12 +831,6 @@ var columns = [{
   "data": "site",
   "title": "SITE NAME"
 }, {
-  "data": "start_date",
-  "title": "START DATE"
-}, {
-  "data": "complete_date",
-  "title": "COMPLETE DATE"
-}, {
   "data": "cable_footage",
   "title": "CABLE FOOTAGE"
 }, {
@@ -868,7 +862,7 @@ $(document).ready(function() {
 
     //initialize the DataTable object and put settings in
     $("#mySelection").DataTable({
-      "autoWidth": false,
+      "autoWidth": true,
       "data": data,
       "columns": columns,
       "order": [
