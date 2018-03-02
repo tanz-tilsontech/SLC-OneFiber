@@ -890,56 +890,59 @@ var key2 =
 //punctuation or numbers in your column name
 //"title" is the column name you want to appear in the published table
 var columns2 = [{
+  "data": "type",
+  "title": "TYPE"
+}, {
   "data": "month_1",
-  "title": "JANUARY 2018"
+  "title": "JAN '18"
 }, {
   "data": "month_2",
-  "title": "FEBRUARY 2018"
+  "title": "FEB '18"
 }, {
   "data": "month_3",
-  "title": "MARCH 2018"
+  "title": "MAR '18"
 }, {
   "data": "month_4",
-  "title": "APRIL 2018"
+  "title": "APR '18"
 }, {
   "data": "month_5",
-  "title": "MAY 2018"
+  "title": "MAY '18"
   }, {
   "data": "month_6",
-  "title": "JUNE 2018"
+  "title": "JUN '18"
 }, {
   "data": "month_7",
-  "title": "JULY 2018"
+  "title": "JUL '18"
 }, {
   "data": "month_8",
-  "title": "AUGUST 2018"
+  "title": "AUG '18"
 }, {
   "data": "month_9",
-  "title": "SEPTEMBER 2018"
+  "title": "SEP '18"
   }, {
   "data": "month_10",
-  "title": "OCTOBER 2018"
+  "title": "OCT '18"
 }, {
   "data": "month_11",
-  "title": "NOVEMBER 2018"
+  "title": "NOV '18"
 }, {
   "data": "month_12",
-  "title": "DECEMBER 2018"
+  "title": "DEC '18"
 }, {
   "data": "month_13",
-  "title": "JANUARY 2019"
+  "title": "JAN '19"
   }, {
   "data": "month_14",
-  "title": "FEBRUARY 2019"
+  "title": "FEB '19"
 }, {
   "data": "month_15",
-  "title": "MARCH 2019"
+  "title": "MAR '19"
 }, {
   "data": "month_16",
-  "title": "APRIL 2019"
+  "title": "APR '19"
 }, {
   "data": "month_17",
-  "title": "MAY 2019"
+  "title": "MAY '19"
 }];
 
 $(document).ready(function() {
