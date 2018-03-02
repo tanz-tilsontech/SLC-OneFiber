@@ -972,14 +972,10 @@ $(document).ready(function() {
       "autoWidth": true,
       "data": data,
       "columns": columns2,
-      "order": [
-        [2, "desc"]
-      ], //order on second column
-      "pagingType": "simple", //no page numbers
-        //uncomment these options to simplify your table
+      "order": false,
+      "pagingType": "simple",
       "paging": false,
       "searching": false,
-        //"info": false
     });
   }
 });
