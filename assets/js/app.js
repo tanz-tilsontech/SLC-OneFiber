@@ -815,13 +815,13 @@ L.easyPrint({
 //Edit 'key' and 'columns' to connect your spreadsheet
 
 //enter google sheets key here
-var key =
+var key1 =
   "https://docs.google.com/spreadsheets/d/1yNyg2grJYCICN0g_UkYuQXtTEZ_EFBVtXv--r9tc6oI/edit?usp=sharing";
 
 //"data" refers to the column name with no spaces and no capitals
 //punctuation or numbers in your column name
 //"title" is the column name you want to appear in the published table
-var columns = [{
+var columns1 = [{
   "data": "hub",
   "title": "HUB"
 }, {
@@ -840,9 +840,9 @@ var columns = [{
 
 $(document).ready(function() {
 
-  function initializeTabletopObject() {
+  function initializeTabletopObject1() {
     Tabletop.init({
-      key: key,
+      key: key1,
       callback: function(data, tabletop) {
         writeTable(data); //call up datatables function
       },
@@ -851,9 +851,9 @@ $(document).ready(function() {
     });
   }
 
-  initializeTabletopObject();
+  initializeTabletopObject1();
 
-  function writeTable(data) {
+  function writeTable1(data) {
     //select main div and put a table there
     //use bootstrap css to customize table style: http://getbootstrap.com/css/#tables
     $('#graphic').html(
@@ -864,7 +864,111 @@ $(document).ready(function() {
     $("#mySelection").DataTable({
       "autoWidth": true,
       "data": data,
-      "columns": columns,
+      "columns": columns1,
+      "order": [
+        [2, "desc"]
+      ], //order on second column
+      "pagingType": "simple" //no page numbers
+        //uncomment these options to simplify your table
+        //"paging": false,
+        //"searching": false,
+        //"info": false
+    });
+  }
+});
+//end of writeTable
+
+
+
+//Edit 'key' and 'columns' to connect your spreadsheet
+
+//enter google sheets key here
+var key2 =
+  "https://docs.google.com/spreadsheets/d/1deiny4hY9c3aYyrXNC-vnK1b1FmFJmq2Hcm6w0nNMv4/edit?usp=sharing";
+
+//"data" refers to the column name with no spaces and no capitals
+//punctuation or numbers in your column name
+//"title" is the column name you want to appear in the published table
+var columns2 = [{
+  "data": "month_1",
+  "title": "JANUARY 2018"
+}, {
+  "data": "month_2",
+  "title": "FEBRUARY 2018"
+}, {
+  "data": "month_3",
+  "title": "MARCH 2018"
+}, {
+  "data": "month_4",
+  "title": "APRIL 2018"
+}, {
+  "data": "month_5",
+  "title": "MAY 2018"
+  }, {
+  "data": "month_6",
+  "title": "JUNE 2018"
+}, {
+  "data": "month_7",
+  "title": "JULY 2018"
+}, {
+  "data": "month_8",
+  "title": "AUGUST 2018"
+}, {
+  "data": "month_9",
+  "title": "SEPTEMBER 2018"
+  }, {
+  "data": "month_10",
+  "title": "OCTOBER 2018"
+}, {
+  "data": "month_11",
+  "title": "NOVEMBER 2018"
+}, {
+  "data": "month_12",
+  "title": "DECEMBER 2018"
+}, {
+  "data": "month_13",
+  "title": "JANUARY 2019"
+  }, {
+  "data": "month_14",
+  "title": "FEBRUARY 2019"
+}, {
+  "data": "month_15",
+  "title": "MARCH 2019"
+}, {
+  "data": "month_16",
+  "title": "APRIL 2019"
+}, {
+  "data": "month_17",
+  "title": "MAY 2019"
+}];
+
+$(document).ready(function() {
+
+  function initializeTabletopObject2() {
+    Tabletop.init({
+      key: key2,
+      callback: function(data, tabletop) {
+        writeTable(data); //call up datatables function
+      },
+      simpleSheet: true,
+      debug: false
+    });
+  }
+
+  initializeTabletopObject2();
+
+  function writeTable2(data) {
+    //select main div and put a table there
+    //use bootstrap css to customize table style: http://getbootstrap.com/css/#tables
+    $('#graphic').html(
+      '<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-condensed table-responsive" id="mySelection"></table>'
+    );
+
+    //initialize the DataTable object and put settings in
+    $("#mySelection").DataTable({
+      "autoWidth": true,
+      "data": data,
+      "columns": columns2,
       "order": [
         [2, "desc"]
       ], //order on second column
@@ -919,8 +1023,14 @@ $("#chart-btn").click(function() {
   return false;
 });
 
-$("#sheets-btn").click(function() {
-  $("#sheets-modal").modal("show");
+$("#sites-btn").click(function() {
+  $("#sites-modal").modal("show");
+  $(".navbar-collapse.in").collapse("hide");
+  return false;
+});
+
+$("#monthly-btn").click(function() {
+  $("#monthly-modal").modal("show");
   $(".navbar-collapse.in").collapse("hide");
   return false;
 });
