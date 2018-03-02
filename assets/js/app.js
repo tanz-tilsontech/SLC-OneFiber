@@ -1,1112 +1,272 @@
-var config = {
-  geojson: "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94.geojson",
-  title: "SLC OneFiber Construction",
-  layerName: "Segments",
-  hoverProperty: "status_title_github",
-  sortProperty: "fqnid",
-  sortOrder: "ascend"
-};
-
-var properties = [{
-  value: "fulcrum_id",
-  label: "Record ID",
-  table: {
-    visible: false,
-    sortable: true
-  },
-  filter: {
-    type: "string"
-  },
-  info: false
-},
-{
-  value: "gps_directions_1",
-  label: "GPS Directions",
-  table: {
-    visible: false,
-    sortable: false
-  },
-  filter: {
-    type: "string"
-  }
-},
-{
-  value: "status_title",
-  label: "Status",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string",
-    input: "checkbox",
-    vertical: true,
-    multiple: true,
-    operators: ["in", "not_in", "equal", "not_equal"],
-    values: []
-  }
-},
-{
-  value: "hub",
-  label: "Hub",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string",
-    input: "checkbox",
-    vertical: true,
-    multiple: true,
-    operators: ["in", "not_in", "equal", "not_equal"],
-    values: []
-  }
-},
-{
-  value: "site",
-  label: "Site",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string",
-    input: "checkbox",
-    vertical: true,
-    multiple: true,
-    operators: ["in", "not_in", "equal", "not_equal"],
-    values: []
-  }
-},
-{
-  value: "wpid",
-  label: "WPID",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string",
-    input: "checkbox",
-    vertical: true,
-    multiple: true,
-    operators: ["in", "not_in", "equal", "not_equal"],
-    values: []
-  }
-},
-{
-  value: "fqnid",
-  label: "FQNID",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string"
-  }
-},
-{
-  value: "ntp_date",
-  label: "Proposed Start Date",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "date"
-  }
-},
-{
-  value: "proposed_type",
-  label: "Proposed Type",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string"
-  }
-},
-{
-  value: "proposed_product",
-  label: "Proposed Product",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string"
-  }
-},
-{
-  value: "proposed_footage",
-  label: "Proposed Footage",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "integer",
-  }
-},
-{
-  value: "construction_type_cx_final",
-  label: "Construction Type",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string"
-  }
-},
-{
-  value: "construction_start_date_cx_final",
-  label: "Construction Start Date",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "date"
-  }
-},
-{
-  value: "construction_complete_date_cx_final",
-  label: "Construction Complete Date",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "date"
-  }
-},
-{
-  value: "construction_pass_date_qc_final",
-  label: "Construction QC Pass Date",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "date"
-  }
-},
-{
-  value: "construction_footage_cx_final",
-  label: "Construction Total Footage",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "integer",
-  }
-},
-{
-  value: "cable_placement_type_final",
-  label: "Cable Placement Type",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string"
-  }
-},
-{
-  value: "cable_placement_start_date_cx_final",
-  label: "Cable Placement Start Date",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "date"
-  }
-},
-{
-  value: "cable_placement_complete_date_cx_final",
-  label: "Cable Placement Complete Date",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "date"
-  }
-},
-{
-  value: "cable_placement_pass_date_qc_final",
-  label: "Cable Placement QC Pass Date",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "date"
-  }
-},
-{
-  value: "cable_placement_total_footage_cx_final",
-  label: "Cable Placement Total Footage",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "integer",
-  },
-}];
-
-
-
-function drawCharts() {
-  // HUB COMPLETE
-  $(function() {
-    var result = alasql("SELECT hub AS label, COUNT(NULLIF(cable_placement_total_footage_cx_final::NUMBER,0)) AS total FROM ? GROUP BY hub", [features]);
-    var columns = $.map(result, function(status) {
-      return [[status.label, status.total]];
-    });
-    var chart = c3.generate({
-        bindto: "#hub-complete-chart",
-        data: {
-          type: "gauge",
-          columns: columns
-        }
-    });
-  });
-
-  // HUB TOTAL FOOTAGE
-  $(function() {
-    var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? GROUP BY hub", [features]);
-    var columns1 = $.map(result, function(hub) {
-      return [[hub.label, hub.footage]];
-    });
-    var chart = c3.generate({
-        bindto: "#hub-footage-chart",
-        data: {
-
-          type: "bar",
-          columns: columns1
-        },
-        axis: {
-          x: {
-            type: 'category',
-            categories: ["Cable Footage"]
-          }
-        }
-    });
-  });
-
-
-    // HUB MONTHLY FOOTAGE
-  $(function() {
-    var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? GROUP BY hub", [features]);
-    var columns1 = $.map(result, function(hub) {
-      return [[hub.label, hub.footage]];
-    });
-    var chart = c3.generate({
-        bindto: "#hub-footage-chart",
-        data: {
-
-          type: "bar",
-          columns: columns1
-        },
-        axis: {
-          x: {
-            type: 'category',
-            categories: ["Cable Footage"]
-          }
-        }
-    });
-  });
-
-
-  // HUB STATUS 
-  $(function() {
-    var result = alasql("SELECT status AS label, COUNT(status) AS total FROM ? GROUP BY status", [features]);
-    var columns = $.map(result, function(status) {
-      return [[status.label, status.total]];
-    });
-    var chart = c3.generate({
-        bindto: "#hub-status-chart",
-        data: {
-          type: "pie",
-          columns: columns
-        }
-    });
-  });
-}
-
-$(function() {
-  $(".title").html(config.title);
-  $("#layer-name").html(config.layerName);
-  $("#layer-name2").html("SLC LLD Route");
-});
-
-function buildConfig() {
-  filters = [];
-  table = [{
-    field: "action",
-    title: "<i class='fa fa-gear'></i>&nbsp;Action",
-    align: "center",
-    valign: "middle",
-    width: "75px",
-    cardVisible: false,
-    switchable: false,
-    formatter: function(value, row, index) {
-      return [
-        '<a class="zoom" href="javascript:void(0)" title="Zoom" style="margin-right: 10px;">',
-          '<i class="fa fa-search-plus"></i>',
-        '</a>',
-        '<a class="identify" href="javascript:void(0)" title="Identify" style="margin-right: 10px;">',
-          '<i class="fa fa-info-circle"></i>',
-        '</a>'
-      ].join("");
-    },
-    events: {
-      "click .zoom": function (e, value, row, index) {
-        var layer = featureLayer.getLayer(row.leaflet_stamp);
-        map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 19);
-        highlightLayer.clearLayers();
-        highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
-      },
-      "click .identify": function (e, value, row, index) {
-        identifyFeature(row.leaflet_stamp);
-        highlightLayer.clearLayers();
-        highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
-      }
-    }
-  }];
-
-  $.each(properties, function(index, value) {
-    // Filter config
-    if (value.filter) {
-      var id;
-      if (value.filter.type == "integer") {
-        id = "cast(properties->"+ value.value +" as int)";
-      }
-      else if (value.filter.type == "double") {
-        id = "cast(properties->"+ value.value +" as double)";
-      }
-      else {
-        id = "properties->" + value.value;
-      }
-      filters.push({
-        id: id,
-        label: value.label
-      });
-      $.each(value.filter, function(key, val) {
-        if (filters[index]) {
-          // If values array is empty, fetch all distinct values
-          if (key == "values" && val.length === 0) {
-            alasql("SELECT DISTINCT(properties->"+value.value+") AS field FROM ? ORDER BY field ASC", [geojson.features], function(results){
-              distinctValues = [];
-              $.each(results, function(index, value) {
-                distinctValues.push(value.field);
-              });
-            });
-            filters[index].values = distinctValues;
-          } else {
-            filters[index][key] = val;
-          }
-        }
-      });
-    }
-    // Table config
-    if (value.table) {
-      table.push({
-        field: value.value,
-        title: value.label
-      });
-      $.each(value.table, function(key, val) {
-        if (table[index+1]) {
-          table[index+1][key] = val;
-        }
-      });
-    }
-  });
-
-  buildFilters();
-  buildTable();
-}
-
-// Basemap Layers
-var mapboxOSM = L.tileLayer('http://{s}.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZWNvdHJ1c3QiLCJhIjoibGo4TG5nOCJ9.QJnT2dgjL4_4EA7WlK8Zkw', {
-    maxZoom: 20
-});
-
-
-var mapboxSat = L.tileLayer('https://api.mapbox.com/v4/cfritz1387.573ca1ee/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiY2ZyaXR6MTM4NyIsImEiOiJjaWphZTZ0eHkwMDVwdWlseGx5aWhhbXlwIn0._lgb3vbGMSx1-jdZCufdgg', {
-    maxZoom: 20
-});
-
-
-var SLCLLDRoute = L.tileLayer('http://ttm-tileify-proxy.herokuapp.com/tiles/{z}/{x}/{y}?url=https%3A%2F%2Ftilsonweb.3-gislive.com%2Farcgis%2Frest%2Fservices%2FSLClld%2FTilsonslc_lld%2FMapServer&transparent=true&layers=show%3A3%2C10%2C31%2C44%2C47%2C49', {
-    maxZoom: 20
-});
-
-
-var highlightLayer = L.geoJson(null, {
-  pointToLayer: function (feature, latlng) {
-    return L.circleMarker(latlng, {
-      radius: 5,
-      color: "#FFF",
-      weight: 2,
-      opacity: 1,
-      fillColor: "#00FFFF",
-      fillOpacity: 1,
-      clickable: false
-    });
-  },
-  style: function (feature) {
-    return {
-      color: "#00FFFF",
-      weight: 2,
-      opacity: 1,
-      fillColor: "#00FFFF",
-      fillOpacity: 0.5,
-      clickable: false
-    };
-  }
-});
-
-
-var featureLayer = L.geoJson(null, {
-  filter: function(feature, layer) {
-    return feature.geometry.coordinates[0] !== 0 && feature.geometry.coordinates[1] !== 0;
-  },
-  pointToLayer: function (feature, latlng) {
-    return L.marker(latlng, {
-      title: feature.properties["status_title_github"],
-      riseOnHover: true,
-      icon: L.icon({
-        iconUrl: "assets/pictures/markers/cb0d0c.png",
-        iconSize: [30, 40],
-        iconAnchor: [15, 32]
-      })
-    });
-  },
-  onEachFeature: function (feature, layer) {
-    if (feature.properties) {
-      layer.on({
-        click: function (e) {
-          identifyFeature(L.stamp(layer));
-          highlightLayer.clearLayers();
-          highlightLayer.addData(featureLayer.getLayer(L.stamp(layer)).toGeoJSON());
-        },
-        mouseover: function (e) {
-          if (config.hoverProperty) {
-            $(".info-control").html(feature.properties[config.hoverProperty]);
-            $(".info-control").show();
-          }
-        },
-        mouseout: function (e) {
-          $(".info-control").hide();
-        }
-      });
-      if (feature.properties["marker-color"]) {
-        layer.setIcon(
-          L.icon({
-            iconUrl: "assets/pictures/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
-            iconSize: [30, 40],
-            iconAnchor: [15, 32]
-          })
-        );
-      }
-    }
-  }
-});
-
-
-// Fetch the GeoJSON file
-
-$.getJSON(config.geojson, function (data) {
-  geojson = data;
-  features = $.map(geojson.features, function(feature) {
-    return feature.properties;
-  });
-  featureLayer.addData(data);
-  buildConfig();
-  $("#loading-mask").hide();
-  var style = {
-    "property": "status",
-    "values": {
-      "Segment Ready": "https://image.ibb.co/iXHCyH/1891c9.png",
-      "Segment Not Ready": "https://image.ibb.co/hk21sc/242424.png",
-      "Construction Started": "https://image.ibb.co/mC5Akx/ffd300.png",
-      "Constractor CX QC": "https://image.ibb.co/hHRSXc/b3b3b3.png",
-      "Tilson CX QC": "https://image.ibb.co/c3TVkx/ff8819.png",
-      "Construction Fix": "https://image.ibb.co/cen1sc/cb0d0c.png",
-      "Cable Placement Ready": "https://image.ibb.co/iXHCyH/1891c9.png",
-      "Cable Placement Started": "https://image.ibb.co/mC5Akx/ffd300.png",
-      "Contractor CP QC": "https://image.ibb.co/hHRSXc/b3b3b3.png",
-      "Tilson CP QC": "https://image.ibb.co/c3TVkx/ff8819.png",
-      "Cable Placement Fix": "https://image.ibb.co/cen1sc/cb0d0c.png",
-      "Splicing/Testing Pending": "https://image.ibb.co/hxOkJH/87d30f.png"
-    }
-  }
-  JSON.stringify(style);
-  if (style.property && style.values) {
-    $("#legend-item").removeClass("hidden");
-    $("#legend-title").html(style.property.toUpperCase().replace(/_/g, " "));
-    $.each(style.values, function(property, value) {
-      if (value.startsWith("http")) {
-        $("#legend").append("<p><img src='" + value + "'></i> " + property + "</p>");
-      } else {
-        $("#legend").append("<p><i style='background:" + value + "'></i> " + property + "</p>");
-      }
-    });
-  }
-});
-
-var map = L.map("map", {
-  layers: [mapboxOSM, SLCLLDRoute, featureLayer, highlightLayer]
-}).fitWorld();
-
-
-// ESRI geocoder
-var searchControl = L.esri.Geocoding.Controls.geosearch({
-  useMapBounds: 17
-}).addTo(map);
-
-// Info control
-var info = L.control({
-  position: "bottomleft"
-});
-
-// Custom info hover control
-info.onAdd = function (map) {
-  this._div = L.DomUtil.create("div", "info-control");
-  this.update();
-  return this._div;
-};
-info.update = function (props) {
-  this._div.innerHTML = "";
-};
-info.addTo(map);
-$(".info-control").hide();
-
-// Larger screens get expanded layer control
-if (document.body.clientWidth <= 767) {
-  isCollapsed = true;
-} else {
-  isCollapsed = false;
-}
-var baseLayers = {
-  "Street Map": mapboxOSM,
-  "Satellite Map": mapboxSat,
-  "SLC LLD Route": SLCLLDRoute,
-};
-var overlayLayers = {
-  "<span id='layer-name'>GeoJSON Layer</span>": featureLayer,
-  "<span id='layer-name2'>GeoJSON Layer</span>": SLCLLDRoute,
-};
-
-
-var layerControl = L.control.layers(baseLayers, overlayLayers, {
-  collapsed: isCollapsed
-}).addTo(map);
-
-// Filter table to only show features in current map bounds
-map.on("moveend", function (e) {
-  syncTable();
-});
-
-map.on("click", function(e) {
-  highlightLayer.clearLayers();
-});
-
-// Table formatter to make links clickable
-function urlFormatter (value, row, index) {
-  if (typeof value == "string" && (value.indexOf("http") === 0 || value.indexOf("https") === 0)) {
-    return "<a href='"+value+"' target='_blank'>"+value+"</a>";
-  }
-}
-
-
-function buildFilters() {
-  $("#query-builder").queryBuilder({
-    allow_empty: true,
-    filters: filters
-  });
-}
-
-
-function dateFilter() {
-  var rules_widgets = {
-    condition: 'OR',
-    rules: [{
-      id: 'date',
-      operator: 'equal',
-      value: '1991/11/17'
-    }]
-  };
-$('#query-builder').queryBuilder({
-    plugins: ['bt-tooltip-errors'],
-    filters: [{
-      id: 'date',
-      label: 'Datepicker',
-      type: 'date',
-      validation: {
-        format: 'YYYY/MM/DD'
-      },
-      plugin: 'datepicker',
-      plugin_config: {
-        format: 'yyyy/mm/dd',
-        todayBtn: 'linked',
-        todayHighlight: true,
-        autoclose: true
-      }
-    }],
-  });
-  rules: rules_widgets
-}
-
-
-function applyFilter() {
-  var query = "SELECT * FROM ?";
-  var sql = $("#query-builder").queryBuilder("getSQL", false, false).sql;
-  if (sql.length > 0) {
-    query += " WHERE " + sql;
-  }
-  alasql(query, [geojson.features], function(features){
-    featureLayer.clearLayers();
-    featureLayer.addData(features);
-    syncTable();
-  });
-}
-
-function buildTable() {
-  $("#table").bootstrapTable({
-    cache: false,
-    height: $("#table-container").height(),
-    undefinedText: "",
-    striped: false,
-    pagination: false,
-    minimumCountColumns: 1,
-    sortName: config.sortProperty,
-    sortOrder: config.sortOrder,
-    toolbar: "#toolbar",
-    search: true,
-    trimOnSearch: false,
-    showColumns: true,
-    showToggle: true,
-    columns: table,
-    onClickRow: function(row, $element) {
-      var layer = featureLayer.getLayer(row.leaflet_stamp);
-      map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 19);
-      highlightLayer.clearLayers();
-      highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
-    },
-    onDblClickRow: function(row) {
-      identifyFeature(row.leaflet_stamp);
-      highlightLayer.clearLayers();
-      highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
-    },
-  });
-
-  map.fitBounds(featureLayer.getBounds());
-
-  $(window).resize(function () {
-    $("#table").bootstrapTable("resetView", {
-      height: $("#table-container").height()
-    });
-  });
-}
-
-function syncTable() {
-  tableFeatures = [];
-  featureLayer.eachLayer(function (layer) {
-    layer.feature.properties.leaflet_stamp = L.stamp(layer);
-    if (map.hasLayer(featureLayer)) {
-      featureLayer.getLayer()
-      layer.feature.geometry.type === "Point"
-      if (map.getBounds().contains(layer.getLatLng())) {
-        tableFeatures.push(layer.feature.properties);
-      }
-    }
-  });
-  $("#table").bootstrapTable("load", JSON.parse(JSON.stringify(tableFeatures)));
-  var featureCount = $("#table").bootstrapTable("getData").length;
-  if (featureCount == 1) {
-    $("#feature-count").html($("#table").bootstrapTable("getData").length + " visible feature");
-  } else {
-    $("#feature-count").html($("#table").bootstrapTable("getData").length + " visible features");
-  }
-}
-
-function identifyFeature(id) {
-  var featureProperties = featureLayer.getLayer(id).feature.properties;
-  var content = "<table class='table table-striped table-bordered table-condensed'>";
-  $.each(featureProperties, function(key, value) {
-    if (!value) {
-      value = "";
-    }
-    if (typeof value == "string"  && value.indexOf("https://www.google") === 0) {
-      value = "<a href='" + value + "' target='_blank'>" + "GPS Directions" + "</a>";
-    }
-    $.each(properties, function(index, property) {
-      if (key == property.value) {
-        if (property.info !== false) {
-          content += "<tr><th>" + property.label + "</th><td>" + value + "</td></tr>";
-        }
-      }
-    });
-  });
-  content += "<table>";
-  $("#feature-info").html(content);
-  $("#featureModal").modal("show");
-}
-
-function switchView(view) {
-  if (view == "split") {
-    $("#view").html("Split View");
-    location.hash = "#split";
-    $("#table-container").show();
-    $("#table-container").css("height", "55%");
-    $("#map-container").show();
-    $("#map-container").css("height", "45%");
-    $(window).resize();
-    if (map) {
-      map.invalidateSize();
-    }
-  } else if (view == "map") {
-    $("#view").html("Map View");
-    location.hash = "#map";
-    $("#map-container").show();
-    $("#map-container").css("height", "100%");
-    $("#table-container").hide();
-    if (map) {
-      map.invalidateSize();
-    }
-  } else if (view == "table") {
-    $("#view").html("Table View");
-    location.hash = "#table";
-    $("#table-container").show();
-    $("#table-container").css("height", "100%");
-    $("#map-container").hide();
-    $(window).resize();
-  }
-}
-
-$("[name='view']").click(function() {
-  $(".in,.open").removeClass("in open");
-  if (this.id === "map-graph") {
-    switchView("split");
-    return false;
-  } else if (this.id === "map-only") {
-    switchView("map");
-    return false;
-  } else if (this.id === "graph-only") {
-    switchView("table");
-    return false;
-  }
-});
-
-L.easyPrint({
-  title: 'Print',
-  elementsToHide: 'p, h2, .gitButton'
-}).addTo(map)
-
-
-//Edit 'key' and 'columns' to connect your spreadsheet
-
-//enter google sheets key here
-var key1 =
-  "https://docs.google.com/spreadsheets/d/1yNyg2grJYCICN0g_UkYuQXtTEZ_EFBVtXv--r9tc6oI/edit?usp=sharing";
-
-//"data" refers to the column name with no spaces and no capitals
-//punctuation or numbers in your column name
-//"title" is the column name you want to appear in the published table
-var columns1 = [{
-  "data": "hub",
-  "title": "HUB"
-}, {
-  "data": "nfid",
-  "title": "SITE NFID"
-}, {
-  "data": "site",
-  "title": "SITE NAME"
-}, {
-  "data": "cable_footage",
-  "title": "CABLE FOOTAGE"
-}, {
-  "data": "complete_percent",
-  "title": "COMPLETE PERCENT"
-}];
-
-$(document).ready(function() {
-
-  function initializeTabletopObject1() {
-    Tabletop.init({
-      key: key1,
-      callback: function(data, tabletop) {
-        writeTable1(data); //call up datatables function
-      },
-      simpleSheet: true,
-      debug: false
-    });
-  }
-
-  initializeTabletopObject1();
-
-  function writeTable1(data) {
-    //select main div and put a table there
-    //use bootstrap css to customize table style: http://getbootstrap.com/css/#tables
-    $('#graphic1').html(
-      '<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-condensed table-responsive" id="mySelection"></table>'
-    );
-
-    //initialize the DataTable object and put settings in
-    $("#mySelection").DataTable({
-      "autoWidth": true,
-      "data": data,
-      "columns": columns1,
-      "order": [
-        [2, "desc"]
-      ], //order on second column
-      "pagingType": "simple" //no page numbers
-        //uncomment these options to simplify your table
-        //"paging": false,
-        //"searching": false,
-        //"info": false
-    });
-  }
-});
-//end of writeTable
-
-
-
-//Edit 'key' and 'columns' to connect your spreadsheet
-
-//enter google sheets key here
-var key2 =
-  "https://docs.google.com/spreadsheets/d/1deiny4hY9c3aYyrXNC-vnK1b1FmFJmq2Hcm6w0nNMv4/edit?usp=sharing";
-
-//"data" refers to the column name with no spaces and no capitals
-//punctuation or numbers in your column name
-//"title" is the column name you want to appear in the published table
-var columns2 = [{
-  "data": "type",
-  "title": "TYPE"
-}, {
-  "data": "month_1",
-  "title": "JAN '18"
-}, {
-  "data": "month_2",
-  "title": "FEB '18"
-}, {
-  "data": "month_3",
-  "title": "MAR '18"
-}, {
-  "data": "month_4",
-  "title": "APR '18"
-}, {
-  "data": "month_5",
-  "title": "MAY '18"
-  }, {
-  "data": "month_6",
-  "title": "JUN '18"
-}, {
-  "data": "month_7",
-  "title": "JUL '18"
-}, {
-  "data": "month_8",
-  "title": "AUG '18"
-}, {
-  "data": "month_9",
-  "title": "SEP '18"
-  }, {
-  "data": "month_10",
-  "title": "OCT '18"
-}, {
-  "data": "month_11",
-  "title": "NOV '18"
-}, {
-  "data": "month_12",
-  "title": "DEC '18"
-}, {
-  "data": "month_13",
-  "title": "JAN '19"
-  }, {
-  "data": "month_14",
-  "title": "FEB '19"
-}, {
-  "data": "month_15",
-  "title": "MAR '19"
-}, {
-  "data": "month_16",
-  "title": "APR '19"
-}, {
-  "data": "month_17",
-  "title": "MAY '19"
-}];
-
-$(document).ready(function() {
-
-  function initializeTabletopObject2() {
-    Tabletop.init({
-      key: key2,
-      callback: function(data, tabletop) {
-        writeTable2(data); //call up datatables function
-      },
-      simpleSheet: true,
-      debug: false
-    });
-  }
-
-  initializeTabletopObject2();
-
-  function writeTable2(data) {
-    //select main div and put a table there
-    //use bootstrap css to customize table style: http://getbootstrap.com/css/#tables
-    $('#graphic2').html(
-      '<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-condensed table-responsive" id="mySelection"></table>'
-    );
-
-    //initialize the DataTable object and put settings in
-    $("#mySelection").DataTable({
-      "autoWidth": false,
-      "data": data,
-      "columns": columns2,
-      "order": false,
-      "pagingType": "simple",
-      "paging": false,
-      "searching": false,
-    });
-  }
-});
-//end of writeTable
-
-
-
-$("#refresh-btn").click(function() {
-  featureLayer.clearLayers();
-  map.setView([40.5912,-111.837],9)
-  $.getJSON(config.geojson, function (data) {
-    geojson = data;
-    legendItems = {};
-    features = $.map(geojson.features, function(feature) {
-      return feature.properties;
-    });
-    featureLayer.addData(data);
-    buildConfig();
-    $("#loading-mask").hide();
-  });
-  syncTable();
-  buildTable();
-  buildFilters();
-  map.fitBounds(featureLayer.getBounds());
-  $(".navbar-collapse.in").collapse("hide");
-  return false;
-});
-
-$("#about-btn").click(function() {
-  $("#aboutModal").modal("show");
-  $(".navbar-collapse.in").collapse("hide");
-  return false;
-});
-
-$("#filter-btn").click(function() {
-  $("#filterModal").modal("show");
-  $(".navbar-collapse.in").collapse("hide");
-  return false;
-});
-
-$("#chart-btn").click(function() {
-  $("#chartModal").modal("show");
-  $(".navbar-collapse.in").collapse("hide");
-  return false;
-});
-
-$("#sites-btn").click(function() {
-  $("#sites-modal").modal("show");
-  $(".navbar-collapse.in").collapse("hide");
-  return false;
-});
-
-$("#monthly-btn").click(function() {
-  $("#monthly-modal").modal("show");
-  $(".navbar-collapse.in").collapse("hide");
-  return false;
-});
-
-
-$("#view-sql-btn").click(function() {
-  alert($("#query-builder").queryBuilder("getSQL", false, false).sql);
-});
-
-$("#apply-filter-btn").click(function() {
-  applyFilter();
-  $(".navbar-collapse.in").collapse("hide");
-  return false;
-});
-
-$("#reset-filter-btn").click(function() {
-  $("#query-builder").queryBuilder("reset");
-  applyFilter();
-});
-
-$("#extent-btn").click(function() {
-  map.fitBounds(featureLayer.getBounds());
-  $(".navbar-collapse.in").collapse("hide");
-  return false;
-});
-
-$("#legend-btn").click(function() {
-  $("#legend-modal").modal("show");
-  $(".navbar-collapse.in").collapse("hide");
-  return false;
-});
-
-$("#download-csv-btn").click(function() {
-  $("#table").tableExport({
-    headings: true,
-    type: "csv",
-    ignoreColumn: [0],
-    fileName: "SLC OneFiber Construction"
-  });
-  $(".navbar-collapse.in").collapse("hide");
-  return false;
-});
-
-$("#download-excel-btn").click(function() {
-  $("#table").tableExport({
-    headings: true,
-    type: "excel",
-    ignoreColumn: [0],
-    fileName: "SLC OneFiber Construction"
-  });
-  $(".navbar-collapse.in").collapse("hide");
-  return false;
-});
-
-$("#download-pdf-btn").click(function() {
-  $("#table").tableExport({
-    type: "pdf",
-    ignoreColumn: [0],
-    fileName: "SLC OneFiber Construction",
-    jspdf: {
-      format: "bestfit",
-      margins: {
-        left: 20,
-        right: 10,
-        top: 20,
-        bottom: 20
-      },
-      autotable: {
-        extendWidth: true,
-        overflow: "linebreak"
-      }
-    }
-  });
-  $(".navbar-collapse.in").collapse("hide");
-  return false;
-});
-
-$("#chartModal").on("shown.bs.modal", function (e) {
-  drawCharts();
-});
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="Tanner Anz">
+    <title class="title">SLC OneFiber Construction</title>
+    <link href='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.css' rel='stylesheet' />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.21/c3.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet.esri.geocoder/1.0.2/esri-leaflet-geocoder.css">
+    <link rel='stylesheet' href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css'/>
+    <link rel='stylesheet' href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css'/>
+    <link rel="stylesheet" href="assets/vendor/jQuery-QueryBuilder/query-builder.default.min.css">
+    <link rel="stylesheet" href="assets/vendor/leaflet/leaflet-print/dist/easyPrint.css">
+    <link rel="stylesheet" href="assets/css/app.css">
+    <link rel="icon" type="image/x-icon" href="assets/pictures/tilson%20icon.ico">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-linear-measurement@0.0.1/sass/Leaflet.LinearMeasurement.scss">
+    <link rel="stylesheet" href="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highcharts/6.0.7/css/highcharts.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+
+    <!--link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.12.2/mapbox-gl.css' rel='stylesheet' /-->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div id="loading-mask" class="modal-backdrop">
+      <div class="loading-indicator">
+        <div class="progress progress-striped active">
+          <div class="progress-bar progress-bar-info loading-bar"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#" name="title" id="navbar-title"><img src="assets/pictures/tilson-technology-management-squarelogo-1436356419088.png">SLC OneFiber Construction</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="dropdown">
+              <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars fa-white"></i> <span id="view">Menu </span><b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a id="chart-btn" href="#" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-bar-chart"></i> Data Charts</a></li>
+                <li><a id="sites-btn" href="#" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-table"></i> Site Completion</a></li>
+                <li><a id="monthly-btn" href="#" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-tasks"></i> Monthly Progress</a></li>
+                <li><a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-laptop"></i> <span id="view"> Page Views </span><b class="caret"></b></a>
+                  <ul class="dropdown-submenu">
+                    <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" name="view" id="map-graph"><i class="fa fa-th-large"></i> Split View</a></li>
+                    <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" name="view" id="map-only"><i class="fa fa-globe"></i> Map View</a></li>
+                    <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" name="view" id="graph-only"><i class="fa fa-table"></i> Table View</a></li>
+                  </ul>
+                </li>
+                <li><a class="dropdown-toggle" id="downloadDrop" href="#" role="button" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-cloud-download"></i>&nbsp;&nbsp;Download <b class="caret"></b></a>
+                  <ul class="dropdown-submenu">
+                    <li><a href="https://web.fulcrumapp.com/shares/fb96b48deb5cfb94.kml" id="raw-kml-download" download="" target="_blank" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-download"></i>&nbsp;&nbsp;Raw KML</a></li>
+                    <li><a href="https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/feed.kml" id="kml-feed-download" download="feed.kml" target="_blank" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-download"></i>&nbsp;&nbsp;KML Feed</a></li>
+                  </ul>
+                <li class="hidden" id="legend-item">
+                  <a href="#" id="legend-btn" data-toggle="collapse" data-target=".navbar-collapse.in" title="Show Legend"><i class="glyphicon glyphicon-list-alt"></i> Show Legend
+                    <span class="hidden-xs">
+                    </span>
+                    <span class="visible-xs">
+                      Show Legend
+                    </span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li><a id="extent-btn" href="#" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-arrows-alt"></i> Feature Extent</a></li>
+            <li><a href="#" id="refresh-btn" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-refresh"></i>&nbsp;&nbsp;Refresh Now</a></li>
+            <li class="hidden-md hidden-lg"><a id="filter-btn" href="#" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Filter Data</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="map-container">
+      <div id="map"></div>
+    </div>
+
+    <div id="table-container">
+      <div id="toolbar" style="width: 400px;">
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-default" data-toggle="modal" data-target="#filterModal">
+            <i class="fa fa-filter"></i> Filter Data
+          </button>
+          <div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fa fa-cloud-download"></i> Export Data <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a href="#" id="download-csv-btn"><i class="fa fa-file-text-o"></i> CSV</a></li>
+              <li><a href="#" id="download-excel-btn"><i class="fa fa-file-excel-o"></i> Excel</a></li>
+              <li><a href="#" id="download-pdf-btn"><i class="fa fa-file-pdf-o"></i> PDF</a></li>
+            </ul>
+          </div>
+        </div>
+        <span id="feature-count" class="text-muted" style="padding-left: 15px;"></span>
+      </div>
+      <table id="table"></table>
+    </div>
+
+    <div class="modal fade" id="chartModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Charts</h4>
+          </div>
+          <div class="modal-body" style="overflow: auto;">
+            <div role="tabpanel">
+              <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#hub-status-chart" aria-controls="reports" role="tab" data-toggle="tab">STATUS</a></li>
+                <li role="presentation"><a href="#hub-complete-chart" aria-controls="charts" role="tab" data-toggle="tab">HUB COMPLETE</a></li>
+                <li role="presentation"><a href="#hub-footage-chart" aria-controls="charts" role="tab" data-toggle="tab">HUB FOOTAGE</a></li>
+                <!--li role="presentation"><a href="#species-chart" aria-controls="charts" role="tab" data-toggle="tab">Species</a></li-->
+              </ul>
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="hub-status-chart"></div>
+                <div role="tabpanel" class="tab-pane" id="hub-complete-chart"></div>
+                <div role="tabpanel" class="tab-pane" id="hub-footage-chart"></div>
+                <!--div role="tabpanel" class="tab-pane" id="species-chart"></div-->
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="filterModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Filter Data<span id="record-count" class="badge pull-right" style="margin-right: 15px; margin-top: 2px;"></span></h4>
+          </div>
+          <div class="modal-body">
+            <div id="query-builder"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-info" id="reset-filter-btn"><i class="fa fa-undo"></i> Reset Filter</button>
+            <button type="button" class="btn btn-primary" id="apply-filter-btn"><i class="fa fa-filter"></i> Apply Filter</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="featureModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Feature Info</h4>
+          </div>
+          <div class="modal-body" id="feature-info"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="legend-modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title text-primary" id="legend-title">Legend</h4>
+          </div>
+          <div class="modal-body legend" id="legend"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="sites-modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title text-primary" id="sites-title">SITE COMPLETION</h4>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <div id="graphic1"></div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="monthly-modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title text-primary" id="monthly-title">MONTHLY PROGRESS</h4>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <table id="graphic2"></table>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.0-beta.7/esri-leaflet.js"></script-->
+    <!--script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script-->
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&use_slippy=true&libraries=places&key=AIzaSyBD-VYZnlbtRVWB7iFXDovJn4nIg7cQ-tI"></script>
+    <script src='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.js'></script>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.21/c3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/leaflet.esri/1.0.0/esri-leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/leaflet.esri.geocoder/1.0.2/esri-leaflet-geocoder.js"></script>
+    <script src="https://cdn.jsdelivr.net/alasql/0.2/alasql.min.js"></script>
+    <script src="assets/vendor/jQuery-QueryBuilder/query-builder.standalone.min.js"></script>
+    <script src="assets/vendor/tableExport/tableExport.min.js"></script>
+    <script src="assets/vendor/tableExport/libs/FileSaver/FileSaver.min.js"></script>
+    <script src="assets/vendor/tableExport/libs/html2canvas/html2canvas.min.js"></script>
+    <script src="assets/vendor/tableExport/libs/jsPDF/jspdf.min.js"></script>
+    <script src="assets/vendor/tableExport/libs/jsPDF-AutoTable/jspdf.plugin.autotable.js"></script>
+    <script src="assets/vendor/leaflet/leaflet-print/dist/leaflet.easyPrint.js"></script>
+    <script src="assets/js/leaflet-markercluster.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/export.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-linear-measurement@0.0.1/src/Leaflet.LinearMeasurement.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.2/tabletop.min.js"></script>
+    <script src="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/6.0.7/highcharts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/6.0.7/highcharts-3d.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <!--script src="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js"></script-->
+   
+  </body>
+</html>
