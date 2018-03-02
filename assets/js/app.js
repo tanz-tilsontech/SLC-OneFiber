@@ -856,7 +856,7 @@ $(document).ready(function() {
   function writeTable1(data) {
     //select main div and put a table there
     //use bootstrap css to customize table style: http://getbootstrap.com/css/#tables
-    $('#graphic').html(
+    $('#graphic1').html(
       '<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-condensed table-responsive" id="mySelection"></table>'
     );
 
@@ -960,7 +960,7 @@ $(document).ready(function() {
   function writeTable2(data) {
     //select main div and put a table there
     //use bootstrap css to customize table style: http://getbootstrap.com/css/#tables
-    $('#graphic').html(
+    $('#graphic2').html(
       '<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-condensed table-responsive" id="mySelection"></table>'
     );
 
