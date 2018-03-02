@@ -844,7 +844,7 @@ $(document).ready(function() {
     Tabletop.init({
       key: key1,
       callback: function(data, tabletop) {
-        writeTable(data); //call up datatables function
+        writeTable1(data); //call up datatables function
       },
       simpleSheet: true,
       debug: false
@@ -948,7 +948,7 @@ $(document).ready(function() {
     Tabletop.init({
       key: key2,
       callback: function(data, tabletop) {
-        writeTable(data); //call up datatables function
+        writeTable2(data); //call up datatables function
       },
       simpleSheet: true,
       debug: false
