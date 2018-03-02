@@ -969,7 +969,7 @@ $(document).ready(function() {
 
     //initialize the DataTable object and put settings in
     $("#mySelection").DataTable({
-      "autoWidth": true,
+      "autoWidth": false,
       "data": data,
       "columns": columns2,
       "order": false,
