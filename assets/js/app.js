@@ -852,10 +852,8 @@ $("#chart-btn").click(function() {
 });
 
 $("#sheets-btn").click(function() {
-  function openInNewTab() {
-    var win = window.open("https://docs.google.com/spreadsheets/d/1yNyg2grJYCICN0g_UkYuQXtTEZ_EFBVtXv--r9tc6oI/edit?usp=sharing", '_blank');
-    win.focus();
-  }
+  var win = window.open("https://docs.google.com/spreadsheets/d/1yNyg2grJYCICN0g_UkYuQXtTEZ_EFBVtXv--r9tc6oI/edit?usp=sharing", '_blank');
+  win.focus();
 });
 
 $("#view-sql-btn").click(function() {
