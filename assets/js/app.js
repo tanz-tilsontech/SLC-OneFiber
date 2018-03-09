@@ -96,7 +96,7 @@ var properties = [{
 },
 {
   value: "fqnid",
-  label: "FQNID",
+  label: "ROUTE FQNID",
   table: {
     visible: true,
     sortable: true
