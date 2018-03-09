@@ -106,6 +106,17 @@ var properties = [{
   }
 },
 {
+  value: "fiber_fqnid",
+  label: "FIBER FQNID",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string"
+  }
+},
+{
   value: "ntp_date",
   label: "Proposed Start Date",
   table: {
