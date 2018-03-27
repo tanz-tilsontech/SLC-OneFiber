@@ -106,7 +106,7 @@ var properties = [{
   }
 },
 {
-  value: "fiber_fqnid",
+  value: "fiber_fqnid_1",
   label: "FIBER FQNID",
   table: {
     visible: true,
