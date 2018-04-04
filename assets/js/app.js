@@ -779,6 +779,9 @@ function identifyFeature(id) {
     if (typeof value == "string"  && value.indexOf("https://www.google") === 0) {
       value = "<a href='" + value + "' target='_blank'>" + "GPS Directions" + "</a>";
     }
+    if (typeof value == "string"  && value.indexOf("https://web.fulcrumapp") === 0) {
+      value = "<a href='" + value + "' target='_blank'>" + "Fulcrum Record" + "</a>";
+    }
     $.each(properties, function(index, property) {
       if (key == property.value) {
         if (property.info !== false) {
