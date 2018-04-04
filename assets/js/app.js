@@ -8,6 +8,18 @@ var config = {
 };
 
 var properties = [{
+  value: "fulcrum_record_link",
+  label: "Fulcrum Record",
+  table: {
+    visible: false,
+    sortable: true
+  },
+  filter: {
+    type: "string"
+  },
+  info: false
+},
+{
   value: "fulcrum_id",
   label: "Record ID",
   table: {
