@@ -405,51 +405,50 @@ function buildConfig() {
   }];
 
   $.each(properties, function(index, value) {
-    if (value.value === config.userName) {
-      if (value.filter) {
-        var id;
-        if (value.filter.type == "integer") {
-          id = "cast(properties->"+ value.value +" as int)";
-        }
-        else if (value.filter.type == "double") {
-          id = "cast(properties->"+ value.value +" as double)";
-        }
-        else {
-          id = "properties->" + value.value;
-        }
-        filters.push({
-          id: id,
-          label: value.label
-        });
-        $.each(value.filter, function(key, val) {
-          if (filters[index]) {
-            // If values array is empty, fetch all distinct values
-            if (key == "values" && val.length === 0) {
-              alasql("SELECT DISTINCT(properties->"+value.value+") AS field FROM ? ORDER BY field ASC", [geojson.features], function(results){
-                distinctValues = [];
-                $.each(results, function(index, value) {
-                  distinctValues.push(value.field);
-                });
+    // Filter config
+    if (value.filter) {
+      var id;
+      if (value.filter.type == "integer") {
+        id = "cast(properties->"+ value.value +" as int)";
+      }
+      else if (value.filter.type == "double") {
+        id = "cast(properties->"+ value.value +" as double)";
+      }
+      else {
+        id = "properties->" + value.value;
+      }
+      filters.push({
+        id: id,
+        label: value.label
+      });
+      $.each(value.filter, function(key, val) {
+        if (filters[index]) {
+          // If values array is empty, fetch all distinct values
+          if (key == "values" && val.length === 0) {
+            alasql("SELECT DISTINCT(properties->"+value.value+") AS field FROM ? ORDER BY field ASC", [geojson.features], function(results){
+              distinctValues = [];
+              $.each(results, function(index, value) {
+                distinctValues.push(value.field);
               });
-              filters[index].values = distinctValues;
-            } else {
-              filters[index][key] = val;
-            }
+            });
+            filters[index].values = distinctValues;
+          } else {
+            filters[index][key] = val;
           }
-        });
-      }
-      // Table config
-      if (value.table) {
-        table.push({
-          field: value.value,
-          title: value.label
-        });
-        $.each(value.table, function(key, val) {
-          if (table[index+1]) {
-            table[index+1][key] = val;
-          }
-        });
-      }
+        }
+      });
+    }
+    // Table config
+    if (value.table) {
+      table.push({
+        field: value.value,
+        title: value.label
+      });
+      $.each(value.table, function(key, val) {
+        if (table[index+1]) {
+          table[index+1][key] = val;
+        }
+      });
     }
   });
 
@@ -550,7 +549,9 @@ var featureLayer = L.geoJson(null, {
 $.getJSON(config.geojson, function (data) {
   geojson = data;
   features = $.map(geojson.features, function(feature) {
-    return feature.properties;
+    if (feature.properties.contractor === config.userName){
+      return feature.properties;
+    }
   });
   featureLayer.addData(data);
   buildConfig();
