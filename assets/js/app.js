@@ -520,7 +520,7 @@ var highlightLayer = L.geoJson(null, {
 
 var featureLayer = L.geoJson(null, {
   filter: function(feature, layer) {
-    if (feature.properties.contractor === userName) return true;
+    if (feature.properties.contractor === config.userName) return true;
     return feature.geometry.coordinates[0] !== 0 && feature.geometry.coordinates[1] !== 0;
   },
   pointToLayer: function (feature, latlng) {
