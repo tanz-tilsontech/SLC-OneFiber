@@ -405,7 +405,7 @@ function buildConfig() {
   }];
 
   $.each(properties, function(index, value) {
-    if (feature.properties.contractor === config.userName) {
+    if (value.value === config.userName) {
       if (value.filter) {
         var id;
         if (value.filter.type == "integer") {
