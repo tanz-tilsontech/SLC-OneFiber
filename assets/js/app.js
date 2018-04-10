@@ -9,16 +9,6 @@ var config = {
 };
 
 var properties = [{
-  value: "fulcrum_record_link",
-  label: "Fulcrum Record",
-  table: {
-    visible: false
-  },
-  filter: {
-    type: "string"
-  }
-},
-{
   value: "fulcrum_id",
   label: "Record ID",
   table: {
@@ -41,17 +31,6 @@ var properties = [{
     type: "string"
   },
   info: false
-},
-{
-  value: "gps_directions_1",
-  label: "GPS Directions",
-  table: {
-    visible: false,
-    sortable: false
-  },
-  filter: {
-    type: "string"
-  }
 },
 {
   value: "status_title",
