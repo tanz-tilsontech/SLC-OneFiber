@@ -1,10 +1,11 @@
 var config = {
   geojson: "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94.geojson",
-  title: "SLC OneFiber Construction",
+  title: "SLC OneFiber (FiberTel)",
+  userName: "Tilson",
   layerName: "Segments",
   hoverProperty: "status_title_github",
   sortProperty: "fqnid",
-  sortOrder: "ascend"
+  sortOrder: "ascend",
 };
 
 var properties = [{
@@ -23,6 +24,18 @@ var properties = [{
   table: {
     visible: false,
     sortable: true
+  },
+  filter: {
+    type: "string"
+  },
+  info: false
+},
+{
+  value: "contractor",
+  label: "Contractor",
+  table: {
+    visible: false,
+    sortable: false
   },
   filter: {
     type: "string"
@@ -507,6 +520,7 @@ var highlightLayer = L.geoJson(null, {
 
 var featureLayer = L.geoJson(null, {
   filter: function(feature, layer) {
+    if (feature.properties.contractor === userName) return true;
     return feature.geometry.coordinates[0] !== 0 && feature.geometry.coordinates[1] !== 0;
   },
   pointToLayer: function (feature, latlng) {
@@ -723,8 +737,8 @@ function buildTable() {
     toolbar: "#toolbar",
     search: true,
     trimOnSearch: false,
-    showColumns: true,
-    showToggle: true,
+    showColumns: false,
+    showToggle: false,
     columns: table,
     onClickRow: function(row, $element) {
       var layer = featureLayer.getLayer(row.leaflet_stamp);
