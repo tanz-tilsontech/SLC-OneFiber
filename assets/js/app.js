@@ -1,7 +1,7 @@
 var config = {
   geojson: "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94.geojson",
   title: "SLC OneFiber (FiberTel)",
-  userName: "Tilson",
+  userName: "FiberTel",
   layerName: "Segments",
   hoverProperty: "status_title_github",
   sortProperty: "fqnid",
