@@ -169,17 +169,6 @@ var properties = [{
   }
 },
 {
-  value: "construction_type_cx_final",
-  label: "Construction Type",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string"
-  }
-},
-{
   value: "construction_start_date_cx_final",
   label: "Construction Start Date",
   table: {
@@ -221,17 +210,6 @@ var properties = [{
   },
   filter: {
     type: "integer",
-  }
-},
-{
-  value: "cable_placement_type_final",
-  label: "Cable Placement Type",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string"
   }
 },
 {
