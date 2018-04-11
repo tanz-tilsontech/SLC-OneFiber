@@ -406,7 +406,7 @@ function buildConfig() {
 
   $.each(properties, function(index, value) {
     // Filter config
-    if (value.filter && value.value === "FiberTel") {
+    if (value.filter) {
       var id;
       if (value.filter.type == "integer") {
         id = "cast(properties->"+ value.value +" as int)";
@@ -657,36 +657,6 @@ function buildFilters() {
   });
 }
 
-
-function dateFilter() {
-  var rules_widgets = {
-    condition: 'OR',
-    rules: [{
-      id: 'date',
-      operator: 'equal',
-      value: '1991/11/17'
-    }]
-  };
-$('#query-builder').queryBuilder({
-    plugins: ['bt-tooltip-errors'],
-    filters: [{
-      id: 'date',
-      label: 'Datepicker',
-      type: 'date',
-      validation: {
-        format: 'YYYY/MM/DD'
-      },
-      plugin: 'datepicker',
-      plugin_config: {
-        format: 'yyyy/mm/dd',
-        todayBtn: 'linked',
-        todayHighlight: true,
-        autoclose: true
-      }
-    }],
-  });
-  rules: rules_widgets
-}
 
 
 function applyFilter() {
