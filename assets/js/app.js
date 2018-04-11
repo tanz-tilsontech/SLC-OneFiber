@@ -9,250 +9,251 @@ var config = {
 };
 
 var properties = [{
-  value: "fulcrum_id",
-  label: "Record ID",
-  table: {
-    visible: false,
-    sortable: false
+    value: "fulcrum_id",
+    label: "Record ID",
+    table: {
+      visible: false,
+      sortable: false
+    },
+    info: false
   },
-  info: false
-},
-{
-  value: "contractor",
-  label: "Contractor",
-  table: {
-    visible: false,
-    sortable: false
+  {
+    value: "contractor",
+    label: "Contractor",
+    table: {
+      visible: false,
+      sortable: false
+    },
+    info: false
   },
-  info: false
-},
-{
-  value: "status_title",
-  label: "Status",
-  table: {
-    visible: true,
-    sortable: true
+  {
+    value: "status_title",
+    label: "Status",
+    table: {
+      visible: true,
+      sortable: true
+    },
+    filter: {
+      type: "string",
+      input: "checkbox",
+      vertical: true,
+      multiple: true,
+      operators: ["in", "not_in", "equal", "not_equal"],
+      values: []
+    }
   },
-  filter: {
-    type: "string",
-    input: "checkbox",
-    vertical: true,
-    multiple: true,
-    operators: ["in", "not_in", "equal", "not_equal"],
-    values: []
+  {
+    value: "hub",
+    label: "Hub",
+    table: {
+      visible: true,
+      sortable: true
+    },
+    filter: {
+      type: "string",
+      input: "checkbox",
+      vertical: true,
+      multiple: true,
+      operators: ["in", "not_in", "equal", "not_equal"],
+      values: []
+    }
+  },
+  {
+    value: "site",
+    label: "Site",
+    table: {
+      visible: true,
+      sortable: true
+    },
+    filter: {
+      type: "string",
+      input: "checkbox",
+      vertical: true,
+      multiple: true,
+      operators: ["in", "not_in", "equal", "not_equal"],
+      values: []
+    }
+  },
+  {
+    value: "wpid",
+    label: "WPID",
+    table: {
+      visible: true,
+      sortable: true
+    },
+    filter: {
+      type: "string",
+      input: "checkbox",
+      vertical: true,
+      multiple: true,
+      operators: ["in", "not_in", "equal", "not_equal"],
+      values: []
+    }
+  },
+  {
+    value: "fqnid",
+    label: "ROUTE FQNID",
+    table: {
+      visible: true,
+      sortable: true
+    },
+    filter: {
+      type: "string",
+      input: "checkbox",
+      vertical: true,
+      multiple: true,
+      operators: ["in", "not_in", "equal", "not_equal"],
+      values: []
+    }
+  },
+  {
+    value: "fiber_fqnid_1",
+    label: "FIBER FQNID",
+    table: {
+      visible: true,
+      sortable: true
+    },
+    filter: {
+      type: "string",
+      input: "checkbox",
+      vertical: true,
+      multiple: true,
+      operators: ["in", "not_in", "equal", "not_equal"],
+      values: []
+    }
+  },
+  {
+    value: "ntp_date",
+    label: "Proposed Start Date",
+    table: {
+      visible: true,
+      sortable: true
+    },
+    filter: {
+      type: "date"
+    }
+  },
+  {
+    value: "proposed_type",
+    label: "Proposed Type",
+    table: {
+      visible: true,
+      sortable: true
+    },
+    filter: {
+      type: "string"
+    }
+  },
+  {
+    value: "proposed_product",
+    label: "Proposed Product",
+    table: {
+      visible: true,
+      sortable: true
+    },
+    filter: {
+      type: "string"
+    }
+  },
+  {
+    value: "proposed_footage",
+    label: "Proposed Footage",
+    table: {
+      visible: true,
+      sortable: true
+    },
+    filter: {
+      type: "integer",
+    }
+  },
+  {
+    value: "construction_start_date_cx_final",
+    label: "Construction Start Date",
+    table: {
+      visible: true,
+      sortable: true
+    },
+    filter: {
+      type: "date"
+    }
+  },
+  {
+    value: "construction_complete_date_cx_final",
+    label: "Construction Complete Date",
+    table: {
+      visible: true,
+      sortable: true
+    },
+    filter: {
+      type: "date"
+    }
+  },
+  {
+    value: "construction_pass_date_qc_final",
+    label: "Construction QC Pass Date",
+    table: {
+      visible: true,
+      sortable: true
+    },
+    filter: {
+      type: "date"
+    }
+  },
+  {
+    value: "construction_footage_cx_final",
+    label: "Construction Total Footage",
+    table: {
+      visible: true,
+      sortable: true
+    },
+    filter: {
+      type: "integer",
+    }
+  },
+  {
+    value: "cable_placement_start_date_cx_final",
+    label: "Cable Placement Start Date",
+    table: {
+      visible: true,
+      sortable: true
+    },
+    filter: {
+      type: "date"
+    }
+  },
+  {
+    value: "cable_placement_complete_date_cx_final",
+    label: "Cable Placement Complete Date",
+    table: {
+      visible: true,
+      sortable: true
+    },
+    filter: {
+      type: "date"
+    }
+  },
+  {
+    value: "cable_placement_pass_date_qc_final",
+    label: "Cable Placement QC Pass Date",
+    table: {
+      visible: true,
+      sortable: true
+    },
+    filter: {
+      type: "date"
+    }
+  },
+  {
+    value: "cable_placement_total_footage_cx_final",
+    label: "Cable Placement Total Footage",
+    table: {
+      visible: true,
+      sortable: true
+    },
+    filter: {
+      type: "integer",
+    },
   }
-},
-{
-  value: "hub",
-  label: "Hub",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string",
-    input: "checkbox",
-    vertical: true,
-    multiple: true,
-    operators: ["in", "not_in", "equal", "not_equal"],
-    values: []
-  }
-},
-{
-  value: "site",
-  label: "Site",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string",
-    input: "checkbox",
-    vertical: true,
-    multiple: true,
-    operators: ["in", "not_in", "equal", "not_equal"],
-    values: []
-  }
-},
-{
-  value: "wpid",
-  label: "WPID",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string",
-    input: "checkbox",
-    vertical: true,
-    multiple: true,
-    operators: ["in", "not_in", "equal", "not_equal"],
-    values: []
-  }
-},
-{
-  value: "fqnid",
-  label: "ROUTE FQNID",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string",
-    input: "checkbox",
-    vertical: true,
-    multiple: true,
-    operators: ["in", "not_in", "equal", "not_equal"],
-    values: []
-  }
-},
-{
-  value: "fiber_fqnid_1",
-  label: "FIBER FQNID",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string",
-    input: "checkbox",
-    vertical: true,
-    multiple: true,
-    operators: ["in", "not_in", "equal", "not_equal"],
-    values: []
-  }
-},
-{
-  value: "ntp_date",
-  label: "Proposed Start Date",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "date"
-  }
-},
-{
-  value: "proposed_type",
-  label: "Proposed Type",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string"
-  }
-},
-{
-  value: "proposed_product",
-  label: "Proposed Product",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string"
-  }
-},
-{
-  value: "proposed_footage",
-  label: "Proposed Footage",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "integer",
-  }
-},
-{
-  value: "construction_start_date_cx_final",
-  label: "Construction Start Date",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "date"
-  }
-},
-{
-  value: "construction_complete_date_cx_final",
-  label: "Construction Complete Date",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "date"
-  }
-},
-{
-  value: "construction_pass_date_qc_final",
-  label: "Construction QC Pass Date",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "date"
-  }
-},
-{
-  value: "construction_footage_cx_final",
-  label: "Construction Total Footage",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "integer",
-  }
-},
-{
-  value: "cable_placement_start_date_cx_final",
-  label: "Cable Placement Start Date",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "date"
-  }
-},
-{
-  value: "cable_placement_complete_date_cx_final",
-  label: "Cable Placement Complete Date",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "date"
-  }
-},
-{
-  value: "cable_placement_pass_date_qc_final",
-  label: "Cable Placement QC Pass Date",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "date"
-  }
-},
-{
-  value: "cable_placement_total_footage_cx_final",
-  label: "Cable Placement Total Footage",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "integer",
-  },
 }];
 
 
