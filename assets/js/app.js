@@ -13,11 +13,9 @@ var properties = [{
   label: "Record ID",
   table: {
     visible: false,
-    sortable: true
+    sortable: false
   },
-  filter: {
-    type: "string"
-  },
+  filter: false
   info: false
 },
 {
@@ -27,9 +25,7 @@ var properties = [{
     visible: false,
     sortable: false
   },
-  filter: {
-    type: "string"
-  },
+  filter: false
   info: false
 },
 {
