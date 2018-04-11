@@ -551,7 +551,7 @@ $.getJSON(config.geojson, function (data) {
     if(properties.contractor === userName){
       geojson = data;
     }
-  }
+  });
   features = $.map(geojson.features, function(feature) {
     return feature.properties;
   });
