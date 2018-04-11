@@ -547,9 +547,9 @@ var featureLayer = L.geoJson(null, {
 // Fetch the GeoJSON file
 
 $.getJSON(config.geojson, function (data) {
-  geojson = data;
+  geojson = if (feature.properties.contractor === config.userName) return data;
   features = $.map(geojson.features, function(feature) {
-   if (feature.properties.contractor === config.userName) return feature.properties;
+   return feature.properties;
   });
   featureLayer.addData(data);
   buildConfig();
