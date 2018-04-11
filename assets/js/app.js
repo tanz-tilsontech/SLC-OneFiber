@@ -549,11 +549,8 @@ var featureLayer = L.geoJson(null, {
 $.getJSON(config.geojson, function (data) {
   geojson = data;
   features = $.map(geojson.features, function(feature) {
-    return feature.properties;
+   if (feature.properties.contractor === config.userName) return feature.properties;
   });
-  if (feature.properties.contractor === config.userName) {
-    return feature.properties;
-  }
   featureLayer.addData(data);
   buildConfig();
   $("#loading-mask").hide();
