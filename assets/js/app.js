@@ -258,7 +258,7 @@ var properties = [{
 function drawCharts() {
   // HUB COMPLETE
   $(function() {
-    var result = alasql("SELECT hub AS label, COUNT(NULLIF(cable_placement_total_footage_cx_final::NUMBER,0)) AS total FROM ? GROUP BY hub", [features]);
+    var result = alasql("SELECT hub AS label, COUNT(NULLIF(cable_placement_total_footage_cx_final::NUMBER,0)) AS total FROM ? WHERE contractor = 'FiberTel'   GROUP BY hub", [features]);
     var columns = $.map(result, function(status) {
       return [[status.label, status.total]];
     });
@@ -273,7 +273,7 @@ function drawCharts() {
 
   // HUB TOTAL FOOTAGE
   $(function() {
-    var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? GROUP BY hub", [features]);
+    var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? WHERE contractor = 'FiberTel' GROUP BY hub", [features]);
     var columns1 = $.map(result, function(hub) {
       return [[hub.label, hub.footage]];
     });
@@ -296,7 +296,7 @@ function drawCharts() {
 
     // HUB MONTHLY FOOTAGE
   $(function() {
-    var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? GROUP BY hub", [features]);
+    var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? WHERE contractor = 'FiberTel' GROUP BY hub", [features]);
     var columns1 = $.map(result, function(hub) {
       return [[hub.label, hub.footage]];
     });
@@ -319,7 +319,7 @@ function drawCharts() {
 
   // HUB STATUS 
   $(function() {
-    var result = alasql("SELECT status AS label, COUNT(status) AS total FROM ? GROUP BY status", [features]);
+    var result = alasql("SELECT status AS label, COUNT(status) AS total FROM ? WHERE contractor = 'FiberTel' GROUP BY status", [features]);
     var columns = $.map(result, function(status) {
       return [[status.label, status.total]];
     });
