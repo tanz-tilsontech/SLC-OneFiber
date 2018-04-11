@@ -15,7 +15,6 @@ var properties = [{
     visible: false,
     sortable: false
   },
-  filter: false,
   info: false
 },
 {
@@ -25,7 +24,6 @@ var properties = [{
     visible: false,
     sortable: false
   },
-  filter: false,
   info: false
 },
 {
