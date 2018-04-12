@@ -329,7 +329,7 @@ var properties1 = [{
   }
 },
 {
-  value: "dirt_resto_b_cx",
+  value: "dirt_resto_b_cx_url",
   label: "Dirt Pictures",
   table: {
     visible: true,
@@ -883,8 +883,8 @@ function identifyFeature1(id) {
     if (!value) {
       value = "";
     }
-    if (typeof value == "string"  && value.indexOf("https://web.fulcrumapp.com/photos/view?photos") === 0) {
-      value = "<a href='" + photoLink + value + "' target='_blank'>" + "View Photos" + "</a>";
+    if (typeof value == "string"  && value.indexOf("https://web.fulcrumapp.com/api/v2/file") === 0) {
+      value = "<a href='#' onclick='photoGallery(\"" + value + "\"); return false;'>View Photos</a>";
     }
     $.each(properties1, function(index, property) {
       if (key == property.value) {
