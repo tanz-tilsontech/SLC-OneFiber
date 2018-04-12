@@ -346,8 +346,6 @@ var properties1 = [{
 }];
 
 
-dirt_resto_b_cx_urls
-
 function drawCharts() {
   // HUB COMPLETE
   $(function() {
