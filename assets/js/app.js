@@ -592,7 +592,7 @@ var featureLayer = L.geoJson(null, {
 
 
 
-var featureLayer1 = L.geoJson1(null, {
+var featureLayer1 = L.geoJson(null, {
   pointToLayer: function (feature, latlng) {
     return L.marker(latlng, {
       title: feature.properties["restoration_items"],
@@ -679,8 +679,8 @@ $.getJSON(config.geojson, function (data) {
 
 
 $.getJSON(config1.geojson, function (data) {
-  geojson1 = data
-  features1 = $.map(geojson.features, function(feature) {
+  geojson = data
+  features = $.map(geojson.features, function(feature) {
     return feature.properties;
   });
   featureLayer1.addData(data);
