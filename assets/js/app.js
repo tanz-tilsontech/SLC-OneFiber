@@ -904,7 +904,7 @@ function photoGallery(photos) {
   var photoArray = [];
   var photoIDs = photos.split("photos=")[1];
   $.each(photoIDs.split("%2C"), function(index, id) {
-    photoArray.push({href: "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/photos" + id});
+    photoArray.push({href: "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/photos/" + id});
   });
   $.fancybox(photoArray, {
     "type": "image",
