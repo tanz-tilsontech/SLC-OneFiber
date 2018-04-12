@@ -236,6 +236,7 @@ var properties = [{
   },
   filter: {
     type: "integer"
+  }
 },
 {
   value: "fulcrum_id",
