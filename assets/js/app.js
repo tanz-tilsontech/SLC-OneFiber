@@ -427,7 +427,6 @@ function drawCharts() {
 $(function() {
   $(".title").html(config.title);
   $("#layer-name").html(config.layerName);
-  $("#layer-name2").html("SLC LLD Route");
 });
 
 function buildConfig() {
@@ -744,7 +743,7 @@ var baseLayers = {
 var overlayLayers = {
   "<span id='layer-name'>GeoJSON Layer</span>": featureLayer,
   "<span id='layer-name1'>Restoration</span>": featureLayer1,
-  "<span id='layer-name2'>GeoJSON Layer</span>": SLCLLDRoute,
+  "<span id='layer-name2'>Engineered</span>": SLCLLDRoute,
 };
 
 
