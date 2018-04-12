@@ -327,10 +327,26 @@ var properties1 = [{
     operators: ["in", "not_in", "equal", "not_equal"],
     values: []
   }
+},
+{
+  value: "dirt_resto_b_cx_urls",
+  label: "Dirt Pictures",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    input: "checkbox",
+    vertical: true,
+    multiple: true,
+    operators: ["in", "not_in", "equal", "not_equal"],
+    values: []
+  }
 }];
 
 
-
+dirt_resto_b_cx_urls
 
 function drawCharts() {
   // HUB COMPLETE
@@ -842,11 +858,9 @@ function identifyFeature(id) {
   $.each(featureProperties, function(key, value) {
     if (!value) {
       value = "";
-    }
-    if (typeof value == "string"  && value.indexOf("https://www.google") === 0) {
+    } if (typeof value == "string"  && value.indexOf("https://www.google") === 0) {
       value = "<a href='" + value + "' target='_blank'>" + "GPS Directions" + "</a>";
-    }
-    if (typeof value == "string"  && value.indexOf("https://web.fulcrumapp") === 0) {
+    } if (typeof value == "string"  && value.indexOf("https://web.fulcrumapp") === 0) {
       value = "<a href='" + value + "' target='_blank'>" + "Fulcrum Record" + "</a>";
     }
     $.each(properties, function(index, property) {
@@ -870,11 +884,8 @@ function identifyFeature1(id) {
     if (!value) {
       value = "";
     }
-    if (typeof value == "string"  && value.indexOf("https://www.google") === 0) {
-      value = "<a href='" + value + "' target='_blank'>" + "GPS Directions" + "</a>";
-    }
-    if (typeof value == "string"  && value.indexOf("https://web.fulcrumapp") === 0) {
-      value = "<a href='" + value + "' target='_blank'>" + "Fulcrum Record" + "</a>";
+    if (typeof value == "string"  && value.indexOf("https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/photos/") === 0) {
+      value = "<a href='#' onclick='photoGallery(\"" + value + "\"); return false;'>View Photos</a>";
     }
     $.each(properties1, function(index, property) {
       if (key == property.value) {
