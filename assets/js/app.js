@@ -1,6 +1,5 @@
-var legendItems = {};
-
 // Configuration of Routes in Fulcrum
+
 
 var config = {
   geojson: "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94.geojson",
@@ -264,7 +263,7 @@ var properties = [{
 
 // Configuration of Restoration in Fulcrum
 
-var restorationConfig = {
+var config1 = {
   geojson: "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94.geojson?child=restoration_repeat",
   userName: "FiberTel",
   layerName: "Restoration",
@@ -273,7 +272,7 @@ var restorationConfig = {
   sortOrder: "ascend",
 };
 
-var restorationProperties = [{
+var properties1 = [{
   value: "restoration_items",
   label: "Restoration Type",
   table: {
@@ -350,374 +349,6 @@ var restorationProperties = [{
 }];
 
 
-// Fetch the Routes GeoJSON file
-
-$.getJSON(config.geojson, function (data) {
-  geojson = data
-  features = $.map(geojson.features, function(feature) {
-    return feature.properties;
-  });
-  routesLayer.addData(data);
-  buildConfig();
-  $("#loading-mask").hide();
-  var style = {
-    "property": "status",
-    "values": {
-      "Segment Ready": "https://image.ibb.co/iXHCyH/1891c9.png",
-      "Segment Not Ready": "https://image.ibb.co/hk21sc/242424.png",
-      "Construction Started": "https://image.ibb.co/mC5Akx/ffd300.png",
-      "Constractor CX QC": "https://image.ibb.co/hHRSXc/b3b3b3.png",
-      "Tilson CX QC": "https://image.ibb.co/c3TVkx/ff8819.png",
-      "Construction Fix": "https://image.ibb.co/cen1sc/cb0d0c.png",
-      "Cable Placement Ready": "https://image.ibb.co/iXHCyH/1891c9.png",
-      "Cable Placement Started": "https://image.ibb.co/mC5Akx/ffd300.png",
-      "Contractor CP QC": "https://image.ibb.co/hHRSXc/b3b3b3.png",
-      "Tilson CP QC": "https://image.ibb.co/c3TVkx/ff8819.png",
-      "Cable Placement Fix": "https://image.ibb.co/cen1sc/cb0d0c.png",
-      "Splicing/Testing Pending": "https://image.ibb.co/hxOkJH/87d30f.png"
-    }
-  }
-  JSON.stringify(style);
-  if (style.property && style.values) {
-    $("#legend-item").removeClass("hidden");
-    $("#legend-title").html(style.property.toUpperCase().replace(/_/g, " "));
-    $.each(style.values, function(property, value) {
-      if (value.startsWith("http")) {
-        $("#legend").append("<p><img src='" + value + "'></i> " + property + "</p>");
-      } else {
-        $("#legend").append("<p><i style='background:" + value + "'></i> " + property + "</p>");
-      }
-    });
-  }
-});
-
-
-// Fetch the Restoration GeoJSON file
-
-$.getJSON(restorationConfig.geojson, function (data) {
-  geojson = data
-  features = $.map(geojson.features, function(feature) {
-    return feature.properties;
-  });
-  restorationLayer.addData(data);
-  $("#loading-mask").hide();
-});
-
-
-// Add GeoJSON Data to Routes Layer
-
-var routesLayer = L.geoJson(null, {
-  filter: function(feature, layer) {
-    if (feature.properties.contractor === config.userName) return true;
-  },
-  pointToLayer: function (feature, latlng) {
-    return L.marker(latlng, {
-      title: feature.properties["status_title_github"],
-      riseOnHover: true,
-      icon: L.icon({
-        iconUrl: "assets/pictures/markers/cb0d0c.png",
-        iconSize: [30, 40],
-        iconAnchor: [15, 32]
-      })
-    });
-  },
-  onEachFeature: function (feature, layer) {
-    if (feature.properties) {
-      layer.on({
-        click: function (e) {
-          identifyRoutes(L.stamp(layer));
-          highlightLayer.clearLayers();
-          highlightLayer.addData(routesLayer.getLayer(L.stamp(layer)).toGeoJSON());
-        },
-        mouseover: function (e) {
-          if (config.hoverProperty) {
-            $(".info-control").html(feature.properties[config.hoverProperty]);
-            $(".info-control").show();
-          }
-        },
-        mouseout: function (e) {
-          $(".info-control").hide();
-        }
-      });
-      if (feature.properties["marker-color"]) {
-        layer.setIcon(
-          L.icon({
-            iconUrl: "assets/pictures/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
-            iconSize: [30, 40],
-            iconAnchor: [15, 32]
-          })
-        );
-      }
-    }
-  }
-});
-
-
-// Add GeoJSON Data to Restoration Layer
-
-var restorationLayer = L.geoJson(null, {
-  pointToLayer: function (feature, latlng) {
-    return L.marker(latlng, {
-      title: feature.properties["restoration_items"],
-      riseOnHover: true,
-      icon: L.icon({
-        iconUrl: "assets/pictures/markers/242424.png",
-        iconSize: [30, 40],
-        iconAnchor: [15, 32]
-      })
-    });
-  },
-  onEachFeature: function (feature, layer) {
-    if (feature.properties) {
-      layer.on({
-        click: function (e) {
-          identifyRestoration(L.stamp(layer));
-          highlightLayer.clearLayers();
-          highlightLayer.addData(restorationLayer.getLayer(L.stamp(layer)).toGeoJSON());
-        },
-        mouseover: function (e) {
-          if (restorationConfig.hoverProperty) {
-            $(".info-control").html(feature.properties[restorationConfig.hoverProperty]);
-            $(".info-control").show();
-          }
-        },
-        mouseout: function (e) {
-          $(".info-control").hide();
-        }
-      });
-      if (feature.properties["marker-color"]) {
-        layer.setIcon(
-          L.icon({
-            iconUrl: "assets/pictures/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
-            iconSize: [30, 40],
-            iconAnchor: [15, 32]
-          })
-        );
-      }
-    }
-  }
-});
-
-
-// Naming of the Layers
-
-var baseLayers = {
-  "Street Map": mapboxOSM,
-  "Satellite Map": mapboxSat,
-  "Engineered Routes": SLCLLDRoute,
-};
-var overlayLayers = {
-  "<span id='layer-name'>GeoJSON Layer</span>": routesLayer,
-  "<span id='layer-name1'>Restoration</span>": restorationLayer,
-  "<span id='layer-name2'>Engineered</span>": SLCLLDRoute,
-};
-
-$(function() {
-  $(".title").html(config.title);
-  $("#layer-name").html(config.layerName);
-});
-
-
-// Highlight Feature Point on Map
-
-
-var highlightLayer = L.geoJson(null, {
-  pointToLayer: function (feature, latlng) {
-    return L.circleMarker(latlng, {
-      radius: 5,
-      color: "#FFF",
-      weight: 2,
-      opacity: 1,
-      fillColor: "#00FFFF",
-      fillOpacity: 1,
-      clickable: false
-    });
-  },
-  style: function (feature) {
-    return {
-      color: "#00FFFF",
-      weight: 2,
-      opacity: 1,
-      fillColor: "#00FFFF",
-      fillOpacity: 0.5,
-      clickable: false
-    };
-  }
-});
-
-
-// Add All Layers to Map
-
-var map = L.map("map", {
-  layers: [mapboxOSM, SLCLLDRoute, routesLayer, restorationLayer, highlightLayer]
-}).fitWorld();
-
-
-// Basemap Layers
-
-var mapboxOSM = L.tileLayer('http://{s}.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZWNvdHJ1c3QiLCJhIjoibGo4TG5nOCJ9.QJnT2dgjL4_4EA7WlK8Zkw', {
-    maxZoom: 20
-});
-
-
-var mapboxSat = L.tileLayer('https://api.mapbox.com/v4/cfritz1387.573ca1ee/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiY2ZyaXR6MTM4NyIsImEiOiJjaWphZTZ0eHkwMDVwdWlseGx5aWhhbXlwIn0._lgb3vbGMSx1-jdZCufdgg', {
-    maxZoom: 20
-});
-
-
-var SLCLLDRoute = L.tileLayer('http://ttm-tileify-proxy1.herokuapp.com/tiles/{z}/{x}/{y}?url=https%3A%2F%2Ftilsonwebdraco.3-gislive.com%2Farcgis%2Frest%2Fservices%2FSLClld%2FTilsonslc_lld%2FMapServer&transparent=true&layers=show%3A3%2C10%2C31%2C44%2C47%2C49', {
-    maxZoom: 20
-});
-
-
-// ESRI geocoder
-
-var searchControl = L.esri.Geocoding.Controls.geosearch({
-  useMapBounds: 17
-}).addTo(map);
-
-
-
-// Info control
-
-var info = L.control({
-  position: "bottomleft"
-});
-
-
-
-// Custom info hover control
-
-info.onAdd = function (map) {
-  this._div = L.DomUtil.create("div", "info-control");
-  this.update();
-  return this._div;
-};
-info.update = function (props) {
-  this._div.innerHTML = "";
-};
-info.addTo(map);
-$(".info-control").hide();
-
-
-
-
-// Pop up window to show Routes Data
-
-function identifyRoutes(id) {
-  var featureProperties = routesLayer.getLayer(id).feature.properties;
-  var content = "<table class='table table-striped table-bordered table-condensed'>";
-  $.each(featureProperties, function(key, value) {
-    if (!value) {
-      value = "";
-    } if (typeof value == "string"  && value.indexOf("https://www.google") === 0) {
-      value = "<a href='" + value + "' target='_blank'>" + "GPS Directions" + "</a>";
-    } if (typeof value == "string"  && value.indexOf("https://web.fulcrumapp") === 0) {
-      value = "<a href='" + value + "' target='_blank'>" + "Fulcrum Record" + "</a>";
-    }
-    $.each(properties, function(index, property) {
-      if (key == property.value) {
-        if (property.info !== false) {
-          content += "<tr><th>" + property.label + "</th><td>" + value + "</td></tr>";
-        }
-      }
-    });
-  });
-  content += "<table>";
-  $("#feature-info").html(content);
-  $("#featureModal").modal("show");
-}
-
-
-
-
-// Pop up window to show Restoration Data
-
-function identifyRestoration(id) {
-  var featureProperties = restorationLayer.getLayer(id).feature.properties;
-  var content = "<table class='table table-striped table-bordered table-condensed'>";
-  var photoLink = "https://web.fulcrumapp.com/photos/view?photos=";
-  $.each(featureProperties, function(key, value) {
-    if (!value) {
-      value = "";
-    }
-    if (typeof value == "string"  && value.indexOf("https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/photos") === 0) {
-      value = "<a href='#' onclick='photoGalleryRestoration(\"" + value + "\"); return false;'>View Photos</a>";
-    }
-    $.each(restorationProperties, function(index, property) {
-      if (key == property.value) {
-        if (property.info !== false) {
-          content += "<tr><th>" + property.label + "</th><td>" + value + "</td></tr>";
-        }
-      }
-    });
-  });
-  content += "<table>";
-  $("#feature-info").html(content);
-  $("#featureModal").modal("show");
-}
-
-
-// Add photo pop up gallery to Restoration Photos
-
-function photoGalleryRestoration(photos) {
-  var photoArray = [];
-  var photoIDs = photos.split("photos=")[1];
-  $.each(photoIDs.split("%2C"), function(index, id) {
-    photoArray.push({href: "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/photos/" + id});
-  });
-  $.fancybox(photoArray, {
-    "type": "image",
-    "showNavArrows": true,
-    "padding": 0,
-    "scrolling": "no",
-    beforeShow: function () {
-      this.title = "Photo " + (this.index + 1) + " of " + this.group.length + (this.title ? " - " + this.title : "");
-    }
-  });
-  return false;
-}
-
-
-
-// Larger screens get expanded layer control
-
-if (document.body.clientWidth <= 767) {
-  isCollapsed = true;
-} else {
-  isCollapsed = false;
-}
-var layerControl = L.control.layers(baseLayers, overlayLayers, {
-  collapsed: isCollapsed
-}).addTo(map);
-
-
-
-// Filter table to only show features in current map bounds
-
-map.on("moveend", function (e) {
-  syncTable();
-});
-
-map.on("click", function(e) {
-  highlightLayer.clearLayers();
-});
-
-
-
-// Add print button on map
-
-L.easyPrint({
-  title: 'Print',
-  elementsToHide: 'p, h2, .gitButton'
-}).addTo(map)
-
-
-
-
-// Add Charts
-
-
 function drawCharts() {
   // HUB COMPLETE
   $(function() {
@@ -757,7 +388,7 @@ function drawCharts() {
   });
 
 
-  // HUB MONTHLY FOOTAGE
+    // HUB MONTHLY FOOTAGE
   $(function() {
     var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? WHERE contractor = 'FiberTel' GROUP BY hub", [features]);
     var columns1 = $.map(result, function(hub) {
@@ -796,9 +427,10 @@ function drawCharts() {
   });
 }
 
-
-
-// Build Filter Configuration
+$(function() {
+  $(".title").html(config.title);
+  $("#layer-name").html(config.layerName);
+});
 
 function buildConfig() {
   filters = [];
@@ -822,15 +454,15 @@ function buildConfig() {
     },
     events: {
       "click .zoom": function (e, value, row, index) {
-        var layer = routesLayer.getLayer(row.leaflet_stamp);
+        var layer = featureLayer.getLayer(row.leaflet_stamp);
         map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 19);
         highlightLayer.clearLayers();
-        highlightLayer.addData(routesLayer.getLayer(row.leaflet_stamp).toGeoJSON());
+        highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
       },
       "click .identify": function (e, value, row, index) {
-        identifyRoutes(row.leaflet_stamp);
+        identifyFeature(row.leaflet_stamp);
         highlightLayer.clearLayers();
-        highlightLayer.addData(routesLayer.getLayer(row.leaflet_stamp).toGeoJSON());
+        highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
       }
     }
   }];
@@ -887,8 +519,249 @@ function buildConfig() {
   buildTable();
 }
 
+// Basemap Layers
+var mapboxOSM = L.tileLayer('http://{s}.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZWNvdHJ1c3QiLCJhIjoibGo4TG5nOCJ9.QJnT2dgjL4_4EA7WlK8Zkw', {
+    maxZoom: 20
+});
 
 
+var mapboxSat = L.tileLayer('https://api.mapbox.com/v4/cfritz1387.573ca1ee/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiY2ZyaXR6MTM4NyIsImEiOiJjaWphZTZ0eHkwMDVwdWlseGx5aWhhbXlwIn0._lgb3vbGMSx1-jdZCufdgg', {
+    maxZoom: 20
+});
+
+
+var SLCLLDRoute = L.tileLayer('http://ttm-tileify-proxy1.herokuapp.com/tiles/{z}/{x}/{y}?url=https%3A%2F%2Ftilsonwebdraco.3-gislive.com%2Farcgis%2Frest%2Fservices%2FSLClld%2FTilsonslc_lld%2FMapServer&transparent=true&layers=show%3A3%2C10%2C31%2C44%2C47%2C49', {
+    maxZoom: 20
+});
+
+
+var highlightLayer = L.geoJson(null, {
+  pointToLayer: function (feature, latlng) {
+    return L.circleMarker(latlng, {
+      radius: 5,
+      color: "#FFF",
+      weight: 2,
+      opacity: 1,
+      fillColor: "#00FFFF",
+      fillOpacity: 1,
+      clickable: false
+    });
+  },
+  style: function (feature) {
+    return {
+      color: "#00FFFF",
+      weight: 2,
+      opacity: 1,
+      fillColor: "#00FFFF",
+      fillOpacity: 0.5,
+      clickable: false
+    };
+  }
+});
+
+
+var featureLayer = L.geoJson(null, {
+  filter: function(feature, layer) {
+    if (feature.properties.contractor === config.userName) return true;
+  },
+  pointToLayer: function (feature, latlng) {
+    return L.marker(latlng, {
+      title: feature.properties["status_title_github"],
+      riseOnHover: true,
+      icon: L.icon({
+        iconUrl: "assets/pictures/markers/cb0d0c.png",
+        iconSize: [30, 40],
+        iconAnchor: [15, 32]
+      })
+    });
+  },
+  onEachFeature: function (feature, layer) {
+    if (feature.properties) {
+      layer.on({
+        click: function (e) {
+          identifyFeature(L.stamp(layer));
+          highlightLayer.clearLayers();
+          highlightLayer.addData(featureLayer.getLayer(L.stamp(layer)).toGeoJSON());
+        },
+        mouseover: function (e) {
+          if (config.hoverProperty) {
+            $(".info-control").html(feature.properties[config.hoverProperty]);
+            $(".info-control").show();
+          }
+        },
+        mouseout: function (e) {
+          $(".info-control").hide();
+        }
+      });
+      if (feature.properties["marker-color"]) {
+        layer.setIcon(
+          L.icon({
+            iconUrl: "assets/pictures/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
+            iconSize: [30, 40],
+            iconAnchor: [15, 32]
+          })
+        );
+      }
+    }
+  }
+});
+
+
+
+var featureLayer1 = L.geoJson(null, {
+  pointToLayer: function (feature, latlng) {
+    return L.marker(latlng, {
+      title: feature.properties["restoration_items"],
+      riseOnHover: true,
+      icon: L.icon({
+        iconUrl: "assets/pictures/markers/242424.png",
+        iconSize: [30, 40],
+        iconAnchor: [15, 32]
+      })
+    });
+  },
+  onEachFeature: function (feature, layer) {
+    if (feature.properties) {
+      layer.on({
+        click: function (e) {
+          identifyFeature1(L.stamp(layer));
+          highlightLayer.clearLayers();
+          highlightLayer.addData(featureLayer1.getLayer(L.stamp(layer)).toGeoJSON());
+        },
+        mouseover: function (e) {
+          if (config1.hoverProperty) {
+            $(".info-control").html(feature.properties[config1.hoverProperty]);
+            $(".info-control").show();
+          }
+        },
+        mouseout: function (e) {
+          $(".info-control").hide();
+        }
+      });
+      if (feature.properties["marker-color"]) {
+        layer.setIcon(
+          L.icon({
+            iconUrl: "assets/pictures/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
+            iconSize: [30, 40],
+            iconAnchor: [15, 32]
+          })
+        );
+      }
+    }
+  }
+});
+
+
+// Fetch the Routes GeoJSON file
+
+$.getJSON(config.geojson, function (data) {
+  geojson = data
+  features = $.map(geojson.features, function(feature) {
+    return feature.properties;
+  });
+  featureLayer.addData(data);
+  buildConfig();
+  $("#loading-mask").hide();
+  var style = {
+    "property": "status",
+    "values": {
+      "Segment Ready": "https://image.ibb.co/iXHCyH/1891c9.png",
+      "Segment Not Ready": "https://image.ibb.co/hk21sc/242424.png",
+      "Construction Started": "https://image.ibb.co/mC5Akx/ffd300.png",
+      "Constractor CX QC": "https://image.ibb.co/hHRSXc/b3b3b3.png",
+      "Tilson CX QC": "https://image.ibb.co/c3TVkx/ff8819.png",
+      "Construction Fix": "https://image.ibb.co/cen1sc/cb0d0c.png",
+      "Cable Placement Ready": "https://image.ibb.co/iXHCyH/1891c9.png",
+      "Cable Placement Started": "https://image.ibb.co/mC5Akx/ffd300.png",
+      "Contractor CP QC": "https://image.ibb.co/hHRSXc/b3b3b3.png",
+      "Tilson CP QC": "https://image.ibb.co/c3TVkx/ff8819.png",
+      "Cable Placement Fix": "https://image.ibb.co/cen1sc/cb0d0c.png",
+      "Splicing/Testing Pending": "https://image.ibb.co/hxOkJH/87d30f.png"
+    }
+  }
+  JSON.stringify(style);
+  if (style.property && style.values) {
+    $("#legend-item").removeClass("hidden");
+    $("#legend-title").html(style.property.toUpperCase().replace(/_/g, " "));
+    $.each(style.values, function(property, value) {
+      if (value.startsWith("http")) {
+        $("#legend").append("<p><img src='" + value + "'></i> " + property + "</p>");
+      } else {
+        $("#legend").append("<p><i style='background:" + value + "'></i> " + property + "</p>");
+      }
+    });
+  }
+});
+
+
+// Fetch the Restoration GeoJSON file
+
+$.getJSON(config1.geojson, function (data) {
+  geojson = data
+  features = $.map(geojson.features, function(feature) {
+    return feature.properties;
+  });
+  featureLayer1.addData(data);
+  $("#loading-mask").hide();
+});
+
+var map = L.map("map", {
+  layers: [mapboxOSM, SLCLLDRoute, featureLayer, featureLayer1, highlightLayer]
+}).fitWorld();
+
+
+// ESRI geocoder
+var searchControl = L.esri.Geocoding.Controls.geosearch({
+  useMapBounds: 17
+}).addTo(map);
+
+// Info control
+var info = L.control({
+  position: "bottomleft"
+});
+
+// Custom info hover control
+info.onAdd = function (map) {
+  this._div = L.DomUtil.create("div", "info-control");
+  this.update();
+  return this._div;
+};
+info.update = function (props) {
+  this._div.innerHTML = "";
+};
+info.addTo(map);
+$(".info-control").hide();
+
+// Larger screens get expanded layer control
+if (document.body.clientWidth <= 767) {
+  isCollapsed = true;
+} else {
+  isCollapsed = false;
+}
+var baseLayers = {
+  "Street Map": mapboxOSM,
+  "Satellite Map": mapboxSat,
+  "Engineered Routes": SLCLLDRoute,
+};
+var overlayLayers = {
+  "<span id='layer-name'>GeoJSON Layer</span>": featureLayer,
+  "<span id='layer-name1'>Restoration</span>": featureLayer1,
+  "<span id='layer-name2'>Engineered</span>": SLCLLDRoute,
+};
+
+
+var layerControl = L.control.layers(baseLayers, overlayLayers, {
+  collapsed: isCollapsed
+}).addTo(map);
+
+// Filter table to only show features in current map bounds
+map.on("moveend", function (e) {
+  syncTable();
+});
+
+map.on("click", function(e) {
+  highlightLayer.clearLayers();
+});
 
 // Table formatter to make links clickable
 function urlFormatter (value, row, index) {
@@ -897,9 +770,6 @@ function urlFormatter (value, row, index) {
   }
 }
 
-
-
-// Build Filters within Table
 
 function buildFilters() {
   $("#query-builder").queryBuilder({
@@ -910,8 +780,6 @@ function buildFilters() {
 
 
 
-// Apply Filters within Table
-
 function applyFilter() {
   var query = "SELECT * FROM ?";
   var sql = $("#query-builder").queryBuilder("getSQL", false, false).sql;
@@ -919,15 +787,11 @@ function applyFilter() {
     query += " WHERE " + sql;
   }
   alasql(query, [geojson.features], function(features){
-    routesLayer.clearLayers();
-    routesLayer.addData(features);
+    featureLayer.clearLayers();
+    featureLayer.addData(features);
     syncTable();
   });
 }
-
-
-
-// Build Table Data
 
 function buildTable() {
   $("#table").bootstrapTable({
@@ -946,19 +810,19 @@ function buildTable() {
     showToggle: false,
     columns: table,
     onClickRow: function(row, $element) {
-      var layer = routesLayer.getLayer(row.leaflet_stamp);
+      var layer = featureLayer.getLayer(row.leaflet_stamp);
       map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 19);
       highlightLayer.clearLayers();
-      highlightLayer.addData(routesLayer.getLayer(row.leaflet_stamp).toGeoJSON());
+      highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
     },
     onDblClickRow: function(row) {
-      identifyRoutes(row.leaflet_stamp);
+      identifyFeature(row.leaflet_stamp);
       highlightLayer.clearLayers();
-      highlightLayer.addData(routesLayer.getLayer(row.leaflet_stamp).toGeoJSON());
+      highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
     },
   });
 
-  map.fitBounds(routesLayer.getBounds());
+  map.fitBounds(featureLayer.getBounds());
 
   $(window).resize(function () {
     $("#table").bootstrapTable("resetView", {
@@ -967,16 +831,12 @@ function buildTable() {
   });
 }
 
-
-
-// Sync Table with Features inside of Map Extent
-
 function syncTable() {
   tableFeatures = [];
-  routesLayer.eachLayer(function (layer) {
+  featureLayer.eachLayer(function (layer) {
     layer.feature.properties.leaflet_stamp = L.stamp(layer);
-    if (map.hasLayer(routesLayer)) {
-      routesLayer.getLayer()
+    if (map.hasLayer(featureLayer)) {
+      featureLayer.getLayer()
       layer.feature.geometry.type === "Point"
       if (map.getBounds().contains(layer.getLatLng())) {
         tableFeatures.push(layer.feature.properties);
@@ -992,9 +852,75 @@ function syncTable() {
   }
 }
 
+function identifyFeature(id) {
+  var featureProperties = featureLayer.getLayer(id).feature.properties;
+  var content = "<table class='table table-striped table-bordered table-condensed'>";
+  $.each(featureProperties, function(key, value) {
+    if (!value) {
+      value = "";
+    } if (typeof value == "string"  && value.indexOf("https://www.google") === 0) {
+      value = "<a href='" + value + "' target='_blank'>" + "GPS Directions" + "</a>";
+    } if (typeof value == "string"  && value.indexOf("https://web.fulcrumapp") === 0) {
+      value = "<a href='" + value + "' target='_blank'>" + "Fulcrum Record" + "</a>";
+    }
+    $.each(properties, function(index, property) {
+      if (key == property.value) {
+        if (property.info !== false) {
+          content += "<tr><th>" + property.label + "</th><td>" + value + "</td></tr>";
+        }
+      }
+    });
+  });
+  content += "<table>";
+  $("#feature-info").html(content);
+  $("#featureModal").modal("show");
+}
 
 
-// Switch Map Views
+function identifyFeature1(id) {
+  var featureProperties = featureLayer1.getLayer(id).feature.properties;
+  var content = "<table class='table table-striped table-bordered table-condensed'>";
+  var photoLink = "https://web.fulcrumapp.com/photos/view?photos=";
+  $.each(featureProperties, function(key, value) {
+    if (!value) {
+      value = "";
+    }
+    if (typeof value == "string"  && value.indexOf("https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/photos") === 0) {
+      value = "<a href='#' onclick='photoGallery(\"" + value + "\"); return false;'>View Photos</a>";
+    }
+    $.each(properties1, function(index, property) {
+      if (key == property.value) {
+        if (property.info !== false) {
+          content += "<tr><th>" + property.label + "</th><td>" + value + "</td></tr>";
+        }
+      }
+    });
+  });
+  content += "<table>";
+  $("#feature-info").html(content);
+  $("#featureModal").modal("show");
+}
+
+
+function photoGallery(photos) {
+  var photoArray = [];
+  var photoIDs = photos.split("photos=")[1];
+  $.each(photoIDs.split("%2C"), function(index, id) {
+    photoArray.push({href: "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/photos/" + id});
+  });
+  $.fancybox(photoArray, {
+    "type": "image",
+    "showNavArrows": true,
+    "padding": 0,
+    "scrolling": "no",
+    beforeShow: function () {
+      this.title = "Photo " + (this.index + 1) + " of " + this.group.length + (this.title ? " - " + this.title : "");
+    }
+  });
+  return false;
+}
+
+
 
 function switchView(view) {
   if (view == "split") {
@@ -1041,12 +967,16 @@ $("[name='view']").click(function() {
   }
 });
 
+L.easyPrint({
+  title: 'Print',
+  elementsToHide: 'p, h2, .gitButton'
+}).addTo(map)
 
 
-// Refresh Feature Data
+
 
 $("#refresh-btn").click(function() {
-  routesLayer.clearLayers();
+  featureLayer.clearLayers();
   map.setView([40.5912,-111.837],9)
   $.getJSON(config.geojson, function (data) {
     geojson = data;
@@ -1054,14 +984,14 @@ $("#refresh-btn").click(function() {
     features = $.map(geojson.features, function(feature) {
       return feature.properties;
     });
-    routesLayer.addData(data);
+    featureLayer.addData(data);
     buildConfig();
     $("#loading-mask").hide();
   });
   syncTable();
   buildTable();
   buildFilters();
-  map.fitBounds(routesLayer.getBounds());
+  map.fitBounds(featureLayer.getBounds());
   $(".navbar-collapse.in").collapse("hide");
   return false;
 });
@@ -1113,7 +1043,7 @@ $("#reset-filter-btn").click(function() {
 });
 
 $("#extent-btn").click(function() {
-  map.fitBounds(routesLayer.getBounds());
+  map.fitBounds(featureLayer.getBounds());
   $(".navbar-collapse.in").collapse("hide");
   return false;
 });
