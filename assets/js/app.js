@@ -899,6 +899,27 @@ function identifyFeature1(id) {
   $("#featureModal").modal("show");
 }
 
+
+function photoGallery(photos) {
+  var photoArray = [];
+  var photoIDs = photos.split("photos=")[1];
+  $.each(photoIDs.split("%2C"), function(index, id) {
+    photoArray.push({href: "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/photos" + id});
+  });
+  $.fancybox(photoArray, {
+    "type": "image",
+    "showNavArrows": true,
+    "padding": 0,
+    "scrolling": "no",
+    beforeShow: function () {
+      this.title = "Photo " + (this.index + 1) + " of " + this.group.length + (this.title ? " - " + this.title : "");
+    }
+  });
+  return false;
+}
+
+
+
 function switchView(view) {
   if (view == "split") {
     $("#view").html("Split View");
