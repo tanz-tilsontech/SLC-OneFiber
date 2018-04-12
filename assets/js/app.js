@@ -883,7 +883,7 @@ function identifyFeature1(id) {
     if (!value) {
       value = "";
     }
-    if (typeof value == "string"  && value.indexOf("https://web.fulcrumapp.com/api/v2/file") === 0) {
+    if (typeof value == "string"  && value.indexOf("https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/photos") === 0) {
       value = "<a href='#' onclick='photoGallery(\"" + value + "\"); return false;'>View Photos</a>";
     }
     $.each(properties1, function(index, property) {
