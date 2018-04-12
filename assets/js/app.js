@@ -236,7 +236,8 @@ var properties = [{
   },
   filter: {
     type: "integer",
-  },
+},
+{
   value: "fulcrum_id",
   label: "Record ID",
   table: {
