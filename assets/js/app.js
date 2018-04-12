@@ -876,7 +876,7 @@ function identifyFeature1(id) {
     if (typeof value == "string"  && value.indexOf("https://web.fulcrumapp") === 0) {
       value = "<a href='" + value + "' target='_blank'>" + "Fulcrum Record" + "</a>";
     }
-    $.each(properties, function(index, property) {
+    $.each(properties1, function(index, property) {
       if (key == property.value) {
         if (property.info !== false) {
           content += "<tr><th>" + property.label + "</th><td>" + value + "</td></tr>";
