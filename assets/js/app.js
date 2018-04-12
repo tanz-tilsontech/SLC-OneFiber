@@ -878,12 +878,13 @@ function identifyFeature(id) {
 function identifyFeature1(id) {
   var featureProperties = featureLayer1.getLayer(id).feature.properties;
   var content = "<table class='table table-striped table-bordered table-condensed'>";
+  var photoLink = "https://web.fulcrumapp.com/photos/view?photos=";
   $.each(featureProperties, function(key, value) {
     if (!value) {
       value = "";
     }
     if (typeof value == "string"  && value.indexOf("https://web.fulcrumapp.com/photos/view?photos") === 0) {
-      value = "<a href='" "https://web.fulcrumapp.com/photos/view?photos=" + value + "' target='_blank'>" + "View Photos" + "</a>";
+      value = "<a href='" + photoLink + value + "' target='_blank'>" + "View Photos" + "</a>";
     }
     $.each(properties1, function(index, property) {
       if (key == property.value) {
