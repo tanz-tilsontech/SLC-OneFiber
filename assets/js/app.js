@@ -517,6 +517,9 @@ var featureLayer = L.geoJson(null, {
 // Fetch the GeoJSON file
 
 $.getJSON(config.geojson, function (data) {
+  var data = $(geojson.features).filter(function (index) {
+    return geojson.features[index].contractor == "FiberTel";
+  });
   geojson = data
   features = $.map(geojson.features, function(feature) {
     return feature.properties;
