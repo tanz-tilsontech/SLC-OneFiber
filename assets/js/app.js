@@ -608,13 +608,13 @@ var featureLayer1 = L.geoJson(null, {
     if (feature.properties) {
       layer.on({
         click: function (e) {
-          identifyFeature(L.stamp(layer));
+          identifyFeature1(L.stamp(layer));
           highlightLayer.clearLayers();
-          highlightLayer.addData(featureLayer.getLayer(L.stamp(layer)).toGeoJSON());
+          highlightLayer.addData(featureLayer1.getLayer(L.stamp(layer)).toGeoJSON());
         },
         mouseover: function (e) {
-          if (config.hoverProperty) {
-            $(".info-control").html(feature.properties[config.hoverProperty]);
+          if (config1.hoverProperty) {
+            $(".info-control").html(feature.properties[config1.hoverProperty]);
             $(".info-control").show();
           }
         },
@@ -729,7 +729,7 @@ var baseLayers = {
 };
 var overlayLayers = {
   "<span id='layer-name'>GeoJSON Layer</span>": featureLayer,
-  "<span id='layer-name1'>GeoJSON Layer</span>": featureLayer1,
+  "<span id='layer-name1'>Restoration</span>": featureLayer1,
   "<span id='layer-name2'>GeoJSON Layer</span>": SLCLLDRoute,
 };
 
