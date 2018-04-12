@@ -598,7 +598,7 @@ var featureLayer1 = L.geoJson(null, {
       title: feature.properties["restoration_items"],
       riseOnHover: true,
       icon: L.icon({
-        iconUrl: "assets/pictures/markers/cb0d0c.png",
+        iconUrl: "assets/pictures/markers/242424.png",
         iconSize: [30, 40],
         iconAnchor: [15, 32]
       })
@@ -636,7 +636,7 @@ var featureLayer1 = L.geoJson(null, {
 });
 
 
-// Fetch the GeoJSON file
+// Fetch the Routes GeoJSON file
 
 $.getJSON(config.geojson, function (data) {
   geojson = data
@@ -677,6 +677,8 @@ $.getJSON(config.geojson, function (data) {
   }
 });
 
+
+// Fetch the Restoration GeoJSON file
 
 $.getJSON(config1.geojson, function (data) {
   geojson = data
@@ -727,6 +729,7 @@ var baseLayers = {
 };
 var overlayLayers = {
   "<span id='layer-name'>GeoJSON Layer</span>": featureLayer,
+  "<span id='layer-name1'>GeoJSON Layer</span>": featureLayer1,
   "<span id='layer-name2'>GeoJSON Layer</span>": SLCLLDRoute,
 };
 
@@ -835,6 +838,33 @@ function syncTable() {
 
 function identifyFeature(id) {
   var featureProperties = featureLayer.getLayer(id).feature.properties;
+  var content = "<table class='table table-striped table-bordered table-condensed'>";
+  $.each(featureProperties, function(key, value) {
+    if (!value) {
+      value = "";
+    }
+    if (typeof value == "string"  && value.indexOf("https://www.google") === 0) {
+      value = "<a href='" + value + "' target='_blank'>" + "GPS Directions" + "</a>";
+    }
+    if (typeof value == "string"  && value.indexOf("https://web.fulcrumapp") === 0) {
+      value = "<a href='" + value + "' target='_blank'>" + "Fulcrum Record" + "</a>";
+    }
+    $.each(properties, function(index, property) {
+      if (key == property.value) {
+        if (property.info !== false) {
+          content += "<tr><th>" + property.label + "</th><td>" + value + "</td></tr>";
+        }
+      }
+    });
+  });
+  content += "<table>";
+  $("#feature-info").html(content);
+  $("#featureModal").modal("show");
+}
+
+
+function identifyFeature1(id) {
+  var featureProperties = featureLayer1.getLayer(id).feature.properties;
   var content = "<table class='table table-striped table-bordered table-condensed'>";
   $.each(featureProperties, function(key, value) {
     if (!value) {
