@@ -1,8 +1,10 @@
+// Configuration of Routes in Fulcrum
+
 var config = {
   geojson: "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94.geojson",
   title: "SLC OneFiber (FiberTel)",
   userName: "FiberTel",
-  layerName: "Segments",
+  layerName: "Routes",
   hoverProperty: "status_title_github",
   sortProperty: "fqnid",
   sortOrder: "ascend",
@@ -233,10 +235,8 @@ var properties = [{
     sortable: true
   },
   filter: {
-    type: "integer"
-  }
-},
-{
+    type: "integer",
+  },
   value: "fulcrum_id",
   label: "Record ID",
   table: {
@@ -254,6 +254,81 @@ var properties = [{
   },
   info: false
 }];
+
+
+
+
+// Configuration of Restoration in Fulcrum
+
+var config1 = {
+  geojson: "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94.geojson?child=restoration_repeat",
+  userName: "FiberTel",
+  layerName: "Restoration",
+  hoverProperty: "restoration_items",
+  sortProperty: "date_resto",
+  sortOrder: "ascend",
+};
+
+var properties1 = [{
+  value: "restoration_items",
+  label: "Restoration Type",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    input: "checkbox",
+    vertical: true,
+    multiple: true,
+    operators: ["in", "not_in", "equal", "not_equal"],
+    values: []
+  }
+},
+{
+  value: "date_resto",
+  label: "Restoration Date",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "date"
+  }
+},
+{
+  value: "restoration_complete_contractor",
+  label: "Restoration Complete (Contractor)",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    input: "checkbox",
+    vertical: true,
+    multiple: true,
+    operators: ["in", "not_in", "equal", "not_equal"],
+    values: []
+  }
+},
+{
+  value: "restoration_complete_tilson",
+  label: "Restoration Complete (Tilson)",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    input: "checkbox",
+    vertical: true,
+    multiple: true,
+    operators: ["in", "not_in", "equal", "not_equal"],
+    values: []
+  }
+}];
+
 
 
 
@@ -516,6 +591,51 @@ var featureLayer = L.geoJson(null, {
 });
 
 
+
+var featureLayer1 = L.geoJson1(null, {
+  pointToLayer: function (feature, latlng) {
+    return L.marker(latlng, {
+      title: feature.properties["restoration_items"],
+      riseOnHover: true,
+      icon: L.icon({
+        iconUrl: "assets/pictures/markers/cb0d0c.png",
+        iconSize: [30, 40],
+        iconAnchor: [15, 32]
+      })
+    });
+  },
+  onEachFeature: function (feature, layer) {
+    if (feature.properties) {
+      layer.on({
+        click: function (e) {
+          identifyFeature(L.stamp(layer));
+          highlightLayer.clearLayers();
+          highlightLayer.addData(featureLayer.getLayer(L.stamp(layer)).toGeoJSON());
+        },
+        mouseover: function (e) {
+          if (config.hoverProperty) {
+            $(".info-control").html(feature.properties[config.hoverProperty]);
+            $(".info-control").show();
+          }
+        },
+        mouseout: function (e) {
+          $(".info-control").hide();
+        }
+      });
+      if (feature.properties["marker-color"]) {
+        layer.setIcon(
+          L.icon({
+            iconUrl: "assets/pictures/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
+            iconSize: [30, 40],
+            iconAnchor: [15, 32]
+          })
+        );
+      }
+    }
+  }
+});
+
+
 // Fetch the GeoJSON file
 
 $.getJSON(config.geojson, function (data) {
@@ -557,8 +677,18 @@ $.getJSON(config.geojson, function (data) {
   }
 });
 
+
+$.getJSON(config1.geojson, function (data) {
+  geojson1 = data
+  features1 = $.map(geojson.features, function(feature) {
+    return feature.properties;
+  });
+  featureLayer1.addData(data);
+  $("#loading-mask").hide();
+});
+
 var map = L.map("map", {
-  layers: [mapboxOSM, SLCLLDRoute, featureLayer, highlightLayer]
+  layers: [mapboxOSM, SLCLLDRoute, featureLayer, featureLayer1, highlightLayer]
 }).fitWorld();
 
 
