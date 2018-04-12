@@ -235,7 +235,7 @@ var properties = [{
     sortable: true
   },
   filter: {
-    type: "integer",
+    type: "integer"
 },
 {
   value: "fulcrum_id",
