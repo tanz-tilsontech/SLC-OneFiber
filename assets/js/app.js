@@ -739,7 +739,7 @@ if (document.body.clientWidth <= 767) {
 var baseLayers = {
   "Street Map": mapboxOSM,
   "Satellite Map": mapboxSat,
-  "SLC LLD Route": SLCLLDRoute,
+  "Engineered Routes": SLCLLDRoute,
 };
 var overlayLayers = {
   "<span id='layer-name'>GeoJSON Layer</span>": featureLayer,
