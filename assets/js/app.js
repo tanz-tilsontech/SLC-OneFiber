@@ -931,7 +931,16 @@ function photoGallery(photos) {
 
 
 function switchView(view) {
-  if (view == "split") {
+  if (view == "map") {
+    $("#view").html("Map View");
+    location.hash = "#map";
+    $("#map-container").show();
+    $("#map-container").css("height", "100%");
+    $("#table-container").hide();
+    if (map) {
+      map.invalidateSize();
+    }
+  } else if (view == "split") {
     $("#view").html("Split View");
     location.hash = "#split";
     $("#table-container").show();
@@ -939,15 +948,6 @@ function switchView(view) {
     $("#map-container").show();
     $("#map-container").css("height", "45%");
     $(window).resize();
-    if (map) {
-      map.invalidateSize();
-    }
-  } else if (view == "map") {
-    $("#view").html("Map View");
-    location.hash = "#map";
-    $("#map-container").show();
-    $("#map-container").css("height", "100%");
-    $("#table-container").hide();
     if (map) {
       map.invalidateSize();
     }
@@ -961,13 +961,15 @@ function switchView(view) {
   }
 }
 
+
+
 $("[name='view']").click(function() {
   $(".in,.open").removeClass("in open");
-  if (this.id === "map-graph") {
-    switchView("split");
-    return false;
-  } else if (this.id === "map-only") {
+  if (this.id === "map-only") {
     switchView("map");
+    return false;
+  } else if (this.id === "map-graph") {
+    switchView("split");
     return false;
   } else if (this.id === "graph-only") {
     switchView("table");
