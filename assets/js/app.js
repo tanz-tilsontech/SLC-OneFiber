@@ -1064,12 +1064,28 @@ $("#legend-btn").click(function() {
   return false;
 });
 
+
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth()+1;
+var yyyy = today.getFullYear();
+
+if(dd<10) {
+    dd = '0'+dd
+} 
+
+if(mm<10) {
+    mm = '0'+mm
+} 
+
+today = mm + '.' + dd + '.' + yyyy;
+
 $("#download-csv-btn").click(function() {
   $("#table").tableExport({
     headings: true,
     type: "csv",
     ignoreColumn: [0],
-    fileName: "SLC OneFiber Construction"
+    fileName: "DataMap_"+ today +""
   });
   $(".navbar-collapse.in").collapse("hide");
   return false;
@@ -1080,7 +1096,7 @@ $("#download-excel-btn").click(function() {
     headings: true,
     type: "excel",
     ignoreColumn: [0],
-    fileName: "SLC OneFiber Construction"
+    fileName: "DataMap_"+ today +""
   });
   $(".navbar-collapse.in").collapse("hide");
   return false;
@@ -1090,7 +1106,7 @@ $("#download-pdf-btn").click(function() {
   $("#table").tableExport({
     type: "pdf",
     ignoreColumn: [0],
-    fileName: "SLC OneFiber Construction",
+    fileName: "DataMap_"+ today +"",
     jspdf: {
       format: "bestfit",
       margins: {
