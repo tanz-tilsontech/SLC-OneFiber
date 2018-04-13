@@ -638,10 +638,10 @@ var featureLayer1 = L.geoJson(null, {
           $(".info-control").hide();
         }
       });
-      if (feature.properties["marker-color"]) {
+      if (feature.properties.restoration_complete_tilson === "Yes") {
         layer.setIcon(
           L.icon({
-            iconUrl: "assets/pictures/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
+            iconUrl: "assets/pictures/markers/ffffff.png",
             iconSize: [30, 40],
             iconAnchor: [15, 32]
           })
