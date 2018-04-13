@@ -6,7 +6,7 @@ var config = {
   title: "SLC OneFiber (FiberTel)",
   userName: "FiberTel",
   layerName: "Routes",
-  hoverProperty: "title",
+  hoverProperty: "status_title_github",
   sortProperty: "fqnid",
   sortOrder: "ascend",
 };
