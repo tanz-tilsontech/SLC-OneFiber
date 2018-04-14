@@ -69,7 +69,7 @@ function logout() {
 };
 
 window.onbeforeunload = function() {
-  ocalStorage.removeItem("fulcrum_app_token");
+  localStorage.removeItem("fulcrum_app_token");
   return '';
 };
 
