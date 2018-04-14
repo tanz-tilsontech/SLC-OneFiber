@@ -422,7 +422,7 @@ var properties1 = [{
 function drawCharts() {
   // HUB COMPLETE
   $(function() {
-    var result = alasql("SELECT hub AS label, COUNT(NULLIF(cable_placement_total_footage_cx_final::NUMBER,0)) AS total FROM ? WHERE contractor = 'FiberTel'   GROUP BY hub", [features]);
+    var result = alasql("SELECT hub AS label, COUNT(NULLIF(cable_placement_total_footage_cx_final::NUMBER,0)) AS total FROM ? WHERE contractor = "userName"   GROUP BY hub", [features]);
     var columns = $.map(result, function(hub) {
       return [[hub.label, hub.total]];
     });
@@ -437,7 +437,7 @@ function drawCharts() {
 
   // HUB TOTAL FOOTAGE
   $(function() {
-    var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? WHERE contractor = 'FiberTel' GROUP BY hub", [features]);
+    var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? WHERE contractor = "userName" GROUP BY hub", [features]);
     var columns1 = $.map(result, function(hub) {
       return [[hub.label, hub.footage]];
     });
@@ -460,7 +460,7 @@ function drawCharts() {
 
     // HUB MONTHLY FOOTAGE
   $(function() {
-    var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? WHERE contractor = 'FiberTel' GROUP BY hub", [features]);
+    var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? WHERE contractor = "userName" GROUP BY hub", [features]);
     var columns1 = $.map(result, function(hub) {
       return [[hub.label, hub.footage]];
     });
@@ -483,7 +483,7 @@ function drawCharts() {
 
   // HUB STATUS 
   $(function() {
-    var result = alasql("SELECT status AS label, COUNT(status) AS total FROM ? WHERE contractor = 'FiberTel' GROUP BY status", [features]);
+    var result = alasql("SELECT status AS label, COUNT(status) AS total FROM ? WHERE contractor = "userName" GROUP BY status", [features]);
     var columns = $.map(result, function(status) {
       return [[status.label, status.total]];
     });
@@ -642,9 +642,6 @@ var highlightLayer = L.geoJson(null, {
 
 
 var featureLayer = L.geoJson(null, {
-  filter: function(feature, layer) {
-    if (feature.properties.contractor === config.userName) return true;
-  },
   pointToLayer: function (feature, latlng) {
     return L.marker(latlng, {
       title: feature.properties["status_title_github"],
@@ -744,11 +741,11 @@ var featureLayer1 = L.geoJson(null, {
 // Fetch the Routes GeoJSON file
 
 $.getJSON(config.geojson, function (data) {
-  geojson = data
+  geojson = $(data).filter(feature.properties.contractor === config.userName);
   features = $.map(geojson.features, function(feature) {
     return feature.properties;
   });
-  featureLayer.addData(data);
+  featureLayer.addData(geojson);
   buildConfig();
   $("#loading-mask").hide();
   var style = {
