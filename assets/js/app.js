@@ -420,7 +420,7 @@ function drawCharts() {
   // HUB COMPLETE
   $(function() {
     if ($("#email").val().includes("tilson") || $("#email").val().includes("verizon")) {
-      var result = alasql("SELECT hub AS label, COUNT(NULLIF(cable_placement_total_footage_cx_final::NUMBER,0)) AS total FROM ? GROUP BY hub", [features]);
+      var result = alasql("SELECT hub AS label, COUNT(NULLIF(cable_placement_total_footage_cx_final::NUMBER,0)) AS total FROM ? WHERE contractor = 'FiberTel' GROUP BY hub", [features]);
       var columns = $.map(result, function(hub) {
         return [[hub.label, hub.total]];
       });
@@ -645,7 +645,7 @@ var highlightLayer = L.geoJson(null, {
 
 var featureLayer = L.geoJson(null, {
   filter: function(feature, layer) {
-    if ($("#email").val().includes("fibertel")) {
+    if ($("#email").val().includes("tilson")) {
       if (feature.properties.contractor === "FiberTel") return true;
     } else if ($("#email").val().includes("tilson") || $("#email").val().includes("verizon")) {
       if (feature.properties.contractor != "") return true;
