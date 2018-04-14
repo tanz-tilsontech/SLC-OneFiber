@@ -71,7 +71,6 @@ window.onbeforeunload = function() {
 var config = {
   geojson: "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94.geojson",
   title: "SLC OneFiber (FiberTel)",
-  userName: ,
   layerName: "Routes",
   hoverProperty: "status_title_github",
   sortProperty: "fqnid",
@@ -332,7 +331,6 @@ var properties = [{
 
 var config1 = {
   geojson: "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94.geojson?child=restoration_repeat",
-  userName: "FiberTel",
   layerName: "Restoration",
   hoverProperty: "restoration_items",
   sortProperty: "date_resto",
@@ -421,10 +419,17 @@ var properties1 = [{
 function drawCharts() {
   // HUB COMPLETE
   $(function() {
-    var result = alasql("SELECT hub AS label, COUNT(NULLIF(cable_placement_total_footage_cx_final::NUMBER,0)) AS total FROM ? WHERE contractor = 'FiberTel'   GROUP BY hub", [features]);
-    var columns = $.map(result, function(hub) {
-      return [[hub.label, hub.total]];
-    });
+    if (username.includes(tilson) || username.includes(verizon)) {
+      var result = alasql("SELECT hub AS label, COUNT(NULLIF(cable_placement_total_footage_cx_final::NUMBER,0)) AS total FROM ? GROUP BY hub", [features]);
+      var columns = $.map(result, function(hub) {
+        return [[hub.label, hub.total]];
+      });
+    } else if (username.includes(fibertel)) {
+      var result = alasql("SELECT hub AS label, COUNT(NULLIF(cable_placement_total_footage_cx_final::NUMBER,0)) AS total FROM ? WHERE contractor = 'FiberTel'   GROUP BY hub", [features]);
+      var columns = $.map(result, function(hub) {
+        return [[hub.label, hub.total]];
+      });
+    }
     var chart = c3.generate({
         bindto: "#hub-complete-chart",
         data: {
