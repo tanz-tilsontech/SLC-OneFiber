@@ -24,9 +24,8 @@ map-container
 
 function checkAuth() {
   if (!localStorage.getItem("fulcrum_app_token")) {
-    $("#login-modal").modal("show");
     document.write( '<style class="hideStuff" ' +
-    'type="text/css">body {display:none;}<\/style>');
+    'type="text/css">body <script $("#login-modal").modal("show");/script><\/style>');
   } else {
     $("#login-modal").modal("hide");
   }
