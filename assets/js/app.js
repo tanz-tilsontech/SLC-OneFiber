@@ -19,7 +19,7 @@ function bindUIActions() {
   $("#login-modal").on("hidden.bs.modal", function (e) {
     $(".modal-backdrop").css("opacity", "");
   });
-},
+};
 
 var authenticateModule = {
   checkAuth: function() {
