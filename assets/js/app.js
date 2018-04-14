@@ -1,30 +1,30 @@
 // Page Login
 
-window.onload = {
-  init: function() {
-    this.authenticateModule.checkAuth();
-    this.bindUIActions();
-  },
 
-  bindUIActions: function() {
-    $("#login-btn").click(function() {
-      app.authenticateModule.login();
-    });
+function init() {
+  this.authenticateModule.checkAuth();
+  this.bindUIActions();
+}
 
-    $("#logout-btn").click(function() {
-      app.authenticateModule.logout();
-    });
+function bindUIActions() {
+  $("#login-btn").click(function() {
+    app.authenticateModule.login();
+  });
 
-    $("#login-modal").on("shown.bs.modal", function (e) {
-      $(".modal-backdrop").css("opacity", "1");
-    });
+  $("#logout-btn").click(function() {
+    app.authenticateModule.logout();
+  });
 
-    $("#login-modal").on("hidden.bs.modal", function (e) {
-      $(".modal-backdrop").css("opacity", "");
-    });
-  },
+  $("#login-modal").on("shown.bs.modal", function (e) {
+    $(".modal-backdrop").css("opacity", "1");
+  });
 
-  authenticateModule: {
+  $("#login-modal").on("hidden.bs.modal", function (e) {
+    $(".modal-backdrop").css("opacity", "");
+  });
+}
+
+var authenticateModule = {
   checkAuth: function() {
     if (!localStorage.getItem("fulcrum_geobooze_token")) {
       $("#login-modal").modal("show");
@@ -71,6 +71,7 @@ window.onload = {
     location.reload();
   }
 };
+
 
 
 
