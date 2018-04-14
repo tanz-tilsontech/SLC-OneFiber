@@ -419,12 +419,12 @@ var properties1 = [{
 function drawCharts() {
   // HUB COMPLETE
   $(function() {
-    if (username.includes(tilson) || username.includes(verizon)) {
+    if (login.username.includes(tilson) || login.username.includes(verizon)) {
       var result = alasql("SELECT hub AS label, COUNT(NULLIF(cable_placement_total_footage_cx_final::NUMBER,0)) AS total FROM ? GROUP BY hub", [features]);
       var columns = $.map(result, function(hub) {
         return [[hub.label, hub.total]];
       });
-    } else if (username.includes(fibertel)) {
+    } else if (login.username.includes(fibertel)) {
       var result = alasql("SELECT hub AS label, COUNT(NULLIF(cable_placement_total_footage_cx_final::NUMBER,0)) AS total FROM ? WHERE contractor = 'FiberTel'   GROUP BY hub", [features]);
       var columns = $.map(result, function(hub) {
         return [[hub.label, hub.total]];
@@ -645,9 +645,9 @@ var highlightLayer = L.geoJson(null, {
 
 var featureLayer = L.geoJson(null, {
   filter: function(feature, layer) {
-    if (username.includes(fibertel)) {
+    if (login.username.includes(fibertel)) {
       if (feature.properties.contractor === "FiberTel") return true;
-    } else if (username.includes(tilson) || username.includes(verizon)) {
+    } else if (login.username.includes(tilson) || login.username.includes(verizon)) {
       if (feature.properties.contractor != "") return true;
     }
   },
