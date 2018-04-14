@@ -1,11 +1,12 @@
 // Page Login
 
-init: function() {
+window.onload = {
+  init: function() {
   this.authenticateModule.checkAuth();
   this.bindUIActions();
-};
+  },
 
-bindUIActions: function() {
+  bindUIActions: function() {
   $("#login-btn").click(function() {
     app.authenticateModule.login();
   });
@@ -21,9 +22,9 @@ bindUIActions: function() {
   $("#login-modal").on("hidden.bs.modal", function (e) {
     $(".modal-backdrop").css("opacity", "");
   });
-};
+  },
 
-authenticateModule: {
+  authenticateModule: {
   checkAuth: function() {
     if (!localStorage.getItem("fulcrum_geobooze_token")) {
       $("#login-modal").modal("show");
@@ -31,7 +32,7 @@ authenticateModule: {
       $("#login-modal").modal("hide");
       app.formModule.fetchBeerTypes();
     }
-  };
+  },
 
   login: function() {
     var username = $("#email").val();
@@ -62,13 +63,13 @@ authenticateModule: {
         app.authenticateModule.checkAuth();
       }
     });
-  };
+  },
 
   logout: function() {
     localStorage.removeItem("fulcrum_geobooze_token");
     localStorage.removeItem("fulcrum_userfullname");
     location.reload();
-  };
+  }
 };
 
 
