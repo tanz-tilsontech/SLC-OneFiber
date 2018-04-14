@@ -66,13 +66,12 @@ window.onbeforeunload = function() {
 };
 
 
-
 // Configuration of Routes in Fulcrum
 
 var config = {
   geojson: "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94.geojson",
   title: "SLC OneFiber (FiberTel)",
-  userName: "FiberTel",
+  userName: ,
   layerName: "Routes",
   hoverProperty: "status_title_github",
   sortProperty: "fqnid",
@@ -639,11 +638,13 @@ var highlightLayer = L.geoJson(null, {
 });
 
 
-
-
 var featureLayer = L.geoJson(null, {
   filter: function(feature, layer) {
-    if (feature.properties.contractor === config.userName) return true;
+    if (username.includes(fibertel)) {
+      if (feature.properties.contractor === "FiberTel") return true;
+    } else if (username.includes(tilson) || username.includes(verizon)) {
+      if (feature.properties.contractor != "") return true;
+    }
   },
   pointToLayer: function (feature, latlng) {
     return L.marker(latlng, {
