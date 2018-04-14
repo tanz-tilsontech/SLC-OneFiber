@@ -1146,6 +1146,7 @@ $("#view-sql-btn").click(function() {
 
 $("#apply-filter-btn").click(function() {
   applyFilter();
+  $('#filterModal').modal('hide');
   $(".navbar-collapse.in").collapse("hide");
   return false;
 });
