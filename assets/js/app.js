@@ -68,6 +68,11 @@ function logout() {
   location.reload();
 };
 
+window.onbeforeunload = function() {
+  ocalStorage.removeItem("fulcrum_app_token");
+  return '';
+};
+
 
 
 // Configuration of Routes in Fulcrum
