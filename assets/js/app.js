@@ -23,9 +23,9 @@ function bindUIActions() {
 
 function checkAuth() {
   if (!localStorage.getItem("fulcrum_app_token")) {
-    $("#login-modal").modal("show");
-    document.write( '<style class="hideStuff" ' +
-    'type="text/css">body {display:none;}<\/style>');
+    $(document).ready(function() {
+      $("#login-modal").modal("show");
+    });
   } else {
     $("#login-modal").modal("hide");
   }
