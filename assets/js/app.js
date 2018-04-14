@@ -20,7 +20,7 @@ function bindUIActions() {
     $(".modal-backdrop").css("opacity", "");
   });
 };
-map-container
+
 
 function checkAuth() {
   if (!localStorage.getItem("fulcrum_app_token")) {
