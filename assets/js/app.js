@@ -2,26 +2,26 @@
 
 window.onload = {
   init: function() {
-  this.authenticateModule.checkAuth();
-  this.bindUIActions();
+    this.authenticateModule.checkAuth();
+    this.bindUIActions();
   },
 
   bindUIActions: function() {
-  $("#login-btn").click(function() {
-    app.authenticateModule.login();
-  });
+    $("#login-btn").click(function() {
+      app.authenticateModule.login();
+    });
 
-  $("#logout-btn").click(function() {
-    app.authenticateModule.logout();
-  });
+    $("#logout-btn").click(function() {
+      app.authenticateModule.logout();
+    });
 
-  $("#login-modal").on("shown.bs.modal", function (e) {
-    $(".modal-backdrop").css("opacity", "1");
-  });
+    $("#login-modal").on("shown.bs.modal", function (e) {
+      $(".modal-backdrop").css("opacity", "1");
+    });
 
-  $("#login-modal").on("hidden.bs.modal", function (e) {
-    $(".modal-backdrop").css("opacity", "");
-  });
+    $("#login-modal").on("hidden.bs.modal", function (e) {
+      $(".modal-backdrop").css("opacity", "");
+    });
   },
 
   authenticateModule: {
@@ -425,6 +425,8 @@ var properties1 = [{
 }];
 
 
+
+
 function drawCharts() {
   // HUB COMPLETE
   $(function() {
@@ -501,12 +503,17 @@ function drawCharts() {
         }
     });
   });
-}
+};
+
+
 
 $(function() {
   $(".title").html(config.title);
   $("#layer-name").html(config.layerName);
 });
+
+
+
 
 function buildConfig() {
   filters = [];
@@ -593,7 +600,9 @@ function buildConfig() {
 
   buildFilters();
   buildTable();
-}
+};
+
+
 
 // Basemap Layers
 var mapboxOSM = L.tileLayer('http://{s}.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZWNvdHJ1c3QiLCJhIjoibGo4TG5nOCJ9.QJnT2dgjL4_4EA7WlK8Zkw', {
@@ -609,6 +618,8 @@ var mapboxSat = L.tileLayer('https://api.mapbox.com/v4/cfritz1387.573ca1ee/{z}/{
 var SLCLLDRoute = L.tileLayer('http://ttm-tileify-proxy1.herokuapp.com/tiles/{z}/{x}/{y}?url=https%3A%2F%2Ftilsonwebdraco.3-gislive.com%2Farcgis%2Frest%2Fservices%2FSLClld%2FTilsonslc_lld%2FMapServer&transparent=true&layers=show%3A3%2C10%2C31%2C44%2C47%2C49', {
     maxZoom: 20
 });
+
+
 
 
 var highlightLayer = L.geoJson(null, {
@@ -634,6 +645,8 @@ var highlightLayer = L.geoJson(null, {
     };
   }
 });
+
+
 
 
 var featureLayer = L.geoJson(null, {
@@ -789,9 +802,12 @@ $.getJSON(config1.geojson, function (data) {
   $("#loading-mask").hide();
 });
 
+
+
 var map = L.map("map", {
   layers: [mapboxOSM, SLCLLDRoute, featureLayer, featureLayer1, highlightLayer]
 }).fitWorld();
+
 
 
 // ESRI geocoder
@@ -799,10 +815,14 @@ var searchControl = L.esri.Geocoding.Controls.geosearch({
   useMapBounds: 17
 }).addTo(map);
 
+
+
 // Info control
 var info = L.control({
   position: "bottomleft"
 });
+
+
 
 // Custom info hover control
 info.onAdd = function (map) {
@@ -816,17 +836,23 @@ info.update = function (props) {
 info.addTo(map);
 $(".info-control").hide();
 
+
+
 // Larger screens get expanded layer control
 if (document.body.clientWidth <= 767) {
   isCollapsed = true;
 } else {
   isCollapsed = false;
 }
+
+
 var baseLayers = {
   "Street Map": mapboxOSM,
   "Satellite Map": mapboxSat,
   "Engineered Routes": SLCLLDRoute,
 };
+
+
 var overlayLayers = {
   "<span id='layer-name'>GeoJSON Layer</span>": featureLayer,
   "<span id='layer-name1'>Restoration</span>": featureLayer1,
@@ -847,12 +873,15 @@ map.on("click", function(e) {
   highlightLayer.clearLayers();
 });
 
+
+
 // Table formatter to make links clickable
 function urlFormatter (value, row, index) {
   if (typeof value == "string" && (value.indexOf("http") === 0 || value.indexOf("https") === 0)) {
     return "<a href='"+value+"' target='_blank'>"+value+"</a>";
   }
-}
+};
+
 
 
 function buildFilters() {
@@ -860,7 +889,7 @@ function buildFilters() {
     allow_empty: true,
     filters: filters
   });
-}
+};
 
 
 
@@ -875,7 +904,10 @@ function applyFilter() {
     featureLayer.addData(features);
     syncTable();
   });
-}
+};
+
+
+
 
 function buildTable() {
   $("#table").bootstrapTable({
@@ -913,7 +945,9 @@ function buildTable() {
       height: $("#table-container").height()
     });
   });
-}
+};
+
+
 
 function syncTable() {
   tableFeatures = [];
@@ -934,7 +968,9 @@ function syncTable() {
   } else {
     $("#feature-count").html($("#table").bootstrapTable("getData").length + " visible features");
   }
-}
+};
+
+
 
 function identifyFeature(id) {
   var featureProperties = featureLayer.getLayer(id).feature.properties;
@@ -958,7 +994,7 @@ function identifyFeature(id) {
   content += "<table>";
   $("#feature-info").html(content);
   $("#featureModal").modal("show");
-}
+};
 
 
 function identifyFeature1(id) {
@@ -983,7 +1019,7 @@ function identifyFeature1(id) {
   content += "<table>";
   $("#feature-info").html(content);
   $("#featureModal").modal("show");
-}
+};
 
 
 function photoGallery(photos) {
@@ -1002,8 +1038,7 @@ function photoGallery(photos) {
     }
   });
   return false;
-}
-
+};
 
 
 function switchView(view) {
@@ -1035,8 +1070,7 @@ function switchView(view) {
     $("#map-container").hide();
     $(window).resize();
   }
-}
-
+};
 
 
 $("[name='view']").click(function() {
@@ -1053,11 +1087,12 @@ $("[name='view']").click(function() {
   }
 });
 
+
+
 L.easyPrint({
   title: 'Print',
   elementsToHide: 'p, h2, .gitButton'
 }).addTo(map)
-
 
 
 
