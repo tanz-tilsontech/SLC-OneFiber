@@ -51,7 +51,7 @@ function login() {
         }
       });
       if (!localStorage.getItem("fulcrum_app_token")) {
-        alert("This login does not have access to the Fulcrum Labs organization.");
+        alert("This login does not have access to the Tilson DataMap.");
       }
       checkAuth();
     }
