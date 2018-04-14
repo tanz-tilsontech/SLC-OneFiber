@@ -8,10 +8,6 @@ function bindUIActions() {
     login();
   });
 
-  $("#logout-btn").click(function() {
-    logout();
-  });
-
   $("#login-modal").on("shown.bs.modal", function (e) {
     $(".modal-backdrop").css("opacity", "1");
   });
@@ -62,14 +58,10 @@ function login() {
   });
 };
 
-function logout() {
+window.onbeforeunload = function() {
   localStorage.removeItem("fulcrum_app_token");
   localStorage.removeItem("fulcrum_userfullname");
   location.reload();
-};
-
-window.onbeforeunload = function() {
-  localStorage.removeItem("fulcrum_app_token");
   return '';
 };
 
