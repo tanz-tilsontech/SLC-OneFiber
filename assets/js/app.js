@@ -1,76 +1,74 @@
 // Page Login
 
-login = {
-  init: function() {
-    this.authenticateModule.checkAuth();
-    this.bindUIActions();
-  },
+init: function() {
+  this.authenticateModule.checkAuth();
+  this.bindUIActions();
+};
 
-  bindUIActions: function() {
-    $("#login-btn").click(function() {
-      app.authenticateModule.login();
-    });
+bindUIActions: function() {
+  $("#login-btn").click(function() {
+    app.authenticateModule.login();
+  });
 
-    $("#logout-btn").click(function() {
-      app.authenticateModule.logout();
-    });
+  $("#logout-btn").click(function() {
+    app.authenticateModule.logout();
+  });
 
-    $("#login-modal").on("shown.bs.modal", function (e) {
-      $(".modal-backdrop").css("opacity", "1");
-    });
+  $("#login-modal").on("shown.bs.modal", function (e) {
+    $(".modal-backdrop").css("opacity", "1");
+  });
 
-    $("#login-modal").on("hidden.bs.modal", function (e) {
-      $(".modal-backdrop").css("opacity", "");
-    });
-  },
+  $("#login-modal").on("hidden.bs.modal", function (e) {
+    $(".modal-backdrop").css("opacity", "");
+  });
+};
 
-  authenticateModule: {
-    checkAuth: function() {
-      if (!localStorage.getItem("fulcrum_geobooze_token")) {
-        $("#login-modal").modal("show");
-      } else {
-        $("#login-modal").modal("hide");
-        app.formModule.fetchBeerTypes();
-      }
-    },
-
-    login: function() {
-      var username = $("#email").val();
-      var password = $("#password").val();
-      $.ajax({
-        type: "GET",
-        url: "https://api.fulcrumapp.com/api/v2/users.json",
-        contentType: "application/json",
-        dataType: "json",
-        headers: {
-          "Authorization": "Basic " + btoa(username + ":" + password)
-        },
-        statusCode: {
-          401: function() {
-            alert("Incorrect credentials, please try again.");
-          }
-        },
-        success: function (data) {
-          $.each(data.user.contexts, function(index, context) {
-            if (context.name == "Tilson SLC") {
-              localStorage.setItem("fulcrum_geobooze_token", btoa(context.api_token));
-              localStorage.setItem("fulcrum_userfullname", data.user.first_name + " " + data.user.last_name);
-            }
-          });
-          if (!localStorage.getItem("fulcrum_geobooze_token")) {
-            alert("This login does not have access to the Fulcrum Labs organization.");
-          }
-          app.authenticateModule.checkAuth();
-        }
-      });
-    },
-
-    logout: function() {
-      localStorage.removeItem("fulcrum_geobooze_token");
-      localStorage.removeItem("fulcrum_userfullname");
-      location.reload();
+authenticateModule: {
+  checkAuth: function() {
+    if (!localStorage.getItem("fulcrum_geobooze_token")) {
+      $("#login-modal").modal("show");
+    } else {
+      $("#login-modal").modal("hide");
+      app.formModule.fetchBeerTypes();
     }
-  }
+  };
+
+  login: function() {
+    var username = $("#email").val();
+    var password = $("#password").val();
+    $.ajax({
+      type: "GET",
+      url: "https://api.fulcrumapp.com/api/v2/users.json",
+      contentType: "application/json",
+      dataType: "json",
+      headers: {
+        "Authorization": "Basic " + btoa(username + ":" + password)
+      },
+      statusCode: {
+        401: function() {
+          alert("Incorrect credentials, please try again.");
+        }
+      },
+      success: function (data) {
+        $.each(data.user.contexts, function(index, context) {
+          if (context.name == "Tilson SLC") {
+            localStorage.setItem("fulcrum_geobooze_token", btoa(context.api_token));
+            localStorage.setItem("fulcrum_userfullname", data.user.first_name + " " + data.user.last_name);
+          }
+        });
+        if (!localStorage.getItem("fulcrum_geobooze_token")) {
+          alert("This login does not have access to the Fulcrum Labs organization.");
+        }
+        app.authenticateModule.checkAuth();
+      }
+    });
+  };
+
+  logout: function() {
+    localStorage.removeItem("fulcrum_geobooze_token");
+    localStorage.removeItem("fulcrum_userfullname");
+    location.reload();
+  };
 };
 
 
