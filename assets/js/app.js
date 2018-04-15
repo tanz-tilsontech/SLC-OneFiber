@@ -417,60 +417,6 @@ var properties1 = [{
 
 
 
-// Fetch the Routes GeoJSON file
-
-$.getJSON(config.geojson, function (data) {
-  geojson = data
-  features = $.map(geojson.features, function(feature) {
-    return feature.properties;
-  });
-  featureLayer.addData(data);
-  buildConfig();
-  $("#loading-mask").hide();
-  var style = {
-    "property": "status",
-    "values": {
-      "Segment Ready": "https://image.ibb.co/iXHCyH/1891c9.png",
-      "Segment Not Ready": "https://image.ibb.co/hk21sc/242424.png",
-      "Construction Started": "https://image.ibb.co/mC5Akx/ffd300.png",
-      "Constractor CX QC": "https://image.ibb.co/hHRSXc/b3b3b3.png",
-      "Tilson CX QC": "https://image.ibb.co/c3TVkx/ff8819.png",
-      "Construction Fix": "https://image.ibb.co/cen1sc/cb0d0c.png",
-      "Cable Placement Ready": "https://image.ibb.co/iXHCyH/1891c9.png",
-      "Cable Placement Started": "https://image.ibb.co/mC5Akx/ffd300.png",
-      "Contractor CP QC": "https://image.ibb.co/hHRSXc/b3b3b3.png",
-      "Tilson CP QC": "https://image.ibb.co/c3TVkx/ff8819.png",
-      "Cable Placement Fix": "https://image.ibb.co/cen1sc/cb0d0c.png",
-      "Splicing/Testing Pending": "https://image.ibb.co/hxOkJH/87d30f.png"
-    }
-  }
-  JSON.stringify(style);
-  if (style.property && style.values) {
-    $("#legend-item").removeClass("hidden");
-    $("#legend-title").html(style.property.toUpperCase().replace(/_/g, " "));
-    $.each(style.values, function(property, value) {
-      if (value.startsWith("http")) {
-        $("#legend").append("<p><img src='" + value + "'></i> " + property + "</p>");
-      } else {
-        $("#legend").append("<p><i style='background:" + value + "'></i> " + property + "</p>");
-      }
-    });
-  }
-});
-
-
-// Fetch the Restoration GeoJSON file
-
-$.getJSON(config1.geojson, function (data) {
-  geojson = data
-  features = $.map(geojson.features, function(feature) {
-    return feature.properties;
-  });
-  featureLayer1.addData(data);
-  $("#loading-mask").hide();
-});
-
-
 
 function drawCharts() {
   // HUB COMPLETE
@@ -821,6 +767,60 @@ var featureLayer1 = L.geoJson(null, {
       }
     }
   }
+});
+
+
+// Fetch the Routes GeoJSON file
+
+$.getJSON(config.geojson, function (data) {
+  geojson = data
+  features = $.map(geojson.features, function(feature) {
+    return feature.properties;
+  });
+  featureLayer.addData(data);
+  buildConfig();
+  $("#loading-mask").hide();
+  var style = {
+    "property": "status",
+    "values": {
+      "Segment Ready": "https://image.ibb.co/iXHCyH/1891c9.png",
+      "Segment Not Ready": "https://image.ibb.co/hk21sc/242424.png",
+      "Construction Started": "https://image.ibb.co/mC5Akx/ffd300.png",
+      "Constractor CX QC": "https://image.ibb.co/hHRSXc/b3b3b3.png",
+      "Tilson CX QC": "https://image.ibb.co/c3TVkx/ff8819.png",
+      "Construction Fix": "https://image.ibb.co/cen1sc/cb0d0c.png",
+      "Cable Placement Ready": "https://image.ibb.co/iXHCyH/1891c9.png",
+      "Cable Placement Started": "https://image.ibb.co/mC5Akx/ffd300.png",
+      "Contractor CP QC": "https://image.ibb.co/hHRSXc/b3b3b3.png",
+      "Tilson CP QC": "https://image.ibb.co/c3TVkx/ff8819.png",
+      "Cable Placement Fix": "https://image.ibb.co/cen1sc/cb0d0c.png",
+      "Splicing/Testing Pending": "https://image.ibb.co/hxOkJH/87d30f.png"
+    }
+  }
+  JSON.stringify(style);
+  if (style.property && style.values) {
+    $("#legend-item").removeClass("hidden");
+    $("#legend-title").html(style.property.toUpperCase().replace(/_/g, " "));
+    $.each(style.values, function(property, value) {
+      if (value.startsWith("http")) {
+        $("#legend").append("<p><img src='" + value + "'></i> " + property + "</p>");
+      } else {
+        $("#legend").append("<p><i style='background:" + value + "'></i> " + property + "</p>");
+      }
+    });
+  }
+});
+
+
+// Fetch the Restoration GeoJSON file
+
+$.getJSON(config1.geojson, function (data) {
+  geojson = data
+  features = $.map(geojson.features, function(feature) {
+    return feature.properties;
+  });
+  featureLayer1.addData(data);
+  $("#loading-mask").hide();
 });
 
 
