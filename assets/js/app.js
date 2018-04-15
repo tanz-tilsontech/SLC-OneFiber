@@ -702,6 +702,7 @@ var featureLayer = L.geoJson(null, {
             iconAnchor: [15, 32]
           })
         );
+        legendItems[feature.properties.Status] = feature.properties["marker-color"];
       }
     }
   }
@@ -900,6 +901,18 @@ function urlFormatter (value, row, index) {
     return "<a href='"+value+"' target='_blank'>"+value+"</a>";
   }
 };
+
+var legendItems = {};
+var legend = L.control({position: 'bottomright'});
+
+legend.onAdd = function (map) {
+
+  $.each(legendItems, function(index, value) {
+    $(".legend").append("<div><img src='assets/pictures/markers/" + value.replace("#",'').toLowerCase() + ".png' height='20px' width='15px'>" + index + "</div>");
+  });
+};
+
+legend.addTo(map);
 
 
 
