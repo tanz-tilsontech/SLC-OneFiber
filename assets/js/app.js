@@ -710,13 +710,6 @@ var featureLayer = L.geoJson(null, {
 
 
 var featureLayer1 = L.geoJson(null, {
-  filter: function(feature, layer) {
-    if ($("#email").val().includes("fibertel")) {
-      if (feature.properties.contractor_repeat === "FiberTel") return true;
-    } else if ($("#email").val().includes("tilson") || $("#email").val().includes("verizon")) {
-      if (feature.properties.contractor_repeat != "") return true;
-    }
-  },
   pointToLayer: function (feature, latlng) {
     return L.marker(latlng, {
       title: feature.properties["restoration_items"],
