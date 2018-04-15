@@ -66,6 +66,13 @@ window.onbeforeunload = function() {
 };
 
 
+
+// Add legend to map
+
+var legendItems = {};
+
+
+
 // Configuration of Routes in Fulcrum
 
 var config = {
@@ -702,6 +709,7 @@ var featureLayer = L.geoJson(null, {
             iconAnchor: [15, 32]
           })
         );
+        legendItems[feature.properties.Status] = feature.properties["marker-color"];
       }
     }
   }
@@ -823,6 +831,17 @@ $.getJSON(config1.geojson, function (data) {
 
 
 
+function updateLegend() {
+  if (! $.isEmptyObject(legendItems)) {
+    $(".legend").remove();
+    $("#layer-name").append("<div class='legend'></div>");
+    $.each(legendItems, function(index, value) {
+      $(".legend").append("<div><img src='assets/img/markers/" + value.replace("#",'').toLowerCase() + ".png' height='20px' width='15px'>" + index + "</div>");
+    });
+  }
+}
+
+
 var map = L.map("map", {
   layers: [mapboxOSM, SLCLLDRoute, featureLayer, featureLayer1, highlightLayer]
 }).fitWorld();
@@ -892,6 +911,8 @@ map.on("click", function(e) {
   highlightLayer.clearLayers();
 });
 
+
+updateLegend();
 
 
 // Table formatter to make links clickable
