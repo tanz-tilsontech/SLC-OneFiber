@@ -702,7 +702,7 @@ var featureLayer = L.geoJson(null, {
             iconAnchor: [15, 32]
           })
         );
-        legendItems[feature.properties.Status] = feature.properties["marker-color"];
+        legendItems = feature.properties["marker-color"];
       }
     }
   }
