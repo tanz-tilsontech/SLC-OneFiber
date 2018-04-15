@@ -419,70 +419,15 @@ var properties1 = [{
 
 
 
-// Fetch the Routes GeoJSON file
-
-$.getJSON(config.geojson, function (data) {
-  geojson = data
-  features = $.map(geojson.features, function(feature) {
-    return feature.properties;
-  });
-  featureLayer.addData(data);
-  buildConfig();
-  $("#loading-mask").hide();
-  var style = {
-    "property": "status",
-    "values": {
-      "Segment Ready": "https://image.ibb.co/iXHCyH/1891c9.png",
-      "Segment Not Ready": "https://image.ibb.co/hk21sc/242424.png",
-      "Construction Started": "https://image.ibb.co/mC5Akx/ffd300.png",
-      "Constractor CX QC": "https://image.ibb.co/hHRSXc/b3b3b3.png",
-      "Tilson CX QC": "https://image.ibb.co/c3TVkx/ff8819.png",
-      "Construction Fix": "https://image.ibb.co/cen1sc/cb0d0c.png",
-      "Cable Placement Ready": "https://image.ibb.co/iXHCyH/1891c9.png",
-      "Cable Placement Started": "https://image.ibb.co/mC5Akx/ffd300.png",
-      "Contractor CP QC": "https://image.ibb.co/hHRSXc/b3b3b3.png",
-      "Tilson CP QC": "https://image.ibb.co/c3TVkx/ff8819.png",
-      "Cable Placement Fix": "https://image.ibb.co/cen1sc/cb0d0c.png",
-      "Splicing/Testing Pending": "https://image.ibb.co/hxOkJH/87d30f.png"
-    }
-  }
-  JSON.stringify(style);
-  if (style.property && style.values) {
-    $("#legend-item").removeClass("hidden");
-    $("#legend-title").html(style.property.toUpperCase().replace(/_/g, " "));
-    $.each(style.values, function(property, value) {
-      if (value.startsWith("http")) {
-        $("#legend").append("<p><img src='" + value + "'></i> " + property + "</p>");
-      } else {
-        $("#legend").append("<p><i style='background:" + value + "'></i> " + property + "</p>");
-      }
-    });
-  }
-});
-
-
-// Fetch the Restoration GeoJSON file
-
-$.getJSON(config1.geojson, function (data) {
-  geojson = data
-  features = $.map(geojson.features, function(feature) {
-    return feature.properties;
-  });
-  featureLayer1.addData(data);
-  $("#loading-mask").hide();
-});
-
-
-
 function drawCharts() {
   // HUB COMPLETE
   $(function() {
-    if (localStorage.getItem("fulcrum_useremail").includes("tilson") || localStorage.getItem("fulcrum_useremail").includes("verizon")) {
+    if (localStorage.getItem("fulcrum_useremail").indexOf("tilson") >= 0 || localStorage.getItem("fulcrum_useremail").indexOf("verizon") >= 0) {
       var result = alasql("SELECT hub AS label, COUNT(NULLIF(cable_placement_total_footage_cx_final::NUMBER,0)) AS total FROM ? GROUP BY hub", [features]);
       var columns = $.map(result, function(hub) {
         return [[hub.label, hub.total]];
       });
-    } else if (localStorage.getItem("fulcrum_useremail").includes("fibertel")) {
+    } else if (localStorage.getItem("fulcrum_useremail").indexOf("fibertel") >= 0) {
       var result = alasql("SELECT hub AS label, COUNT(NULLIF(cable_placement_total_footage_cx_final::NUMBER,0)) AS total FROM ? WHERE contractor = 'FiberTel'   GROUP BY hub", [features]);
       var columns = $.map(result, function(hub) {
         return [[hub.label, hub.total]];
@@ -499,12 +444,12 @@ function drawCharts() {
 
   // HUB TOTAL FOOTAGE
   $(function() {
-    if (localStorage.getItem("fulcrum_useremail").includes("tilson") || localStorage.getItem("fulcrum_useremail").includes("verizon")) {
+    if (localStorage.getItem("fulcrum_useremail").indexOf("tilson") >= 0 || localStorage.getItem("fulcrum_useremail").indexOf("verizon") >= 0) {
       var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? GROUP BY hub", [features]);
       var columns1 = $.map(result, function(hub) {
         return [[hub.label, hub.footage]];
       });
-    } else if (localStorage.getItem("fulcrum_useremail").includes("fibertel")) {
+    } else if (localStorage.getItem("fulcrum_useremail").indexOf("fibertel") >= 0) {
       var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? WHERE contractor = 'FiberTel' GROUP BY hub", [features]);
       var columns1 = $.map(result, function(hub) {
         return [[hub.label, hub.footage]];
@@ -552,12 +497,12 @@ function drawCharts() {
 
   // HUB STATUS 
   $(function() {
-    if (localStorage.getItem("fulcrum_useremail").includes("tilson") || localStorage.getItem("fulcrum_useremail").includes("verizon")) {
+    if (localStorage.getItem("fulcrum_useremail").indexOf("tilson") >= 0 || localStorage.getItem("fulcrum_useremail").indexOf("verizon") >= 0) {
       var result = alasql("SELECT status AS label, COUNT(status) AS total FROM ? GROUP BY status", [features]);
       var columns = $.map(result, function(status) {
         return [[status.label, status.total]];
       });
-    } else if (localStorage.getItem("fulcrum_useremail").includes("fibertel")) {
+    } else if (localStorage.getItem("fulcrum_useremail").indexOf("fibertel") >= 0) {
       var result = alasql("SELECT status AS label, COUNT(status) AS total FROM ? WHERE contractor = 'FiberTel' GROUP BY status", [features]);
       var columns = $.map(result, function(status) {
         return [[status.label, status.total]];
@@ -717,9 +662,9 @@ var highlightLayer = L.geoJson(null, {
 
 var featureLayer = L.geoJson(null, {
   filter: function(feature, layer) {
-    if (localStorage.getItem("fulcrum_useremail").includes("fibertel")) {
+    if (localStorage.getItem("fulcrum_useremail").indexOf("fibertel") >= 0) {
       if (feature.properties.contractor === "FiberTel") return true;
-    } else if (localStorage.getItem("fulcrum_useremail").includes("tilson") || localStorage.getItem("fulcrum_useremail").includes("verizon")) {
+    } else if (localStorage.getItem("fulcrum_useremail").indexOf("tilson") >= 0 || localStorage.getItem("fulcrum_useremail").indexOf("verizon") >= 0) {
       if (feature.properties.contractor != "") return true;
     }
   },
@@ -769,9 +714,9 @@ var featureLayer = L.geoJson(null, {
 
 var featureLayer1 = L.geoJson(null, {
   filter: function(feature, layer) {
-    if (localStorage.getItem("fulcrum_useremail").includes("fibertel")) {
+    if (localStorage.getItem("fulcrum_useremail").indexOf("fibertel") >= 0) {
       if (feature.properties.contractor === "FiberTel") return true;
-    } else if (localStorage.getItem("fulcrum_useremail").includes("tilson") || localStorage.getItem("fulcrum_useremail").includes("verizon")) {
+    } else if (localStorage.getItem("fulcrum_useremail").indexOf("tilson") >= 0 || localStorage.getItem("fulcrum_useremail").indexOf("verizon") >= 0) {
       if (feature.properties.contractor != "") return true;
     }
   },
@@ -904,6 +849,60 @@ function urlFormatter (value, row, index) {
     return "<a href='"+value+"' target='_blank'>"+value+"</a>";
   }
 };
+
+
+// Fetch the Routes GeoJSON file
+
+$.getJSON(config.geojson, function (data) {
+  geojson = data
+  features = $.map(geojson.features, function(feature) {
+    return feature.properties;
+  });
+  featureLayer.addData(data);
+  buildConfig();
+  $("#loading-mask").hide();
+  var style = {
+    "property": "status",
+    "values": {
+      "Segment Ready": "https://image.ibb.co/iXHCyH/1891c9.png",
+      "Segment Not Ready": "https://image.ibb.co/hk21sc/242424.png",
+      "Construction Started": "https://image.ibb.co/mC5Akx/ffd300.png",
+      "Constractor CX QC": "https://image.ibb.co/hHRSXc/b3b3b3.png",
+      "Tilson CX QC": "https://image.ibb.co/c3TVkx/ff8819.png",
+      "Construction Fix": "https://image.ibb.co/cen1sc/cb0d0c.png",
+      "Cable Placement Ready": "https://image.ibb.co/iXHCyH/1891c9.png",
+      "Cable Placement Started": "https://image.ibb.co/mC5Akx/ffd300.png",
+      "Contractor CP QC": "https://image.ibb.co/hHRSXc/b3b3b3.png",
+      "Tilson CP QC": "https://image.ibb.co/c3TVkx/ff8819.png",
+      "Cable Placement Fix": "https://image.ibb.co/cen1sc/cb0d0c.png",
+      "Splicing/Testing Pending": "https://image.ibb.co/hxOkJH/87d30f.png"
+    }
+  }
+  JSON.stringify(style);
+  if (style.property && style.values) {
+    $("#legend-item").removeClass("hidden");
+    $("#legend-title").html(style.property.toUpperCase().replace(/_/g, " "));
+    $.each(style.values, function(property, value) {
+      if (value.startsWith("http")) {
+        $("#legend").append("<p><img src='" + value + "'></i> " + property + "</p>");
+      } else {
+        $("#legend").append("<p><i style='background:" + value + "'></i> " + property + "</p>");
+      }
+    });
+  }
+});
+
+
+// Fetch the Restoration GeoJSON file
+
+$.getJSON(config1.geojson, function (data) {
+  geojson = data
+  features = $.map(geojson.features, function(feature) {
+    return feature.properties;
+  });
+  featureLayer1.addData(data);
+  $("#loading-mask").hide();
+});
 
 
 
@@ -1123,6 +1122,7 @@ $("#refresh-btn").click(function() {
   featureLayer.clearLayers();
   featureLayer1.clearLayers();
   map.setView([40.5912,-111.837],9)
+  
   $.getJSON(config.geojson, function (data) {
     geojson = data;
     legendItems = {};
@@ -1136,8 +1136,7 @@ $("#refresh-btn").click(function() {
   syncTable();
   buildTable();
   buildFilters();
-  $(".navbar-collapse.in").collapse("hide");
-  return false;
+ 
   $.getJSON(config1.geojson, function (data) {
     geojson = data
     features = $.map(geojson.features, function(feature) {
@@ -1147,6 +1146,8 @@ $("#refresh-btn").click(function() {
     $("#loading-mask").hide();
   });
   map.fitBounds(featureLayer.getBounds());
+  $(".navbar-collapse.in").collapse("hide");
+  return false;
 });
 
 $("#about-btn").click(function() {
