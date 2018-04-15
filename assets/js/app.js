@@ -67,12 +67,12 @@ window.onbeforeunload = function() {
 
 
 
-
 // Configuration of Routes in Fulcrum
 
 var config = {
   geojson: "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94.geojson",
   title: "SLC OneFiber (FiberTel)",
+  userName: "FiberTel",
   layerName: "Routes",
   hoverProperty: "status_title_github",
   sortProperty: "fqnid",
@@ -333,6 +333,7 @@ var properties = [{
 
 var config1 = {
   geojson: "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94.geojson?child=restoration_repeat",
+  userName: "FiberTel",
   layerName: "Restoration",
   hoverProperty: "restoration_items",
   sortProperty: "date_resto",
@@ -421,17 +422,10 @@ var properties1 = [{
 function drawCharts() {
   // HUB COMPLETE
   $(function() {
-    if ($("#email").val().includes("tilson") || $("#email").val().includes("verizon")) {
-      var result = alasql("SELECT hub AS label, COUNT(NULLIF(cable_placement_total_footage_cx_final::NUMBER,0)) AS total FROM ? GROUP BY hub", [features]);
-      var columns = $.map(result, function(hub) {
-        return [[hub.label, hub.total]];
-      });
-    } else if ($("#email").val().includes("fibertel")) {
-      var result = alasql("SELECT hub AS label, COUNT(NULLIF(cable_placement_total_footage_cx_final::NUMBER,0)) AS total FROM ? WHERE contractor = 'FiberTel'   GROUP BY hub", [features]);
-      var columns = $.map(result, function(hub) {
-        return [[hub.label, hub.total]];
-      });
-    }
+    var result = alasql("SELECT hub AS label, COUNT(NULLIF(cable_placement_total_footage_cx_final::NUMBER,0)) AS total FROM ? WHERE contractor = 'FiberTel'   GROUP BY hub", [features]);
+    var columns = $.map(result, function(hub) {
+      return [[hub.label, hub.total]];
+    });
     var chart = c3.generate({
         bindto: "#hub-complete-chart",
         data: {
@@ -443,17 +437,10 @@ function drawCharts() {
 
   // HUB TOTAL FOOTAGE
   $(function() {
-    if ($("#email").val().includes("tilson") || $("#email").val().includes("verizon")) {
-      var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? GROUP BY hub", [features]);
-      var columns1 = $.map(result, function(hub) {
-        return [[hub.label, hub.footage]];
-      });
-    } else if ($("#email").val().includes("fibertel")) {
-      var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? WHERE contractor = 'FiberTel' GROUP BY hub", [features]);
-      var columns1 = $.map(result, function(hub) {
-        return [[hub.label, hub.footage]];
-      });
-    }
+    var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? WHERE contractor = 'FiberTel' GROUP BY hub", [features]);
+    var columns1 = $.map(result, function(hub) {
+      return [[hub.label, hub.footage]];
+    });
     var chart = c3.generate({
         bindto: "#hub-footage-chart",
         data: {
@@ -496,17 +483,10 @@ function drawCharts() {
 
   // HUB STATUS 
   $(function() {
-    if ($("#email").val().includes("tilson") || $("#email").val().includes("verizon")) {
-      var result = alasql("SELECT status AS label, COUNT(status) AS total FROM ? GROUP BY status", [features]);
-      var columns = $.map(result, function(status) {
-        return [[status.label, status.total]];
-      });
-    } else if ($("#email").val().includes("fibertel")) {
-      var result = alasql("SELECT status AS label, COUNT(status) AS total FROM ? WHERE contractor = 'FiberTel' GROUP BY status", [features]);
-      var columns = $.map(result, function(status) {
-        return [[status.label, status.total]];
-      });
-    }
+    var result = alasql("SELECT status AS label, COUNT(status) AS total FROM ? WHERE contractor = 'FiberTel' GROUP BY status", [features]);
+    var columns = $.map(result, function(status) {
+      return [[status.label, status.total]];
+    });
     var chart = c3.generate({
         bindto: "#hub-status-chart",
         data: {
@@ -659,13 +639,11 @@ var highlightLayer = L.geoJson(null, {
 });
 
 
+
+
 var featureLayer = L.geoJson(null, {
   filter: function(feature, layer) {
-    if ($("#email").val().includes("fibertel")) {
-      if (feature.properties.contractor === "FiberTel") return true;
-    } else if ($("#email").val().includes("tilson") || $("#email").val().includes("verizon")) {
-      if (feature.properties.contractor != "") return true;
-    }
+    if (feature.properties.contractor === config.userName) return true;
   },
   pointToLayer: function (feature, latlng) {
     return L.marker(latlng, {
@@ -712,13 +690,6 @@ var featureLayer = L.geoJson(null, {
 
 
 var featureLayer1 = L.geoJson(null, {
-  filter: function(feature, layer) {
-    if ($("#email").val().includes("fibertel")) {
-      if (feature.properties.contractor === "FiberTel") return true;
-    } else if ($("#email").val().includes("tilson") || $("#email").val().includes("verizon")) {
-      if (feature.properties.contractor != "") return true;
-    }
-  },
   pointToLayer: function (feature, latlng) {
     return L.marker(latlng, {
       title: feature.properties["restoration_items"],
@@ -1119,7 +1090,6 @@ L.easyPrint({
 
 $("#refresh-btn").click(function() {
   featureLayer.clearLayers();
-  featureLayer1.clearLayers();
   map.setView([40.5912,-111.837],9)
   $.getJSON(config.geojson, function (data) {
     geojson = data;
@@ -1134,17 +1104,9 @@ $("#refresh-btn").click(function() {
   syncTable();
   buildTable();
   buildFilters();
+  map.fitBounds(featureLayer.getBounds());
   $(".navbar-collapse.in").collapse("hide");
   return false;
-  $.getJSON(config1.geojson, function (data) {
-    geojson = data
-    features = $.map(geojson.features, function(feature) {
-      return feature.properties;
-    });
-    featureLayer1.addData(data);
-    $("#loading-mask").hide();
-  });
-  map.fitBounds(featureLayer.getBounds());
 });
 
 $("#about-btn").click(function() {
