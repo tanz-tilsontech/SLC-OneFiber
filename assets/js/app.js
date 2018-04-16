@@ -60,7 +60,6 @@ function login() {
 };
 
 var userEmail = $("#email").val()
-
 // Configuration of Routes in Fulcrum
 
 var config = {
@@ -651,6 +650,13 @@ var highlightLayer = L.geoJson(null, {
 });
 
 var featureLayer = L.geoJson(null, {
+  filter: function(feature, layer) {
+    if (userEmail.includes("fibertel")) {
+      if (feature.properties.contractor === "FiberTel") return true;
+    } else if (userEmail.includes("tilson") || userEmail.includes("verizon")) {
+      if (feature.properties.contractor != "") return true;
+    }
+  },
   pointToLayer: function (feature, latlng) {
     return L.marker(latlng, {
       title: feature.properties["status_title_github"],
@@ -696,6 +702,13 @@ var featureLayer = L.geoJson(null, {
 
 
 var featureLayer1 = L.geoJson(null, {
+  filter: function(feature, layer) {
+    if (userEmail.includes("fibertel")) {
+      if (feature.properties.contractor === "FiberTel") return true;
+    } else if (userEmail.includes("tilson") || userEmail.includes("verizon")) {
+      if (feature.properties.contractor != "") return true;
+    }
+  },
   pointToLayer: function (feature, latlng) {
     return L.marker(latlng, {
       title: feature.properties["restoration_items"],
@@ -834,6 +847,7 @@ $.getJSON(config.geojson, function (data) {
   features = $.map(geojson.features, function(feature) {
     return feature.properties;
   });
+  login();
   featureLayer.addData(data);
   buildConfig();
   $("#loading-mask").hide();
@@ -876,6 +890,7 @@ $.getJSON(config1.geojson, function (data) {
   features = $.map(geojson.features, function(feature) {
     return feature.properties;
   });
+  login();
   featureLayer1.addData(data);
   $("#loading-mask").hide();
 });
@@ -1097,6 +1112,7 @@ L.easyPrint({
 $("#refresh-btn").click(function() {
   featureLayer.clearLayers();
   featureLayer1.clearLayers();
+  login();
   map.setView([40.5912,-111.837],9)
   
   $.getJSON(config.geojson, function (data) {
