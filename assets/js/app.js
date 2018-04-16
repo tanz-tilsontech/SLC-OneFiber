@@ -59,14 +59,6 @@ function login() {
   });
 };
 
-window.onbeforeunload = function() {
-  sessionStorage.removeItem("fulcrum_app_token");
-  sessionStorage.removeItem("fulcrum_userfullname");
-  sessionStorage.removeItem("fulcrum_useremail");
-  location.reload();
-  return '';
-};
-
 
 // Configuration of Routes in Fulcrum
 
