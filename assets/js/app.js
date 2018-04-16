@@ -1,6 +1,7 @@
 
 checkAuth();
 bindUIActions();
+login();
 
 
 function bindUIActions() {
@@ -847,6 +848,8 @@ $.getJSON(config.geojson, function (data) {
   features = $.map(geojson.features, function(feature) {
     return feature.properties;
   });
+  checkAuth();
+  bindUIActions();
   login();
   featureLayer.addData(data);
   buildConfig();
@@ -890,6 +893,8 @@ $.getJSON(config1.geojson, function (data) {
   features = $.map(geojson.features, function(feature) {
     return feature.properties;
   });
+  checkAuth();
+  bindUIActions();
   login();
   featureLayer1.addData(data);
   $("#loading-mask").hide();
@@ -1112,7 +1117,6 @@ L.easyPrint({
 $("#refresh-btn").click(function() {
   featureLayer.clearLayers();
   featureLayer1.clearLayers();
-  login();
   map.setView([40.5912,-111.837],9)
   
   $.getJSON(config.geojson, function (data) {
