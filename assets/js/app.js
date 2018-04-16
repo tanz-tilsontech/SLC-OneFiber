@@ -67,7 +67,7 @@ window.onbeforeunload = function() {
   return '';
 };
 
-var userEmail = localStorage.getItem("fulcrum_useremail")
+var userEmail = localStorage.getItem('fulcrum_useremail')
 
 
 // Configuration of Routes in Fulcrum
