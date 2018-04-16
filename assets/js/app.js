@@ -59,8 +59,6 @@ function login() {
   });
 };
 
-var userEmail = $("#email").val();
-
 // Configuration of Routes in Fulcrum
 
 var config = {
@@ -652,6 +650,7 @@ var highlightLayer = L.geoJson(null, {
 
 
 if (userEmail.includes("fibertel")) {
+  var userEmail = $("#email").val()
   var featureLayer = L.geoJson(null, {
     filter: function(feature, layer) {
       if (feature.properties.contractor === "FiberTel") return true;
@@ -697,8 +696,8 @@ if (userEmail.includes("fibertel")) {
       }
     }
   });
-  featureLayer.addData(data);
 } else if (userEmail.includes("tilson") || userEmail.includes("verizon")) {
+  var userEmail = $("#email").val()
   var featureLayer = L.geoJson(null, {
     filter: function(feature, layer) {
       if (feature.properties.contractor != "") return true;
@@ -744,7 +743,6 @@ if (userEmail.includes("fibertel")) {
       }
     }
   });
-  featureLayer.addData(data);
 };
 
 
@@ -895,6 +893,7 @@ $.getJSON(config.geojson, function (data) {
   features = $.map(geojson.features, function(feature) {
     return feature.properties;
   });
+  featureLayer.addData(data);
   buildConfig();
   $("#loading-mask").hide();
   var style = {
@@ -936,6 +935,7 @@ $.getJSON(config1.geojson, function (data) {
   features = $.map(geojson.features, function(feature) {
     return feature.properties;
   });
+  featureLayer1.addData(data);
   $("#loading-mask").hide();
 });
 
