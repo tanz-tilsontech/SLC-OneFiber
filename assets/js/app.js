@@ -59,7 +59,7 @@ function login() {
   });
 };
 
-var userEmail = $("#email").val()
+var userEmail = $("#email").val();
 
 // Configuration of Routes in Fulcrum
 
@@ -651,100 +651,98 @@ var highlightLayer = L.geoJson(null, {
 });
 
 
-function userLayer() {
-  if (userEmail.includes("fibertel")) {
-    var featureLayer = L.geoJson(null, {
-      filter: function(feature, layer) {
-        if (feature.properties.contractor === "FiberTel") return true;
-      },
-      pointToLayer: function (feature, latlng) {
-        return L.marker(latlng, {
-          title: feature.properties["status_title_github"],
-          riseOnHover: true,
-          icon: L.icon({
-            iconUrl: "assets/pictures/markers/cb0d0c.png",
-            iconSize: [30, 40],
-            iconAnchor: [15, 32]
-          })
-        });
-      },
-      onEachFeature: function (feature, layer) {
-        if (feature.properties) {
-          layer.on({
-            click: function (e) {
-              identifyFeature(L.stamp(layer));
-              highlightLayer.clearLayers();
-              highlightLayer.addData(userLayer.featureLayer.getLayer(L.stamp(layer)).toGeoJSON());
-            },
-            mouseover: function (e) {
-              if (config.hoverProperty) {
-                $(".info-control").html(feature.properties[config.hoverProperty]);
-                $(".info-control").show();
-              }
-            },
-            mouseout: function (e) {
-              $(".info-control").hide();
+if (userEmail.includes("fibertel")) {
+  var featureLayer = L.geoJson(null, {
+    filter: function(feature, layer) {
+      if (feature.properties.contractor === "FiberTel") return true;
+    },
+    pointToLayer: function (feature, latlng) {
+      return L.marker(latlng, {
+        title: feature.properties["status_title_github"],
+        riseOnHover: true,
+        icon: L.icon({
+          iconUrl: "assets/pictures/markers/cb0d0c.png",
+          iconSize: [30, 40],
+          iconAnchor: [15, 32]
+        })
+      });
+    },
+    onEachFeature: function (feature, layer) {
+      if (feature.properties) {
+        layer.on({
+          click: function (e) {
+            identifyFeature(L.stamp(layer));
+            highlightLayer.clearLayers();
+            highlightLayer.addData(featureLayer.getLayer(L.stamp(layer)).toGeoJSON());
+          },
+          mouseover: function (e) {
+            if (config.hoverProperty) {
+              $(".info-control").html(feature.properties[config.hoverProperty]);
+              $(".info-control").show();
             }
-          });
-          if (feature.properties["marker-color"]) {
-            layer.setIcon(
-              L.icon({
-                iconUrl: "assets/pictures/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
-                iconSize: [30, 40],
-                iconAnchor: [15, 32]
-              })
-            );
+          },
+          mouseout: function (e) {
+            $(".info-control").hide();
           }
+        });
+        if (feature.properties["marker-color"]) {
+          layer.setIcon(
+            L.icon({
+              iconUrl: "assets/pictures/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
+              iconSize: [30, 40],
+              iconAnchor: [15, 32]
+            })
+          );
         }
       }
-    });
-  } else if (userEmail.includes("tilson") || userEmail.includes("verizon")) {
-    var featureLayer = L.geoJson(null, {
-      filter: function(feature, layer) {
-        if (feature.properties.contractor != "") return true;
-      },
-      pointToLayer: function (feature, latlng) {
-        return L.marker(latlng, {
-          title: feature.properties["status_title_github"],
-          riseOnHover: true,
-          icon: L.icon({
-            iconUrl: "assets/pictures/markers/cb0d0c.png",
-            iconSize: [30, 40],
-            iconAnchor: [15, 32]
-          })
-        });
-      },
-      onEachFeature: function (feature, layer) {
-        if (feature.properties) {
-          layer.on({
-            click: function (e) {
-              identifyFeature(L.stamp(layer));
-              highlightLayer.clearLayers();
-              highlightLayer.addData(userLayer.featureLayer.getLayer(L.stamp(layer)).toGeoJSON());
-            },
-            mouseover: function (e) {
-              if (config.hoverProperty) {
-                $(".info-control").html(feature.properties[config.hoverProperty]);
-                $(".info-control").show();
-              }
-            },
-            mouseout: function (e) {
-              $(".info-control").hide();
+    }
+  });
+} else if (userEmail.includes("tilson") || userEmail.includes("verizon")) {
+  var featureLayer = L.geoJson(null, {
+    filter: function(feature, layer) {
+      if (feature.properties.contractor != "") return true;
+    },
+    pointToLayer: function (feature, latlng) {
+      return L.marker(latlng, {
+        title: feature.properties["status_title_github"],
+        riseOnHover: true,
+        icon: L.icon({
+          iconUrl: "assets/pictures/markers/cb0d0c.png",
+          iconSize: [30, 40],
+          iconAnchor: [15, 32]
+        })
+      });
+    },
+    onEachFeature: function (feature, layer) {
+      if (feature.properties) {
+        layer.on({
+          click: function (e) {
+            identifyFeature(L.stamp(layer));
+            highlightLayer.clearLayers();
+            highlightLayer.addData(featureLayer.getLayer(L.stamp(layer)).toGeoJSON());
+          },
+          mouseover: function (e) {
+            if (config.hoverProperty) {
+              $(".info-control").html(feature.properties[config.hoverProperty]);
+              $(".info-control").show();
             }
-          });
-          if (feature.properties["marker-color"]) {
-            layer.setIcon(
-              L.icon({
-                iconUrl: "assets/pictures/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
-                iconSize: [30, 40],
-                iconAnchor: [15, 32]
-              })
-            );
+          },
+          mouseout: function (e) {
+            $(".info-control").hide();
           }
+        });
+        if (feature.properties["marker-color"]) {
+          layer.setIcon(
+            L.icon({
+              iconUrl: "assets/pictures/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
+              iconSize: [30, 40],
+              iconAnchor: [15, 32]
+            })
+          );
         }
       }
-    });
-  };
+    }
+  });
 };
 
 
@@ -810,7 +808,7 @@ var featureLayer1 = L.geoJson(null, {
 
 
 var map = L.map("map", {
-  layers: [mapboxOSM, SLCLLDRoute, userLayer.featureLayer, featureLayer1, highlightLayer]
+  layers: [mapboxOSM, SLCLLDRoute, featureLayer, featureLayer1, highlightLayer]
 }).fitWorld();
 
 
@@ -859,7 +857,7 @@ var baseLayers = {
 
 
 var overlayLayers = {
-  "<span id='layer-name'>GeoJSON Layer</span>": userLayer.featureLayer,
+  "<span id='layer-name'>GeoJSON Layer</span>": featureLayer,
   "<span id='layer-name1'>Restoration</span>": featureLayer1,
   "<span id='layer-name2'>Engineered</span>": SLCLLDRoute,
 };
@@ -895,7 +893,7 @@ $.getJSON(config.geojson, function (data) {
   features = $.map(geojson.features, function(feature) {
     return feature.properties;
   });
-  userLayer.featureLayer.addData(data);
+  featureLayer.addData(data);
   buildConfig();
   $("#loading-mask").hide();
   var style = {
@@ -959,8 +957,8 @@ function applyFilter() {
     query += " WHERE " + sql;
   }
   alasql(query, [geojson.features], function(features){
-    userLayer.featureLayer.clearLayers();
-    userLayer.featureLayer.addData(features);
+    featureLayer.clearLayers();
+    featureLayer.addData(features);
     syncTable();
   });
 };
@@ -985,19 +983,19 @@ function buildTable() {
     showToggle: false,
     columns: table,
     onClickRow: function(row, $element) {
-      var layer = userLayer.featureLayer.getLayer(row.leaflet_stamp);
+      var layer = featureLayer.getLayer(row.leaflet_stamp);
       map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 19);
       highlightLayer.clearLayers();
-      highlightLayer.addData(userLayer.featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
+      highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
     },
     onDblClickRow: function(row) {
       identifyFeature(row.leaflet_stamp);
       highlightLayer.clearLayers();
-      highlightLayer.addData(userLayer.featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
+      highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
     },
   });
 
-  map.fitBounds(userLayer.featureLayer.getBounds());
+  map.fitBounds(featureLayer.getBounds());
 
   $(window).resize(function () {
     $("#table").bootstrapTable("resetView", {
@@ -1010,10 +1008,10 @@ function buildTable() {
 
 function syncTable() {
   tableFeatures = [];
-  userLayer.featureLayer.eachLayer(function (layer) {
+  featureLayer.eachLayer(function (layer) {
     layer.feature.properties.leaflet_stamp = L.stamp(layer);
-    if (map.hasLayer(userLayer.featureLayer)) {
-      userLayer.featureLayer.getLayer()
+    if (map.hasLayer(featureLayer)) {
+      featureLayer.getLayer()
       layer.feature.geometry.type === "Point"
       if (map.getBounds().contains(layer.getLatLng())) {
         tableFeatures.push(layer.feature.properties);
@@ -1032,7 +1030,7 @@ function syncTable() {
 
 
 function identifyFeature(id) {
-  var featureProperties = userLayer.featureLayer.getLayer(id).feature.properties;
+  var featureProperties = featureLayer.getLayer(id).feature.properties;
   var content = "<table class='table table-striped table-bordered table-condensed'>";
   $.each(featureProperties, function(key, value) {
     if (!value) {
@@ -1057,7 +1055,7 @@ function identifyFeature(id) {
 
 
 function identifyFeature1(id) {
-  var featureProperties = userLayer.featureLayer1.getLayer(id).feature.properties;
+  var featureProperties = featureLayer1.getLayer(id).feature.properties;
   var content = "<table class='table table-striped table-bordered table-condensed'>";
   var photoLink = "https://web.fulcrumapp.com/photos/view?photos=";
   $.each(featureProperties, function(key, value) {
@@ -1156,7 +1154,7 @@ L.easyPrint({
 
 
 $("#refresh-btn").click(function() {
-  userLayer.featureLayer.clearLayers();
+  featureLayer.clearLayers();
   featureLayer1.clearLayers();
   map.setView([40.5912,-111.837],9)
   
@@ -1166,7 +1164,7 @@ $("#refresh-btn").click(function() {
     features = $.map(geojson.features, function(feature) {
       return feature.properties;
     });
-    userLayer.featureLayer.addData(data);
+    featureLayer.addData(data);
     buildConfig();
     $("#loading-mask").hide();
   });
