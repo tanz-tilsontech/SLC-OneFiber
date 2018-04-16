@@ -60,7 +60,7 @@ $(document).ready(function() {
   };
 
   var userEmail = localStorage.getItem("fulcrum_useremail", data.user.email);
-};
+});
 
 // Configuration of Routes in Fulcrum
 
