@@ -649,7 +649,7 @@ var highlightLayer = L.geoJson(null, {
   }
 });
 
-var userEmail = sessionStorage.getItem('fulcrum_useremail')
+var userEmail = sessionStorage.getItem('fulcrum_useremail').val()
 
 var featureLayer = L.geoJson(null, {
   filter: function(feature, layer) {
