@@ -60,9 +60,7 @@
     </div>
 
     <script>
-      checkAuth();
       bindUIActions();
-
 
       function bindUIActions() {
         $("#login-btn").click(function() {
@@ -76,16 +74,6 @@
         $("#login-modal").on("hidden.bs.modal", function (e) {
           $(".modal-backdrop").css("opacity", "");
         });
-      };
-
-      function checkAuth() {
-        if (!sessionStorage.getItem("fulcrum_app_token")) {
-          $(document).ready(function() {
-            $("#login-modal").modal("show");
-          });
-        } else {
-          $("#login-modal").modal("hide");
-        }
       };
 
       function login() {
@@ -115,7 +103,6 @@
             if (!sessionStorage.getItem("fulcrum_app_token")) {
               alert("This login does not have access to the Tilson DataMap.");
             }
-            checkAuth();
           }
         });
       };
