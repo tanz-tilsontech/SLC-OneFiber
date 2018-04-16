@@ -699,7 +699,7 @@ function userLayer() {
       }
     });
   } else if (userEmail.includes("tilson") || userEmail.includes("verizon")) {
-    var userLayer.featureLayer = L.geoJson(null, {
+    var featureLayer = L.geoJson(null, {
       filter: function(feature, layer) {
         if (feature.properties.contractor != "") return true;
       },
