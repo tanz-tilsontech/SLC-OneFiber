@@ -59,7 +59,7 @@ function login() {
   });
 };
 
-var userEmail = "tilson"
+var userEmail = sessionStorage.getItem("fulcrum_useremail")
 
 // Configuration of Routes in Fulcrum
 
