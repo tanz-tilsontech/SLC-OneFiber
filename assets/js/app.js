@@ -747,66 +747,6 @@ if (userEmail.includes("fibertel")) {
 
 
 
-var featureLayer1 = L.geoJson(null, {
-  filter: function(feature, layer) {
-    if (userEmail.includes("fibertel")) {
-      if (feature.properties.contractor === "FiberTel") return true;
-    } else if (userEmail.includes("tilson") || userEmail.includes("verizon")) {
-      if (feature.properties.contractor != "") return true;
-    }
-  },
-  pointToLayer: function (feature, latlng) {
-    return L.marker(latlng, {
-      title: feature.properties["restoration_items"],
-      riseOnHover: true,
-      icon: L.icon({
-        iconUrl: "assets/pictures/markers/242424.png",
-        iconSize: [30, 40],
-        iconAnchor: [15, 32]
-      })
-    });
-  },
-  onEachFeature: function (feature, layer) {
-    if (feature.properties) {
-      layer.on({
-        click: function (e) {
-          identifyFeature1(L.stamp(layer));
-          highlightLayer.clearLayers();
-          highlightLayer.addData(featureLayer1.getLayer(L.stamp(layer)).toGeoJSON());
-        },
-        mouseover: function (e) {
-          if (config1.hoverProperty) {
-            $(".info-control").html(feature.properties[config1.hoverProperty]);
-            $(".info-control").show();
-          }
-        },
-        mouseout: function (e) {
-          $(".info-control").hide();
-        }
-      });
-      if (feature.properties.restoration_complete_contractor === "Yes") {
-        layer.setIcon(
-          L.icon({
-            iconUrl: "assets/pictures/markers/b3b3b3.png",
-            iconSize: [30, 40],
-            iconAnchor: [15, 32]
-          })
-        );
-      } else if (feature.properties.restoration_complete_contractor === "Yes" && feature.properties.restoration_complete_tilson === "Yes") {
-        layer.setIcon(
-          L.icon({
-            iconUrl: "assets/pictures/markers/ffffff.png",
-            iconSize: [30, 40],
-            iconAnchor: [15, 32]
-          })
-        );
-      }
-    }
-  }
-});
-
-
-
 var map = L.map("map", {
   layers: [mapboxOSM, SLCLLDRoute, featureLayer, featureLayer1, highlightLayer]
 }).fitWorld();
