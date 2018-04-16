@@ -48,7 +48,6 @@ function login() {
         if (context.name == "Tilson SLC") {
           sessionStorage.setItem("fulcrum_app_token", btoa(context.api_token));
           sessionStorage.setItem("fulcrum_userfullname", data.user.first_name + " " + data.user.last_name);
-          sessionStorage.setItem("fulcrum_useremail", data.user.email);
         }
       });
       if (!sessionStorage.getItem("fulcrum_app_token")) {
@@ -58,8 +57,6 @@ function login() {
     }
   });
 };
-
-var userEmail = $("#email").val()
 
 // Configuration of Routes in Fulcrum
 
@@ -413,12 +410,12 @@ var properties1 = [{
 function drawCharts() {
   // HUB COMPLETE
   $(function() {
-    if (userEmail.includes("tilson") || userEmail.includes("verizon")) {
+    if (login.username.includes("tilson") || login.username.includes("verizon")) {
       var result = alasql("SELECT hub AS label, COUNT(NULLIF(cable_placement_total_footage_cx_final::NUMBER,0)) AS total FROM ? GROUP BY hub", [features]);
       var columns = $.map(result, function(hub) {
         return [[hub.label, hub.total]];
       });
-    } else if (userEmail.includes("fibertel")) {
+    } else if (login.username.includes("fibertel")) {
       var result = alasql("SELECT hub AS label, COUNT(NULLIF(cable_placement_total_footage_cx_final::NUMBER,0)) AS total FROM ? WHERE contractor = 'FiberTel'   GROUP BY hub", [features]);
       var columns = $.map(result, function(hub) {
         return [[hub.label, hub.total]];
@@ -435,12 +432,12 @@ function drawCharts() {
 
   // HUB TOTAL FOOTAGE
   $(function() {
-    if (userEmail.includes("tilson") || userEmail.includes("verizon")) {
+    if (login.username.includes("tilson") || login.username.includes("verizon")) {
       var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? GROUP BY hub", [features]);
       var columns1 = $.map(result, function(hub) {
         return [[hub.label, hub.footage]];
       });
-    } else if (userEmail.includes("fibertel")) {
+    } else if (login.username.includes("fibertel")) {
       var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? WHERE contractor = 'FiberTel' GROUP BY hub", [features]);
       var columns1 = $.map(result, function(hub) {
         return [[hub.label, hub.footage]];
@@ -488,12 +485,12 @@ function drawCharts() {
 
   // HUB STATUS 
   $(function() {
-    if (userEmail.includes("tilson") || userEmail.includes("verizon")) {
+    if (login.username.includes("tilson") || login.username.includes("verizon")) {
       var result = alasql("SELECT status AS label, COUNT(status) AS total FROM ? GROUP BY status", [features]);
       var columns = $.map(result, function(status) {
         return [[status.label, status.total]];
       });
-    } else if (userEmail.includes("fibertel")) {
+    } else if (login.username.includes("fibertel")) {
       var result = alasql("SELECT status AS label, COUNT(status) AS total FROM ? WHERE contractor = 'FiberTel' GROUP BY status", [features]);
       var columns = $.map(result, function(status) {
         return [[status.label, status.total]];
@@ -651,7 +648,7 @@ var highlightLayer = L.geoJson(null, {
 });
 
 
-if (userEmail.includes("fibertel")) {
+if (login.username.includes("fibertel")) {
   var featureLayer = L.geoJson(null, {
     filter: function(feature, layer) {
       if (feature.properties.contractor === "FiberTel") return true;
@@ -697,7 +694,7 @@ if (userEmail.includes("fibertel")) {
       }
     }
   });
-} else if (userEmail.includes("tilson") || userEmail.includes("verizon")) {
+} else if (login.username.includes("tilson") || login.username.includes("verizon")) {
   var featureLayer = L.geoJson(null, {
     filter: function(feature, layer) {
       if (feature.properties.contractor != "") return true;
@@ -749,9 +746,9 @@ if (userEmail.includes("fibertel")) {
 
 var featureLayer1 = L.geoJson(null, {
   filter: function(feature, layer) {
-    if (userEmail.includes("fibertel")) {
+    if (login.username.includes("fibertel")) {
       if (feature.properties.contractor === "FiberTel") return true;
-    } else if (userEmail.includes("tilson") || userEmail.includes("verizon")) {
+    } else if (login.username.includes("tilson") || login.username.includes("verizon")) {
       if (feature.properties.contractor != "") return true;
     }
   },
