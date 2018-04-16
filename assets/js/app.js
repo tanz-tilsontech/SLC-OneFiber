@@ -648,119 +648,17 @@ var highlightLayer = L.geoJson(null, {
 });
 
 
-$(document).ready(function() {
-  if (login.username.includes("fibertel")) {
-    var featureLayer = L.geoJson(null, {
-      filter: function(feature, layer) {
-        if (feature.properties.contractor === "FiberTel") return true;
-      },
-      pointToLayer: function (feature, latlng) {
-        return L.marker(latlng, {
-          title: feature.properties["status_title_github"],
-          riseOnHover: true,
-          icon: L.icon({
-            iconUrl: "assets/pictures/markers/cb0d0c.png",
-            iconSize: [30, 40],
-            iconAnchor: [15, 32]
-          })
-        });
-      },
-      onEachFeature: function (feature, layer) {
-        if (feature.properties) {
-          layer.on({
-            click: function (e) {
-              identifyFeature(L.stamp(layer));
-              highlightLayer.clearLayers();
-              highlightLayer.addData(featureLayer.getLayer(L.stamp(layer)).toGeoJSON());
-            },
-            mouseover: function (e) {
-              if (config.hoverProperty) {
-                $(".info-control").html(feature.properties[config.hoverProperty]);
-                $(".info-control").show();
-              }
-            },
-            mouseout: function (e) {
-              $(".info-control").hide();
-            }
-          });
-          if (feature.properties["marker-color"]) {
-            layer.setIcon(
-              L.icon({
-                iconUrl: "assets/pictures/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
-                iconSize: [30, 40],
-                iconAnchor: [15, 32]
-              })
-            );
-          }
-        }
-      }
-    });
-  } else if (login.username.includes("tilson") || login.username.includes("verizon")) {
-    var featureLayer = L.geoJson(null, {
-      filter: function(feature, layer) {
-        if (feature.properties.contractor != "") return true;
-      },
-      pointToLayer: function (feature, latlng) {
-        return L.marker(latlng, {
-          title: feature.properties["status_title_github"],
-          riseOnHover: true,
-          icon: L.icon({
-            iconUrl: "assets/pictures/markers/cb0d0c.png",
-            iconSize: [30, 40],
-            iconAnchor: [15, 32]
-          })
-        });
-      },
-      onEachFeature: function (feature, layer) {
-        if (feature.properties) {
-          layer.on({
-            click: function (e) {
-              identifyFeature(L.stamp(layer));
-              highlightLayer.clearLayers();
-              highlightLayer.addData(featureLayer.getLayer(L.stamp(layer)).toGeoJSON());
-            },
-            mouseover: function (e) {
-              if (config.hoverProperty) {
-                $(".info-control").html(feature.properties[config.hoverProperty]);
-                $(".info-control").show();
-              }
-            },
-            mouseout: function (e) {
-              $(".info-control").hide();
-            }
-          });
-          if (feature.properties["marker-color"]) {
-            layer.setIcon(
-              L.icon({
-                iconUrl: "assets/pictures/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
-                iconSize: [30, 40],
-                iconAnchor: [15, 32]
-              })
-            );
-          }
-        }
-      }
-    });
-  };
-});
-
-
-
-$(document).ready(function() {
-  var featureLayer1 = L.geoJson(null, {
+if (login.username.includes("fibertel")) {
+  var featureLayer = L.geoJson(null, {
     filter: function(feature, layer) {
-      if (login.username.includes("fibertel")) {
-        if (feature.properties.contractor === "FiberTel") return true;
-      } else if (login.username.includes("tilson") || login.username.includes("verizon")) {
-        if (feature.properties.contractor != "") return true;
-      }
+      if (feature.properties.contractor === "FiberTel") return true;
     },
     pointToLayer: function (feature, latlng) {
       return L.marker(latlng, {
-        title: feature.properties["restoration_items"],
+        title: feature.properties["status_title_github"],
         riseOnHover: true,
         icon: L.icon({
-          iconUrl: "assets/pictures/markers/242424.png",
+          iconUrl: "assets/pictures/markers/cb0d0c.png",
           iconSize: [30, 40],
           iconAnchor: [15, 32]
         })
@@ -770,13 +668,13 @@ $(document).ready(function() {
       if (feature.properties) {
         layer.on({
           click: function (e) {
-            identifyFeature1(L.stamp(layer));
+            identifyFeature(L.stamp(layer));
             highlightLayer.clearLayers();
-            highlightLayer.addData(featureLayer1.getLayer(L.stamp(layer)).toGeoJSON());
+            highlightLayer.addData(featureLayer.getLayer(L.stamp(layer)).toGeoJSON());
           },
           mouseover: function (e) {
-            if (config1.hoverProperty) {
-              $(".info-control").html(feature.properties[config1.hoverProperty]);
+            if (config.hoverProperty) {
+              $(".info-control").html(feature.properties[config.hoverProperty]);
               $(".info-control").show();
             }
           },
@@ -784,18 +682,10 @@ $(document).ready(function() {
             $(".info-control").hide();
           }
         });
-        if (feature.properties.restoration_complete_contractor === "Yes") {
+        if (feature.properties["marker-color"]) {
           layer.setIcon(
             L.icon({
-              iconUrl: "assets/pictures/markers/b3b3b3.png",
-              iconSize: [30, 40],
-              iconAnchor: [15, 32]
-            })
-          );
-        } else if (feature.properties.restoration_complete_contractor === "Yes" && feature.properties.restoration_complete_tilson === "Yes") {
-          layer.setIcon(
-            L.icon({
-              iconUrl: "assets/pictures/markers/ffffff.png",
+              iconUrl: "assets/pictures/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
               iconSize: [30, 40],
               iconAnchor: [15, 32]
             })
@@ -803,13 +693,119 @@ $(document).ready(function() {
         }
       }
     }
-  });
+  }).addTo(map);
+} else if (login.username.includes("tilson") || login.username.includes("verizon")) {
+  var featureLayer = L.geoJson(null, {
+    filter: function(feature, layer) {
+      if (feature.properties.contractor != "") return true;
+    },
+    pointToLayer: function (feature, latlng) {
+      return L.marker(latlng, {
+        title: feature.properties["status_title_github"],
+        riseOnHover: true,
+        icon: L.icon({
+          iconUrl: "assets/pictures/markers/cb0d0c.png",
+          iconSize: [30, 40],
+          iconAnchor: [15, 32]
+        })
+      });
+    },
+    onEachFeature: function (feature, layer) {
+      if (feature.properties) {
+        layer.on({
+          click: function (e) {
+            identifyFeature(L.stamp(layer));
+            highlightLayer.clearLayers();
+            highlightLayer.addData(featureLayer.getLayer(L.stamp(layer)).toGeoJSON());
+          },
+          mouseover: function (e) {
+            if (config.hoverProperty) {
+              $(".info-control").html(feature.properties[config.hoverProperty]);
+              $(".info-control").show();
+            }
+          },
+          mouseout: function (e) {
+            $(".info-control").hide();
+          }
+        });
+        if (feature.properties["marker-color"]) {
+          layer.setIcon(
+            L.icon({
+              iconUrl: "assets/pictures/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
+              iconSize: [30, 40],
+              iconAnchor: [15, 32]
+            })
+          );
+        }
+      }
+    }
+  }).addTo(map);
+};
+
+
+
+var featureLayer1 = L.geoJson(null, {
+  filter: function(feature, layer) {
+    if (login.username.includes("fibertel")) {
+      if (feature.properties.contractor === "FiberTel") return true;
+    } else if (login.username.includes("tilson") || login.username.includes("verizon")) {
+      if (feature.properties.contractor != "") return true;
+    }
+  },
+  pointToLayer: function (feature, latlng) {
+    return L.marker(latlng, {
+      title: feature.properties["restoration_items"],
+      riseOnHover: true,
+      icon: L.icon({
+        iconUrl: "assets/pictures/markers/242424.png",
+        iconSize: [30, 40],
+        iconAnchor: [15, 32]
+      })
+    });
+  },
+  onEachFeature: function (feature, layer) {
+    if (feature.properties) {
+      layer.on({
+        click: function (e) {
+          identifyFeature1(L.stamp(layer));
+          highlightLayer.clearLayers();
+          highlightLayer.addData(featureLayer1.getLayer(L.stamp(layer)).toGeoJSON());
+        },
+        mouseover: function (e) {
+          if (config1.hoverProperty) {
+            $(".info-control").html(feature.properties[config1.hoverProperty]);
+            $(".info-control").show();
+          }
+        },
+        mouseout: function (e) {
+          $(".info-control").hide();
+        }
+      });
+      if (feature.properties.restoration_complete_contractor === "Yes") {
+        layer.setIcon(
+          L.icon({
+            iconUrl: "assets/pictures/markers/b3b3b3.png",
+            iconSize: [30, 40],
+            iconAnchor: [15, 32]
+          })
+        );
+      } else if (feature.properties.restoration_complete_contractor === "Yes" && feature.properties.restoration_complete_tilson === "Yes") {
+        layer.setIcon(
+          L.icon({
+            iconUrl: "assets/pictures/markers/ffffff.png",
+            iconSize: [30, 40],
+            iconAnchor: [15, 32]
+          })
+        );
+      }
+    }
+  }
 });
 
 
 
 var map = L.map("map", {
-  layers: [mapboxOSM, SLCLLDRoute, featureLayer, featureLayer1, highlightLayer]
+  layers: [mapboxOSM, SLCLLDRoute, highlightLayer]
 }).fitWorld();
 
 
