@@ -950,10 +950,7 @@ function buildTable() {
     },
   });
 
-  if (featureLayer) {
-    map.fitBounds(featureLayer.getBounds());
-  }
-
+  
   $(window).resize(function () {
     $("#table").bootstrapTable("resetView", {
       height: $("#table-container").height()
