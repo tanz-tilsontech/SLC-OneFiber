@@ -651,13 +651,6 @@ var highlightLayer = L.geoJson(null, {
 });
 
 var featureLayer = L.geoJson(null, {
-  filter: function(feature, layer) {
-    if (userEmail.includes("fibertel")) {
-      if (feature.properties.contractor === "FiberTel") return true;
-    } else if (userEmail.includes("tilson") || userEmail.includes("verizon")) {
-      if (feature.properties.contractor != "") return true;
-    }
-  },
   pointToLayer: function (feature, latlng) {
     return L.marker(latlng, {
       title: feature.properties["status_title_github"],
@@ -703,13 +696,6 @@ var featureLayer = L.geoJson(null, {
 
 
 var featureLayer1 = L.geoJson(null, {
-  filter: function(feature, layer) {
-    if (userEmail.includes("fibertel")) {
-      if (feature.properties.contractor === "FiberTel") return true;
-    } else if (userEmail.includes("tilson") || userEmail.includes("verizon")) {
-      if (feature.properties.contractor != "") return true;
-    }
-  },
   pointToLayer: function (feature, latlng) {
     return L.marker(latlng, {
       title: feature.properties["restoration_items"],
