@@ -1,6 +1,6 @@
 
 function userEmail() {
-  var userEmail = sessionStorage.getItem("fulcrum_useremail");
+  var userEmail = window.sessionStorage.getItem("fulcrum_useremail");
 };
 
 // Configuration of Routes in Fulcrum
