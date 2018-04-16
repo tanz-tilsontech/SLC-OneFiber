@@ -748,7 +748,7 @@ if (userEmail.includes("fibertel")) {
 
 
 var map = L.map("map", {
-  layers: [mapboxOSM, SLCLLDRoute, featureLayer, featureLayer1, highlightLayer]
+  layers: [mapboxOSM, SLCLLDRoute, featureLayer, highlightLayer]
 }).fitWorld();
 
 
