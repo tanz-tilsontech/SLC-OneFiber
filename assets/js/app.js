@@ -518,94 +518,93 @@ $(function() {
 
 
 
-if (userEmail != "") {
-  function buildConfig() {
-    filters = [];
-    table = [{
-      field: "action",
-      title: "<i class='fa fa-gear'></i>&nbsp;Action",
-      align: "center",
-      valign: "middle",
-      width: "75px",
-      cardVisible: false,
-      switchable: false,
-      formatter: function(value, row, index) {
-        return [
-          '<a class="zoom" href="javascript:void(0)" title="Zoom" style="margin-right: 10px;">',
-            '<i class="fa fa-search-plus"></i>',
-          '</a>',
-          '<a class="identify" href="javascript:void(0)" title="Identify" style="margin-right: 10px;">',
-            '<i class="fa fa-info-circle"></i>',
-          '</a>'
-        ].join("");
+
+function buildConfig() {
+  filters = [];
+  table = [{
+    field: "action",
+    title: "<i class='fa fa-gear'></i>&nbsp;Action",
+    align: "center",
+    valign: "middle",
+    width: "75px",
+    cardVisible: false,
+    switchable: false,
+    formatter: function(value, row, index) {
+      return [
+        '<a class="zoom" href="javascript:void(0)" title="Zoom" style="margin-right: 10px;">',
+          '<i class="fa fa-search-plus"></i>',
+        '</a>',
+        '<a class="identify" href="javascript:void(0)" title="Identify" style="margin-right: 10px;">',
+          '<i class="fa fa-info-circle"></i>',
+        '</a>'
+      ].join("");
+    },
+    events: {
+      "click .zoom": function (e, value, row, index) {
+        var layer = featureLayer.getLayer(row.leaflet_stamp);
+        map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 19);
+        highlightLayer.clearLayers();
+        highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
       },
-      events: {
-        "click .zoom": function (e, value, row, index) {
-          var layer = featureLayer.getLayer(row.leaflet_stamp);
-          map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 19);
-          highlightLayer.clearLayers();
-          highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
-        },
-        "click .identify": function (e, value, row, index) {
-          identifyFeature(row.leaflet_stamp);
-          highlightLayer.clearLayers();
-          highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
-        }
+      "click .identify": function (e, value, row, index) {
+        identifyFeature(row.leaflet_stamp);
+        highlightLayer.clearLayers();
+        highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
       }
-    }];
+    }
+  }];
 
-    $.each(properties, function(index, value) {
-      // Filter config
-      if (value.filter) {
-        var id;
-        if (value.filter.type == "integer") {
-          id = "cast(properties->"+ value.value +" as int)";
-        }
-        else if (value.filter.type == "double") {
-          id = "cast(properties->"+ value.value +" as double)";
-        }
-        else {
-          id = "properties->" + value.value;
-        }
-        filters.push({
-          id: id,
-          label: value.label
-        });
-        $.each(value.filter, function(key, val) {
-          if (filters[index]) {
-            // If values array is empty, fetch all distinct values
-            if (key == "values" && val.length === 0) {
-              alasql("SELECT DISTINCT(properties->"+value.value+") AS field FROM ? ORDER BY field ASC", [geojson.features], function(results){
-                distinctValues = [];
-                $.each(results, function(index, value) {
-                  distinctValues.push(value.field);
-                });
+  $.each(properties, function(index, value) {
+    // Filter config
+    if (value.filter) {
+      var id;
+      if (value.filter.type == "integer") {
+        id = "cast(properties->"+ value.value +" as int)";
+      }
+      else if (value.filter.type == "double") {
+        id = "cast(properties->"+ value.value +" as double)";
+      }
+      else {
+        id = "properties->" + value.value;
+      }
+      filters.push({
+        id: id,
+        label: value.label
+      });
+      $.each(value.filter, function(key, val) {
+        if (filters[index]) {
+          // If values array is empty, fetch all distinct values
+          if (key == "values" && val.length === 0) {
+            alasql("SELECT DISTINCT(properties->"+value.value+") AS field FROM ? ORDER BY field ASC", [geojson.features], function(results){
+              distinctValues = [];
+              $.each(results, function(index, value) {
+                distinctValues.push(value.field);
               });
-              filters[index].values = distinctValues;
-            } else {
-              filters[index][key] = val;
-            }
+            });
+            filters[index].values = distinctValues;
+          } else {
+            filters[index][key] = val;
           }
-        });
-      }
-      // Table config
-      if (value.table) {
-        table.push({
-          field: value.value,
-          title: value.label
-        });
-        $.each(value.table, function(key, val) {
-          if (table[index+1]) {
-            table[index+1][key] = val;
-          }
-        });
-      }
-    });
+        }
+      });
+    }
+    // Table config
+    if (value.table) {
+      table.push({
+        field: value.value,
+        title: value.label
+      });
+      $.each(value.table, function(key, val) {
+        if (table[index+1]) {
+          table[index+1][key] = val;
+        }
+      });
+    }
+  });
 
-    buildFilters();
-    buildTable();
-  };
-}
+  buildFilters();
+  buildTable();
+};
 
 
 
@@ -654,11 +653,7 @@ var highlightLayer = L.geoJson(null, {
 
 var featureLayer = L.geoJson(null, {
   filter: function(feature, layer) {
-    if (userEmail.includes("fibertel")) {
-      if (feature.properties.contractor === "FiberTel") return true;
-    } else if (userEmail.includes("tilson") || userEmail.includes("verizon")) {
-      if (feature.properties.contractor != "") return true;
-    }
+    if (feature.properties.contractor === "FiberTel") return true;
   },
   pointToLayer: function (feature, latlng) {
     return L.marker(latlng, {
@@ -705,11 +700,7 @@ var featureLayer = L.geoJson(null, {
 
 var featureLayer1 = L.geoJson(null, {
   filter: function(feature, layer) {
-    if (userEmail.includes("fibertel")) {
-      if (feature.properties.contractor === "FiberTel") return true;
-    } else if (userEmail.includes("tilson") || userEmail.includes("verizon")) {
-      if (feature.properties.contractor != "") return true;
-    }
+    if (feature.properties.contractor === "FiberTel") return true;
   },
   pointToLayer: function (feature, latlng) {
     return L.marker(latlng, {
@@ -843,46 +834,46 @@ function urlFormatter (value, row, index) {
 
 
 // Fetch the Routes GeoJSON file
-if (userEmail != "") {
-  $.getJSON(config.geojson, function (data) {
-    geojson = data
-    features = $.map(geojson.features, function(feature) {
-      return feature.properties;
-    });
-    featureLayer.addData(data);
-    buildConfig();
-    $("#loading-mask").hide();
-    var style = {
-      "property": "status",
-      "values": {
-        "Segment Ready": "https://image.ibb.co/iXHCyH/1891c9.png",
-        "Segment Not Ready": "https://image.ibb.co/hk21sc/242424.png",
-        "Construction Started": "https://image.ibb.co/mC5Akx/ffd300.png",
-        "Constractor CX QC": "https://image.ibb.co/hHRSXc/b3b3b3.png",
-        "Tilson CX QC": "https://image.ibb.co/c3TVkx/ff8819.png",
-        "Construction Fix": "https://image.ibb.co/cen1sc/cb0d0c.png",
-        "Cable Placement Ready": "https://image.ibb.co/iXHCyH/1891c9.png",
-        "Cable Placement Started": "https://image.ibb.co/mC5Akx/ffd300.png",
-        "Contractor CP QC": "https://image.ibb.co/hHRSXc/b3b3b3.png",
-        "Tilson CP QC": "https://image.ibb.co/c3TVkx/ff8819.png",
-        "Cable Placement Fix": "https://image.ibb.co/cen1sc/cb0d0c.png",
-        "Splicing/Testing Pending": "https://image.ibb.co/hxOkJH/87d30f.png"
-      }
-    }
-    JSON.stringify(style);
-    if (style.property && style.values) {
-      $("#legend-item").removeClass("hidden");
-      $("#legend-title").html(style.property.toUpperCase().replace(/_/g, " "));
-      $.each(style.values, function(property, value) {
-        if (value.startsWith("http")) {
-          $("#legend").append("<p><img src='" + value + "'></i> " + property + "</p>");
-        } else {
-          $("#legend").append("<p><i style='background:" + value + "'></i> " + property + "</p>");
-        }
-      });
-    }
+
+$.getJSON(config.geojson, function (data) {
+  geojson = data
+  features = $.map(geojson.features, function(feature) {
+    return feature.properties;
   });
-}
+  featureLayer.addData(data);
+  buildConfig();
+  $("#loading-mask").hide();
+  var style = {
+    "property": "status",
+    "values": {
+      "Segment Ready": "https://image.ibb.co/iXHCyH/1891c9.png",
+      "Segment Not Ready": "https://image.ibb.co/hk21sc/242424.png",
+      "Construction Started": "https://image.ibb.co/mC5Akx/ffd300.png",
+      "Constractor CX QC": "https://image.ibb.co/hHRSXc/b3b3b3.png",
+      "Tilson CX QC": "https://image.ibb.co/c3TVkx/ff8819.png",
+      "Construction Fix": "https://image.ibb.co/cen1sc/cb0d0c.png",
+      "Cable Placement Ready": "https://image.ibb.co/iXHCyH/1891c9.png",
+      "Cable Placement Started": "https://image.ibb.co/mC5Akx/ffd300.png",
+      "Contractor CP QC": "https://image.ibb.co/hHRSXc/b3b3b3.png",
+      "Tilson CP QC": "https://image.ibb.co/c3TVkx/ff8819.png",
+      "Cable Placement Fix": "https://image.ibb.co/cen1sc/cb0d0c.png",
+      "Splicing/Testing Pending": "https://image.ibb.co/hxOkJH/87d30f.png"
+    }
+  }
+  JSON.stringify(style);
+  if (style.property && style.values) {
+    $("#legend-item").removeClass("hidden");
+    $("#legend-title").html(style.property.toUpperCase().replace(/_/g, " "));
+    $.each(style.values, function(property, value) {
+      if (value.startsWith("http")) {
+        $("#legend").append("<p><img src='" + value + "'></i> " + property + "</p>");
+      } else {
+        $("#legend").append("<p><i style='background:" + value + "'></i> " + property + "</p>");
+      }
+    });
+  }
+});
+
 
 // Fetch the Restoration GeoJSON file
 
@@ -921,45 +912,44 @@ function applyFilter() {
 
 
 
-if (userEmail != "") {
-  function buildTable() {
-    $("#table").bootstrapTable({
-      cache: false,
-      height: $("#table-container").height(),
-      undefinedText: "",
-      striped: false,
-      pagination: false,
-      minimumCountColumns: 1,
-      sortName: config.sortProperty,
-      sortOrder: config.sortOrder,
-      toolbar: "#toolbar",
-      search: true,
-      trimOnSearch: false,
-      showColumns: false,
-      showToggle: false,
-      columns: table,
-      onClickRow: function(row, $element) {
-        var layer = featureLayer.getLayer(row.leaflet_stamp);
-        map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 19);
-        highlightLayer.clearLayers();
-        highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
-      },
-      onDblClickRow: function(row) {
-        identifyFeature(row.leaflet_stamp);
-        highlightLayer.clearLayers();
-        highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
-      },
-    });
 
-    map.fitBounds(featureLayer.getBounds());
+function buildTable() {
+  $("#table").bootstrapTable({
+    cache: false,
+    height: $("#table-container").height(),
+    undefinedText: "",
+    striped: false,
+    pagination: false,
+    minimumCountColumns: 1,
+    sortName: config.sortProperty,
+    sortOrder: config.sortOrder,
+    toolbar: "#toolbar",
+    search: true,
+    trimOnSearch: false,
+    showColumns: false,
+    showToggle: false,
+    columns: table,
+    onClickRow: function(row, $element) {
+      var layer = featureLayer.getLayer(row.leaflet_stamp);
+      map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 19);
+      highlightLayer.clearLayers();
+      highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
+    },
+    onDblClickRow: function(row) {
+      identifyFeature(row.leaflet_stamp);
+      highlightLayer.clearLayers();
+      highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
+    },
+  });
 
-    $(window).resize(function () {
-      $("#table").bootstrapTable("resetView", {
-        height: $("#table-container").height()
-      });
+  map.fitBounds(featureLayer.getBounds());
+
+  $(window).resize(function () {
+    $("#table").bootstrapTable("resetView", {
+      height: $("#table-container").height()
     });
-  };
-}
+  });
+};
 
 
 
