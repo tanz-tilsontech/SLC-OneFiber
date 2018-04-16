@@ -650,60 +650,106 @@ var highlightLayer = L.geoJson(null, {
   }
 });
 
-var featureLayer = L.geoJson(null, {
-  filter: function(feature, layer, userEmail) {
-    if (userEmail.includes("fibertel")) {
+
+var featureLayer = 
+if (userEmail.includes("fibertel")) {
+  L.geoJson(null, {
+    filter: function(feature, layer) {
       if (feature.properties.contractor === "FiberTel") return true;
-    } else if (userEmail.includes("tilson") || userEmail.includes("verizon")) {
-      if (feature.properties.contractor != "") return true;
-    }
-  },
-  pointToLayer: function (feature, latlng) {
-    return L.marker(latlng, {
-      title: feature.properties["status_title_github"],
-      riseOnHover: true,
-      icon: L.icon({
-        iconUrl: "assets/pictures/markers/cb0d0c.png",
-        iconSize: [30, 40],
-        iconAnchor: [15, 32]
-      })
-    });
-  },
-  onEachFeature: function (feature, layer) {
-    if (feature.properties) {
-      layer.on({
-        click: function (e) {
-          identifyFeature(L.stamp(layer));
-          highlightLayer.clearLayers();
-          highlightLayer.addData(featureLayer.getLayer(L.stamp(layer)).toGeoJSON());
-        },
-        mouseover: function (e) {
-          if (config.hoverProperty) {
-            $(".info-control").html(feature.properties[config.hoverProperty]);
-            $(".info-control").show();
-          }
-        },
-        mouseout: function (e) {
-          $(".info-control").hide();
-        }
+    },
+    pointToLayer: function (feature, latlng) {
+      return L.marker(latlng, {
+        title: feature.properties["status_title_github"],
+        riseOnHover: true,
+        icon: L.icon({
+          iconUrl: "assets/pictures/markers/cb0d0c.png",
+          iconSize: [30, 40],
+          iconAnchor: [15, 32]
+        })
       });
-      if (feature.properties["marker-color"]) {
-        layer.setIcon(
-          L.icon({
-            iconUrl: "assets/pictures/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
-            iconSize: [30, 40],
-            iconAnchor: [15, 32]
-          })
-        );
+    },
+    onEachFeature: function (feature, layer) {
+      if (feature.properties) {
+        layer.on({
+          click: function (e) {
+            identifyFeature(L.stamp(layer));
+            highlightLayer.clearLayers();
+            highlightLayer.addData(featureLayer.getLayer(L.stamp(layer)).toGeoJSON());
+          },
+          mouseover: function (e) {
+            if (config.hoverProperty) {
+              $(".info-control").html(feature.properties[config.hoverProperty]);
+              $(".info-control").show();
+            }
+          },
+          mouseout: function (e) {
+            $(".info-control").hide();
+          }
+        });
+        if (feature.properties["marker-color"]) {
+          layer.setIcon(
+            L.icon({
+              iconUrl: "assets/pictures/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
+              iconSize: [30, 40],
+              iconAnchor: [15, 32]
+            })
+          );
+        }
       }
     }
-  }
-});
+  });
+} else if (userEmail.includes("tilson") || userEmail.includes("verizon")) {
+  L.geoJson(null, {
+    filter: function(feature, layer) {
+      if (feature.properties.contractor != "") return true;
+    },
+    pointToLayer: function (feature, latlng) {
+      return L.marker(latlng, {
+        title: feature.properties["status_title_github"],
+        riseOnHover: true,
+        icon: L.icon({
+          iconUrl: "assets/pictures/markers/cb0d0c.png",
+          iconSize: [30, 40],
+          iconAnchor: [15, 32]
+        })
+      });
+    },
+    onEachFeature: function (feature, layer) {
+      if (feature.properties) {
+        layer.on({
+          click: function (e) {
+            identifyFeature(L.stamp(layer));
+            highlightLayer.clearLayers();
+            highlightLayer.addData(featureLayer.getLayer(L.stamp(layer)).toGeoJSON());
+          },
+          mouseover: function (e) {
+            if (config.hoverProperty) {
+              $(".info-control").html(feature.properties[config.hoverProperty]);
+              $(".info-control").show();
+            }
+          },
+          mouseout: function (e) {
+            $(".info-control").hide();
+          }
+        });
+        if (feature.properties["marker-color"]) {
+          layer.setIcon(
+            L.icon({
+              iconUrl: "assets/pictures/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
+              iconSize: [30, 40],
+              iconAnchor: [15, 32]
+            })
+          );
+        }
+      }
+    }
+  });
+};
 
 
 
 var featureLayer1 = L.geoJson(null, {
-  filter: function(feature, layer, userEmail) {
+  filter: function(feature, layer) {
     if (userEmail.includes("fibertel")) {
       if (feature.properties.contractor === "FiberTel") return true;
     } else if (userEmail.includes("tilson") || userEmail.includes("verizon")) {
