@@ -18,7 +18,7 @@ function bindUIActions() {
 };
 
 function checkAuth() {
-  if (!localStorage.getItem("fulcrum_app_token")) {
+  if (!sessionStorage.getItem("fulcrum_app_token")) {
     $(document).ready(function() {
       $("#login-modal").modal("show");
     });
@@ -46,12 +46,12 @@ function login() {
     success: function (data) {
       $.each(data.user.contexts, function(index, context) {
         if (context.name == "Tilson SLC") {
-          localStorage.setItem("fulcrum_app_token", btoa(context.api_token));
-          localStorage.setItem("fulcrum_userfullname", data.user.first_name + " " + data.user.last_name);
-          localStorage.setItem("fulcrum_useremail", data.user.email);
+          sessionStorage.setItem("fulcrum_app_token", btoa(context.api_token));
+          sessionStorage.setItem("fulcrum_userfullname", data.user.first_name + " " + data.user.last_name);
+          sessionStorage.setItem("fulcrum_useremail", data.user.email);
         }
       });
-      if (!localStorage.getItem("fulcrum_app_token")) {
+      if (!sessionStorage.getItem("fulcrum_app_token")) {
         alert("This login does not have access to the Tilson DataMap.");
       }
       checkAuth();
@@ -60,14 +60,12 @@ function login() {
 };
 
 window.onbeforeunload = function() {
-  localStorage.removeItem("fulcrum_app_token");
-  localStorage.removeItem("fulcrum_userfullname");
-  localStorage.removeItem("fulcrum_useremail");
+  sessionStorage.removeItem("fulcrum_app_token");
+  sessionStorage.removeItem("fulcrum_userfullname");
+  sessionStorage.removeItem("fulcrum_useremail");
   location.reload();
   return '';
 };
-
-var userEmail = localStorage.getItem('fulcrum_useremail')
 
 
 // Configuration of Routes in Fulcrum
@@ -659,6 +657,7 @@ var highlightLayer = L.geoJson(null, {
   }
 });
 
+var userEmail = sessionStorage.getItem('fulcrum_useremail')
 
 var featureLayer = L.geoJson(null, {
   filter: function(feature, layer) {
