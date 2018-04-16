@@ -6,6 +6,7 @@ bindUIActions();
 function bindUIActions() {
   $("#login-btn").click(function() {
     login();
+    window.location = "main.html"
   });
 
   $("#login-modal").on("shown.bs.modal", function (e) {
