@@ -697,6 +697,7 @@ if (userEmail.includes("fibertel")) {
       }
     }
   });
+  featureLayer.addData(data);
 } else if (userEmail.includes("tilson") || userEmail.includes("verizon")) {
   var featureLayer = L.geoJson(null, {
     filter: function(feature, layer) {
@@ -743,6 +744,7 @@ if (userEmail.includes("fibertel")) {
       }
     }
   });
+  featureLayer1.addData(data);
 };
 
 
@@ -893,7 +895,6 @@ $.getJSON(config.geojson, function (data) {
   features = $.map(geojson.features, function(feature) {
     return feature.properties;
   });
-  featureLayer.addData(data);
   buildConfig();
   $("#loading-mask").hide();
   var style = {
@@ -935,7 +936,6 @@ $.getJSON(config1.geojson, function (data) {
   features = $.map(geojson.features, function(feature) {
     return feature.properties;
   });
-  featureLayer1.addData(data);
   $("#loading-mask").hide();
 });
 
