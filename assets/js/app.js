@@ -59,7 +59,10 @@ function login() {
   });
 };
 
-var userEmail = $("#email").val()
+$(document).ready(function() {
+  var userEmail = $("#email").val()
+});
+
 
 // Configuration of Routes in Fulcrum
 
