@@ -1,7 +1,6 @@
 
 checkAuth();
 bindUIActions();
-login();
 
 
 function bindUIActions() {
@@ -61,6 +60,7 @@ function login() {
 };
 
 var userEmail = $("#email").val()
+
 // Configuration of Routes in Fulcrum
 
 var config = {
@@ -848,9 +848,6 @@ $.getJSON(config.geojson, function (data) {
   features = $.map(geojson.features, function(feature) {
     return feature.properties;
   });
-  checkAuth();
-  bindUIActions();
-  login();
   featureLayer.addData(data);
   buildConfig();
   $("#loading-mask").hide();
@@ -893,9 +890,6 @@ $.getJSON(config1.geojson, function (data) {
   features = $.map(geojson.features, function(feature) {
     return feature.properties;
   });
-  checkAuth();
-  bindUIActions();
-  login();
   featureLayer1.addData(data);
   $("#loading-mask").hide();
 });
