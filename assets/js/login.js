@@ -6,7 +6,6 @@ bindUIActions();
 function bindUIActions() {
   $("#login-btn").click(function() {
     login();
-    window.location = "main.html"
   });
 
   $("#login-modal").on("shown.bs.modal", function (e) {
@@ -56,6 +55,7 @@ function login() {
         alert("This login does not have access to the Tilson DataMap.");
       }
       checkAuth();
+      window.location = "main.html"
     }
   });
 };
