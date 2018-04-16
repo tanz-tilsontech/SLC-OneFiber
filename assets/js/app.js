@@ -653,7 +653,7 @@ var highlightLayer = L.geoJson(null, {
 
 function userLayers() {
   if (userEmail.includes("fibertel")) {
-    var featureLayer = L.geoJson(null, {
+    var userLayer.featureLayer = L.geoJson(null, {
       filter: function(feature, layer) {
         if (feature.properties.contractor === "FiberTel") return true;
       },
@@ -674,7 +674,7 @@ function userLayers() {
             click: function (e) {
               identifyFeature(L.stamp(layer));
               highlightLayer.clearLayers();
-              highlightLayer.addData(featureLayer.getLayer(L.stamp(layer)).toGeoJSON());
+              highlightLayer.addData(userLayer.featureLayer.getLayer(L.stamp(layer)).toGeoJSON());
             },
             mouseover: function (e) {
               if (config.hoverProperty) {
@@ -699,7 +699,7 @@ function userLayers() {
       }
     });
   } else if (userEmail.includes("tilson") || userEmail.includes("verizon")) {
-    var featureLayer = L.geoJson(null, {
+    var userLayer.featureLayer = L.geoJson(null, {
       filter: function(feature, layer) {
         if (feature.properties.contractor != "") return true;
       },
@@ -720,7 +720,7 @@ function userLayers() {
             click: function (e) {
               identifyFeature(L.stamp(layer));
               highlightLayer.clearLayers();
-              highlightLayer.addData(featureLayer.getLayer(L.stamp(layer)).toGeoJSON());
+              highlightLayer.addData(userLayer.featureLayer.getLayer(L.stamp(layer)).toGeoJSON());
             },
             mouseover: function (e) {
               if (config.hoverProperty) {
@@ -810,7 +810,7 @@ var featureLayer1 = L.geoJson(null, {
 
 
 var map = L.map("map", {
-  layers: [mapboxOSM, SLCLLDRoute, featureLayer, featureLayer1, highlightLayer]
+  layers: [mapboxOSM, SLCLLDRoute, userLayer.featureLayer, featureLayer1, highlightLayer]
 }).fitWorld();
 
 
@@ -859,7 +859,7 @@ var baseLayers = {
 
 
 var overlayLayers = {
-  "<span id='layer-name'>GeoJSON Layer</span>": featureLayer,
+  "<span id='layer-name'>GeoJSON Layer</span>": userLayer.featureLayer,
   "<span id='layer-name1'>Restoration</span>": featureLayer1,
   "<span id='layer-name2'>Engineered</span>": SLCLLDRoute,
 };
@@ -895,7 +895,7 @@ $.getJSON(config.geojson, function (data) {
   features = $.map(geojson.features, function(feature) {
     return feature.properties;
   });
-  featureLayer.addData(data);
+  userLayer.featureLayer.addData(data);
   buildConfig();
   $("#loading-mask").hide();
   var style = {
@@ -959,8 +959,8 @@ function applyFilter() {
     query += " WHERE " + sql;
   }
   alasql(query, [geojson.features], function(features){
-    featureLayer.clearLayers();
-    featureLayer.addData(features);
+    userLayer.featureLayer.clearLayers();
+    userLayer.featureLayer.addData(features);
     syncTable();
   });
 };
@@ -985,19 +985,19 @@ function buildTable() {
     showToggle: false,
     columns: table,
     onClickRow: function(row, $element) {
-      var layer = featureLayer.getLayer(row.leaflet_stamp);
+      var layer = userLayer.featureLayer.getLayer(row.leaflet_stamp);
       map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 19);
       highlightLayer.clearLayers();
-      highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
+      highlightLayer.addData(userLayer.featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
     },
     onDblClickRow: function(row) {
       identifyFeature(row.leaflet_stamp);
       highlightLayer.clearLayers();
-      highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
+      highlightLayer.addData(userLayer.featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
     },
   });
 
-  map.fitBounds(featureLayer.getBounds());
+  map.fitBounds(userLayer.featureLayer.getBounds());
 
   $(window).resize(function () {
     $("#table").bootstrapTable("resetView", {
@@ -1010,10 +1010,10 @@ function buildTable() {
 
 function syncTable() {
   tableFeatures = [];
-  featureLayer.eachLayer(function (layer) {
+  userLayer.featureLayer.eachLayer(function (layer) {
     layer.feature.properties.leaflet_stamp = L.stamp(layer);
-    if (map.hasLayer(featureLayer)) {
-      featureLayer.getLayer()
+    if (map.hasLayer(userLayer.featureLayer)) {
+      userLayer.featureLayer.getLayer()
       layer.feature.geometry.type === "Point"
       if (map.getBounds().contains(layer.getLatLng())) {
         tableFeatures.push(layer.feature.properties);
@@ -1032,7 +1032,7 @@ function syncTable() {
 
 
 function identifyFeature(id) {
-  var featureProperties = featureLayer.getLayer(id).feature.properties;
+  var featureProperties = userLayer.featureLayer.getLayer(id).feature.properties;
   var content = "<table class='table table-striped table-bordered table-condensed'>";
   $.each(featureProperties, function(key, value) {
     if (!value) {
@@ -1057,7 +1057,7 @@ function identifyFeature(id) {
 
 
 function identifyFeature1(id) {
-  var featureProperties = featureLayer1.getLayer(id).feature.properties;
+  var featureProperties = userLayer.featureLayer1.getLayer(id).feature.properties;
   var content = "<table class='table table-striped table-bordered table-condensed'>";
   var photoLink = "https://web.fulcrumapp.com/photos/view?photos=";
   $.each(featureProperties, function(key, value) {
@@ -1156,7 +1156,7 @@ L.easyPrint({
 
 
 $("#refresh-btn").click(function() {
-  featureLayer.clearLayers();
+  userLayer.featureLayer.clearLayers();
   featureLayer1.clearLayers();
   map.setView([40.5912,-111.837],9)
   
@@ -1166,7 +1166,7 @@ $("#refresh-btn").click(function() {
     features = $.map(geojson.features, function(feature) {
       return feature.properties;
     });
-    featureLayer.addData(data);
+    userLayer.featureLayer.addData(data);
     buildConfig();
     $("#loading-mask").hide();
   });
