@@ -651,9 +651,8 @@ var highlightLayer = L.geoJson(null, {
 });
 
 
-var featureLayer = 
 if (userEmail.includes("fibertel")) {
-  L.geoJson(null, {
+  var featureLayer = L.geoJson(null, {
     filter: function(feature, layer) {
       if (feature.properties.contractor === "FiberTel") return true;
     },
@@ -699,7 +698,7 @@ if (userEmail.includes("fibertel")) {
     }
   });
 } else if (userEmail.includes("tilson") || userEmail.includes("verizon")) {
-  L.geoJson(null, {
+  var featureLayer = L.geoJson(null, {
     filter: function(feature, layer) {
       if (feature.properties.contractor != "") return true;
     },
