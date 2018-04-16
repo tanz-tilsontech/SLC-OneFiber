@@ -54,6 +54,99 @@ function login() {
         alert("This login does not have access to the Tilson DataMap.");
       }
       checkAuth();
+      if (username.includes("fibertel")) {
+        var featureLayer = L.geoJson(null, {
+          filter: function(feature, layer) {
+            if (feature.properties.contractor === "FiberTel") return true;
+          },
+          pointToLayer: function (feature, latlng) {
+            return L.marker(latlng, {
+              title: feature.properties["status_title_github"],
+              riseOnHover: true,
+              icon: L.icon({
+                iconUrl: "assets/pictures/markers/cb0d0c.png",
+                iconSize: [30, 40],
+                iconAnchor: [15, 32]
+              })
+            });
+          },
+          onEachFeature: function (feature, layer) {
+            if (feature.properties) {
+              layer.on({
+                click: function (e) {
+                  identifyFeature(L.stamp(layer));
+                  highlightLayer.clearLayers();
+                  highlightLayer.addData(featureLayer.getLayer(L.stamp(layer)).toGeoJSON());
+                },
+                mouseover: function (e) {
+                  if (config.hoverProperty) {
+                    $(".info-control").html(feature.properties[config.hoverProperty]);
+                    $(".info-control").show();
+                  }
+                },
+                mouseout: function (e) {
+                  $(".info-control").hide();
+                }
+              });
+              if (feature.properties["marker-color"]) {
+                layer.setIcon(
+                  L.icon({
+                    iconUrl: "assets/pictures/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
+                    iconSize: [30, 40],
+                    iconAnchor: [15, 32]
+                  })
+                );
+              }
+            }
+          }
+        });
+      } else if (username.includes("tilson") || username.includes("verizon")) {
+        var featureLayer = L.geoJson(null, {
+          filter: function(feature, layer) {
+            if (feature.properties.contractor != "") return true;
+          },
+          pointToLayer: function (feature, latlng) {
+            return L.marker(latlng, {
+              title: feature.properties["status_title_github"],
+              riseOnHover: true,
+              icon: L.icon({
+                iconUrl: "assets/pictures/markers/cb0d0c.png",
+                iconSize: [30, 40],
+                iconAnchor: [15, 32]
+              })
+            });
+          },
+          onEachFeature: function (feature, layer) {
+            if (feature.properties) {
+              layer.on({
+                click: function (e) {
+                  identifyFeature(L.stamp(layer));
+                  highlightLayer.clearLayers();
+                  highlightLayer.addData(featureLayer.getLayer(L.stamp(layer)).toGeoJSON());
+                },
+                mouseover: function (e) {
+                  if (config.hoverProperty) {
+                    $(".info-control").html(feature.properties[config.hoverProperty]);
+                    $(".info-control").show();
+                  }
+                },
+                mouseout: function (e) {
+                  $(".info-control").hide();
+                }
+              });
+              if (feature.properties["marker-color"]) {
+                layer.setIcon(
+                  L.icon({
+                    iconUrl: "assets/pictures/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
+                    iconSize: [30, 40],
+                    iconAnchor: [15, 32]
+                  })
+                );
+              }
+            }
+          }
+        });
+      };
     }
   });
 };
@@ -410,12 +503,12 @@ var properties1 = [{
 function drawCharts() {
   // HUB COMPLETE
   $(function() {
-    if (login.username.includes("tilson") || login.username.includes("verizon")) {
+    if (username.includes("tilson") || username.includes("verizon")) {
       var result = alasql("SELECT hub AS label, COUNT(NULLIF(cable_placement_total_footage_cx_final::NUMBER,0)) AS total FROM ? GROUP BY hub", [features]);
       var columns = $.map(result, function(hub) {
         return [[hub.label, hub.total]];
       });
-    } else if (login.username.includes("fibertel")) {
+    } else if (username.includes("fibertel")) {
       var result = alasql("SELECT hub AS label, COUNT(NULLIF(cable_placement_total_footage_cx_final::NUMBER,0)) AS total FROM ? WHERE contractor = 'FiberTel'   GROUP BY hub", [features]);
       var columns = $.map(result, function(hub) {
         return [[hub.label, hub.total]];
@@ -432,12 +525,12 @@ function drawCharts() {
 
   // HUB TOTAL FOOTAGE
   $(function() {
-    if (login.username.includes("tilson") || login.username.includes("verizon")) {
+    if (username.includes("tilson") || username.includes("verizon")) {
       var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? GROUP BY hub", [features]);
       var columns1 = $.map(result, function(hub) {
         return [[hub.label, hub.footage]];
       });
-    } else if (login.username.includes("fibertel")) {
+    } else if (username.includes("fibertel")) {
       var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? WHERE contractor = 'FiberTel' GROUP BY hub", [features]);
       var columns1 = $.map(result, function(hub) {
         return [[hub.label, hub.footage]];
@@ -485,12 +578,12 @@ function drawCharts() {
 
   // HUB STATUS 
   $(function() {
-    if (login.username.includes("tilson") || login.username.includes("verizon")) {
+    if (username.includes("tilson") || username.includes("verizon")) {
       var result = alasql("SELECT status AS label, COUNT(status) AS total FROM ? GROUP BY status", [features]);
       var columns = $.map(result, function(status) {
         return [[status.label, status.total]];
       });
-    } else if (login.username.includes("fibertel")) {
+    } else if (username.includes("fibertel")) {
       var result = alasql("SELECT status AS label, COUNT(status) AS total FROM ? WHERE contractor = 'FiberTel' GROUP BY status", [features]);
       var columns = $.map(result, function(status) {
         return [[status.label, status.total]];
@@ -648,107 +741,15 @@ var highlightLayer = L.geoJson(null, {
 });
 
 
-if (login.username.includes("fibertel")) {
-  var featureLayer = L.geoJson(null, {
-    filter: function(feature, layer) {
-      if (feature.properties.contractor === "FiberTel") return true;
-    },
-    pointToLayer: function (feature, latlng) {
-      return L.marker(latlng, {
-        title: feature.properties["status_title_github"],
-        riseOnHover: true,
-        icon: L.icon({
-          iconUrl: "assets/pictures/markers/cb0d0c.png",
-          iconSize: [30, 40],
-          iconAnchor: [15, 32]
-        })
-      });
-    },
-    onEachFeature: function (feature, layer) {
-      if (feature.properties) {
-        layer.on({
-          click: function (e) {
-            identifyFeature(L.stamp(layer));
-            highlightLayer.clearLayers();
-            highlightLayer.addData(featureLayer.getLayer(L.stamp(layer)).toGeoJSON());
-          },
-          mouseover: function (e) {
-            if (config.hoverProperty) {
-              $(".info-control").html(feature.properties[config.hoverProperty]);
-              $(".info-control").show();
-            }
-          },
-          mouseout: function (e) {
-            $(".info-control").hide();
-          }
-        });
-        if (feature.properties["marker-color"]) {
-          layer.setIcon(
-            L.icon({
-              iconUrl: "assets/pictures/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
-              iconSize: [30, 40],
-              iconAnchor: [15, 32]
-            })
-          );
-        }
-      }
-    }
-  }).addTo(map);
-} else if (login.username.includes("tilson") || login.username.includes("verizon")) {
-  var featureLayer = L.geoJson(null, {
-    filter: function(feature, layer) {
-      if (feature.properties.contractor != "") return true;
-    },
-    pointToLayer: function (feature, latlng) {
-      return L.marker(latlng, {
-        title: feature.properties["status_title_github"],
-        riseOnHover: true,
-        icon: L.icon({
-          iconUrl: "assets/pictures/markers/cb0d0c.png",
-          iconSize: [30, 40],
-          iconAnchor: [15, 32]
-        })
-      });
-    },
-    onEachFeature: function (feature, layer) {
-      if (feature.properties) {
-        layer.on({
-          click: function (e) {
-            identifyFeature(L.stamp(layer));
-            highlightLayer.clearLayers();
-            highlightLayer.addData(featureLayer.getLayer(L.stamp(layer)).toGeoJSON());
-          },
-          mouseover: function (e) {
-            if (config.hoverProperty) {
-              $(".info-control").html(feature.properties[config.hoverProperty]);
-              $(".info-control").show();
-            }
-          },
-          mouseout: function (e) {
-            $(".info-control").hide();
-          }
-        });
-        if (feature.properties["marker-color"]) {
-          layer.setIcon(
-            L.icon({
-              iconUrl: "assets/pictures/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
-              iconSize: [30, 40],
-              iconAnchor: [15, 32]
-            })
-          );
-        }
-      }
-    }
-  }).addTo(map);
-};
+
 
 
 
 var featureLayer1 = L.geoJson(null, {
   filter: function(feature, layer) {
-    if (login.username.includes("fibertel")) {
+    if (username.includes("fibertel")) {
       if (feature.properties.contractor === "FiberTel") return true;
-    } else if (login.username.includes("tilson") || login.username.includes("verizon")) {
+    } else if (username.includes("tilson") || username.includes("verizon")) {
       if (feature.properties.contractor != "") return true;
     }
   },
@@ -805,7 +806,7 @@ var featureLayer1 = L.geoJson(null, {
 
 
 var map = L.map("map", {
-  layers: [mapboxOSM, SLCLLDRoute, highlightLayer]
+  layers: [mapboxOSM, SLCLLDRoute, featureLayer, featureLayer1, highlightLayer]
 }).fitWorld();
 
 
