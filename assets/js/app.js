@@ -60,7 +60,7 @@ function login() {
 };
 
 $(document).ready(function() {
-  var userEmail = $("#email").val()
+  userEmail = $("#email").val()
 });
 
 
