@@ -59,7 +59,7 @@ function login() {
 };
 
 function userEmail() {
-  var userEmail = localStorage.getItem("fulcrum_useremail", data.user.email);
+  var userEmail = localStorage.getItem("fulcrum_useremail");
 };
 
 // Configuration of Routes in Fulcrum
