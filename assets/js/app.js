@@ -59,7 +59,7 @@ function login() {
   });
 };
 
-var userEmail = sessionStorage.getItem("fulcrum_useremail")
+var userEmail = $("#email").val();
 
 // Configuration of Routes in Fulcrum
 
@@ -744,7 +744,7 @@ if (userEmail.includes("fibertel")) {
       }
     }
   });
-  featureLayer1.addData(data);
+  featureLayer.addData(data);
 };
 
 
