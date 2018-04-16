@@ -1,4 +1,4 @@
-var userEmail = sessionStorage.getItem("fulcrum_useremail");
+var userEmail = localStorage.getItem("fulcrum_useremail");
 
 // Configuration of Routes in Fulcrum
 
