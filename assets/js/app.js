@@ -890,7 +890,7 @@ $.getJSON(config.geojson, function (data) {
   features = $.map(geojson.features, function(feature) {
     return feature.properties;
   });
-  featureLayer.addData(data);
+  featureLayer.addData(features);
   buildConfig();
   $("#loading-mask").hide();
   var style = {
@@ -932,7 +932,7 @@ $.getJSON(config1.geojson, function (data) {
   features = $.map(geojson.features, function(feature) {
     return feature.properties;
   });
-  featureLayer1.addData(data);
+  featureLayer1.addData(features);
   $("#loading-mask").hide();
 });
 
