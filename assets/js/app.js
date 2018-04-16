@@ -651,9 +651,9 @@ var highlightLayer = L.geoJson(null, {
 });
 
 
-function userLayers() {
+function userLayer() {
   if (userEmail.includes("fibertel")) {
-    var userLayer.featureLayer = L.geoJson(null, {
+    var featureLayer = L.geoJson(null, {
       filter: function(feature, layer) {
         if (feature.properties.contractor === "FiberTel") return true;
       },
