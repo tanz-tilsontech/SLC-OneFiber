@@ -700,7 +700,7 @@ var featureLayer = L.geoJson(null, {
 
 var featureLayer1 = L.geoJson(null, {
   filter: function(feature, layer) {
-    if (feature.properties.contractor === "FiberTel") return true;
+    if (feature.properties.contractor_repeat === "FiberTel") return true;
   },
   pointToLayer: function (feature, latlng) {
     return L.marker(latlng, {
