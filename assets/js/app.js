@@ -1,6 +1,6 @@
 
 function userEmail() {
-  var userEmail = $("#email").val();
+  userEmail = $("#email").val();
 };
 
 // Configuration of Routes in Fulcrum
