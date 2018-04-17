@@ -1,7 +1,64 @@
 
-function userEmail() {
-  userEmail = $("#email").val();
+checkAuth();
+bindUIActions();
+
+
+function bindUIActions() {
+  $("#login-btn").click(function() {
+    login();
+  });
+
+  $("#login-modal").on("shown.bs.modal", function (e) {
+    $(".modal-backdrop").css("opacity", "1");
+  });
+
+  $("#login-modal").on("hidden.bs.modal", function (e) {
+    $(".modal-backdrop").css("opacity", "");
+  });
 };
+
+function checkAuth() {
+  if (!sessionStorage.getItem("fulcrum_app_token")) {
+    $(document).ready(function() {
+      $("#login-modal").modal("show");
+    });
+  } else {
+    $("#login-modal").modal("hide");
+  }
+};
+
+function login() {
+  var username = $("#email").val();
+  var password = $("#password").val();
+  $.ajax({
+    type: "GET",
+    url: "https://api.fulcrumapp.com/api/v2/users.json",
+    contentType: "application/json",
+    dataType: "json",
+    headers: {
+      "Authorization": "Basic " + btoa(username + ":" + password)
+    },
+    statusCode: {
+      401: function() {
+        alert("Incorrect credentials, please try again.");
+      }
+    },
+    success: function (data) {
+      $.each(data.user.contexts, function(index, context) {
+        if (context.name == "Tilson SLC") {
+          sessionStorage.setItem("fulcrum_app_token", btoa(context.api_token));
+          sessionStorage.setItem("fulcrum_userfullname", data.user.first_name + " " + data.user.last_name);
+          sessionStorage.setItem("fulcrum_useremail", data.user.email);
+        }
+      });
+      if (!sessionStorage.getItem("fulcrum_app_token")) {
+        alert("This login does not have access to the Tilson DataMap.");
+      }
+      checkAuth();
+    }
+  });
+};
+
 
 // Configuration of Routes in Fulcrum
 
@@ -355,18 +412,10 @@ var properties1 = [{
 function drawCharts() {
   // HUB COMPLETE
   $(function() {
-    userEmail();
-    if (userEmail.userEmail.includes("tilson") || userEmail.userEmail.includes("verizon")) {
-      var result = alasql("SELECT hub AS label, COUNT(NULLIF(cable_placement_total_footage_cx_final::NUMBER,0)) AS total FROM ? GROUP BY hub", [features]);
-      var columns = $.map(result, function(hub) {
-        return [[hub.label, hub.total]];
-      });
-    } else if (userEmail.userEmail.includes("fibertel")) {
-      var result = alasql("SELECT hub AS label, COUNT(NULLIF(cable_placement_total_footage_cx_final::NUMBER,0)) AS total FROM ? WHERE contractor = 'FiberTel'   GROUP BY hub", [features]);
-      var columns = $.map(result, function(hub) {
-        return [[hub.label, hub.total]];
-      });
-    }
+    var result = alasql("SELECT hub AS label, COUNT(NULLIF(cable_placement_total_footage_cx_final::NUMBER,0)) AS total FROM ? GROUP BY hub", [features]);
+    var columns = $.map(result, function(hub) {
+      return [[hub.label, hub.total]];
+    });
     var chart = c3.generate({
         bindto: "#hub-complete-chart",
         data: {
@@ -378,18 +427,10 @@ function drawCharts() {
 
   // HUB TOTAL FOOTAGE
   $(function() {
-    userEmail();
-    if (userEmail.userEmail.includes("tilson") || userEmail.userEmail.includes("verizon")) {
-      var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? GROUP BY hub", [features]);
-      var columns1 = $.map(result, function(hub) {
-        return [[hub.label, hub.footage]];
-      });
-    } else if (userEmail.userEmail.includes("fibertel")) {
-      var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? WHERE contractor = 'FiberTel' GROUP BY hub", [features]);
-      var columns1 = $.map(result, function(hub) {
-        return [[hub.label, hub.footage]];
-      });
-    }
+    var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? GROUP BY hub", [features]);
+    var columns1 = $.map(result, function(hub) {
+      return [[hub.label, hub.footage]];
+    });
     var chart = c3.generate({
         bindto: "#hub-footage-chart",
         data: {
@@ -409,7 +450,6 @@ function drawCharts() {
 
     // HUB MONTHLY FOOTAGE
   $(function() {
-    userEmail();
     var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? WHERE contractor = 'FiberTel' GROUP BY hub", [features]);
     var columns1 = $.map(result, function(hub) {
       return [[hub.label, hub.footage]];
@@ -433,18 +473,10 @@ function drawCharts() {
 
   // HUB STATUS 
   $(function() {
-    userEmail();
-    if (userEmail.userEmail.includes("tilson") || userEmail.userEmail.includes("verizon")) {
-      var result = alasql("SELECT status AS label, COUNT(status) AS total FROM ? GROUP BY status", [features]);
-      var columns = $.map(result, function(status) {
-        return [[status.label, status.total]];
-      });
-    } else if (userEmail.userEmail.includes("fibertel")) {
-      var result = alasql("SELECT status AS label, COUNT(status) AS total FROM ? WHERE contractor = 'FiberTel' GROUP BY status", [features]);
-      var columns = $.map(result, function(status) {
-        return [[status.label, status.total]];
-      });
-    }
+    var result = alasql("SELECT status AS label, COUNT(status) AS total FROM ? GROUP BY status", [features]);
+    var columns = $.map(result, function(status) {
+      return [[status.label, status.total]];
+    });
     var chart = c3.generate({
         bindto: "#hub-status-chart",
         data: {
@@ -466,7 +498,6 @@ $(function() {
 
 
 function buildConfig() {
-  userEmail();
   filters = [];
   table = [{
     field: "action",
@@ -597,61 +628,54 @@ var highlightLayer = L.geoJson(null, {
   }
 });
 
-userEmail();
-
-if (userEmail.userEmail.includes("tilson") || userEmail.userEmail.includes("verizon")) {
-  var featureLayer = L.geoJson(null, {
-    filter: function(feature, layer) {
-      if (feature.properties.contractor != "") return true;
-    },
-    pointToLayer: function (feature, latlng) {
-      return L.marker(latlng, {
-        title: feature.properties["status_title_github"],
-        riseOnHover: true,
-        icon: L.icon({
-          iconUrl: "assets/pictures/markers/cb0d0c.png",
-          iconSize: [30, 40],
-          iconAnchor: [15, 32]
-        })
-      });
-    },
-    onEachFeature: function (feature, layer) {
-      if (feature.properties) {
-        layer.on({
-          click: function (e) {
-            identifyFeature(L.stamp(layer));
-            highlightLayer.clearLayers();
-            highlightLayer.addData(featureLayer.getLayer(L.stamp(layer)).toGeoJSON());
-          },
-          mouseover: function (e) {
-            if (config.hoverProperty) {
-              $(".info-control").html(feature.properties[config.hoverProperty]);
-              $(".info-control").show();
-            }
-          },
-          mouseout: function (e) {
-            $(".info-control").hide();
+var featureLayer = L.geoJson(null, {
+  filter: function(feature, layer) {
+    if (feature.properties.contractor != "Tilson") return true;
+  },
+  pointToLayer: function (feature, latlng) {
+    return L.marker(latlng, {
+      title: feature.properties["status_title_github"],
+      riseOnHover: true,
+      icon: L.icon({
+        iconUrl: "assets/pictures/markers/cb0d0c.png",
+        iconSize: [30, 40],
+        iconAnchor: [15, 32]
+      })
+    });
+  },
+  onEachFeature: function (feature, layer) {
+    if (feature.properties) {
+      layer.on({
+        click: function (e) {
+          identifyFeature(L.stamp(layer));
+          highlightLayer.clearLayers();
+          highlightLayer.addData(featureLayer.getLayer(L.stamp(layer)).toGeoJSON());
+        },
+        mouseover: function (e) {
+          if (config.hoverProperty) {
+            $(".info-control").html(feature.properties[config.hoverProperty]);
+            $(".info-control").show();
           }
-        });
-        if (feature.properties["marker-color"]) {
-          layer.setIcon(
-            L.icon({
-              iconUrl: "assets/pictures/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
-              iconSize: [30, 40],
-              iconAnchor: [15, 32]
-            })
-          );
+        },
+        mouseout: function (e) {
+          $(".info-control").hide();
         }
+      });
+      if (feature.properties["marker-color"]) {
+        layer.setIcon(
+          L.icon({
+            iconUrl: "assets/pictures/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
+            iconSize: [30, 40],
+            iconAnchor: [15, 32]
+          })
+        );
       }
     }
-  });
-};
+  }
+});
 
 
 var featureLayer1 = L.geoJson(null, {
-  filter: function(feature, layer) {
-    if (feature.properties.contractor_repeat === "FiberTel") return true;
-  },
   pointToLayer: function (feature, latlng) {
     return L.marker(latlng, {
       title: feature.properties["restoration_items"],
@@ -790,7 +814,6 @@ $.getJSON(config.geojson, function (data) {
   features = $.map(geojson.features, function(feature) {
     return feature.properties;
   });
-  userEmail();
   featureLayer.addData(data);
   buildConfig();
   $("#loading-mask").hide();
@@ -833,7 +856,6 @@ $.getJSON(config1.geojson, function (data) {
   features = $.map(geojson.features, function(feature) {
     return feature.properties;
   });
-  userEmail();
   featureLayer1.addData(data);
   $("#loading-mask").hide();
 });
@@ -866,7 +888,6 @@ function applyFilter() {
 
 
 function buildTable() {
-  userEmail();
   $("#table").bootstrapTable({
     cache: false,
     height: $("#table-container").height(),
@@ -907,7 +928,6 @@ function buildTable() {
 
 
 function syncTable() {
-  userEmail();
   tableFeatures = [];
   featureLayer.eachLayer(function (layer) {
     layer.feature.properties.leaflet_stamp = L.stamp(layer);
@@ -1055,7 +1075,6 @@ L.easyPrint({
 
 
 $("#refresh-btn").click(function() {
-  userEmail();
   featureLayer.clearLayers();
   featureLayer1.clearLayers();
   map.setView([40.5912,-111.837],9)
@@ -1066,7 +1085,7 @@ $("#refresh-btn").click(function() {
     features = $.map(geojson.features, function(feature) {
       return feature.properties;
     });
-    userEmail();
+
     featureLayer.addData(data);
     buildConfig();
     $("#loading-mask").hide();
@@ -1080,7 +1099,7 @@ $("#refresh-btn").click(function() {
     features = $.map(geojson.features, function(feature) {
       return feature.properties;
     });
-    userEmail();
+
     featureLayer1.addData(data);
     $("#loading-mask").hide();
   });
