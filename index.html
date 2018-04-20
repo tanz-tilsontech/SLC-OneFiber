@@ -6,17 +6,16 @@
     <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="description" content="Tilson DataMap">
+    <meta name="description" content="">
     <meta name="keywords" content="">
     <meta name="author" content="Tanner Anz">
-    <title class="title">SLC OneFiber (FiberTel)</title>
+    <title class="title">SLC OneFiber Tilson QC</title>
     <link href='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.css' rel='stylesheet' />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.21/c3.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet.esri.geocoder/1.0.2/esri-leaflet-geocoder.css">
     <link rel='stylesheet' href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css'/>
     <link rel='stylesheet' href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css'/>
@@ -28,6 +27,14 @@
     <link rel="stylesheet" href="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highcharts/6.0.7/css/highcharts.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css">
+
+    <!--link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.12.2/mapbox-gl.css' rel='stylesheet' /-->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
   </head>
 
   <body>
@@ -75,7 +82,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#" name="title" id="navbar-title"><img src="assets/pictures/tilson-technology-management-squarelogo-1436356419088.png">SLC OneFiber (FiberTel)</a>
+          <a class="navbar-brand" href="https://www.tilsontech.com" target="_blank" name="title" id="navbar-title"><img src="assets/pictures/tilson-technology-management-squarelogo-1436356419088.png">SLC OneFiber Tilson QC</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -186,16 +193,100 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Feature Info</h4>
+            <h4 class="modal-title">Route Info</h4>
+            <button type="button" class="btn btn-warning" id="featurePictures">Pictures</button>
+            <button type="button" class="btn btn-primary" id="featureBluestakes">BlueStakes</button>
+            <button type="button" class="btn btn-success" id="featureSignatures">Signatures</button>
           </div>
           <div class="modal-body" id="feature-info"></div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           </div>
         </div>
       </div>
     </div>
+
+    <div class="modal fade" id="featuresPicturesModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Pictures</h4>
+          </div>
+          <div class="modal-body" id="featuresPics">
+            <div role="tabpanel">
+              <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#potholesPic" aria-controls="potholesPic" role="tab" data-toggle="tab">Potholes</a></li>
+                <li role="presentation"><a href="#borelogPic" aria-controls="borelogPic" role="tab" data-toggle="tab">Bore Log</a></li>
+                <li role="presentation"><a href="#fibercablePic" aria-controls="fibercablePic" role="tab" data-toggle="tab">Fiber Cable</a></li>
+              </ul>
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="potholesPic"></div>
+                <div role="tabpanel" class="tab-pane" id="borelogPic"></div>
+                <div role="tabpanel" class="tab-pane" id="fibercablePic"></div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="feature1Modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Feature Info</h4>
+          </div>
+          <div class="modal-body" id="feature-info1"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="restoPicturesBtn">Pictures</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="bluestakesModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">BlueStakes Video</h4>
+          </div>
+          <div class="modal-body" id="bluestakesModalBody"></div>
+          <div class="modal-footer">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="restoPicModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Pictures</h4>
+          </div>
+          <div class="modal-body" id="restoPics">
+            <div role="tabpanel">
+              <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#restoBefore" aria-controls="restoBefore" role="tab" data-toggle="tab">Before Pictures</a></li>
+                <li role="presentation"><a href="#restoAfter" aria-controls="restoAfter" role="tab" data-toggle="tab">After Pictures</a></li>
+              </ul>
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="restoBefore"></div>
+                <div role="tabpanel" class="tab-pane" id="restoAfter"></div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+          </div>
+        </div>
+      </div>
+    </div>
+
 
     <div class="modal fade" id="legend-modal" tabindex="-1" role="dialog">
       <div class="modal-dialog modal-sm">
@@ -250,9 +341,11 @@
       </div>
     </div>
 
-    
+    <!--script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.0-beta.7/esri-leaflet.js"></script-->
+    <!--script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script-->
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&use_slippy=true&libraries=places&key=AIzaSyBD-VYZnlbtRVWB7iFXDovJn4nIg7cQ-tI"></script>
     <script src='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.js'></script>
-    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.js"></script>
@@ -269,68 +362,6 @@
     <script src="assets/vendor/tableExport/libs/jsPDF-AutoTable/jspdf.plugin.autotable.js"></script>
     <script src="assets/vendor/leaflet/leaflet-print/dist/leaflet.easyPrint.js"></script>
     <script src="assets/js/leaflet-markercluster.js"></script>
-    <script>
-      $(document).ready(function() {
-        checkAuth();
-        bindUIActions();
-
-        function bindUIActions() {
-          $("#login-btn").click(function() {
-            login();
-          });
-
-          $("#login-modal").on("shown.bs.modal", function (e) {
-            $(".modal-backdrop").css("opacity", "1");
-          });
-
-          $("#login-modal").on("hidden.bs.modal", function (e) {
-            $(".modal-backdrop").css("opacity", "");
-          });
-        };
-
-        function checkAuth() {
-          if (!sessionStorage.getItem("fulcrum_app_token")) {
-            $(document).ready(function() {
-              $("#login-modal").modal("show");
-            });
-          } else {
-            $("#login-modal").modal("hide");
-          }
-        };
-
-        function login() {
-          var username = $("#email").val();
-          var password = $("#password").val();
-          $.ajax({
-            type: "GET",
-            url: "https://api.fulcrumapp.com/api/v2/users.json",
-            contentType: "application/json",
-            dataType: "json",
-            headers: {
-              "Authorization": "Basic " + btoa(username + ":" + password)
-            },
-            statusCode: {
-              401: function() {
-                alert("Incorrect credentials, please try again.");
-              }
-            },
-            success: function (data) {
-              $.each(data.user.contexts, function(index, context) {
-                if (context.name == "Tilson SLC") {
-                  sessionStorage.setItem("fulcrum_app_token", btoa(context.api_token));
-                  sessionStorage.setItem("fulcrum_userfullname", data.user.first_name + " " + data.user.last_name);
-                  sessionStorage.setItem("fulcrum_useremail", data.user.email);
-                }
-              });
-              if (!sessionStorage.getItem("fulcrum_app_token")) {
-                alert("This login does not have access to the Tilson DataMap.");
-              }
-              checkAuth();
-            }
-          });
-        };
-      });
-    </script>
     <script src="assets/js/app.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/leaflet-linear-measurement@0.0.1/src/Leaflet.LinearMeasurement.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.2/tabletop.min.js"></script>
@@ -339,6 +370,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/6.0.7/highcharts-3d.js"></script>
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+    <!--script src="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js"></script-->
    
   </body>
 </html>
