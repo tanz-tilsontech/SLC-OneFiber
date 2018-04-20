@@ -883,7 +883,7 @@ var Owner = "tilsontech"
 $.getJSON(config.geojson, function (data) {
   geojson = data.features.filter(function(feature) {
     if (localStorage.getItem("fulcrum_useremail").includes(Owner)) {
-      return feature.properties.contractor === 'Tilson';
+      return feature.properties.contractor === 'FiberTel';
     };
   });
   features = $.map(geojson.features, function(feature) {
