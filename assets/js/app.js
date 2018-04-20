@@ -19,7 +19,7 @@ function bindUIActions() {
 };
 
 function checkAuth() {
-  if (!sessionStorage.getItem("fulcrum_app_token")) {
+  if (!localStorage.getItem("fulcrum_app_token")) {
     $(document).ready(function() {
       $("#login-modal").modal("show");
     });
@@ -47,12 +47,12 @@ function login() {
     success: function (data) {
       $.each(data.user.contexts, function(index, context) {
         if (context.name == "Tilson SLC") {
-          sessionStorage.setItem("fulcrum_app_token", btoa(context.api_token));
-          sessionStorage.setItem("fulcrum_userfullname", data.user.first_name + " " + data.user.last_name);
-          sessionStorage.setItem("fulcrum_useremail", data.user.email);
+          localStorage.setItem("fulcrum_app_token", btoa(context.api_token));
+          localStorage.setItem("fulcrum_userfullname", data.user.first_name + " " + data.user.last_name);
+          localStorage.setItem("fulcrum_useremail", data.user.email);
         }
       });
-      if (!sessionStorage.getItem("fulcrum_app_token")) {
+      if (!localStorage.getItem("fulcrum_app_token")) {
         alert("This login does not have access to the Tilson DataMap.");
       }
       checkAuth();
@@ -776,6 +776,9 @@ var highlightLayer = L.geoJson(null, {
 
 
 var featureLayer = L.geoJson(null, {
+  filter: function(feature, layer) {
+    if (feature.properties.contractor != "Tilson") return true;
+  },
   pointToLayer: function (feature, latlng) {
     return L.marker(latlng, {
       title: feature.properties["status_title_github"],
@@ -876,20 +879,15 @@ var featureLayer1 = L.geoJson(null, {
 
 
 
-var Owner = "tilsontech"
 
 // Fetch the Routes GeoJSON file
 
 $.getJSON(config.geojson, function (data) {
-  geojson = data.features.filter(function(feature) {
-    if (sessionStorage.getItem("fulcrum_useremail").includes(Owner)) {
-      return feature.properties.contractor === 'FiberTel';
-    };
-  });
+  geojson = data;
   features = $.map(geojson.features, function(feature) {
     return feature.properties;
   });
-  featureLayer.addData(geojson);
+  featureLayer.addData(data);
   buildConfig();
   $("#loading-mask").hide();
   var style = {
