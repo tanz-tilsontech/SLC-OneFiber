@@ -878,12 +878,16 @@ var featureLayer1 = L.geoJson(null, {
 });
 
 
-
+var owner = "tilson"
 
 // Fetch the Routes GeoJSON file
 
 $.getJSON(config.geojson, function (data) {
-  geojson = data;
+  geojson = data.features.filter(function(feature) {
+    if (sessionStorage.getItem("fulcrum_useremail").includes(owner)) {
+      return feature.properties.contractor === 'Tilson';
+    }
+  });
   features = $.map(geojson.features, function(feature) {
     return feature.properties;
   });
