@@ -19,7 +19,7 @@ function bindUIActions() {
 };
 
 function checkAuth() {
-  if (!sessionStorage.getItem("fulcrum_app_token")) {
+  if (!localStorage.getItem("fulcrum_app_token")) {
     $(document).ready(function() {
       $("#login-modal").modal("show");
     });
@@ -47,12 +47,12 @@ function login() {
     success: function (data) {
       $.each(data.user.contexts, function(index, context) {
         if (context.name == "Tilson SLC") {
-          sessionStorage.setItem("fulcrum_app_token", btoa(context.api_token));
-          sessionStorage.setItem("fulcrum_userfullname", data.user.first_name + " " + data.user.last_name);
-          sessionStorage.setItem("fulcrum_useremail", data.user.email);
+          localStorage.setItem("fulcrum_app_token", btoa(context.api_token));
+          localStorage.setItem("fulcrum_userfullname", data.user.first_name + " " + data.user.last_name);
+          localStorage.setItem("fulcrum_useremail", data.user.email);
         }
       });
-      if (!sessionStorage.getItem("fulcrum_app_token")) {
+      if (!localStorage.getItem("fulcrum_app_token")) {
         alert("This login does not have access to the Tilson DataMap.");
       }
       checkAuth();
@@ -884,7 +884,7 @@ var owner = "tilson"
 
 $.getJSON(config.geojson, function (data) {
   geojson = data.features.filter(function(feature) {
-    if (sessionStorage.getItem("fulcrum_useremail").includes(owner)) {
+    if (localStorage.getItem("fulcrum_useremail").includes(owner)) {
       return feature.properties.contractor === 'Tilson';
     }
   });
