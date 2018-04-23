@@ -344,7 +344,9 @@ $.getJSON(config.geojson, function (data) {
   features = $.map(geojson.features, function(feature) {
     return feature.attributes;
   });
-  var latlng = feature.attributes.centroid_y,feature.attributes.centroid_x
+  var lat = feature.attributes.centroid_y
+  var long = feature.attributes.centroid_x
+  var latlng = (lat,long)
   featureLayer.addData(data);
   buildConfig();
   $("#loading-mask").hide();
