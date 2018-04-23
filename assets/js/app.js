@@ -341,7 +341,7 @@ var featureLayer = L.geoJson(null, {
 
 $.getJSON(config.geojson, function (data) {
   geojson = data;
-  features = $.map(geojson.features, function(feature) {
+  features = $.map(geojson.features, function(features) {
     return features.attributes;
   });
   var lat = features.attributes.centroid_y
