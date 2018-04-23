@@ -339,25 +339,12 @@ var featureLayer = L.geoJson(null, {
 
 // Fetch the Routes GeoJSON file
 
-$.getJSON(config.geojson, function (data) {
-  geojson = data;
-  features = $.map(geojson.features, function(features) {
-    return features.attributes;
-  });
-  var lat = features.attributes.centroid_y
-  var long = features.attributes.centroid_x
-  var latlng = (lat,long)
-  featureLayer.addData(data);
-  buildConfig();
-  $("#loading-mask").hide();
-});
+var map = L.map('map').setView([45.526, -122.667], 13);
 
-
-
-
-var map = L.map("map", {
-  layers: [mapboxOSM, SLCLLDRoute, featureLayer, highlightLayer]
-}).fitWorld();
+  L.esri.basemapLayer('Streets').addTo(map);
+  L.esri.featureLayer({
+    url: 'https://tilsonwebdraco.3-gislive.com/arcgis/rest/services/SLClld/Tilsonslc_lld/MapServer/10/query?where=fqn_id+IS+NOT+NULL&text=&objectIds=&time=&geometry=&geometryType=esriGeometryPoint&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=*&returnGeometry=false&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&f=pjson'
+  }).addTo(map);
 
 
 // ESRI geocoder
