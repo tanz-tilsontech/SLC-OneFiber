@@ -76,7 +76,7 @@ var properties = [{
   value: "constructiontype",
   label: "Route Type",
   table: {
-    visible: false
+    visible: true
   },
   filter: {
     type: "string",
@@ -91,7 +91,7 @@ var properties = [{
   value: "label_id_text",
   label: "Construction Type",
   table: {
-    visible: false
+    visible: true
   },
   filter: {
     type: "string",
@@ -106,7 +106,7 @@ var properties = [{
   value: "workorderid",
   label: "Work Order ID",
   table: {
-    visible: false
+    visible: true
   },
   filter: {
     type: "string",
@@ -121,7 +121,7 @@ var properties = [{
   value: "id",
   label: "3GIS ID",
   table: {
-    visible: false
+    visible: true
   },
   filter: {
     type: "string"
@@ -131,7 +131,7 @@ var properties = [{
   value: "fqn_id",
   label: "Route FQNID",
   table: {
-    visible: false,
+    visible: true,
     sortable: true
   },
   filter: {
@@ -147,7 +147,7 @@ var properties = [{
   value: "fibercable_fqnid",
   label: "Fiber FQNID",
   table: {
-    visible: false,
+    visible: true,
     sortable: true
   },
   filter: {
@@ -163,8 +163,8 @@ var properties = [{
   value: "sitespannfid",
   label: "Site NFID",
   table: {
-    visible: false,
-    sortable: false
+    visible: true,
+    sortable: true
   },
   filter: {
     type: "string",
@@ -369,7 +369,7 @@ var featureLayer = L.geoJson(null, {
 // Fetch the Routes GeoJSON file
 
 $.getJSON(config.geojson, function (data) {
-  geojson = data
+  geojson = data;
   features = $.map(geojson.features, function(feature) {
     return feature.attributes;
   });
@@ -809,7 +809,6 @@ $(document).ready(function() {
 
 $("#refresh-btn").click(function() {
   featureLayer.clearLayers();
-  featureLayer1.clearLayers();
   $.getJSON(config.geojson, function (data) {
     geojson = data;
     legendItems = {};
@@ -818,14 +817,6 @@ $("#refresh-btn").click(function() {
     });
     featureLayer.addData(data);
     buildConfig();
-    $("#loading-mask").hide();
-  });
-  $.getJSON(config1.geojson, function (data) {
-    geojson = data
-    features = $.map(geojson.features, function(feature) {
-      return feature.properties;
-    });
-    featureLayer1.addData(data);
     $("#loading-mask").hide();
   });
   syncTable();
