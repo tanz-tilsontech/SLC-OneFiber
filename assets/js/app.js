@@ -64,17 +64,62 @@ function login() {
 // Configuration of Routes in Fulcrum
 
 var config = {
-  geojson: "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94.geojson",
+  geojson: "https://tilsonwebdraco.3-gislive.com/arcgis/rest/services/SLClld/Tilsonslc_lld/MapServer/10/query?where=fqn_id+IS+NOT+NULL&text=&objectIds=&time=&geometry=&geometryType=esriGeometryPoint&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=*&returnGeometry=false&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&f=pjson",
   title: "SLC OneFiber Tilson QC",
-  layerName: "Segments",
-  hoverProperty: "status_title_github",
-  sortProperty: "fqnid",
+  layerName: "Routes",
+  hoverProperty: "fqn_id",
+  sortProperty: "fqn_id",
   sortOrder: "ascend",
 };
 
 var properties = [{
-  value: "fulcrum_record_link",
-  label: "Fulcrum Record",
+  value: "constructiontype",
+  label: "Route Type",
+  table: {
+    visible: false
+  },
+  filter: {
+    type: "string",
+    input: "checkbox",
+    vertical: true,
+    multiple: true,
+    operators: ["in", "not_in", "equal", "not_equal"],
+    values: []
+  },
+},
+{
+  value: "label_id_text",
+  label: "Construction Type",
+  table: {
+    visible: false
+  },
+  filter: {
+    type: "string",
+    input: "checkbox",
+    vertical: true,
+    multiple: true,
+    operators: ["in", "not_in", "equal", "not_equal"],
+    values: []
+  },
+},
+{
+  value: "workorderid",
+  label: "Work Order ID",
+  table: {
+    visible: false
+  },
+  filter: {
+    type: "string",
+    input: "checkbox",
+    vertical: true,
+    multiple: true,
+    operators: ["in", "not_in", "equal", "not_equal"],
+    values: []
+  },
+},
+{
+  value: "id",
+  label: "3GIS ID",
   table: {
     visible: false
   },
@@ -83,20 +128,23 @@ var properties = [{
   },
 },
 {
-  value: "fulcrum_id",
-  label: "Record ID",
+  value: "fqn_id",
+  label: "Route FQNID",
   table: {
     visible: false,
     sortable: true
   },
   filter: {
-    type: "string"
-  },
-  info: false
+    type: "string",
+    input: "checkbox",
+    vertical: true,
+    multiple: true,
+    operators: ["in", "not_in", "equal", "not_equal"],
+    values: []
 },
 {
-  value: "contractor",
-  label: "Contractor",
+  value: "fibercable_fqnid",
+  label: "Fiber FQNID",
   table: {
     visible: false,
     sortable: true
@@ -109,27 +157,15 @@ var properties = [{
     operators: ["in", "not_in", "equal", "not_equal"],
     values: []
   },
-  info: false
 },
 {
-  value: "gps_directions_1",
-  label: "GPS Directions",
+  value: "sitespannfid",
+  label: "Site NFID",
   table: {
     visible: false,
     sortable: false
   },
   filter: {
-    type: "string"
-  }
-},
-{
-  value: "status_title",
-  label: "Status",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
     type: "string",
     input: "checkbox",
     vertical: true,
@@ -139,430 +175,16 @@ var properties = [{
   }
 },
 {
-  value: "hub",
-  label: "Hub",
+  value: "calculatedlength",
+  label: "Footage",
   table: {
     visible: true,
     sortable: true
   },
   filter: {
     type: "string",
-    input: "checkbox",
-    vertical: true,
-    multiple: true,
-    operators: ["in", "not_in", "equal", "not_equal"],
-    values: []
-  }
-},
-{
-  value: "site",
-  label: "Site",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string",
-    input: "checkbox",
-    vertical: true,
-    multiple: true,
-    operators: ["in", "not_in", "equal", "not_equal"],
-    values: []
-  }
-},
-{
-  value: "wpid",
-  label: "WPID",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string",
-    input: "checkbox",
-    vertical: true,
-    multiple: true,
-    operators: ["in", "not_in", "equal", "not_equal"],
-    values: []
-  }
-},
-{
-  value: "fqnid",
-  label: "ROUTE FQNID",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string",
-    input: "checkbox",
-    vertical: true,
-    multiple: true,
-    operators: ["in", "not_in", "equal", "not_equal"],
-    values: []
-  }
-},
-{
-  value: "fiber_fqnid_1",
-  label: "FIBER FQNID",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string",
-    input: "checkbox",
-    vertical: true,
-    multiple: true,
-    operators: ["in", "not_in", "equal", "not_equal"],
-    values: []
-  }
-},
-{
-  value: "ntp_date",
-  label: "Proposed Start Date",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "date"
-  }
-},
-{
-  value: "proposed_type",
-  label: "Proposed Type",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string"
-  }
-},
-{
-  value: "proposed_product",
-  label: "Proposed Product",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string"
-  }
-},
-{
-  value: "proposed_footage",
-  label: "Proposed Footage",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "integer",
-  }
-},
-{
-  value: "construction_type_cx_final",
-  label: "Construction Type",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string"
-  }
-},
-{
-  value: "construction_start_date_cx_final",
-  label: "Construction Start Date",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "date"
-  }
-},
-{
-  value: "construction_complete_date_cx_final",
-  label: "Construction Complete Date",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "date"
-  }
-},
-{
-  value: "construction_pass_date_qc_final",
-  label: "Construction QC Pass Date",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "date"
-  }
-},
-{
-  value: "construction_footage_cx_final",
-  label: "Construction Total Footage",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "integer",
-  }
-},
-{
-  value: "cable_placement_type_final",
-  label: "Cable Placement Type",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string"
-  }
-},
-{
-  value: "cable_placement_start_date_cx_final",
-  label: "Cable Placement Start Date",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "date"
-  }
-},
-{
-  value: "cable_placement_complete_date_cx_final",
-  label: "Cable Placement Complete Date",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "date"
-  }
-},
-{
-  value: "cable_placement_pass_date_qc_final",
-  label: "Cable Placement QC Pass Date",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "date"
-  }
-},
-{
-  value: "cable_placement_total_footage_cx_final",
-  label: "Cable Placement Total Footage",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "integer",
-  },
-}];
-
-
-// Configuration of Restoration in Fulcrum
-
-var config1 = {
-  geojson: "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94.geojson?child=restoration_repeat",
-  layerName: "Restoration",
-  hoverProperty: "restoration_items",
-  sortProperty: "date_resto",
-  sortOrder: "ascend",
-};
-
-var properties1 = [{
-  value: "restoration_items",
-  label: "Restoration Type",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string",
-    input: "checkbox",
-    vertical: true,
-    multiple: true,
-    operators: ["in", "not_in", "equal", "not_equal"],
-    values: []
-  }
-},
-{
-  value: "date_resto",
-  label: "Restoration Date",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "date"
-  }
-},
-{
-  value: "restoration_complete_contractor",
-  label: "Restoration Complete (Contractor)",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string",
-    input: "checkbox",
-    vertical: true,
-    multiple: true,
-    operators: ["in", "not_in", "equal", "not_equal"],
-    values: []
-  }
-},
-{
-  value: "restoration_complete_tilson",
-  label: "Restoration Complete (Tilson)",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string",
-    input: "checkbox",
-    vertical: true,
-    multiple: true,
-    operators: ["in", "not_in", "equal", "not_equal"],
-    values: []
   }
 }];
-
-
-var restoBeforeProps = [{
-  value: "dirt_resto_b_cx_url",
-  label: "Dirt",
-  table: {
-    visible: false,
-    sortable: false
-  },
-  filter: {
-    type: "string",
-    input: "checkbox",
-    vertical: true,
-    multiple: true,
-    operators: ["in", "not_in", "equal", "not_equal"],
-    values: []
-  }
-},
-{
-  value: "concrete_resto_b_cx_url",
-  label: "Concrete",
-  table: {
-    visible: false,
-    sortable: false
-  },
-  filter: {
-    type: "string",
-    input: "checkbox",
-    vertical: true,
-    multiple: true,
-    operators: ["in", "not_in", "equal", "not_equal"],
-    values: []
-  }
-},
-{
-  value: "asphalt_resto_b_cx_url",
-  label: "Asphalt",
-  table: {
-    visible: false,
-    sortable: false
-  },
-  filter: {
-    type: "string",
-    input: "checkbox",
-    vertical: true,
-    multiple: true,
-    operators: ["in", "not_in", "equal", "not_equal"],
-    values: []
-  }
-},
-{
-  value: "start_handhole_resto_b_cx_url",
-  label: "Start Handhole",
-  table: {
-    visible: false,
-    sortable: false
-  },
-  filter: {
-    type: "string",
-    input: "checkbox",
-    vertical: true,
-    multiple: true,
-    operators: ["in", "not_in", "equal", "not_equal"],
-    values: []
-  }
-},
-{
-  value: "end_handhole_resto_b_cx_url",
-  label: "End Handhole",
-  table: {
-    visible: false,
-    sortable: false
-  },
-  filter: {
-    type: "string",
-    input: "checkbox",
-    vertical: true,
-    multiple: true,
-    operators: ["in", "not_in", "equal", "not_equal"],
-    values: []
-  }
-}];
-
-
-var featureBluestakesVid = [{
-  value: "locates_cx_url",
-  label: "BlueStakes",
-  table: {
-    visible: false,
-    sortable: false
-  }
-}];
-
-
-
-var potholePictures = [{
-  value: "asphalt_potholes_url",
-  label: "Asphalt",
-  table: {
-    visible: false,
-    sortable: false
-  }
-},
-{
-  value: "concrete_potholes_url",
-  label: "Concrete",
-  table: {
-    visible: false,
-    sortable: false
-  }
-},
-{
-  value: "dirt_potholes_url",
-  label: "Dirt",
-  table: {
-    visible: false,
-    sortable: false
-  }
-}];
-
 
 
 function drawCharts() {
@@ -878,69 +500,24 @@ var featureLayer1 = L.geoJson(null, {
 });
 
 
-var owner = "tilson"
 
 // Fetch the Routes GeoJSON file
 
 $.getJSON(config.geojson, function (data) {
-  geojson = data.features.filter(function(feature) {
-    if (localStorage.getItem("fulcrum_useremail").includes(owner)) {
-      return feature.properties.contractor === 'Tilson';
-    }
-  });
+  geojson = data
   features = $.map(geojson.features, function(feature) {
-    return feature.properties;
+    return feature.attributes;
   });
   featureLayer.addData(data);
   buildConfig();
   $("#loading-mask").hide();
-  var style = {
-    "property": "status",
-    "values": {
-      "Segment Ready": "https://image.ibb.co/iXHCyH/1891c9.png",
-      "Segment Not Ready": "https://image.ibb.co/hk21sc/242424.png",
-      "Construction Started": "https://image.ibb.co/mC5Akx/ffd300.png",
-      "Constractor CX QC": "https://image.ibb.co/hHRSXc/b3b3b3.png",
-      "Tilson CX QC": "https://image.ibb.co/c3TVkx/ff8819.png",
-      "Construction Fix": "https://image.ibb.co/cen1sc/cb0d0c.png",
-      "Cable Placement Ready": "https://image.ibb.co/iXHCyH/1891c9.png",
-      "Cable Placement Started": "https://image.ibb.co/mC5Akx/ffd300.png",
-      "Contractor CP QC": "https://image.ibb.co/hHRSXc/b3b3b3.png",
-      "Tilson CP QC": "https://image.ibb.co/c3TVkx/ff8819.png",
-      "Cable Placement Fix": "https://image.ibb.co/cen1sc/cb0d0c.png",
-      "Splicing/Testing Pending": "https://image.ibb.co/hxOkJH/87d30f.png"
-    }
-  }
-  JSON.stringify(style);
-  if (style.property && style.values) {
-    $("#legend-item").removeClass("hidden");
-    $("#legend-title").html(style.property.toUpperCase().replace(/_/g, " "));
-    $.each(style.values, function(property, value) {
-      if (value.startsWith("http")) {
-        $("#legend").append("<p><img src='" + value + "'></i> " + property + "</p>");
-      } else {
-        $("#legend").append("<p><i style='background:" + value + "'></i> " + property + "</p>");
-      }
-    });
-  }
 });
 
-
-// Fetch the Restoration GeoJSON file
-
-$.getJSON(config1.geojson, function (data) {
-  geojson = data
-  features = $.map(geojson.features, function(feature) {
-    return feature.properties;
-  });
-  featureLayer1.addData(data);
-  $("#loading-mask").hide();
-});
 
 
 
 var map = L.map("map", {
-  layers: [mapboxOSM, SLCLLDRoute, featureLayer, featureLayer1, highlightLayer]
+  layers: [mapboxOSM, SLCLLDRoute, featureLayer, highlightLayer]
 }).fitWorld();
 
 
