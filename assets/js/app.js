@@ -61,6 +61,7 @@ function login() {
 };
 
 
+
 // Configuration of Routes in Fulcrum
 
 var config = {
@@ -343,6 +344,7 @@ $.getJSON(config.geojson, function (data) {
   features = $.map(geojson.features, function(feature) {
     return feature.attributes;
   });
+  var latlng = feature.attributes.centroid_y,feature.attributes.centroid_x
   featureLayer.addData(data);
   buildConfig();
   $("#loading-mask").hide();
