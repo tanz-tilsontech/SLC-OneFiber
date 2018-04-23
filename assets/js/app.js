@@ -188,84 +188,6 @@ var properties = [{
 }];
 
 
-function drawCharts() {
-  // HUB COMPLETE
-  $(function() {
-    var result = alasql("SELECT hub AS label, COUNT(NULLIF(cable_placement_total_footage_cx_final::NUMBER,0)) AS total FROM ? GROUP BY hub", [features]);
-    var columns = $.map(result, function(status) {
-      return [[status.label, status.total]];
-    });
-    var chart = c3.generate({
-        bindto: "#hub-complete-chart",
-        data: {
-          type: "gauge",
-          columns: columns
-        }
-    });
-  });
-
-  // HUB TOTAL FOOTAGE
-  $(function() {
-    var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? GROUP BY hub", [features]);
-    var columns1 = $.map(result, function(hub) {
-      return [[hub.label, hub.footage]];
-    });
-    var chart = c3.generate({
-        bindto: "#hub-footage-chart",
-        data: {
-
-          type: "bar",
-          columns: columns1
-        },
-        axis: {
-          x: {
-            type: 'category',
-            categories: ["Cable Footage"]
-          }
-        }
-    });
-  });
-
-
-    // HUB MONTHLY FOOTAGE
-  $(function() {
-    var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? GROUP BY hub", [features]);
-    var columns1 = $.map(result, function(hub) {
-      return [[hub.label, hub.footage]];
-    });
-    var chart = c3.generate({
-        bindto: "#hub-footage-chart",
-        data: {
-
-          type: "bar",
-          columns: columns1
-        },
-        axis: {
-          x: {
-            type: 'category',
-            categories: ["Cable Footage"]
-          }
-        }
-    });
-  });
-
-
-  // HUB STATUS 
-  $(function() {
-    var result = alasql("SELECT status AS label, COUNT(status) AS total FROM ? GROUP BY status", [features]);
-    var columns = $.map(result, function(status) {
-      return [[status.label, status.total]];
-    });
-    var chart = c3.generate({
-        bindto: "#hub-status-chart",
-        data: {
-          type: "pie",
-          columns: columns
-        }
-    });
-  });
-}
-
 $(function() {
   $(".title").html(config.title);
 });
@@ -399,9 +321,6 @@ var highlightLayer = L.geoJson(null, {
 
 
 var featureLayer = L.geoJson(null, {
-  filter: function(feature, layer) {
-    if (feature.properties.contractor != "Tilson") return true;
-  },
   pointToLayer: function (feature, latlng) {
     return L.marker(latlng, {
       title: feature.properties["status_title_github"],
@@ -445,61 +364,6 @@ var featureLayer = L.geoJson(null, {
     }
   }
 });
-
-
-
-var featureLayer1 = L.geoJson(null, {
-  pointToLayer: function (feature, latlng) {
-    return L.marker(latlng, {
-      title: feature.properties["restoration_items"],
-      riseOnHover: true,
-      icon: L.icon({
-        iconUrl: "assets/pictures/markers/242424.png",
-        iconSize: [30, 40],
-        iconAnchor: [15, 32]
-      })
-    });
-  },
-  onEachFeature: function (feature, layer) {
-    if (feature.properties) {
-      layer.on({
-        click: function (e) {
-          identifyFeature1(L.stamp(layer));
-          RestoBeforePics(L.stamp(layer));
-          highlightLayer.clearLayers();
-          highlightLayer.addData(featureLayer1.getLayer(L.stamp(layer)).toGeoJSON());
-        },
-        mouseover: function (e) {
-          if (config1.hoverProperty) {
-            $(".info-control").html(feature.properties[config1.hoverProperty]);
-            $(".info-control").show();
-          }
-        },
-        mouseout: function (e) {
-          $(".info-control").hide();
-        }
-      });
-      if (feature.properties.restoration_complete_contractor === "Yes") {
-        layer.setIcon(
-          L.icon({
-            iconUrl: "assets/pictures/markers/b3b3b3.png",
-            iconSize: [30, 40],
-            iconAnchor: [15, 32]
-          })
-        );
-      } else if (feature.properties.restoration_complete_contractor === "Yes" && feature.properties.restoration_complete_tilson === "Yes") {
-        layer.setIcon(
-          L.icon({
-            iconUrl: "assets/pictures/markers/ffffff.png",
-            iconSize: [30, 40],
-            iconAnchor: [15, 32]
-          })
-        );
-      }
-    }
-  }
-});
-
 
 
 // Fetch the Routes GeoJSON file
