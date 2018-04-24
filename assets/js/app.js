@@ -300,6 +300,30 @@ var routesLayer = L.esri.featureLayer({
   url: 'https://tilsonwebdraco.3-gislive.com/arcgis/rest/services/SLClld/Tilsonslc_lld/MapServer/10'
 }).addTo(map);
 
+L.esri.get('https://tilsonwebdraco.3-gislive.com/arcgis/rest/services/SLClld/Tilsonslc_lld/MapServer/10', {}, function(data){
+
+  var jsonFeatures = [];
+
+  data.forEach(function(attributes){
+      var lat = attributes.centroid_x;
+      var lon = attributes.centroid_y;
+
+      var feature = {type: 'Feature',
+          properties: attributes,
+          geometry: {
+              type: 'Point',
+              coordinates: [lon,lat]
+          }
+      };
+
+      jsonFeatures.push(feature);
+  });
+
+  var geoJson = { type: 'FeatureCollection', features: jsonFeatures };
+}
+
+L.geoJson(geoJson).addTo(map);
+
 // ESRI geocoder
 var searchControl = L.esri.Geocoding.Controls.geosearch({
   useMapBounds: 17
