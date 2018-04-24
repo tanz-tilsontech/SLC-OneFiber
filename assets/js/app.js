@@ -291,61 +291,11 @@ var highlightLayer = L.geoJson(null, {
 });
 
 
-var featureLayer = L.geoJson(null, {
-  pointToLayer: function (feature, latlng) {
-    return L.marker(latlng, {
-      title: feature.properties["status_title_github"],
-      riseOnHover: true,
-      icon: L.icon({
-        iconUrl: "assets/pictures/markers/cb0d0c.png",
-        iconSize: [30, 40],
-        iconAnchor: [15, 32]
-      })
-    });
-  },
-  onEachFeature: function (feature, layer) {
-    if (feature.properties) {
-      layer.on({
-        click: function (e) {
-          identifyFeature(L.stamp(layer));
-          featureBluestakes(L.stamp(layer));
-          featurePotholePics(L.stamp(layer));
-          highlightLayer.clearLayers();
-          highlightLayer.addData(featureLayer.getLayer(L.stamp(layer)).toGeoJSON());
-        },
-        mouseover: function (e) {
-          if (config.hoverProperty) {
-            $(".info-control").html(feature.properties[config.hoverProperty]);
-            $(".info-control").show();
-          }
-        },
-        mouseout: function (e) {
-          $(".info-control").hide();
-        }
-      });
-      if (feature.properties["marker-color"]) {
-        layer.setIcon(
-          L.icon({
-            iconUrl: "assets/pictures/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
-            iconSize: [30, 40],
-            iconAnchor: [15, 32]
-          })
-        );
-      }
-    }
-  }
-});
-
-
 // Fetch the Routes GeoJSON file
 
-var map = L.map('map').setView([45.526, -122.667], 13);
-
-  L.esri.basemapLayer('Streets').addTo(map);
-  L.esri.featureLayer({
-    url: 'https://tilsonwebdraco.3-gislive.com/arcgis/rest/services/SLClld/Tilsonslc_lld/MapServer/10'
-  }).addTo(map);
-
+var routesLayer = L.esri.featureLayer({
+  url: 'https://tilsonwebdraco.3-gislive.com/arcgis/rest/services/SLClld/Tilsonslc_lld/MapServer/10'
+}).addTo(map);
 
 // ESRI geocoder
 var searchControl = L.esri.Geocoding.Controls.geosearch({
@@ -381,7 +331,7 @@ var baseLayers = {
   "SLC LLD Route": SLCLLDRoute,
 };
 var overlayLayers = {
-  "<span id='layer-name'>Routes</span>": featureLayer,
+  "<span id='layer-name'>Routes</span>": routesLayer,
   "<span id='layer-name2'>Engineered</span>": SLCLLDRoute,
 };
 
