@@ -320,7 +320,7 @@ L.esri.get('https://tilsonwebdraco.3-gislive.com/arcgis/rest/services/SLClld/Til
   });
 
   var geoJson = { type: 'FeatureCollection', features: jsonFeatures };
-}
+});
 
 L.geoJson(geoJson).addTo(map);
 
