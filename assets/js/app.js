@@ -293,6 +293,9 @@ var highlightLayer = L.geoJson(null, {
 
 // Fetch the Routes GeoJSON file
 
+var map = L.map('map').setView([45.526, -122.667], 13);
+
+
 var routesLayer = L.esri.featureLayer({
   url: 'https://tilsonwebdraco.3-gislive.com/arcgis/rest/services/SLClld/Tilsonslc_lld/MapServer/10'
 }).addTo(map);
