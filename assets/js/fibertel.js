@@ -2,7 +2,7 @@ verifyUser();
 
 function verifyUser() {
   var contractor = "fibertel"
-  if (sessionStorage.getItem("fulcrum_useremail").indexOf(contractor) === -1 || sessionStorage.getItem("fulcrum_useremail") === null) {
+  if (sessionStorage.getItem("fulcrum_useremail") === null || sessionStorage.getItem("fulcrum_useremail").indexOf(contractor) === -1) {
     $("#table-container").hide();
     $("#map-container").hide();
     $(".chartModal").css("opacity", "0");
