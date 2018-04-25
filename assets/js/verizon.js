@@ -3,7 +3,7 @@ verifyUser();
 function verifyUser() {
   var customer = "verizon"
   var owner = "tilson"
-  if (sessionStorage.getItem("fulcrum_useremail") === null || sessionStorage.getItem("fulcrum_useremail").indexOf(customer) === -1 || sessionStorage.getItem("fulcrum_useremail").indexOf(owner) === -1) {
+  if (sessionStorage.getItem("fulcrum_useremail") === null || sessionStorage.getItem("fulcrum_useremail").indexOf(customer) === -1) {
     $("#table-container").hide();
     $("#map-container").hide();
     $(".chartModal").css("opacity", "0");
