@@ -177,7 +177,7 @@ var properties = [{
     visible: true,
     sortable: true
   },
-  filters: [{
+  filter: [{
     id: 'date',
     label: 'NTP Date',
     type: 'date',
@@ -244,7 +244,7 @@ var properties = [{
     visible: true,
     sortable: true
   },
-  filters: [{
+  filter: [{
     id: 'date',
     label: 'Construction Start Date',
     type: 'date',
@@ -267,7 +267,7 @@ var properties = [{
     visible: true,
     sortable: true
   },
-  filters: [{
+  filter: [{
     id: 'date',
     label: 'Construction Complete Date',
     type: 'date',
@@ -290,7 +290,7 @@ var properties = [{
     visible: true,
     sortable: true
   },
-  filters: [{
+  filter: [{
     id: 'date',
     label: 'Construction Pass Date',
     type: 'date',
@@ -335,7 +335,7 @@ var properties = [{
     visible: true,
     sortable: true
   },
-  filters: [{
+  filter: [{
     id: 'date',
     label: 'Cable Start Date',
     type: 'date',
@@ -358,7 +358,7 @@ var properties = [{
     visible: true,
     sortable: true
   },
-  filters: [{
+  filter: [{
     id: 'date',
     label: 'Cable Complete Date',
     type: 'date',
@@ -381,7 +381,7 @@ var properties = [{
     visible: true,
     sortable: true
   },
-  filters: [{
+  filter: [{
     id: 'date',
     label: 'Cable Pass Date',
     type: 'date',
