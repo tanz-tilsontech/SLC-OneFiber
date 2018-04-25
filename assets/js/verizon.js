@@ -6,10 +6,9 @@ function verifyUser() {
   if (sessionStorage.getItem("fulcrum_useremail") === null || sessionStorage.getItem("fulcrum_useremail").indexOf(customer) === -1) {
     $("#table-container").hide();
     $("#map-container").hide();
-    $("#mapdata").hide();
-    $("#view").hide();
     $("#legend-btn").hide();
     $("#refresh-btn").hide();
+    $(".navbar-collapse").css("opacity", "0");
     alert("This login does not have access to this page.");
   };
 };
