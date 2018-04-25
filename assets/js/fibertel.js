@@ -923,6 +923,11 @@ var featureLayer = L.geoJson(null, {
 
 
 var featureLayer1 = L.geoJson(null, {
+  filter: function (feature) {
+    if (feature.properties.contractor_repeat === verifyUser.contractor) {
+      return true;
+    };
+  },
   pointToLayer: function (feature, latlng) {
     return L.marker(latlng, {
       title: feature.properties["restoration_items"],
