@@ -395,7 +395,7 @@ var properties = [{
       todayHighlight: true,
       autoclose: true
     }
-  }],}
+  }],
 },
 {
   value: "cable_placement_total_footage_cx_final",
