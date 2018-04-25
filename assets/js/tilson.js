@@ -2,8 +2,8 @@ verifyUser();
 
 function verifyUser() {
   if (sessionStorage.getItem("fulcrum_useremail").includes("tilson")) {
-    $(".map-container").css("height", "0");
-    $(".table-container").css("height", "0");
+    $("#table-container").hide();
+    $("#map-container").hide();;
     $(".chartModal").css("opacity", "0");
     $(".filterModal").css("opacity", "0");
     $(".navbar-collapse").css("opacity", "0");
