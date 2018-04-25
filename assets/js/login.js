@@ -50,7 +50,7 @@ function login() {
           sessionStorage.setItem("fulcrum_useremail", data.user.email);
         }
       });
-      if (sessionStorage.getItem("fulcrum_useremail").includes("tilson")) {
+      if (sessionStorage.getItem("fulcrum_useremail").includes("fibertel")) {
         window.location.href = "tilson.html";
       } else {
         $(".modal-backdrop").css("opacity", "1");
