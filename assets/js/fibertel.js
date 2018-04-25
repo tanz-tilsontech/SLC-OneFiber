@@ -31,7 +31,6 @@ var properties = [{
     visible: false
   },
   filter: false
-  }
 },
 {
   value: "fulcrum_id",
@@ -63,7 +62,6 @@ var properties = [{
     sortable: false
   },
   filter: false
-  }
 },
 {
   value: "status_title",
