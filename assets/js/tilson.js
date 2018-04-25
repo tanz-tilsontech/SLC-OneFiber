@@ -1,7 +1,7 @@
 verifyUser();
 
 function verifyUser() {
-  if (sessionStorage.getItem("fulcrum_useremail").indexOf("tilson") === -1) {
+  if (sessionStorage.getItem("fulcrum_useremail").indexOf("fibertel") === -1) {
     $("#table-container").hide();
     $("#map-container").hide();;
     $(".chartModal").css("opacity", "0");
