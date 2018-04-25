@@ -49,8 +49,7 @@ var properties = [{
     visible: false,
     sortable: true
   },
-  filter: false,
-  info: false
+  filter: false
 },
 {
   value: "gps_directions_1",

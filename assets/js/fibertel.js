@@ -39,8 +39,7 @@ var properties = [{
     visible: false,
     sortable: true
   },
-  filter: false
-  },
+  filter: false,
   info: false
 },
 {
@@ -50,8 +49,7 @@ var properties = [{
     visible: false,
     sortable: true
   },
-  filter: false
-  },
+  filter: false,
   info: false
 },
 {
