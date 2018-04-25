@@ -10,6 +10,9 @@ function verifyUser() {
     $(".navbar-collapse").css("opacity", "0");
     alert("This login does not have access to this page.");
   };
+  if (sessionStorage.getItem("fulcrum_useremail") === null) {
+    alert("Access Denied. Please go to Sign-In Page.");
+  };
 };
 
 
