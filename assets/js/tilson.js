@@ -1,3 +1,10 @@
+verifyUser();
+
+function verifyUser() {
+  if (sessionStorage.getItem("fulcrum_useremail").includes("tilson")) {
+    $(".modal-backdrop").css("opacity", "1");
+  };
+};
 
 
 // Configuration of Routes in Fulcrum
