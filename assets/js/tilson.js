@@ -73,7 +73,7 @@ var properties = [{
     input: "checkbox",
     vertical: true,
     multiple: true,
-    operators: ["in", "not_in", "equal", "not_equal"],
+    operators: ["equal", "not_equal"],
     values: []
   }
 },
@@ -89,7 +89,7 @@ var properties = [{
     input: "checkbox",
     vertical: true,
     multiple: true,
-    operators: ["in", "not_in", "equal", "not_equal"],
+    operators: ["equal", "not_equal"],
     values: []
   }
 },
@@ -105,7 +105,7 @@ var properties = [{
     input: "checkbox",
     vertical: true,
     multiple: true,
-    operators: ["in", "not_in", "equal", "not_equal"],
+    operators: ["equal", "not_equal"],
     values: []
   }
 },
@@ -121,7 +121,7 @@ var properties = [{
     input: "checkbox",
     vertical: true,
     multiple: true,
-    operators: ["in", "not_in", "equal", "not_equal"],
+    operators: ["equal", "not_equal"],
     values: []
   }
 },
@@ -137,7 +137,7 @@ var properties = [{
     input: "checkbox",
     vertical: true,
     multiple: true,
-    operators: ["in", "not_in", "equal", "not_equal"],
+    operators: ["equal", "not_equal"],
     values: []
   }
 },
@@ -153,7 +153,7 @@ var properties = [{
     input: "checkbox",
     vertical: true,
     multiple: true,
-    operators: ["in", "not_in", "equal", "not_equal"],
+    operators: ["equal", "not_equal"],
     values: []
   }
 },
