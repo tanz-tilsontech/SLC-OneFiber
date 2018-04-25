@@ -2,11 +2,11 @@ verifyUser();
 
 function verifyUser() {
   if (sessionStorage.getItem("fulcrum_useremail").includes("tilson")) {
-    $(".map-container").css("opacity", "1");
-    $(".table-container").css("opacity", "1");
-    $(".chartModal").css("opacity", "1");
-    $(".filterModal").css("opacity", "1");
-    $(".navbar-collapse").css("opacity", "1");
+    $(".map-container").css("opacity", "0");
+    $(".table-container").css("opacity", "0");
+    $(".chartModal").css("opacity", "0");
+    $(".filterModal").css("opacity", "0");
+    $(".navbar-collapse").css("opacity", "0");
   };
 };
 
