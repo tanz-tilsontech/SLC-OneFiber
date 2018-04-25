@@ -1,7 +1,7 @@
 verifyUser();
 
 function verifyUser() {
-  if (sessionStorage.getItem("fulcrum_useremail").includes("tilson")) {
+  if (sessionStorage.getItem("fulcrum_useremail").indexOf("tilson") === -1) {
     $("#table-container").hide();
     $("#map-container").hide();;
     $(".chartModal").css("opacity", "0");
