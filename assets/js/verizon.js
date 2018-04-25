@@ -1059,36 +1059,10 @@ function urlFormatter (value, row, index) {
 function buildFilters() {
   $("#query-builder").queryBuilder({
     allow_empty: true,
-    filters: filters,
-    plugins: ['bt-tooltip-errors'],
-    filters: [{
-      id: 'date',
-      label: 'Datepicker',
-      type: 'date',
-      validation: {
-        format: 'YYYY/MM/DD'
-      },
-      plugin: 'datepicker',
-      plugin_config: {
-        format: 'yyyy/mm/dd',
-        todayBtn: 'linked',
-        todayHighlight: true,
-        autoclose: true
-      }
-    }],
-    rules: rules_widgets
+    filters: filters
   });
 }
 
-
-var rules_widgets = {
-  condition: 'OR',
-  rules: [{
-    id: 'date',
-    operator: 'equal',
-    value: '1991/11/17'
-  }]
-};
 
 
 function applyFilter() {

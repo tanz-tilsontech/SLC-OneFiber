@@ -30,9 +30,7 @@ var properties = [{
   table: {
     visible: false
   },
-  filter: {
-    type: "string"
-  },
+  filter: false
 },
 {
   value: "fulcrum_id",
@@ -41,9 +39,7 @@ var properties = [{
     visible: false,
     sortable: true
   },
-  filter: {
-    type: "string"
-  },
+  filter: false,
   info: false
 },
 {
@@ -53,14 +49,7 @@ var properties = [{
     visible: false,
     sortable: true
   },
-  filter: {
-    type: "string",
-    input: "checkbox",
-    vertical: true,
-    multiple: true,
-    operators: ["in", "not_in", "equal", "not_equal"],
-    values: []
-  },
+  filter: false,
   info: false
 },
 {
@@ -70,9 +59,7 @@ var properties = [{
     visible: false,
     sortable: false
   },
-  filter: {
-    type: "string"
-  }
+  filter: false
 },
 {
   value: "status_title",
@@ -177,21 +164,9 @@ var properties = [{
     visible: true,
     sortable: true
   },
-  filter: [{
-    id: 'date',
-    label: 'NTP Date',
-    type: 'date',
-    validation: {
-      format: 'YYYY/MM/DD'
-    },
-    plugin: 'datepicker',
-    plugin_config: {
-      format: 'yyyy/mm/dd',
-      todayBtn: 'linked',
-      todayHighlight: true,
-      autoclose: true
-    }
-  }],
+  filter: {
+    type: "date"
+  }
 },
 {
   value: "proposed_type",
@@ -244,21 +219,9 @@ var properties = [{
     visible: true,
     sortable: true
   },
-  filter: [{
-    id: 'date',
-    label: 'Construction Start Date',
-    type: 'date',
-    validation: {
-      format: 'YYYY/MM/DD'
-    },
-    plugin: 'datepicker',
-    plugin_config: {
-      format: 'yyyy/mm/dd',
-      todayBtn: 'linked',
-      todayHighlight: true,
-      autoclose: true
-    }
-  }],
+  filter: {
+    type: "date"
+  }
 },
 {
   value: "construction_complete_date_cx_final",
@@ -267,21 +230,9 @@ var properties = [{
     visible: true,
     sortable: true
   },
-  filter: [{
-    id: 'date',
-    label: 'Construction Complete Date',
-    type: 'date',
-    validation: {
-      format: 'YYYY/MM/DD'
-    },
-    plugin: 'datepicker',
-    plugin_config: {
-      format: 'yyyy/mm/dd',
-      todayBtn: 'linked',
-      todayHighlight: true,
-      autoclose: true
-    }
-  }],
+  filter: {
+    type: "date"
+  }
 },
 {
   value: "construction_pass_date_qc_final",
@@ -290,21 +241,9 @@ var properties = [{
     visible: true,
     sortable: true
   },
-  filter: [{
-    id: 'date',
-    label: 'Construction Pass Date',
-    type: 'date',
-    validation: {
-      format: 'YYYY/MM/DD'
-    },
-    plugin: 'datepicker',
-    plugin_config: {
-      format: 'yyyy/mm/dd',
-      todayBtn: 'linked',
-      todayHighlight: true,
-      autoclose: true
-    }
-  }],
+  filter: {
+    type: "date"
+  }
 },
 {
   value: "construction_footage_cx_final",
@@ -335,21 +274,9 @@ var properties = [{
     visible: true,
     sortable: true
   },
-  filter: [{
-    id: 'date',
-    label: 'Cable Start Date',
-    type: 'date',
-    validation: {
-      format: 'YYYY/MM/DD'
-    },
-    plugin: 'datepicker',
-    plugin_config: {
-      format: 'yyyy/mm/dd',
-      todayBtn: 'linked',
-      todayHighlight: true,
-      autoclose: true
-    }
-  }],
+  filter: {
+    type: "date"
+  }
 },
 {
   value: "cable_placement_complete_date_cx_final",
@@ -358,21 +285,9 @@ var properties = [{
     visible: true,
     sortable: true
   },
-  filter: [{
-    id: 'date',
-    label: 'Cable Complete Date',
-    type: 'date',
-    validation: {
-      format: 'YYYY/MM/DD'
-    },
-    plugin: 'datepicker',
-    plugin_config: {
-      format: 'yyyy/mm/dd',
-      todayBtn: 'linked',
-      todayHighlight: true,
-      autoclose: true
-    }
-  }],
+  filter: {
+    type: "date"
+  }
 },
 {
   value: "cable_placement_pass_date_qc_final",
@@ -381,21 +296,9 @@ var properties = [{
     visible: true,
     sortable: true
   },
-  filter: [{
-    id: 'date',
-    label: 'Cable Pass Date',
-    type: 'date',
-    validation: {
-      format: 'YYYY/MM/DD'
-    },
-    plugin: 'datepicker',
-    plugin_config: {
-      format: 'yyyy/mm/dd',
-      todayBtn: 'linked',
-      todayHighlight: true,
-      autoclose: true
-    }
-  }],
+  filter: {
+    type: "date"
+  }
 },
 {
   value: "cable_placement_total_footage_cx_final",
@@ -1193,8 +1096,7 @@ function urlFormatter (value, row, index) {
 function buildFilters() {
   $("#query-builder").queryBuilder({
     allow_empty: true,
-    filters: filters,
-    plugins: ['bt-tooltip-errors'],
+    filters: filters
   });
 }
 
