@@ -2,16 +2,13 @@ verifyUser();
 
 function verifyUser() {
   var owner = "tilson"
-  if (sessionStorage.getItem("fulcrum_useremail").indexOf(owner) === -1) {
+  if (sessionStorage.getItem("fulcrum_useremail").indexOf(owner) === -1 || sessionStorage.getItem("fulcrum_useremail") === null) {
     $("#table-container").hide();
     $("#map-container").hide();
     $(".chartModal").css("opacity", "0");
     $(".filterModal").css("opacity", "0");
     $(".navbar-collapse").css("opacity", "0");
     alert("This login does not have access to this page.");
-  };
-  if (sessionStorage.getItem("fulcrum_useremail") === null) {
-    alert("Access Denied. Please go to Sign-In Page.");
   };
 };
 
