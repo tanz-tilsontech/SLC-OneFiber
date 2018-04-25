@@ -63,7 +63,6 @@
               <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-database fa-white"></i> <span id="mapdata">Data </span><b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a href="#" id="filter-btn" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Data Filter</a></li>
-                <li><a id="chart-btn" href="#" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-bar-chart"></i> Data Charts</a></li>
                 <li><a href="#" id="export-btn"><i class="fa fa-cloud-download"></i> Data Export</a>
                   <ul class="sub-menu">
                     <li><a href="#" id="download-csv-btn"><i class="fa fa-file-text-o"></i> CSV</a></li>
@@ -112,36 +111,6 @@
         <span id="feature-count" class="text-muted" style="padding-left: 15px;"></span>
       </div>
       <table id="table"></table>
-    </div>
-
-    <div class="modal fade" id="chartModal" tabindex="-1" role="dialog">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Charts</h4>
-          </div>
-          <div class="modal-body" style="overflow: auto;">
-            <div role="tabpanel">
-              <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#hub-status-chart" aria-controls="reports" role="tab" data-toggle="tab">STATUS</a></li>
-                <li role="presentation"><a href="#hub-complete-chart" aria-controls="charts" role="tab" data-toggle="tab">HUB COMPLETE</a></li>
-                <li role="presentation"><a href="#hub-footage-chart" aria-controls="charts" role="tab" data-toggle="tab">HUB FOOTAGE</a></li>
-                <!--li role="presentation"><a href="#species-chart" aria-controls="charts" role="tab" data-toggle="tab">Species</a></li-->
-              </ul>
-              <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active" id="hub-status-chart"></div>
-                <div role="tabpanel" class="tab-pane" id="hub-complete-chart"></div>
-                <div role="tabpanel" class="tab-pane" id="hub-footage-chart"></div>
-                <!--div role="tabpanel" class="tab-pane" id="species-chart"></div-->
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
     </div>
 
     <div class="modal fade" id="filterModal" tabindex="-1" role="dialog">
@@ -305,44 +274,6 @@
       </div>
     </div>
 
-    <div class="modal fade" id="sites-modal" tabindex="-1" role="dialog">
-      <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title text-primary" id="sites-title">SITE COMPLETION</h4>
-          </div>
-          <div class="row">
-            <div class="col-xs-12">
-              <div id="graphic1"></div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="modal fade" id="monthly-modal" tabindex="-1" role="dialog">
-      <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title text-primary" id="monthly-title">MONTHLY PROGRESS</h4>
-          </div>
-          <div class="row">
-            <div class="col-xs-12">
-              <div id="graphic2" style="overflow-x:auto;"></div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!--script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.0-beta.7/esri-leaflet.js"></script-->
     <!--script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script-->
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&use_slippy=true&libraries=places&key=AIzaSyBD-VYZnlbtRVWB7iFXDovJn4nIg7cQ-tI"></script>
@@ -364,7 +295,7 @@
     <script src="assets/vendor/tableExport/libs/jsPDF-AutoTable/jspdf.plugin.autotable.js"></script>
     <script src="assets/vendor/leaflet/leaflet-print/dist/leaflet.easyPrint.js"></script>
     <script src="assets/js/leaflet-markercluster.js"></script>
-    <script src="assets/js/tilson.js"></script>
+    <script src="assets/js/fibertel.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/leaflet-linear-measurement@0.0.1/src/Leaflet.LinearMeasurement.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.2/tabletop.min.js"></script>
     <script src="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.js"></script>

@@ -1,8 +1,8 @@
 verifyUser();
 
 function verifyUser() {
-  var owner = "tilson"
-  if (sessionStorage.getItem("fulcrum_useremail").indexOf(owner) === -1) {
+  var customer = "verizon"
+  if (sessionStorage.getItem("fulcrum_useremail").indexOf(customer) === -1) {
     $("#table-container").hide();
     $("#map-container").hide();
     $(".chartModal").css("opacity", "0");
@@ -25,56 +25,6 @@ var config = {
 };
 
 var properties = [{
-  value: "fulcrum_record_link",
-  label: "Fulcrum Record",
-  table: {
-    visible: false
-  },
-  filter: {
-    type: "string"
-  },
-},
-{
-  value: "fulcrum_id",
-  label: "Record ID",
-  table: {
-    visible: false,
-    sortable: true
-  },
-  filter: {
-    type: "string"
-  },
-  info: false
-},
-{
-  value: "contractor",
-  label: "Contractor",
-  table: {
-    visible: false,
-    sortable: true
-  },
-  filter: {
-    type: "string",
-    input: "checkbox",
-    vertical: true,
-    multiple: true,
-    operators: ["in", "not_in", "equal", "not_equal"],
-    values: []
-  },
-  info: false
-},
-{
-  value: "gps_directions_1",
-  label: "GPS Directions",
-  table: {
-    visible: false,
-    sortable: false
-  },
-  filter: {
-    type: "string"
-  }
-},
-{
   value: "status_title",
   label: "Status",
   table: {

@@ -29,6 +29,10 @@ function checkAuth() {
 function login() {
   var username = $("#email").val();
   var password = $("#password").val();
+  var owner = "tilson"
+  var customer = "verizon"
+  var contractor1 = "fibertel"
+
   $.ajax({
     type: "GET",
     url: "https://api.fulcrumapp.com/api/v2/users.json",
@@ -50,13 +54,15 @@ function login() {
           sessionStorage.setItem("fulcrum_useremail", data.user.email);
         }
       });
-      if (sessionStorage.getItem("fulcrum_useremail").includes("tilson")) {
+      if (sessionStorage.getItem("fulcrum_useremail").includes(owner)) {
         window.location.href = "tilson.html";
-      } else {
-        $(".modal-backdrop").css("opacity", "1");
+      } else if (sessionStorage.getItem("fulcrum_useremail").includes(customer)) {
+        window.location.href = "verizon.html";
+      } else if (sessionStorage.getItem("fulcrum_useremail").includes(contractor1)) {
+        window.location.href = "fibertel.html";
       };
       if (!sessionStorage.getItem("fulcrum_app_token")) {
-        alert("This login does not have access to the Tilson DataMap.");
+        alert("This login does not have access to this page.");
       }
       checkAuth();
     }
