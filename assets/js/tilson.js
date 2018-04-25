@@ -5,12 +5,12 @@ function verifyUser() {
   if (sessionStorage.getItem("fulcrum_useremail") === null || sessionStorage.getItem("fulcrum_useremail").indexOf(owner) === -1) {
     $("#table-container").hide();
     $("#map-container").hide();
-    $(".chartModal").css("opacity", "0");
-    $(".filterModal").css("opacity", "0");
-    $(".navbar-collapse").css("opacity", "0");
+    $("#mapdata").hide();
+    $("#view").hide();
+    $("#legend-btn").hide();
+    $("#refresh-btn").hide();
     alert("This login does not have access to this page.");
   };
-};
 
 
 // Configuration of Routes in Fulcrum
