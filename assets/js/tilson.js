@@ -127,7 +127,7 @@ var properties = [{
 },
 {
   value: "fqnid",
-  label: "ROUTE FQNID",
+  label: "Route FQNID",
   table: {
     visible: true,
     sortable: true
@@ -143,7 +143,7 @@ var properties = [{
 },
 {
   value: "fiber_fqnid_1",
-  label: "FIBER FQNID",
+  label: "Fiber FQNID",
   table: {
     visible: true,
     sortable: true
