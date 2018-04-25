@@ -177,9 +177,21 @@ var properties = [{
     visible: true,
     sortable: true
   },
-  filter: {
-    type: "date"
-  }
+  filters: [{
+    id: 'date',
+    label: 'NTP Date',
+    type: 'date',
+    validation: {
+      format: 'YYYY/MM/DD'
+    },
+    plugin: 'datepicker',
+    plugin_config: {
+      format: 'yyyy/mm/dd',
+      todayBtn: 'linked',
+      todayHighlight: true,
+      autoclose: true
+    }
+  }],
 },
 {
   value: "proposed_type",
@@ -232,9 +244,21 @@ var properties = [{
     visible: true,
     sortable: true
   },
-  filter: {
-    type: "date"
-  }
+  filters: [{
+    id: 'date',
+    label: 'Construction Start Date',
+    type: 'date',
+    validation: {
+      format: 'YYYY/MM/DD'
+    },
+    plugin: 'datepicker',
+    plugin_config: {
+      format: 'yyyy/mm/dd',
+      todayBtn: 'linked',
+      todayHighlight: true,
+      autoclose: true
+    }
+  }],
 },
 {
   value: "construction_complete_date_cx_final",
@@ -243,9 +267,21 @@ var properties = [{
     visible: true,
     sortable: true
   },
-  filter: {
-    type: "date"
-  }
+  filters: [{
+    id: 'date',
+    label: 'Construction Complete Date',
+    type: 'date',
+    validation: {
+      format: 'YYYY/MM/DD'
+    },
+    plugin: 'datepicker',
+    plugin_config: {
+      format: 'yyyy/mm/dd',
+      todayBtn: 'linked',
+      todayHighlight: true,
+      autoclose: true
+    }
+  }],
 },
 {
   value: "construction_pass_date_qc_final",
@@ -254,9 +290,21 @@ var properties = [{
     visible: true,
     sortable: true
   },
-  filter: {
-    type: "date"
-  }
+  filters: [{
+    id: 'date',
+    label: 'Construction Pass Date',
+    type: 'date',
+    validation: {
+      format: 'YYYY/MM/DD'
+    },
+    plugin: 'datepicker',
+    plugin_config: {
+      format: 'yyyy/mm/dd',
+      todayBtn: 'linked',
+      todayHighlight: true,
+      autoclose: true
+    }
+  }],
 },
 {
   value: "construction_footage_cx_final",
@@ -287,9 +335,21 @@ var properties = [{
     visible: true,
     sortable: true
   },
-  filter: {
-    type: "date"
-  }
+  filters: [{
+    id: 'date',
+    label: 'Cable Start Date',
+    type: 'date',
+    validation: {
+      format: 'YYYY/MM/DD'
+    },
+    plugin: 'datepicker',
+    plugin_config: {
+      format: 'yyyy/mm/dd',
+      todayBtn: 'linked',
+      todayHighlight: true,
+      autoclose: true
+    }
+  }],
 },
 {
   value: "cable_placement_complete_date_cx_final",
@@ -298,9 +358,21 @@ var properties = [{
     visible: true,
     sortable: true
   },
-  filter: {
-    type: "date"
-  }
+  filters: [{
+    id: 'date',
+    label: 'Cable Complete Date',
+    type: 'date',
+    validation: {
+      format: 'YYYY/MM/DD'
+    },
+    plugin: 'datepicker',
+    plugin_config: {
+      format: 'yyyy/mm/dd',
+      todayBtn: 'linked',
+      todayHighlight: true,
+      autoclose: true
+    }
+  }],
 },
 {
   value: "cable_placement_pass_date_qc_final",
@@ -309,9 +381,21 @@ var properties = [{
     visible: true,
     sortable: true
   },
-  filter: {
-    type: "date"
-  }
+  filters: [{
+    id: 'date',
+    label: 'Cable Pass Date',
+    type: 'date',
+    validation: {
+      format: 'YYYY/MM/DD'
+    },
+    plugin: 'datepicker',
+    plugin_config: {
+      format: 'yyyy/mm/dd',
+      todayBtn: 'linked',
+      todayHighlight: true,
+      autoclose: true
+    }
+  }],}
 },
 {
   value: "cable_placement_total_footage_cx_final",
@@ -1111,34 +1195,9 @@ function buildFilters() {
     allow_empty: true,
     filters: filters,
     plugins: ['bt-tooltip-errors'],
-    filters: [{
-      id: 'date',
-      label: 'Datepicker',
-      type: 'date',
-      validation: {
-        format: 'YYYY/MM/DD'
-      },
-      plugin: 'datepicker',
-      plugin_config: {
-        format: 'yyyy/mm/dd',
-        todayBtn: 'linked',
-        todayHighlight: true,
-        autoclose: true
-      }
-    }],
-    rules: rules_widgets
   });
 }
 
-
-var rules_widgets = {
-  condition: 'OR',
-  rules: [{
-    id: 'date',
-    operator: 'equal',
-    value: '1991/11/17'
-  }]
-};
 
 
 function applyFilter() {
