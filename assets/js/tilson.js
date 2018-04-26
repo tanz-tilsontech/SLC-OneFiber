@@ -1031,6 +1031,14 @@ var map = L.map("map", {
 }).fitWorld();
 
 
+var popup = L.popup({
+  closeButton: false,
+  autoClose: false,
+  position: "bottomright"
+})
+.setContent('<p>OneFiber (SLC,UT)</p>')
+.openOn(map);
+
 // ESRI geocoder
 var searchControl = L.esri.Geocoding.Controls.geosearch({
   useMapBounds: 17
