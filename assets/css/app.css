@@ -71,6 +71,13 @@ body {
   font-size: 25px;
   color: white;
 }
+.navbar .navbar-project {
+  font-weight: bold;
+  font-size: 18px;
+  color: red;
+  display: inline;
+  text-align:center;
+}
 .navbar-brand img {
   height: 100%;
   margin-top: -5px;
