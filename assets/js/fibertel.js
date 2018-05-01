@@ -1,7 +1,7 @@
 verifyUser();
 
 function verifyUser() {
-  var contractor = "fibertel"
+  var contractor = "gmail"
   if (sessionStorage.getItem("fulcrum_useremail") === null || sessionStorage.getItem("fulcrum_useremail").indexOf(contractor) === -1) {
     $("#table-container").hide();
     $("#map-container").hide();
