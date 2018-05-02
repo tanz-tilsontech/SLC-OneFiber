@@ -31,7 +31,7 @@ function login() {
   var password = $("#password").val();
   var owner = "tilson"
   var customer = "verizon"
-  var contractor1 = "gmail"
+  var contractor1 = "fibertel"
 
   $.ajax({
     type: "GET",
