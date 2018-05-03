@@ -714,27 +714,50 @@ function drawCharts() {
         }
     });
   });
+}
 
-
-  // HUB STATUS 
+function hubStatusChart() {
   $(function() {
     var result = alasql("SELECT status AS label, COUNT(status) AS total FROM ? GROUP BY status", [features]);
     var columns = $.map(result, function(status) {
       return [[status.label, status.total]];
     });
-    var chart = c3.generate({
-        bindto: "#hub-status-chart",
-        data: {
-          type: "pie",
-          columns: columns
-        }
-    });
+  });
+  $("#hub-status-chart").highcharts({
+    chart: {
+      type: "pie"
+    },
+    credits: {
+      enabled: false
+    },
+    title: {
+      text: ""
+    },
+    subtitle: {
+      text: "Source: <a href='http://tilsontech.com'>Hub Status Percent</a>"
+    },
+    legend: {
+      enabled: false
+    },
+    tooltip: {
+      formatter:function(){
+        return this.y + " % In Status";
+      }
+    },
+    series: [{
+      name: "Status",
+      data: columns
+    }]
   });
 }
+
+
 
 $(function() {
   $(".title").html(config.title);
 });
+
+
 
 function buildConfig() {
   filters = [];
