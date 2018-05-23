@@ -29,6 +29,14 @@ var properties = [{
   label: "Fulcrum Record",
   table: {
     visible: false
+  },
+  filter: {
+    type: "string",
+    input: "checkbox",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
   }
 },
 {
@@ -38,6 +46,14 @@ var properties = [{
     visible: false,
     sortable: true
   },
+  filter: {
+    type: "string",
+    input: "checkbox",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  },
   info: false
 },
 {
@@ -46,6 +62,14 @@ var properties = [{
   table: {
     visible: false,
     sortable: true
+  },
+  filter: {
+    type: "string",
+    input: "checkbox",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
   }
 },
 {
@@ -54,6 +78,14 @@ var properties = [{
   table: {
     visible: false,
     sortable: false
+  },
+  filter: {
+    type: "string",
+    input: "checkbox",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
   }
 },
 {
