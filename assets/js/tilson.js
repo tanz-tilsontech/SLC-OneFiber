@@ -69,7 +69,7 @@ var properties = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "select",
     vertical: true,
     multiple: true,
     operators: ["equal", "not_equal"],
@@ -85,7 +85,7 @@ var properties = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "select",
     vertical: true,
     multiple: true,
     operators: ["equal", "not_equal"],
@@ -101,7 +101,7 @@ var properties = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "select",
     vertical: true,
     multiple: true,
     operators: ["equal", "not_equal"],
@@ -117,7 +117,7 @@ var properties = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "select",
     vertical: true,
     multiple: true,
     operators: ["equal", "not_equal"],
@@ -133,7 +133,7 @@ var properties = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "select",
     vertical: true,
     multiple: true,
     operators: ["equal", "not_equal"],
@@ -149,7 +149,7 @@ var properties = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "select",
     vertical: true,
     multiple: true,
     operators: ["equal", "not_equal"],
@@ -331,7 +331,7 @@ var properties1 = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "select",
     vertical: true,
     multiple: true,
     operators: ["in", "not_in", "equal", "not_equal"],
@@ -358,7 +358,7 @@ var properties1 = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "select",
     vertical: true,
     multiple: true,
     operators: ["in", "not_in", "equal", "not_equal"],
@@ -374,7 +374,7 @@ var properties1 = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "select",
     vertical: true,
     multiple: true,
     operators: ["in", "not_in", "equal", "not_equal"],
@@ -392,7 +392,7 @@ var restoBeforeProps = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "select",
     vertical: true,
     multiple: true,
     operators: ["in", "not_in", "equal", "not_equal"],
@@ -408,7 +408,7 @@ var restoBeforeProps = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "select",
     vertical: true,
     multiple: true,
     operators: ["in", "not_in", "equal", "not_equal"],
@@ -424,7 +424,7 @@ var restoBeforeProps = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "select",
     vertical: true,
     multiple: true,
     operators: ["in", "not_in", "equal", "not_equal"],
@@ -440,7 +440,7 @@ var restoBeforeProps = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "select",
     vertical: true,
     multiple: true,
     operators: ["in", "not_in", "equal", "not_equal"],
@@ -456,7 +456,7 @@ var restoBeforeProps = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "select",
     vertical: true,
     multiple: true,
     operators: ["in", "not_in", "equal", "not_equal"],
@@ -474,7 +474,7 @@ var restoAfterProps = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "select",
     vertical: true,
     multiple: true,
     operators: ["in", "not_in", "equal", "not_equal"],
@@ -490,7 +490,7 @@ var restoAfterProps = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "select",
     vertical: true,
     multiple: true,
     operators: ["in", "not_in", "equal", "not_equal"],
@@ -506,7 +506,7 @@ var restoAfterProps = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "select",
     vertical: true,
     multiple: true,
     operators: ["in", "not_in", "equal", "not_equal"],
@@ -522,7 +522,7 @@ var restoAfterProps = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "select",
     vertical: true,
     multiple: true,
     operators: ["in", "not_in", "equal", "not_equal"],
@@ -538,7 +538,7 @@ var restoAfterProps = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "select",
     vertical: true,
     multiple: true,
     operators: ["in", "not_in", "equal", "not_equal"],
@@ -1346,7 +1346,7 @@ $("#featurePictures").click(function() {
 function featurePotholePics(id) {
   var featureProperties = featureLayer.getLayer(id).feature.properties;
   var content = "<table class='table table-striped table-bordered table-condensed'>";
-  var photoLink = "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/photos";
+  var photoLink = "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/photos/KJLXHZclJ,JKLAHSDKLJ,LJkhsd";
   $.each(featureProperties, function(key, value) {
     if (!value) {
       value = "";
