@@ -30,7 +30,14 @@ var properties = [{
   table: {
     visible: false
   },
-  filter: false
+  filter: {
+    type: "string",
+    input: "select",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
 },
 {
   value: "fulcrum_id",
@@ -39,7 +46,14 @@ var properties = [{
     visible: false,
     sortable: true
   },
-  filter: false,
+  filter: {
+    type: "string",
+    input: "select",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  },
   info: false
 },
 {
@@ -49,7 +63,14 @@ var properties = [{
     visible: false,
     sortable: true
   },
-  filter: false
+  filter: {
+    type: "string",
+    input: "select",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
 },
 {
   value: "gps_directions_1",
