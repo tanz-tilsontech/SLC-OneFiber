@@ -79,7 +79,14 @@ var properties = [{
     visible: false,
     sortable: false
   },
-  filter: false
+  filter: {
+    type: "string",
+    input: "select",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
 },
 {
   value: "status_title",
