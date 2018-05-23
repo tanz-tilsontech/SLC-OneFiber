@@ -29,7 +29,8 @@ var properties = [{
   label: "Fulcrum Record",
   table: {
     visible: false
-  }
+  },
+  filter: false
 },
 {
   value: "fulcrum_id",
@@ -38,6 +39,7 @@ var properties = [{
     visible: false,
     sortable: true
   },
+  filter: false,
   info: false
 },
 {
@@ -46,7 +48,8 @@ var properties = [{
   table: {
     visible: false,
     sortable: true
-  }
+  },
+  filter: false
 },
 {
   value: "gps_directions_1",
@@ -54,7 +57,8 @@ var properties = [{
   table: {
     visible: false,
     sortable: false
-  }
+  },
+  filter: false
 },
 {
   value: "status_title",
