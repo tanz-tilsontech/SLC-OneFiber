@@ -1615,6 +1615,13 @@ function switchView(view) {
     $("#table-container").css("height", "100%");
     $("#map-container").hide();
     $(window).resize();
+  } else if (view == "restoTable") {
+    $("#view").html("Table View");
+    location.hash = "#table";
+    $("#table-container").show();
+    $("#table-container").css("height", "100%");
+    $("#map-container").hide();
+    $(window).resize();
   }
 }
 
