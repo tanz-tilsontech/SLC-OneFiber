@@ -117,6 +117,28 @@
       <table id="table"></table>
     </div>
 
+    <div id="resto-table-container"> 
+      <div id="resto-toolbar" style="width: 400px;">
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-default" data-toggle="modal" data-target="#filterRestoModal">
+            <i class="fa fa-filter"></i> Filter Data
+          </button>
+          <div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fa fa-cloud-download"></i> Export Data <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a href="#" id="download-resto-csv-btn"><i class="fa fa-file-text-o"></i> CSV</a></li>
+              <li><a href="#" id="download-resto-excel-btn"><i class="fa fa-file-excel-o"></i> Excel</a></li>
+              <li><a href="#" id="download-resto-pdf-btn"><i class="fa fa-file-pdf-o"></i> PDF</a></li>
+            </ul>
+          </div>
+        </div>
+        <span id="feature-resto-count" class="text-muted" style="padding-left: 15px;"></span>
+      </div>
+      <table id="resto-table"></table>
+    </div>
+
     <div class="modal fade" id="chartModal" tabindex="-1" role="dialog">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -157,11 +179,11 @@
           <div class="modal-body" id="filterModalBody">
             <div role="tabpanel">
               <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#query-builder" aria-controls="query-builder" role="tab" data-toggle="tab">Routes Filter</a></li>
-                <li role="presentation"><a href="#restoFilter" aria-controls="restoFilter" role="tab" data-toggle="tab">Resto Filter</a></li>
+                <li role="presentation" class="active"><a href="#routesFilter" aria-controls="routesFilter" role="tab" data-toggle="tab">Routes Filter</a></li>
+                <li role="presentation"><a href="#restoFilter" aria-controls="restoFilter" role="tab" data-toggle="tab">Restoration Filter</a></li>
               </ul>
               <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active" id="query-builder"></div>
+                <div role="tabpanel" class="tab-pane active" id="routesFilter"></div>
                 <div role="tabpanel" class="tab-pane" id="restoFilter"></div>
               </div>
             </div>

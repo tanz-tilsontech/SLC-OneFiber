@@ -362,7 +362,7 @@ var properties1 = [{
     input: "checkbox",
     vertical: true,
     multiple: true,
-    operators: ["in", "not_in", "equal", "not_equal"],
+    operators: ["equal", "not_equal"],
     values: []
   }
 },
@@ -389,7 +389,7 @@ var properties1 = [{
     input: "checkbox",
     vertical: true,
     multiple: true,
-    operators: ["in", "not_in", "equal", "not_equal"],
+    operators: ["equal", "not_equal"],
     values: []
   }
 },
@@ -405,7 +405,7 @@ var properties1 = [{
     input: "checkbox",
     vertical: true,
     multiple: true,
-    operators: ["in", "not_in", "equal", "not_equal"],
+    operators: ["equal", "not_equal"],
     values: []
   }
 }];
@@ -423,7 +423,7 @@ var restoBeforeProps = [{
     input: "checkbox",
     vertical: true,
     multiple: true,
-    operators: ["in", "not_in", "equal", "not_equal"],
+    operators: ["equal", "not_equal"],
     values: []
   }
 },
@@ -851,8 +851,8 @@ function buildConfig() {
     }
   });
 
-  buildFilters();
-  buildTable();
+  buildRoutesFilter();
+  buildRoutesTable();
 }
 
 // Basemap Layers
@@ -1109,7 +1109,8 @@ var layerControl = L.control.layers(baseLayers, overlayLayers, {
 
 // Filter table to only show features in current map bounds
 map.on("moveend", function (e) {
-  syncTable();
+  syncRoutesTable();
+  syncRestoTable();
 });
 
 map.on("click", function(e) {
@@ -1124,8 +1125,15 @@ function urlFormatter (value, row, index) {
 }
 
 
-function buildFilters() {
-  $("#query-builder").queryBuilder({
+function buildRoutesFilter() {
+  $("#routesFilter").queryBuilder({
+    allow_empty: true,
+    filters: filters
+  });
+}
+
+function buildRestoFilter() {
+  $("#restoFilter").queryBuilder({
     allow_empty: true,
     filters: filters
   });
@@ -1133,20 +1141,33 @@ function buildFilters() {
 
 
 
-function applyFilter() {
+function applyRoutesFilter() {
   var query = "SELECT * FROM ?";
-  var sql = $("#query-builder").queryBuilder("getSQL", false, false).sql;
+  var sql = $("#routesFilter").queryBuilder("getSQL", false, false).sql;
   if (sql.length > 0) {
     query += " WHERE " + sql;
   }
   alasql(query, [geojson.features], function(features){
     featureLayer.clearLayers();
     featureLayer.addData(features);
-    syncTable();
+    syncRoutesTable();
   });
 }
 
-function buildTable() {
+function applyRestoFilter() {
+  var query = "SELECT * FROM ?";
+  var sql = $("#restoFilter").queryBuilder("getSQL", false, false).sql;
+  if (sql.length > 0) {
+    query += " WHERE " + sql;
+  }
+  alasql(query, [geojson.features], function(features){
+    featureLayer1.clearLayers();
+    featureLayer1.addData(features);
+    syncRestoTable();
+  });
+}
+
+function buildRoutesTable() {
   $("#table").bootstrapTable({
     cache: false,
     height: $("#table-container").height(),
@@ -1184,7 +1205,45 @@ function buildTable() {
   });
 }
 
-function syncTable() {
+function buildRestoTable() {
+  $("#resto-table").bootstrapTable({
+    cache: false,
+    height: $("#resto-table-container").height(),
+    undefinedText: "",
+    striped: false,
+    pagination: false,
+    minimumCountColumns: 1,
+    sortName: config.sortProperty,
+    sortOrder: config.sortOrder,
+    toolbar: "#resto-toolbar",
+    search: true,
+    trimOnSearch: false,
+    showColumns: true,
+    showToggle: true,
+    columns: table,
+    onClickRow: function(row, $element) {
+      var layer = featureLayer1.getLayer(row.leaflet_stamp);
+      map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 19);
+      highlightLayer.clearLayers();
+      highlightLayer.addData(featureLayer1.getLayer(row.leaflet_stamp).toGeoJSON());
+    },
+    onDblClickRow: function(row) {
+      identifyFeature1(row.leaflet_stamp);
+      highlightLayer.clearLayers();
+      highlightLayer.addData(featureLayer1.getLayer(row.leaflet_stamp).toGeoJSON());
+    },
+  });
+
+  map.fitBounds(featureLayer1.getBounds());
+
+  $(window).resize(function () {
+    $("#resto-table").bootstrapTable("resetView", {
+      height: $("#resto-table-container").height()
+    });
+  });
+}
+
+function syncRoutesTable() {
   tableFeatures = [];
   featureLayer.eachLayer(function (layer) {
     layer.feature.properties.leaflet_stamp = L.stamp(layer);
@@ -1202,6 +1261,27 @@ function syncTable() {
     $("#feature-count").html($("#table").bootstrapTable("getData").length + " visible feature");
   } else {
     $("#feature-count").html($("#table").bootstrapTable("getData").length + " visible features");
+  }
+}
+
+function syncRestoTable() {
+  tableFeatures = [];
+  featureLayer1.eachLayer(function (layer) {
+    layer.feature.properties.leaflet_stamp = L.stamp(layer);
+    if (map.hasLayer(featureLayer1)) {
+      featureLayer.getLayer()
+      layer.feature.geometry.type === "Point"
+      if (map.getBounds().contains(layer.getLatLng())) {
+        tableFeatures.push(layer.feature.properties);
+      }
+    }
+  });
+  $("#resto-table").bootstrapTable("load", JSON.parse(JSON.stringify(tableFeatures)));
+  var featureCount = $("#resto-table").bootstrapTable("getData").length;
+  if (featureCount == 1) {
+    $("#feature-resto-count").html($("#resto-table").bootstrapTable("getData").length + " visible feature");
+  } else {
+    $("#feature-resto-count").html($("#resto-table").bootstrapTable("getData").length + " visible features");
   }
 }
 
@@ -1750,9 +1830,12 @@ $("#refresh-btn").click(function() {
     featureLayer1.addData(data);
     $("#loading-mask").hide();
   });
-  syncTable();
-  buildTable();
-  buildFilters();
+  syncRoutesTable();
+  buildRoutesTable();
+  buildRoutesFilter();
+  syncRestoTable();
+  buildRestoTable();
+  buildRestoFilter();
   map.fitBounds(featureLayer.getBounds());
   $(".navbar-collapse.in").collapse("hide");
   return false;
@@ -1790,19 +1873,22 @@ $("#monthly-btn").click(function() {
 
 
 $("#view-sql-btn").click(function() {
-  alert($("#query-builder").queryBuilder("getSQL", false, false).sql);
+  alert($("#routesFilter").queryBuilder("getSQL", false, false).sql);
 });
 
 $("#apply-filter-btn").click(function() {
-  applyFilter();
+  applyRoutesFilter();
+  applyRestoFilter();
   $('#filterModal').modal('hide');
   $(".navbar-collapse.in").collapse("hide");
   return false;
 });
 
 $("#reset-filter-btn").click(function() {
-  $("#query-builder").queryBuilder("reset");
-  applyFilter();
+  $("#routesFilter").queryBuilder("reset");
+  $("#restoFilter").queryBuilder("reset");
+  applyRoutesFilter();
+  applyRestoFilter();
 });
 
 $("#extent-btn").click(function() {
@@ -1857,6 +1943,52 @@ $("#download-excel-btn").click(function() {
 
 $("#download-pdf-btn").click(function() {
   $("#table").tableExport({
+    type: "pdf",
+    ignoreColumn: [0],
+    fileName: "DataMap_"+ today +"",
+    jspdf: {
+      format: "bestfit",
+      margins: {
+        left: 20,
+        right: 10,
+        top: 20,
+        bottom: 20
+      },
+      autotable: {
+        extendWidth: true,
+        overflow: "linebreak"
+      }
+    }
+  });
+  $(".navbar-collapse.in").collapse("hide");
+  return false;
+});
+
+
+$("#download-csv-btn").click(function() {
+  $("#resto-table").tableExport({
+    headings: true,
+    type: "csv",
+    ignoreColumn: [0],
+    fileName: "DataMap_"+ today +""
+  });
+  $(".navbar-collapse.in").collapse("hide");
+  return false;
+});
+
+$("#download-excel-btn").click(function() {
+  $("#resto-table").tableExport({
+    headings: true,
+    type: "excel",
+    ignoreColumn: [0],
+    fileName: "DataMap_"+ today +""
+  });
+  $(".navbar-collapse.in").collapse("hide");
+  return false;
+});
+
+$("#download-pdf-btn").click(function() {
+  $("#resto-table").tableExport({
     type: "pdf",
     ignoreColumn: [0],
     fileName: "DataMap_"+ today +"",
