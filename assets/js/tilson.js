@@ -912,7 +912,7 @@ function buildRestoConfig() {
         if (filters[index]) {
           // If values array is empty, fetch all distinct values
           if (key == "values" && val.length === 0) {
-            alasql("SELECT DISTINCT(properties->"+value.value+") AS field FROM ? ORDER BY field ASC", [geojson.features], function(results){
+            alasql("SELECT DISTINCT(properties->"+value.value+") AS field FROM ? ORDER BY field ASC", [geojson1.features], function(results){
               distinctValues = [];
               $.each(results, function(index, value) {
                 distinctValues.push(value.field);
@@ -1136,8 +1136,8 @@ $.getJSON(config.geojson, function (data) {
 // Fetch the Restoration GeoJSON file
 
 $.getJSON(config1.geojson, function (data) {
-  geojson = data
-  features = $.map(geojson.features, function(feature) {
+  geojson1 = data
+  features = $.map(geojson1.features, function(feature) {
     return feature.properties;
   });
   featureLayer1.addData(data);
@@ -1249,7 +1249,7 @@ function applyRestoFilter() {
   if (sql.length > 0) {
     query += " WHERE " + sql;
   }
-  alasql(query, [geojson.features], function(features){
+  alasql(query, [geojson1.features], function(features){
     featureLayer1.clearLayers();
     featureLayer1.addData(features);
     syncRestoTable();
@@ -1926,8 +1926,8 @@ $("#refresh-btn").click(function() {
     $("#loading-mask").hide();
   });
   $.getJSON(config1.geojson, function (data) {
-    geojson = data
-    features = $.map(geojson.features, function(feature) {
+    geojson1 = data
+    features = $.map(geojson1.features, function(feature) {
       return feature.properties;
     });
     featureLayer1.addData(data);
