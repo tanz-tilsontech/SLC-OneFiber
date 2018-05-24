@@ -18,7 +18,7 @@ function verifyUser() {
 var config = {
   geojson: "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94.geojson",
   title: "SLC OneFiber Tilson QC",
-  layerName: "Segments",
+  layerName: "Routes",
   hoverProperty: "status_title_github",
   sortProperty: "fqnid",
   sortOrder: "ascend",
@@ -273,6 +273,22 @@ var properties = [{
   }
 },
 {
+  value: "inspector_name_cx",
+  label: "Construction Inspector",
+  table: {
+    visible: false,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    input: "checkbox",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
   value: "construction_footage_cx_final",
   label: "Construction Total Footage",
   table: {
@@ -328,6 +344,22 @@ var properties = [{
   }
 },
 {
+  value: "inspector_name_cp",
+  label: "Cable Placement Inspector",
+  table: {
+    visible: false,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    input: "checkbox",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
   value: "cable_placement_total_footage_cx_final",
   label: "Cable Placement Total Footage",
   table: {
@@ -351,6 +383,22 @@ var config1 = {
 };
 
 var properties1 = [{
+  value: "inspector_resto",
+  label: "Restoration Inspector",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    input: "checkbox",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
   value: "restoration_items",
   label: "Restoration Type",
   table: {
