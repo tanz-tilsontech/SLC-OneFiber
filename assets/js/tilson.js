@@ -1374,7 +1374,7 @@ $("#featurePictures").click(function() {
 function featurePotholePics(id) {
   var featureProperties = featureLayer.getLayer(id).feature.properties;
   var content = "<table class='table table-striped table-bordered table-condensed'>";
-  var photoLink = "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/photos/KJLXHZclJ,JKLAHSDKLJ,LJkhsd";
+  var photoLink = "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/photos/";
   $.each(featureProperties, function(key, value) {
     if (!value) {
       value = "";
