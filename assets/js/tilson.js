@@ -896,13 +896,13 @@ function buildRestoConfig() {
     if (value.filter) {
       var id;
       if (value.filter.type == "integer") {
-        id = "cast(properties1->"+ value.value +" as int)";
+        id = "cast(properties->"+ value.value +" as int)";
       }
       else if (value.filter.type == "double") {
-        id = "cast(properties1->"+ value.value +" as double)";
+        id = "cast(properties->"+ value.value +" as double)";
       }
       else {
-        id = "properties1->" + value.value;
+        id = "properties->" + value.value;
       }
       filters.push({
         id: id,
@@ -912,7 +912,7 @@ function buildRestoConfig() {
         if (filters[index]) {
           // If values array is empty, fetch all distinct values
           if (key == "values" && val.length === 0) {
-            alasql("SELECT DISTINCT(properties1->"+value.value+") AS field FROM ? ORDER BY field ASC", [geojson.features], function(results){
+            alasql("SELECT DISTINCT(properties->"+value.value+") AS field FROM ? ORDER BY field ASC", [geojson.features], function(results){
               distinctValues = [];
               $.each(results, function(index, value) {
                 distinctValues.push(value.field);
