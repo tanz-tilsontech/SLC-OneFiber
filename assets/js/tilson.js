@@ -1838,6 +1838,7 @@ function switchView(view) {
     $(window).resize();
     if (map) {
       map.invalidateSize();
+    }
   }
 }
 
