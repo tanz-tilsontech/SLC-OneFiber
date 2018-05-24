@@ -881,7 +881,7 @@ function buildRestoConfig() {
         var layer = featureLayer1.getLayer(row.leaflet_stamp);
         map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 19);
         highlightLayer.clearLayers();
-        highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
+        highlightLayer.addData(featureLayer1.getLayer(row.leaflet_stamp).toGeoJSON());
       },
       "click .identify": function (e, value, row, index) {
         identifyFeature1(row.leaflet_stamp);
@@ -896,13 +896,13 @@ function buildRestoConfig() {
     if (value.filter) {
       var id;
       if (value.filter.type == "integer") {
-        id = "cast(properties->"+ value.value +" as int)";
+        id = "cast(properties1->"+ value.value +" as int)";
       }
       else if (value.filter.type == "double") {
-        id = "cast(properties->"+ value.value +" as double)";
+        id = "cast(properties1->"+ value.value +" as double)";
       }
       else {
-        id = "properties->" + value.value;
+        id = "properties1->" + value.value;
       }
       filters.push({
         id: id,
@@ -912,7 +912,7 @@ function buildRestoConfig() {
         if (filters[index]) {
           // If values array is empty, fetch all distinct values
           if (key == "values" && val.length === 0) {
-            alasql("SELECT DISTINCT(properties->"+value.value+") AS field FROM ? ORDER BY field ASC", [geojson.features], function(results){
+            alasql("SELECT DISTINCT(properties1->"+value.value+") AS field FROM ? ORDER BY field ASC", [geojson.features], function(results){
               distinctValues = [];
               $.each(results, function(index, value) {
                 distinctValues.push(value.field);
