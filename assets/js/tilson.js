@@ -384,7 +384,7 @@ var config1 = {
 
 var properties1 = [{
   value: "inspector_resto",
-  label: "Restoration Inspector",
+  label: "Inspector",
   table: {
     visible: true,
     sortable: true
