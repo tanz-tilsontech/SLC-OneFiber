@@ -1595,6 +1595,7 @@ function switchView(view) {
     $("#table-container").css("height", "55%");
     $("#map-container").show();
     $("#map-container").css("height", "45%");
+    $("#resto-table-container").hide();
     $(window).resize();
     if (map) {
       map.invalidateSize();
@@ -1605,6 +1606,7 @@ function switchView(view) {
     $("#map-container").show();
     $("#map-container").css("height", "100%");
     $("#table-container").hide();
+    $("#resto-table-container").hide();
     if (map) {
       map.invalidateSize();
     }
@@ -1614,13 +1616,15 @@ function switchView(view) {
     $("#table-container").show();
     $("#table-container").css("height", "100%");
     $("#map-container").hide();
+    $("#resto-table-container").hide();
     $(window).resize();
   } else if (view == "restoTable") {
     $("#view").html("Table View");
     location.hash = "#table";
-    $("#table-container").show();
-    $("#table-container").css("height", "100%");
+    $("#resto-table-container").show();
+    $("#resto-table-container").css("height", "100%");
     $("#map-container").hide();
+    $("#table-container").hide();
     $(window).resize();
   }
 }
