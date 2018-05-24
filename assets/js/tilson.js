@@ -1629,6 +1629,9 @@ $("[name='view']").click(function() {
   } else if (this.id === "graph-only") {
     switchView("table");
     return false;
+  } else if (this.id === "resto-graph-only") {
+    switchView("restoTable");
+    return false;
   }
 });
 
@@ -1884,8 +1887,14 @@ $("#view-sql-btn").click(function() {
 
 $("#apply-filter-btn").click(function() {
   applyRoutesFilter();
-  applyRestoFilter();
   $('#filterModal').modal('hide');
+  $(".navbar-collapse.in").collapse("hide");
+  return false;
+});
+
+$("#resto-apply-filter-btn").click(function() {
+  applyRestoFilter();
+  $('#RestofilterModal').modal('hide');
   $(".navbar-collapse.in").collapse("hide");
   return false;
 });
@@ -1972,7 +1981,7 @@ $("#download-pdf-btn").click(function() {
 
 
 $("#download-csv-btn").click(function() {
-  $("#resto-table").tableExport({
+  $("#restoTable").tableExport({
     headings: true,
     type: "csv",
     ignoreColumn: [0],
@@ -1983,7 +1992,7 @@ $("#download-csv-btn").click(function() {
 });
 
 $("#download-excel-btn").click(function() {
-  $("#resto-table").tableExport({
+  $("#restoTable").tableExport({
     headings: true,
     type: "excel",
     ignoreColumn: [0],
@@ -1994,7 +2003,7 @@ $("#download-excel-btn").click(function() {
 });
 
 $("#download-pdf-btn").click(function() {
-  $("#resto-table").tableExport({
+  $("#restoTable").tableExport({
     type: "pdf",
     ignoreColumn: [0],
     fileName: "DataMap_"+ today +"",
