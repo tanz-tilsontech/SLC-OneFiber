@@ -1763,6 +1763,17 @@ function switchView(view) {
     $("#map-container").hide();
     $("#table-container").hide();
     $(window).resize();
+  } else if (view == "restoSplit") {
+    $("#view").html("Split View");
+    location.hash = "#split";
+    $("#resto-table-container").show();
+    $("#resto-table-container").css("height", "55%");
+    $("#map-container").show();
+    $("#map-container").css("height", "45%");
+    $("#table-container").hide();
+    $(window).resize();
+    if (map) {
+      map.invalidateSize();
   }
 }
 
@@ -1780,8 +1791,13 @@ $("[name='view']").click(function() {
   } else if (this.id === "resto-graph-only") {
     switchView("restoTable");
     return false;
+  } else if (this.id === "resto-map-graph") {
+    switchView("restoSplit");
+    return false;
   }
 });
+
+
 
 L.easyPrint({
   title: 'Print',
@@ -2085,7 +2101,7 @@ $("#download-csv-btn").click(function() {
     headings: true,
     type: "csv",
     ignoreColumn: [0],
-    fileName: "DataMap_"+ today +""
+    fileName: "DataMap_Routes_"+ today +""
   });
   $(".navbar-collapse.in").collapse("hide");
   return false;
@@ -2096,7 +2112,7 @@ $("#download-excel-btn").click(function() {
     headings: true,
     type: "excel",
     ignoreColumn: [0],
-    fileName: "DataMap_"+ today +""
+    fileName: "DataMap_Routes_"+ today +""
   });
   $(".navbar-collapse.in").collapse("hide");
   return false;
@@ -2106,7 +2122,7 @@ $("#download-pdf-btn").click(function() {
   $("#table").tableExport({
     type: "pdf",
     ignoreColumn: [0],
-    fileName: "DataMap_"+ today +"",
+    fileName: "DataMap_Routes_"+ today +"",
     jspdf: {
       format: "bestfit",
       margins: {
@@ -2131,7 +2147,7 @@ $("#resto-download-csv-btn").click(function() {
     headings: true,
     type: "csv",
     ignoreColumn: [0],
-    fileName: "DataMap_"+ today +""
+    fileName: "DataMap_Resto_"+ today +""
   });
   $(".navbar-collapse.in").collapse("hide");
   return false;
@@ -2142,7 +2158,7 @@ $("#resto-download-excel-btn").click(function() {
     headings: true,
     type: "excel",
     ignoreColumn: [0],
-    fileName: "DataMap_"+ today +""
+    fileName: "DataMap_Resto_"+ today +""
   });
   $(".navbar-collapse.in").collapse("hide");
   return false;
@@ -2152,7 +2168,7 @@ $("#resto-download-pdf-btn").click(function() {
   $("#restoTable").tableExport({
     type: "pdf",
     ignoreColumn: [0],
-    fileName: "DataMap_"+ today +"",
+    fileName: "DataMap_Resto_"+ today +"",
     jspdf: {
       format: "bestfit",
       margins: {
