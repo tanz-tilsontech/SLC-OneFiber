@@ -2001,9 +2001,7 @@ $("#resto-apply-filter-btn").click(function() {
 
 $("#reset-filter-btn").click(function() {
   $("#routesFilter").queryBuilder("reset");
-  $("#restoFilter").queryBuilder("reset");
   applyRoutesFilter();
-  applyRestoFilter();
 });
 
 $("#extent-btn").click(function() {
