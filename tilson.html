@@ -154,8 +154,17 @@
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h4 class="modal-title">Filter Data<span id="record-count" class="badge pull-right" style="margin-right: 15px; margin-top: 2px;"></span></h4>
           </div>
-          <div class="modal-body">
-            <div id="query-builder"></div>
+          <div class="modal-body" id="filterModalBody">
+            <div role="tabpanel">
+              <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active" id="query-builder"><a href="#routesFilter" aria-controls="cxsigs" role="tab" data-toggle="tab">Routes Filter</a></li>
+                <li role="presentation"><a href="#restoFilter" aria-controls="cpsigs" role="tab" data-toggle="tab">Resto Filter</a></li>
+              </ul>
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="routesFilter"></div>
+                <div role="tabpanel" class="tab-pane" id="restoFilter"></div>
+              </div>
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-info" id="reset-filter-btn"><i class="fa fa-undo"></i> Reset Filter</button>
