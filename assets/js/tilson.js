@@ -1358,7 +1358,7 @@ function syncRestoTable() {
   featureLayer1.eachLayer(function (layer) {
     layer.feature.properties.leaflet_stamp = L.stamp(layer);
     if (map.hasLayer(featureLayer1)) {
-      featureLayer.getLayer()
+      featureLayer1.getLayer()
       layer.feature.geometry.type === "Point"
       if (map.getBounds().contains(layer.getLatLng())) {
         tableFeatures.push(layer.feature.properties);
