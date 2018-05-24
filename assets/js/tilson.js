@@ -1141,6 +1141,7 @@ $.getJSON(config1.geojson, function (data) {
     return feature.properties;
   });
   featureLayer1.addData(data);
+  buildRestoConfig();
   $("#loading-mask").hide();
 });
 
