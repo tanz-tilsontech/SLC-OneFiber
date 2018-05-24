@@ -2078,7 +2078,7 @@ $("#download-pdf-btn").click(function() {
 });
 
 
-$("#download-csv-btn").click(function() {
+$("#resto-download-csv-btn").click(function() {
   $("#restoTable").tableExport({
     headings: true,
     type: "csv",
@@ -2089,7 +2089,7 @@ $("#download-csv-btn").click(function() {
   return false;
 });
 
-$("#download-excel-btn").click(function() {
+$("#resto-download-excel-btn").click(function() {
   $("#restoTable").tableExport({
     headings: true,
     type: "excel",
@@ -2100,7 +2100,7 @@ $("#download-excel-btn").click(function() {
   return false;
 });
 
-$("#download-pdf-btn").click(function() {
+$("#resto-download-pdf-btn").click(function() {
   $("#restoTable").tableExport({
     type: "pdf",
     ignoreColumn: [0],
