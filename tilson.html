@@ -62,7 +62,8 @@
             <li class="dropdown">
               <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-database fa-white"></i> <span id="mapdata">Data </span><b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href="#" id="filter-btn" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Data Filter</a></li>
+                <li><a href="#" id="filter-btn" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Route Filter</a></li>
+                <li><a href="#" id="resto-filter-btn" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Resto Filter</a></li>
                 <li><a id="chart-btn" href="#" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-bar-chart"></i> Data Charts</a></li>
                 <li><a href="#" id="export-btn"><i class="fa fa-cloud-download"></i> Data Export</a>
                   <ul class="sub-menu">
@@ -120,7 +121,7 @@
     <div id="resto-table-container"> 
       <div id="resto-toolbar" style="width: 400px;">
         <div class="btn-group" role="group">
-          <button type="button" class="btn btn-default" data-toggle="modal" data-target="#filterRestoModal">
+          <button type="button" class="btn btn-default" data-toggle="modal" data-target="#restofilterModal">
             <i class="fa fa-filter"></i> Filter Data
           </button>
           <div class="btn-group">
@@ -128,15 +129,15 @@
               <i class="fa fa-cloud-download"></i> Export Data <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-              <li><a href="#" id="download-resto-csv-btn"><i class="fa fa-file-text-o"></i> CSV</a></li>
-              <li><a href="#" id="download-resto-excel-btn"><i class="fa fa-file-excel-o"></i> Excel</a></li>
-              <li><a href="#" id="download-resto-pdf-btn"><i class="fa fa-file-pdf-o"></i> PDF</a></li>
+              <li><a href="#" id="resto-download-csv-btn"><i class="fa fa-file-text-o"></i> CSV</a></li>
+              <li><a href="#" id="resto-download-excel-btn"><i class="fa fa-file-excel-o"></i> Excel</a></li>
+              <li><a href="#" id="resto-download-pdf-btn"><i class="fa fa-file-pdf-o"></i> PDF</a></li>
             </ul>
           </div>
         </div>
-        <span id="feature-resto-count" class="text-muted" style="padding-left: 15px;"></span>
+        <span id="resto-feature-count" class="text-muted" style="padding-left: 15px;"></span>
       </div>
-      <table id="resto-table"></table>
+      <table id="resotTable"></table>
     </div>
 
     <div class="modal fade" id="chartModal" tabindex="-1" role="dialog">
@@ -174,23 +175,32 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Filter Data<span id="record-count" class="badge pull-right" style="margin-right: 15px; margin-top: 2px;"></span></h4>
+            <h4 class="modal-title">Filter Route Data<span id="record-count" class="badge pull-right" style="margin-right: 15px; margin-top: 2px;"></span></h4>
           </div>
-          <div class="modal-body" id="filterModalBody">
-            <div role="tabpanel">
-              <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#routesFilter" aria-controls="routesFilter" role="tab" data-toggle="tab">Routes Filter</a></li>
-                <li role="presentation"><a href="#restoFilter" aria-controls="restoFilter" role="tab" data-toggle="tab">Restoration Filter</a></li>
-              </ul>
-              <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active" id="routesFilter"></div>
-                <div role="tabpanel" class="tab-pane" id="restoFilter"></div>
-              </div>
-            </div>
+          <div class="modal-body">
+            <div id="routeFilter"></div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-info" id="reset-filter-btn"><i class="fa fa-undo"></i> Reset Filter</button>
             <button type="button" class="btn btn-primary" id="apply-filter-btn"><i class="fa fa-filter"></i> Apply Filter</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="RestofilterModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Filter Restoration Data<span id="resto-record-count" class="badge pull-right" style="margin-right: 15px; margin-top: 2px;"></span></h4>
+          </div>
+          <div class="modal-body">
+            <div id="restoFilter"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-info" id="resto-reset-filter-btn"><i class="fa fa-undo"></i> Reset Filter</button>
+            <button type="button" class="btn btn-primary" id="resto-apply-filter-btn"><i class="fa fa-filter"></i> Apply Filter</button>
           </div>
         </div>
       </div>

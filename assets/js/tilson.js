@@ -1206,7 +1206,7 @@ function buildRoutesTable() {
 }
 
 function buildRestoTable() {
-  $("#resto-table").bootstrapTable({
+  $("#restoTable").bootstrapTable({
     cache: false,
     height: $("#resto-table-container").height(),
     undefinedText: "",
@@ -1237,7 +1237,7 @@ function buildRestoTable() {
   map.fitBounds(featureLayer1.getBounds());
 
   $(window).resize(function () {
-    $("#resto-table").bootstrapTable("resetView", {
+    $("#restoTable").bootstrapTable("resetView", {
       height: $("#resto-table-container").height()
     });
   });
@@ -1276,12 +1276,12 @@ function syncRestoTable() {
       }
     }
   });
-  $("#resto-table").bootstrapTable("load", JSON.parse(JSON.stringify(tableFeatures)));
-  var featureCount = $("#resto-table").bootstrapTable("getData").length;
+  $("#restoTable").bootstrapTable("load", JSON.parse(JSON.stringify(tableFeatures)));
+  var featureCount = $("#restoTable").bootstrapTable("getData").length;
   if (featureCount == 1) {
-    $("#feature-resto-count").html($("#resto-table").bootstrapTable("getData").length + " visible feature");
+    $("#resto-feature-count").html($("#restoTable").bootstrapTable("getData").length + " visible feature");
   } else {
-    $("#feature-resto-count").html($("#resto-table").bootstrapTable("getData").length + " visible features");
+    $("#resto-feature-count").html($("#restoTable").bootstrapTable("getData").length + " visible features");
   }
 }
 
@@ -1849,6 +1849,12 @@ $("#about-btn").click(function() {
 
 $("#filter-btn").click(function() {
   $("#filterModal").modal("show");
+  $(".navbar-collapse.in").collapse("hide");
+  return false;
+});
+
+$("#resto-filter-btn").click(function() {
+  $("#RestofilterModal").modal("show");
   $(".navbar-collapse.in").collapse("hide");
   return false;
 });
