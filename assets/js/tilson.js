@@ -1283,7 +1283,7 @@ $.getJSON(config.geojson, function (data) {
 
 $.getJSON(config1.geojson, function (data) {
   geojson1 = data
-  features1 = $.map(geojson1.features1, function(feature) {
+  features1 = $.map(geojson1.features, function(feature) {
     return feature.properties;
   });
   featureLayer1.addData(data);
