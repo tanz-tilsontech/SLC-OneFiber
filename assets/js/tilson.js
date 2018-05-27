@@ -32,7 +32,7 @@ var properties = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "radio",
     vertical: true,
     multiple: true,
     operators: ["equal", "not_equal"],
@@ -48,7 +48,7 @@ var properties = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "radio",
     vertical: true,
     multiple: true,
     operators: ["equal", "not_equal"],
@@ -65,7 +65,7 @@ var properties = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "radio",
     vertical: true,
     multiple: true,
     operators: ["equal", "not_equal"],
@@ -81,7 +81,7 @@ var properties = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "radio",
     vertical: true,
     multiple: true,
     operators: ["equal", "not_equal"],
@@ -97,7 +97,7 @@ var properties = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "radio",
     vertical: true,
     multiple: true,
     operators: ["equal", "not_equal"],
@@ -113,7 +113,7 @@ var properties = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "radio",
     vertical: true,
     multiple: true,
     operators: ["equal", "not_equal"],
@@ -129,7 +129,7 @@ var properties = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "radio",
     vertical: true,
     multiple: true,
     operators: ["equal", "not_equal"],
@@ -145,7 +145,7 @@ var properties = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "radio",
     vertical: true,
     multiple: true,
     operators: ["equal", "not_equal"],
@@ -161,7 +161,7 @@ var properties = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "radio",
     vertical: true,
     multiple: true,
     operators: ["equal", "not_equal"],
@@ -177,7 +177,7 @@ var properties = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "radio",
     vertical: true,
     multiple: true,
     operators: ["equal", "not_equal"],
@@ -281,7 +281,7 @@ var properties = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "radio",
     vertical: true,
     multiple: true,
     operators: ["equal", "not_equal"],
@@ -352,7 +352,7 @@ var properties = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "radio",
     vertical: true,
     multiple: true,
     operators: ["equal", "not_equal"],
@@ -391,7 +391,7 @@ var properties1 = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "radio",
     vertical: true,
     multiple: true,
     operators: ["equal", "not_equal"],
@@ -407,7 +407,7 @@ var properties1 = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "radio",
     vertical: true,
     multiple: true,
     operators: ["equal", "not_equal"],
@@ -423,7 +423,7 @@ var properties1 = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "radio",
     vertical: true,
     multiple: true,
     operators: ["equal", "not_equal"],
@@ -439,7 +439,7 @@ var properties1 = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "radio",
     vertical: true,
     multiple: true,
     operators: ["equal", "not_equal"],
@@ -455,7 +455,7 @@ var properties1 = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "radio",
     vertical: true,
     multiple: true,
     operators: ["equal", "not_equal"],
@@ -471,7 +471,7 @@ var properties1 = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "radio",
     vertical: true,
     multiple: true,
     operators: ["equal", "not_equal"],
@@ -498,7 +498,7 @@ var properties1 = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "radio",
     vertical: true,
     multiple: true,
     operators: ["equal", "not_equal"],
@@ -514,7 +514,7 @@ var properties1 = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "radio",
     vertical: true,
     multiple: true,
     operators: ["equal", "not_equal"],
@@ -532,7 +532,7 @@ var restoBeforeProps = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "radio",
     vertical: true,
     multiple: true,
     operators: ["equal", "not_equal"],
@@ -548,7 +548,7 @@ var restoBeforeProps = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "radio",
     vertical: true,
     multiple: true,
     operators: ["in", "not_in", "equal", "not_equal"],
@@ -564,7 +564,7 @@ var restoBeforeProps = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "radio",
     vertical: true,
     multiple: true,
     operators: ["in", "not_in", "equal", "not_equal"],
@@ -580,7 +580,7 @@ var restoBeforeProps = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "radio",
     vertical: true,
     multiple: true,
     operators: ["in", "not_in", "equal", "not_equal"],
@@ -596,7 +596,7 @@ var restoBeforeProps = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "radio",
     vertical: true,
     multiple: true,
     operators: ["in", "not_in", "equal", "not_equal"],
@@ -614,7 +614,7 @@ var restoAfterProps = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "radio",
     vertical: true,
     multiple: true,
     operators: ["in", "not_in", "equal", "not_equal"],
@@ -630,7 +630,7 @@ var restoAfterProps = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "radio",
     vertical: true,
     multiple: true,
     operators: ["in", "not_in", "equal", "not_equal"],
@@ -646,7 +646,7 @@ var restoAfterProps = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "radio",
     vertical: true,
     multiple: true,
     operators: ["in", "not_in", "equal", "not_equal"],
@@ -662,7 +662,7 @@ var restoAfterProps = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "radio",
     vertical: true,
     multiple: true,
     operators: ["in", "not_in", "equal", "not_equal"],
@@ -678,7 +678,7 @@ var restoAfterProps = [{
   },
   filter: {
     type: "string",
-    input: "checkbox",
+    input: "radio",
     vertical: true,
     multiple: true,
     operators: ["in", "not_in", "equal", "not_equal"],
