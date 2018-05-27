@@ -1397,7 +1397,7 @@ function applyRestoFilter() {
   }
   alasql(query, [geojson1.features], function(features){
     featureLayer1.clearLayers();
-    featureLayer1.addData(features1);
+    featureLayer1.addData(features);
     syncRestoTable();
   });
 }
