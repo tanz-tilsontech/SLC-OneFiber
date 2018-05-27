@@ -1058,7 +1058,7 @@ function buildRestoConfig() {
         if (filters[index]) {
           // If values array is empty, fetch all distinct values
           if (key == "values" && val.length === 0) {
-            alasql("SELECT DISTINCT(properties->"+value.value+") AS field FROM ? ORDER BY field ASC", [geojson1.features1], function(results){
+            alasql("SELECT DISTINCT(properties->"+value.value+") AS field FROM ? ORDER BY field ASC", [geojson1.features], function(results){
               distinctValues = [];
               $.each(results, function(index, value) {
                 distinctValues.push(value.field);
