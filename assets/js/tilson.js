@@ -891,14 +891,14 @@ function drawRestoCharts() {
 
     // HUB STATUS 
   $(function() {
-    var result = alasql("SELECT restoration_items AS label, COUNT(restoration_complete_contractor) AS total FROM ? GROUP BY restoration_complete_contractor", [features1]);
+    var result = alasql("SELECT restoration_complete_contractor AS label, COUNT(restoration_complete_contractor) AS total FROM ? GROUP BY restoration_items", [features1]);
     var columns = $.map(result, function(status) {
       return [[status.label, status.total]];
     });
     var chart = c3.generate({
         bindto: "#resto-status",
         data: {
-          type: "bar",
+          type: "pie",
           columns: columns
         }
     });
