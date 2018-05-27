@@ -83,7 +83,7 @@
                 <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" name="view" id="map-only"><i class="fa fa-globe"></i> Map</a></li>
                 <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" name="view" id="resto-map-graph"><i class="fa fa-th-large"></i> Split</a></li>
                 <li><a href="#" id="resto-filter-btn" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Filter</a></li>
-                <li><a id="chart-btn" href="#" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-bar-chart"></i> Charts</a></li>
+                <li><a id="resto-chart-btn" href="#" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-bar-chart"></i> Charts</a></li>
                 <li><a href="#" id="resto-export-btn"><i class="fa fa-cloud-download"></i> Export</a>
                   <ul class="sub-menu">
                     <li><a href="#" id="resto-download-csv-btn"><i class="fa fa-file-text-o"></i> CSV</a></li>
@@ -170,6 +170,34 @@
                 <div role="tabpanel" class="tab-pane active" id="hub-status-chart"></div>
                 <div role="tabpanel" class="tab-pane" id="hub-complete-chart"></div>
                 <div role="tabpanel" class="tab-pane" id="hub-footage-chart"></div>
+                <!--div role="tabpanel" class="tab-pane" id="species-chart"></div-->
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="RestochartModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Charts</h4>
+          </div>
+          <div class="modal-body" style="overflow: auto;">
+            <div role="tabpanel">
+              <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#resto-status" aria-controls="charts" role="tab" data-toggle="tab">STATUS</a></li>
+                <li role="presentation"><a href="#sites-complete" aria-controls="charts" role="tab" data-toggle="tab">SITES COMPLETE</a></li>
+                <!--li role="presentation"><a href="#species-chart" aria-controls="charts" role="tab" data-toggle="tab">Species</a></li-->
+              </ul>
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="resto-status"></div>
+                <div role="tabpanel" class="tab-pane" id="sites-complete"></div>
                 <!--div role="tabpanel" class="tab-pane" id="species-chart"></div-->
               </div>
             </div>

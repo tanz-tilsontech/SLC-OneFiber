@@ -873,6 +873,40 @@ function drawCharts() {
 }
 
 
+function drawRestoCharts() {
+  // HUB COMPLETE
+  $(function() {
+    var result = alasql("SELECT hub AS label, COUNT(NULLIF(cable_placement_total_footage_cx_final::NUMBER,0)) AS total FROM ? GROUP BY hub", [features1]);
+    var columns = $.map(result, function(status) {
+      return [[status.label, status.total]];
+    });
+    var chart = c3.generate({
+        bindto: "#hub-complete-chart",
+        data: {
+          type: "gauge",
+          columns: columns
+        }
+    });
+  })
+
+    // HUB STATUS 
+  $(function() {
+    var result = alasql("SELECT restoration_items AS label, COUNT(restoration_complete_contractor) AS total FROM ? GROUP BY restoration_complete_contractor", [features1]);
+    var columns = $.map(result, function(status) {
+      return [[status.label, status.total]];
+    });
+    var chart = c3.generate({
+        bindto: "#resto-status",
+        data: {
+          type: "bar",
+          columns: columns
+        }
+    });
+  });
+}
+
+
+
 
 $(function() {
   $(".title").html(config.title);
@@ -1024,7 +1058,7 @@ function buildRestoConfig() {
         if (filters[index]) {
           // If values array is empty, fetch all distinct values
           if (key == "values" && val.length === 0) {
-            alasql("SELECT DISTINCT(properties->"+value.value+") AS field FROM ? ORDER BY field ASC", [geojson1.features], function(results){
+            alasql("SELECT DISTINCT(properties->"+value.value+") AS field FROM ? ORDER BY field ASC", [geojson1.features1], function(results){
               distinctValues = [];
               $.each(results, function(index, value) {
                 distinctValues.push(value.field);
@@ -1249,7 +1283,7 @@ $.getJSON(config.geojson, function (data) {
 
 $.getJSON(config1.geojson, function (data) {
   geojson1 = data
-  features = $.map(geojson1.features, function(feature) {
+  features1 = $.map(geojson1.features1, function(feature) {
     return feature.properties;
   });
   featureLayer1.addData(data);
@@ -1361,7 +1395,7 @@ function applyRestoFilter() {
   if (sql.length > 0) {
     query += " WHERE " + sql;
   }
-  alasql(query, [geojson1.features], function(features){
+  alasql(query, [geojson1.features1], function(features){
     featureLayer1.clearLayers();
     featureLayer1.addData(features);
     syncRestoTable();
@@ -2056,7 +2090,7 @@ $("#refresh-btn").click(function() {
   });
   $.getJSON(config1.geojson, function (data) {
     geojson1 = data
-    features = $.map(geojson1.features, function(feature) {
+    features = $.map(geojson1.features1, function(feature) {
       return feature.properties;
     });
     featureLayer1.addData(data);
@@ -2093,6 +2127,12 @@ $("#resto-filter-btn").click(function() {
 
 $("#chart-btn").click(function() {
   $("#chartModal").modal("show");
+  $(".navbar-collapse.in").collapse("hide");
+  return false;
+});
+
+$("#resto-chart-btn").click(function() {
+  $("#RestochartModal").modal("show");
   $(".navbar-collapse.in").collapse("hide");
   return false;
 });
@@ -2254,4 +2294,8 @@ $("#resto-download-pdf-btn").click(function() {
 
 $("#chartModal").on("shown.bs.modal", function (e) {
   drawCharts();
+});
+
+$("#RestochartModal").on("shown.bs.modal", function (e) {
+  drawRestoCharts();
 });
