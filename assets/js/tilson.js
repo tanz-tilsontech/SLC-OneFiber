@@ -896,7 +896,22 @@ function drawRestoCharts() {
       return [[status.label, status.total]];
     });
     var chart = c3.generate({
-        bindto: "#resto-status",
+        bindto: "#resto-contractor-completed",
+        data: {
+          type: "pie",
+          columns: columns
+        }
+    });
+  });
+
+    // HUB STATUS 
+  $(function() {
+    var result = alasql("SELECT restoration_complete_tilson AS label, COUNT(restoration_complete_tilson) AS total FROM ? GROUP BY restoration_complete_tilson", [features1]);
+    var columns = $.map(result, function(status) {
+      return [[status.label, status.total]];
+    });
+    var chart = c3.generate({
+        bindto: "#resto-tilson-completed",
         data: {
           type: "pie",
           columns: columns
