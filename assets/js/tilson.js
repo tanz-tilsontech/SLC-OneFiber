@@ -813,15 +813,14 @@ function drawCharts() {
   // HUB TOTAL FOOTAGE
   $(function() {
     var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? GROUP BY hub", [features]);
-    var columns1 = $.map(result, function(hub) {
+    var columns = $.map(result, function(hub) {
       return [[hub.label, hub.footage]];
     });
     var chart = c3.generate({
         bindto: "#hub-footage-chart",
         data: {
-
           type: "bar",
-          columns: columns1
+          columns: columns
         },
         axis: {
           x: {
@@ -835,16 +834,15 @@ function drawCharts() {
 
     // HUB MONTHLY FOOTAGE
   $(function() {
-    var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? GROUP BY hub", [features1]);
-    var columns1 = $.map(result, function(hub) {
+    var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? GROUP BY hub", [features]);
+    var columns = $.map(result, function(hub) {
       return [[hub.label, hub.footage]];
     });
     var chart = c3.generate({
         bindto: "#hub-footage-chart",
         data: {
-
           type: "bar",
-          columns: columns1
+          columns: columns
         },
         axis: {
           x: {
@@ -858,7 +856,7 @@ function drawCharts() {
 
   // HUB STATUS 
   $(function() {
-    var result = alasql("SELECT status AS label, COUNT(status) AS total FROM ? GROUP BY status", [features1]);
+    var result = alasql("SELECT status AS label, COUNT(status) AS total FROM ? GROUP BY status", [features]);
     var columns = $.map(result, function(status) {
       return [[status.label, status.total]];
     });
@@ -883,7 +881,7 @@ function drawRestoCharts() {
     var chart = c3.generate({
         bindto: "#sites-completed",
         data: {
-          type: "bar",
+          type: "gauge",
           columns: columns
         }
     });
