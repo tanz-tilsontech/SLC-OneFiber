@@ -855,9 +855,9 @@ function drawCharts() {
 
     // TOTAL CABLE FOOTAGE
   $(function() {
-    var result = alasql("SELECT cable_placement_total_footage_cx_final, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ?", [features]);
+    var result = alasql("SELECT cable_placement_total_footage_cx_final AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ?", [features]);
     var columns = $.map(result, function(data) {
-      return [[data.footage]];
+      return [[data.label,data.footage]];
     });
     var chart = c3.generate({
         bindto: "#total-footage-chart",
