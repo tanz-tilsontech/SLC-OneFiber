@@ -874,22 +874,22 @@ function drawCharts() {
 
 
 function drawRestoCharts() {
-  // HUB COMPLETE
+  // SITES COMPLETED
   $(function() {
-    var result = alasql("SELECT hub AS label, COUNT(NULLIF(cable_placement_total_footage_cx_final::NUMBER,0)) AS total FROM ? GROUP BY hub", [features1]);
+    var result = alasql("SELECT restoration_complete_tilson AS label, COUNT(restoration_complete_tilson) AS total FROM ? WHERE restoration_complete_tilson = 'YES' GROUP BY site_nfid_resto", [features1]);
     var columns = $.map(result, function(status) {
       return [[status.label, status.total]];
     });
     var chart = c3.generate({
-        bindto: "#hub-complete-chart",
+        bindto: "#sites-completed",
         data: {
-          type: "gauge",
+          type: "bar",
           columns: columns
         }
     });
   })
 
-    // HUB STATUS 
+    // CONTRACTOR COMPLETED 
   $(function() {
     var result = alasql("SELECT restoration_complete_contractor AS label, COUNT(restoration_complete_contractor) AS total FROM ? GROUP BY restoration_complete_contractor", [features1]);
     var columns = $.map(result, function(status) {
@@ -904,7 +904,7 @@ function drawRestoCharts() {
     });
   });
 
-    // HUB STATUS 
+    // TILSON COMPLETED 
   $(function() {
     var result = alasql("SELECT restoration_complete_tilson AS label, COUNT(restoration_complete_tilson) AS total FROM ? GROUP BY restoration_complete_tilson", [features1]);
     var columns = $.map(result, function(status) {
