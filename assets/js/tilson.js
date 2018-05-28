@@ -853,6 +853,27 @@ function drawCharts() {
     });
   });
 
+    // TOTAL CABLE FOOTAGE
+  $(function() {
+    var result = alasql("SELECT SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ?", [features]);
+    var columns = $.map(result, function(data) {
+      return [[data.footage]];
+    });
+    var chart = c3.generate({
+        bindto: "#total-footage-chart",
+        data: {
+          type: "donut",
+          columns: columns
+        },
+        axis: {
+          x: {
+            type: 'category',
+            categories: ["Total Cable Footage"]
+          }
+        }
+    });
+  });
+
 
   // HUB STATUS 
   $(function() {
