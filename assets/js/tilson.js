@@ -876,7 +876,7 @@ function drawCharts() {
 function drawRestoCharts() {
   // SITES COMPLETED
   $(function() {
-    var result = alasql("SELECT site_nfid_resto AS label, COUNT(restoration_complete_tilson) AS total FROM ? WHERE restoration_complete_tilson = 'YES' GROUP BY site_nfid_resto", [features1]);
+    var result = alasql("SELECT site_nfid_resto AS label, COUNT(restoration_complete_contractor) AS total FROM ? WHERE restoration_complete_contractor = 'YES' GROUP BY site_nfid_resto", [features1]);
     var columns = $.map(result, function(status) {
       return [[status.label, status.total]];
     });
