@@ -874,7 +874,7 @@ function drawCharts() {
 function drawRestoCharts() {
   // SITES COMPLETED
   $(function() {
-    var result = alasql("SELECT site_nfid_resto AS label, SUM(CASE WHEN restoration_complete_contractor = 'YES' THEN 1 ELSE 0 END) AS total FROM ? GROUP BY site_nfid_resto", [features1]);
+    var result = alasql("SELECT site_nfid_resto AS label, SUM(CASE WHEN restoration_complete_contractor = 'Yes' THEN 1 ELSE 0 END) AS total FROM ? GROUP BY site_nfid_resto", [features1]);
     var columns = $.map(result, function(data) {
       return [[data.label, data.total]];
     });
