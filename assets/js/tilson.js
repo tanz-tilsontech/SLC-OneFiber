@@ -798,8 +798,8 @@ function drawCharts() {
   // HUB COMPLETE
   $(function() {
     var result = alasql("SELECT hub AS label, COUNT(NULLIF(cable_placement_total_footage_cx_final::NUMBER,0)) AS total FROM ? GROUP BY hub", [features]);
-    var columns = $.map(result, function(status) {
-      return [[status.label, status.total]];
+    var columns = $.map(result, function(data) {
+      return [[data.label, data.total]];
     });
     var chart = c3.generate({
         bindto: "#hub-complete-chart",
@@ -813,8 +813,8 @@ function drawCharts() {
   // HUB TOTAL FOOTAGE
   $(function() {
     var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? GROUP BY hub", [features]);
-    var columns = $.map(result, function(hub) {
-      return [[hub.label, hub.footage]];
+    var columns = $.map(result, function(data) {
+      return [[data.label, data.footage]];
     });
     var chart = c3.generate({
         bindto: "#hub-footage-chart",
@@ -835,8 +835,8 @@ function drawCharts() {
     // HUB MONTHLY FOOTAGE
   $(function() {
     var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? GROUP BY hub", [features]);
-    var columns = $.map(result, function(hub) {
-      return [[hub.label, hub.footage]];
+    var columns = $.map(result, function(data) {
+      return [[data.label, data.footage]];
     });
     var chart = c3.generate({
         bindto: "#hub-footage-chart",
@@ -857,8 +857,8 @@ function drawCharts() {
   // HUB STATUS 
   $(function() {
     var result = alasql("SELECT status AS label, COUNT(status) AS total FROM ? GROUP BY status", [features]);
-    var columns = $.map(result, function(status) {
-      return [[status.label, status.total]];
+    var columns = $.map(result, function(data) {
+      return [[data.label, data.total]];
     });
     var chart = c3.generate({
         bindto: "#hub-status-chart",
@@ -874,9 +874,9 @@ function drawCharts() {
 function drawRestoCharts() {
   // SITES COMPLETED
   $(function() {
-    var result = alasql("SELECT site_nfid_resto AS label, COUNT(restoration_complete_contractor) AS total FROM ? WHERE restoration_complete_contractor = 'YES' GROUP BY site_nfid_resto", [features1]);
-    var columns = $.map(result, function(status) {
-      return [[status.label, status.total]];
+    var result = alasql("SELECT restoration_complete_contractor,site_nfid_resto AS label, COUNT(restoration_complete_contractor) AS total FROM ? WHERE restoration_complete_contractor = 'YES' GROUP BY site_nfid_resto", [features1]);
+    var columns = $.map(result, function(data) {
+      return [[data.label, data.total]];
     });
     var chart = c3.generate({
         bindto: "#sites-completed",
@@ -890,8 +890,8 @@ function drawRestoCharts() {
     // CONTRACTOR COMPLETED 
   $(function() {
     var result = alasql("SELECT restoration_complete_contractor AS label, COUNT(restoration_complete_contractor) AS total FROM ? GROUP BY restoration_complete_contractor", [features1]);
-    var columns = $.map(result, function(status) {
-      return [[status.label, status.total]];
+    var columns = $.map(result, function(data) {
+      return [[data.label, data.total]];
     });
     var chart = c3.generate({
         bindto: "#resto-contractor-completed",
@@ -905,8 +905,8 @@ function drawRestoCharts() {
     // TILSON COMPLETED 
   $(function() {
     var result = alasql("SELECT restoration_complete_tilson AS label, COUNT(restoration_complete_tilson) AS total FROM ? GROUP BY restoration_complete_tilson", [features1]);
-    var columns = $.map(result, function(status) {
-      return [[status.label, status.total]];
+    var columns = $.map(result, function(data) {
+      return [[data.label, data.total]];
     });
     var chart = c3.generate({
         bindto: "#resto-tilson-completed",
