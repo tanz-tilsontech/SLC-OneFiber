@@ -872,21 +872,6 @@ function drawCharts() {
 
 
 function drawRestoCharts() {
-  // SITES COMPLETED
-  $(function() {
-    var result = alasql("SELECT site_nfid_resto AS label, SUM(CASE WHEN restoration_complete_contractor = 'Yes' THEN 1 ELSE 0 END) AS total FROM ? GROUP BY site_nfid_resto", [features1]);
-    var columns = $.map(result, function(data) {
-      return [[data.label, data.total]];
-    });
-    var chart = c3.generate({
-        bindto: "#sites-completed",
-        data: {
-          type: "gauge",
-          columns: columns
-        }
-    });
-  })
-
     // CONTRACTOR COMPLETED 
   $(function() {
     var result = alasql("SELECT restoration_complete_contractor AS label, COUNT(restoration_complete_contractor) AS total FROM ? GROUP BY restoration_complete_contractor", [features1]);
