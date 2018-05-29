@@ -25,6 +25,21 @@ var config = {
 };
 
 var properties = [{
+  value: "prints",
+  label: "Prints",
+  table: {
+    visible: false
+  },
+  filter: {
+    type: "string",
+    input: "radio",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
   value: "fulcrum_record_link",
   label: "Fulcrum Record",
   table: {
@@ -383,6 +398,22 @@ var config1 = {
 };
 
 var properties1 = [{
+  value: "fulcrum_record_resto",
+  label: "Fulcrum Record",
+  table: {
+    visible: false,
+    sortable: false
+  },
+  filter: {
+    type: "string",
+    input: "radio",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
   value: "inspector_resto",
   label: "Inspector",
   table: {
@@ -1530,6 +1561,9 @@ function identifyFeature(id) {
     }
     if (typeof value == "string"  && value.indexOf("http://www.fulcrumapp") === 0) {
       value = "<a href='" + value + "' target='_blank'>" + "Fulcrum Record" + "</a>";
+    }
+    if (typeof value == "string"  && value.indexOf("https://tilson.egnyte") === 0) {
+      value = "<a href='" + value + "' target='_blank'>" + "Prints" + "</a>";
     }
     $.each(properties, function(index, property) {
       if (key == property.value) {
