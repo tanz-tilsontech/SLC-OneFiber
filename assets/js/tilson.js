@@ -1587,6 +1587,9 @@ function identifyFeature1(id) {
     if (!value) {
       value = "";
     }
+    if (typeof value == "string"  && value.indexOf("http://www.fulcrumapp") === 0) {
+      value = "<a href='" + value + "' target='_blank'>" + "Fulcrum Record" + "</a>";
+    }
     $.each(properties1, function(index, property) {
       if (key == property.value) {
         if (property.info !== false) {
