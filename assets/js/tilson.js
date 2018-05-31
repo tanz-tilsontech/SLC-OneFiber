@@ -2327,10 +2327,10 @@ $("#resto-download-pdf-btn").click(function() {
   return false;
 });
 
-$("#chartModal").on(function (e) {
+$("#chartModal").on("shown.bs.modal", function (e) {
   drawCharts();
 });
 
-$("#RestochartModal").on(function (e) {
+$("#RestochartModal").on("shown.bs.modal", function (e) {
   drawRestoCharts();
 });
