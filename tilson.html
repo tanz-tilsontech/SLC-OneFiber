@@ -138,28 +138,15 @@
             </ul>
           </div>
         </div>
-        <div class="modal fade" id="chartModal" tabindex="-1" role="dialog">
-          <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Route Charts</h4>
-              </div>
-              <div class="modal-body" style="overflow: auto;">
-                <div role="tabpanel">
-                  <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active"><a href="#hub-status-chart" aria-controls="reports" role="tab" data-toggle="tab">STATUS</a></li>
-                    <li role="presentation"><a href="#total-footage-chart" aria-controls="charts" role="tab" data-toggle="tab">CABLE FOOTAGE</a></li>
-                  </ul>
-                  <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active" id="hub-status-chart"></div>
-                    <div role="tabpanel" class="tab-pane" id="total-footage-chart"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              </div>
+        <div id="chartModal" style="overflow: auto;">
+          <div role="tabpanel">
+            <ul class="nav nav-tabs" role="tablist">
+              <li role="presentation" class="active"><a href="#hub-status-chart" aria-controls="reports" role="tab" data-toggle="tab">STATUS</a></li>
+              <li role="presentation"><a href="#total-footage-chart" aria-controls="charts" role="tab" data-toggle="tab">CABLE FOOTAGE</a></li>
+            </ul>
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane active" id="hub-status-chart"></div>
+              <div role="tabpanel" class="tab-pane" id="total-footage-chart"></div>
             </div>
           </div>
         </div>
