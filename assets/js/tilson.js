@@ -863,14 +863,14 @@ function drawCharts() {
   });
 
 
-    // HUB MONTHLY FOOTAGE
+    // TOTAL CABLE FOOTAGE
   $(function() {
-    var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? GROUP BY hub", [features]);
+    var result = alasql("SELECT status AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? GROUP BY status", [features]);
     var columns = $.map(result, function(data) {
       return [[data.label, data.footage]];
     });
     var chart = c3.generate({
-        bindto: "#hub-footage-chart",
+        bindto: "#total-footage-chart",
         data: {
           type: "bar",
           columns: columns
@@ -2327,10 +2327,5 @@ $("#resto-download-pdf-btn").click(function() {
   return false;
 });
 
-$("#chartModal").on("shown.bs.modal", function (e) {
-  drawCharts();
-});
-
-$("#RestochartModal").on("shown.bs.modal", function (e) {
-  drawRestoCharts();
-});
+drawCharts();
+drawRestoCharts();
