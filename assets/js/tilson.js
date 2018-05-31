@@ -1246,7 +1246,7 @@ var featureLayer1 = L.geoJson(null, {
           $(".info-control").hide();
         }
       });
-      if (feature.properties.restoration_complete_contractor === "Yes") {
+      if (feature.properties.restoration_complete_contractor === "Yes" && feature.properties.restoration_complete_tilson === "No") {
         layer.setIcon(
           L.icon({
             iconUrl: "assets/pictures/markers/b3b3b3.png",
