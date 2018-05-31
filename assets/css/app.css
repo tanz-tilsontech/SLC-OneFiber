@@ -9,7 +9,6 @@ body {
 #map-container {
   height: 100%;
   padding: 0;
-  border: 3px solid #00FFFF;
 }
 #table-container {
   height: 0%;
@@ -134,10 +133,12 @@ body {
 
 .left {
     width: 75%;
+    border: 3px solid #00FFFF;
 }
 
 .right {
     width: 25%;
     align-items: center;
     justify-content: center;
+    border: 3px solid #D4AF37;
 }
