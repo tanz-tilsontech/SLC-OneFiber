@@ -2327,6 +2327,9 @@ $("#resto-download-pdf-btn").click(function() {
   return false;
 });
 
+drawCharts();
+drawRestoCharts();
+
 $("#chartModal").on("shown.bs.modal", function (e) {
   drawCharts();
 });
