@@ -903,7 +903,7 @@ function drawCharts() {
 
 
 // STATUS 
-$(function() {
+function statusChart() {
   var result = alasql("SELECT status AS label, COUNT(status) AS total FROM ? GROUP BY status", [features]);
   var columns = $.map(result, function(data) {
     return [[data.label, data.total]];
@@ -915,7 +915,7 @@ $(function() {
         columns: columns
       }
   });
-});
+};
 
 
 function drawRestoCharts() {
