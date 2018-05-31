@@ -863,7 +863,7 @@ function drawCharts() {
   });
 
 
-    // TOTAL CABLE FOOTAGE
+    // CABLE TOTAL FOOTAGE
   $(function() {
     var result = alasql("SELECT status AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? GROUP BY status", [features]);
     var columns = $.map(result, function(data) {
@@ -2327,5 +2327,10 @@ $("#resto-download-pdf-btn").click(function() {
   return false;
 });
 
-drawCharts();
-drawRestoCharts();
+$("#chartModal").on("shown.bs.modal", function (e) {
+  drawCharts();
+});
+
+$("#RestochartModal").on("shown.bs.modal", function (e) {
+  drawRestoCharts();
+});
