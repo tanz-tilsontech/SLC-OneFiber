@@ -1522,9 +1522,9 @@ function syncRoutesTable() {
   $("#table").bootstrapTable("load", JSON.parse(JSON.stringify(tableFeatures)));
   var featureCount = $("#table").bootstrapTable("getData").length;
   if (featureCount == 1) {
-    $("#feature-count").html($("#table").bootstrapTable("getData").length + " visible feature");
+    $("#feature-count").html($("#table").bootstrapTable("getData").length + " Visible");
   } else {
-    $("#feature-count").html($("#table").bootstrapTable("getData").length + " visible features");
+    $("#feature-count").html($("#table").bootstrapTable("getData").length + " Visible");
   }
 }
 
@@ -1543,9 +1543,9 @@ function syncRestoTable() {
   $("#restoTable").bootstrapTable("load", JSON.parse(JSON.stringify(tableFeatures)));
   var featureCount = $("#restoTable").bootstrapTable("getData").length;
   if (featureCount == 1) {
-    $("#resto-feature-count").html($("#restoTable").bootstrapTable("getData").length + " visible feature");
+    $("#resto-feature-count").html($("#restoTable").bootstrapTable("getData").length + " Visible");
   } else {
-    $("#resto-feature-count").html($("#restoTable").bootstrapTable("getData").length + " visible features");
+    $("#resto-feature-count").html($("#restoTable").bootstrapTable("getData").length + " Visible");
   }
 }
 
