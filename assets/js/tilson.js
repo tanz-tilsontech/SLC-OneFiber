@@ -1305,6 +1305,17 @@ $.getJSON(config.geojson, function (data) {
       }
     });
   }
+  var result1 = alasql("SELECT status AS label, COUNT(status) AS total FROM ? GROUP BY status", [features]);
+  var columns1 = $.map(result1, function(data) {
+    return [[data.label, data.total]];
+  });
+  var chart1 = c3.generate({
+      bindto: "#hub-status-chart1",
+      data: {
+        type: "pie",
+        columns: columns1
+      }
+  });
 });
 
 
@@ -2333,17 +2344,4 @@ $("#chartModal").on("shown.bs.modal", function (e) {
 
 $("#RestochartModal").on("shown.bs.modal", function (e) {
   drawRestoCharts();
-});
-
-// STATUS 
-var result1 = alasql("SELECT status AS label, COUNT(status) AS total FROM ? GROUP BY status", [features]);
-var columns1 = $.map(result1, function(data) {
-  return [[data.label, data.total]];
-});
-var chart1 = c3.generate({
-    bindto: "#hub-status-chart1",
-    data: {
-      type: "pie",
-      columns: columns1
-    }
 });
