@@ -1442,10 +1442,10 @@ function buildRoutesTable() {
     sortName: config.sortProperty,
     sortOrder: config.sortOrder,
     toolbar: "#toolbar",
-    search: true,
+    search: false,
     trimOnSearch: false,
-    showColumns: true,
-    showToggle: true,
+    showColumns: false,
+    showToggle: false,
     columns: table,
     onClickRow: function(row, $element) {
       var layer = featureLayer.getLayer(row.leaflet_stamp);
@@ -1480,10 +1480,10 @@ function buildRestoTable() {
     sortName: config.sortProperty,
     sortOrder: config.sortOrder,
     toolbar: "#resto-toolbar",
-    search: true,
+    search: false,
     trimOnSearch: false,
-    showColumns: true,
-    showToggle: true,
+    showColumns: false,
+    showToggle: false,
     columns: table,
     onClickRow: function(row, $element) {
       var layer = featureLayer1.getLayer(row.leaflet_stamp);
