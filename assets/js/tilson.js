@@ -863,14 +863,14 @@ function drawCharts() {
   });
 
 
-    // CABLE TOTAL FOOTAGE
+    // HUB MONTHLY FOOTAGE
   $(function() {
-    var result = alasql("SELECT status AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? GROUP BY status", [features]);
+    var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? GROUP BY hub", [features]);
     var columns = $.map(result, function(data) {
       return [[data.label, data.footage]];
     });
     var chart = c3.generate({
-        bindto: "#total-footage-chart",
+        bindto: "#hub-footage-chart",
         data: {
           type: "bar",
           columns: columns
@@ -885,7 +885,7 @@ function drawCharts() {
   });
 
 
-  // STATUS 
+  // HUB STATUS 
   $(function() {
     var result = alasql("SELECT status AS label, COUNT(status) AS total FROM ? GROUP BY status", [features]);
     var columns = $.map(result, function(data) {
@@ -1305,34 +1305,6 @@ $.getJSON(config.geojson, function (data) {
       }
     });
   }
-  var result1 = alasql("SELECT status AS label, COUNT(status) AS total FROM ? GROUP BY status", [features]);
-  var columns1 = $.map(result1, function(data) {
-    return [[data.label, data.total]];
-  });
-  var chart1 = c3.generate({
-      bindto: "#hub-status-chart1",
-      data: {
-        type: "pie",
-        columns: columns1
-      }
-  });
-  var result2 = alasql("SELECT status AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? GROUP BY status", [features]);
-  var columns2 = $.map(result2, function(data) {
-    return [[data.label, data.footage]];
-  });
-  var chart2 = c3.generate({
-      bindto: "#total-footage-chart",
-      data: {
-        type: "bar",
-        columns: columns
-      },
-      axis: {
-        x: {
-          type: 'category',
-          categories: ["Cable Footage"]
-        }
-      }
-  });
 });
 
 
@@ -1470,10 +1442,10 @@ function buildRoutesTable() {
     sortName: config.sortProperty,
     sortOrder: config.sortOrder,
     toolbar: "#toolbar",
-    search: false,
+    search: true,
     trimOnSearch: false,
-    showColumns: false,
-    showToggle: false,
+    showColumns: true,
+    showToggle: true,
     columns: table,
     onClickRow: function(row, $element) {
       var layer = featureLayer.getLayer(row.leaflet_stamp);
@@ -1508,10 +1480,10 @@ function buildRestoTable() {
     sortName: config.sortProperty,
     sortOrder: config.sortOrder,
     toolbar: "#resto-toolbar",
-    search: false,
+    search: true,
     trimOnSearch: false,
-    showColumns: false,
-    showToggle: false,
+    showColumns: true,
+    showToggle: true,
     columns: table,
     onClickRow: function(row, $element) {
       var layer = featureLayer1.getLayer(row.leaflet_stamp);
@@ -1550,9 +1522,9 @@ function syncRoutesTable() {
   $("#table").bootstrapTable("load", JSON.parse(JSON.stringify(tableFeatures)));
   var featureCount = $("#table").bootstrapTable("getData").length;
   if (featureCount == 1) {
-    $("#feature-count").html($("#table").bootstrapTable("getData").length + " Visible");
+    $("#feature-count").html($("#table").bootstrapTable("getData").length + " visible feature");
   } else {
-    $("#feature-count").html($("#table").bootstrapTable("getData").length + " Visible");
+    $("#feature-count").html($("#table").bootstrapTable("getData").length + " visible features");
   }
 }
 
@@ -1571,9 +1543,9 @@ function syncRestoTable() {
   $("#restoTable").bootstrapTable("load", JSON.parse(JSON.stringify(tableFeatures)));
   var featureCount = $("#restoTable").bootstrapTable("getData").length;
   if (featureCount == 1) {
-    $("#resto-feature-count").html($("#restoTable").bootstrapTable("getData").length + " Visible");
+    $("#resto-feature-count").html($("#restoTable").bootstrapTable("getData").length + " visible feature");
   } else {
-    $("#resto-feature-count").html($("#restoTable").bootstrapTable("getData").length + " Visible");
+    $("#resto-feature-count").html($("#restoTable").bootstrapTable("getData").length + " visible features");
   }
 }
 

@@ -127,16 +127,3 @@ body {
    max-width:1200px;
   }
 }
-.column {
-    float: left;
-}
-
-.left {
-    width: 75%;
-    border: 3px solid #00FFFF;
-}
-
-.right {
-    width: 25%;
-    overflow: scroll;
-}
