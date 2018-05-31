@@ -104,8 +104,23 @@
     </div>
 
     <div class="row" id="map-container">
-      <div class="column" id="map"></div>
-      <div class="column" id="map">
+      <div class="column left" id="map"></div>
+      <div class="column right" id="map">
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-default" data-toggle="modal" data-target="#filterModal">
+            <i class="fa fa-filter"></i> Filter Routes
+          </button>
+          <div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fa fa-cloud-download"></i> Export Routes <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a href="#" id="download-csv-btn"><i class="fa fa-file-text-o"></i> CSV</a></li>
+              <li><a href="#" id="download-excel-btn"><i class="fa fa-file-excel-o"></i> Excel</a></li>
+              <li><a href="#" id="download-pdf-btn"><i class="fa fa-file-pdf-o"></i> PDF</a></li>
+            </ul>
+          </div>
+        </div>
         <div class="btn-group" role="group">
           <button type="button" class="btn btn-default" data-toggle="modal" data-target="#RestofilterModal">
             <i class="fa fa-filter"></i> Filter Resto

@@ -128,10 +128,14 @@ body {
    max-width:1200px;
   }
 }
-.row {
-    display: flex;
+.column {
+    float: left;
 }
 
-.column {
-    flex: 50%;
+.left {
+    width: 75%;
+}
+
+.right {
+    width: 25%;
 }
