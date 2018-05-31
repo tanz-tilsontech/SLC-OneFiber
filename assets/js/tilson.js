@@ -430,6 +430,22 @@ var properties1 = [{
   }
 },
 {
+  value: "contractor_resto",
+  label: "Contractor",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    input: "radio",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
   value: "wpid_resto",
   label: "WPID",
   table: {
