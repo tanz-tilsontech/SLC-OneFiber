@@ -1316,6 +1316,23 @@ $.getJSON(config.geojson, function (data) {
         columns: columns1
       }
   });
+  var result2 = alasql("SELECT status AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? GROUP BY status", [features]);
+  var columns2 = $.map(result2, function(data) {
+    return [[data.label, data.footage]];
+  });
+  var chart2 = c3.generate({
+      bindto: "#total-footage-chart",
+      data: {
+        type: "bar",
+        columns: columns
+      },
+      axis: {
+        x: {
+          type: 'category',
+          categories: ["Cable Footage"]
+        }
+      }
+  });
 });
 
 
