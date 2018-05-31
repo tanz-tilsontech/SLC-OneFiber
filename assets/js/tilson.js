@@ -885,7 +885,7 @@ function drawCharts() {
   });
 
 
-  // HUB STATUS 
+  // STATUS 
   $(function() {
     var result = alasql("SELECT status AS label, COUNT(status) AS total FROM ? GROUP BY status", [features]);
     var columns = $.map(result, function(data) {
@@ -900,6 +900,22 @@ function drawCharts() {
     });
   });
 }
+
+
+// STATUS 
+$(function() {
+  var result = alasql("SELECT status AS label, COUNT(status) AS total FROM ? GROUP BY status", [features]);
+  var columns = $.map(result, function(data) {
+    return [[data.label, data.total]];
+  });
+  var chart = c3.generate({
+      bindto: "#hub-status-chart1",
+      data: {
+        type: "pie",
+        columns: columns
+      }
+  });
+});
 
 
 function drawRestoCharts() {
@@ -2326,9 +2342,6 @@ $("#resto-download-pdf-btn").click(function() {
   $(".navbar-collapse.in").collapse("hide");
   return false;
 });
-
-drawCharts();
-drawRestoCharts();
 
 $("#chartModal").on("shown.bs.modal", function (e) {
   drawCharts();
