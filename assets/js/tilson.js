@@ -1257,7 +1257,7 @@ var featureLayer1 = L.geoJson(null, {
       } else if (feature.properties.restoration_complete_contractor === "Yes" && feature.properties.restoration_complete_tilson === "Yes") {
         layer.setIcon(
           L.icon({
-            iconUrl: "assets/pictures/markers/ffffff.png",
+            iconUrl: "assets/pictures/markers/704b10.png",
             iconSize: [30, 40],
             iconAnchor: [15, 32]
           })
