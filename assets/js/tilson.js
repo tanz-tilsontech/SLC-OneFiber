@@ -867,17 +867,20 @@ function drawCharts() {
       return [[data.label, data.footage]];
     });
     var chart = c3.generate({
-        bindto: "#hub-footage-chart",
-        data: {
-          type: "bar",
-          columns: columns
-        },
-        axis: {
-          x: {
-            type: 'category',
-            categories: ["Cable Footage"]
-          }
+      bindto: "#hub-footage-chart",
+      data: {
+        type: "bar",
+        columns: columns
+      },
+      axis: {
+        x: {
+          type: 'category',
+          categories: ["Cable Footage"]
         }
+      },
+      legend: {
+        show: false
+      }
     });
   });
 
@@ -911,11 +914,14 @@ function drawCharts() {
       return [[data.label, data.total]];
     });
     var chart = c3.generate({
-        bindto: "#hub-status-chart",
-        data: {
-          type: "pie",
-          columns: columns
-        }
+      bindto: "#hub-status-chart",
+      data: {
+        type: "pie",
+        columns: columns
+      },
+      legend: {
+        show: false
+      }
     });
   });
 }
