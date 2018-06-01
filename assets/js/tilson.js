@@ -849,14 +849,14 @@ function drawCharts() {
       return [[data.label, data.total]];
     });
     var chart = c3.generate({
-        bindto: "#hub-complete-chart",
-        data: {
-          type: "gauge",
-          columns: columns
-        },
-        legend: {
-          show: false
-        }
+      bindto: "#hub-complete-chart",
+      data: {
+        type: "gauge",
+        columns: columns
+      },
+      legend: {
+        show: false
+      }
     });
   });
 
