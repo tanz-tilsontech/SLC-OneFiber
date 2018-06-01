@@ -855,6 +855,7 @@ function drawCharts() {
           columns: columns
         }
     });
+    chart.legend.hide(columns);
   });
 
   // HUB TOTAL FOOTAGE
