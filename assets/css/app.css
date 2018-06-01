@@ -9,8 +9,6 @@ body {
 #map-container {
   height: 100%;
   padding: 0;
-  left: 25%;
-  position: fixed;
 }
 #table-container {
   height: 0%;
@@ -20,8 +18,6 @@ body {
 }
 #map {
   height: 100%;
-  position: absolute;
-  width: 100%;
 }
 #table tr {
   cursor: pointer;

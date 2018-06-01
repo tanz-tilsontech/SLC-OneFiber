@@ -849,14 +849,11 @@ function drawCharts() {
       return [[data.label, data.total]];
     });
     var chart = c3.generate({
-      bindto: "#hub-complete-chart",
-      data: {
-        type: "gauge",
-        columns: columns
-      },
-      legend: {
-        show: false
-      }
+        bindto: "#hub-complete-chart",
+        data: {
+          type: "gauge",
+          columns: columns
+        }
     });
   });
 
@@ -867,20 +864,17 @@ function drawCharts() {
       return [[data.label, data.footage]];
     });
     var chart = c3.generate({
-      bindto: "#hub-footage-chart",
-      data: {
-        type: "bar",
-        columns: columns
-      },
-      axis: {
-        x: {
-          type: 'category',
-          categories: ["Cable Footage"]
+        bindto: "#hub-footage-chart",
+        data: {
+          type: "bar",
+          columns: columns
+        },
+        axis: {
+          x: {
+            type: 'category',
+            categories: ["Cable Footage"]
+          }
         }
-      },
-      legend: {
-        show: false
-      }
     });
   });
 
@@ -914,14 +908,11 @@ function drawCharts() {
       return [[data.label, data.total]];
     });
     var chart = c3.generate({
-      bindto: "#hub-status-chart",
-      data: {
-        type: "pie",
-        columns: columns
-      },
-      legend: {
-        show: false
-      }
+        bindto: "#hub-status-chart",
+        data: {
+          type: "pie",
+          columns: columns
+        }
     });
   });
 }
@@ -1330,8 +1321,6 @@ $.getJSON(config.geojson, function (data) {
       }
     });
   }
-  $("#table-container").hide();
-  $("#resto-table-container").hide();
 });
 
 
@@ -1348,15 +1337,6 @@ $.getJSON(config1.geojson, function (data) {
 });
 
 
-
-$(function(){
-  $(window).resize(adjust);
-  function adjust(){
-    var offset = $(window).height() - 50;
-    $('#map-container').height(offset);
-  }
-  adjust();
-});
 
 var map = L.map("map", {
   layers: [mapboxOSM, SLCLLDRoute, featureLayer, featureLayer1, highlightLayer]
