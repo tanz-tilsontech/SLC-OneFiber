@@ -2244,6 +2244,11 @@ $("#reset-filter-btn").click(function() {
   applyRoutesFilter();
 });
 
+$("#resto-reset-filter-btn").click(function() {
+  $("#restoFilter").queryBuilder("reset");
+  applyRestoFilter();
+});
+
 $("#extent-btn").click(function() {
   map.fitBounds(featureLayer.getBounds());
   $(".navbar-collapse.in").collapse("hide");
