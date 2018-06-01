@@ -1321,6 +1321,8 @@ $.getJSON(config.geojson, function (data) {
       }
     });
   }
+  $("#table-container").hide();
+  $("#resto-table-container").hide();
 });
 
 
