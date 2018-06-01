@@ -853,9 +853,11 @@ function drawCharts() {
         data: {
           type: "gauge",
           columns: columns
+        },
+        legend: {
+          show: false
         }
     });
-    chart.legend.hide(columns);
   });
 
   // HUB TOTAL FOOTAGE
