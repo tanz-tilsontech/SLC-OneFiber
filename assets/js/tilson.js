@@ -2209,6 +2209,9 @@ $("#apply-filter-btn").click(function() {
   applyRoutesFilter();
   $('#filterModal').modal('hide');
   $(".navbar-collapse.in").collapse("hide");
+  map = L.map("map", {
+  layers: [mapboxOSM, SLCLLDRoute, featureLayer, highlightLayer]
+}).fitWorld();
   return false;
 });
 
@@ -2216,6 +2219,9 @@ $("#resto-apply-filter-btn").click(function() {
   applyRestoFilter();
   $('#RestofilterModal').modal('hide');
   $(".navbar-collapse.in").collapse("hide");
+  map = L.map("map", {
+  layers: [mapboxOSM, SLCLLDRoute, featureLayer1, highlightLayer]
+}).fitWorld();
   return false;
 });
 
