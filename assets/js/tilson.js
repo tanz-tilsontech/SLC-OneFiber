@@ -2222,11 +2222,15 @@ $("#resto-apply-filter-btn").click(function() {
 $("#reset-filter-btn").click(function() {
   $("#routesFilter").queryBuilder("reset");
   applyRoutesFilter();
+  $('#filterModal').modal('hide');
+  $(".navbar-collapse.in").collapse("hide");
 });
 
 $("#resto-reset-filter-btn").click(function() {
   $("#restoFilter").queryBuilder("reset");
   applyRestoFilter();
+  $('#RestofilterModal').modal('hide');
+  $(".navbar-collapse.in").collapse("hide");
 });
 
 $("#extent-btn").click(function() {
