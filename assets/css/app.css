@@ -9,7 +9,7 @@ body {
 #map-container {
   height: 100%;
   padding: 0;
-  left: 75%;
+  left: 25%;
   position: fixed;
 }
 #table-container {
