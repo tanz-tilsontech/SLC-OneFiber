@@ -1338,6 +1338,15 @@ $.getJSON(config1.geojson, function (data) {
 
 
 
+$(function(){
+  $(window).resize(adjust);
+  function adjust(){
+    var offset = $(window).height() - 50;
+    $('#map-container').height(offset);
+  }
+  adjust();
+});
+
 var map = L.map("map", {
   layers: [mapboxOSM, SLCLLDRoute, featureLayer, featureLayer1, highlightLayer]
 }).fitWorld();
