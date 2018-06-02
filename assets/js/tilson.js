@@ -176,10 +176,10 @@ var properties = [{
   },
   filter: {
     type: "string",
-    input: "radio",
+    input: "text",
     vertical: true,
     multiple: true,
-    operators: ["equal", "not_equal"],
+    operators: ["equal", "not_equal", "contains"],
     values: []
   }
 },
@@ -192,10 +192,10 @@ var properties = [{
   },
   filter: {
     type: "string",
-    input: "radio",
+    input: "text",
     vertical: true,
     multiple: true,
-    operators: ["equal", "not_equal"],
+    operators: ["equal", "not_equal", "contains"],
     values: []
   }
 },
