@@ -53,8 +53,8 @@ var config2 = {
 var config3 = {
   geojson: "https://tilsonwebdraco.3-gislive.com/arcgis/rest/services/SLClld/Tilsonslc_lld/MapServer/35/query?where=objectid+IS+NOT+NULL&outFields=*&f=geojson",
   layerName: "Work Order Area",
-  hoverProperty: "workorderid",
-  sortProperty: "workorderid",
+  hoverProperty: "name",
+  sortProperty: "name",
   sortOrder: "ascend",
 };
 
@@ -1293,6 +1293,20 @@ var highlightLayer = L.geoJson(null, {
 });
 
 
+var highlightLayer2 = L.geoJson(null, {
+  style: function (feature) {
+    return {
+      color: "#ff0000",
+      weight: 3,
+      opacity: 1,
+      fillColor: "#ff0000",
+      fillOpacity: 0.1,
+      clickable: false
+    };
+  }
+});
+
+
 var featureLayer = L.geoJson(null, {
   filter: function (feature) {
     if (feature.properties.contractor != "Tilson") {
@@ -1450,8 +1464,8 @@ var featureLayer3 = L.geoJson(null, {
     if (feature.properties) {
       layer.on({
         click: function (e) {
-          highlightLayer.clearLayers();
-          highlightLayer.addData(featureLayer3.getLayer(L.stamp(layer)).toGeoJSON());
+          highlightLayer2.clearLayers();
+          highlightLayer2.addData(featureLayer3.getLayer(L.stamp(layer)).toGeoJSON());
           $(".info-control").html(feature.properties[config3.hoverProperty]);
           $(".info-control").show();
         },
