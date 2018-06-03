@@ -1403,7 +1403,7 @@ var featureLayer2 = L.geoJson(null, {
     }
   },
   filter: function (feature) {
-    if (feature.properties.oofstatus === "Cable Placed") {
+    if (feature.properties.oofstatus === "Cable Placed" && feature.properties.oofstatus === "Construction Underway") {
       return true;
     };
   },
@@ -1423,12 +1423,6 @@ var featureLayer2 = L.geoJson(null, {
           highlightLayer.addData(featureLayer2.getLayer(L.stamp(layer)).toGeoJSON());
           $(".info-control").html(feature.properties[config2.hoverProperty]);
           $(".info-control").show();
-        },
-        mouseover: function (e) {
-          if (config2.hoverProperty) {
-            $(".info-control").html(feature.properties[config2.hoverProperty]);
-            $(".info-control").show();
-          }
         }
       });
     }
