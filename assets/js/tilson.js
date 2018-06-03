@@ -24,6 +24,17 @@ var config = {
   sortOrder: "ascend",
 };
 
+// Configuration of Engineering in 3GIS
+
+var config2 = {
+  geojson: "https://tilsonwebdraco.3-gislive.com/arcgis/rest/services/SLClld/Tilsonslc_lld/MapServer/109/query?where=fqn_id+IS+NOT+NULL&outFields=*&f=geojson",
+  title: "SLC OneFiber Tilson QC",
+  layerName: "Eng. Routes",
+  hoverProperty: "status_title_github",
+  sortProperty: "fqn_id",
+  sortOrder: "ascend",
+};
+
 var properties = [{
   value: "prints",
   label: "Prints",
@@ -1286,6 +1297,58 @@ var featureLayer1 = L.geoJson(null, {
 
 
 
+var featureLayer2 = L.geoJson(null, {
+  pointToLayer: function (feature, latlng) {
+    return L.marker(latlng, {
+      title: Feature.properties["fqn_id"],
+      riseOnHover: true,
+      icon: L.icon({
+        iconUrl: "assets/pictures/markers/242424.png",
+        iconSize: [30, 40],
+        iconAnchor: [15, 32]
+      })
+    });
+  },
+  onEachFeature: function (feature, layer) {
+    if (Feature.properties) {
+      layer.on({
+        click: function (e) {
+          highlightLayer.clearLayers();
+          highlightLayer.addData(featureLayer2.getLayer(L.stamp(layer)).toGeoJSON());
+        },
+        mouseover: function (e) {
+          if (config2.hoverProperty) {
+            $(".info-control").html(feature.properties[config2.hoverProperty]);
+            $(".info-control").show();
+          }
+        },
+        mouseout: function (e) {
+          $(".info-control").hide();
+        }
+      });
+      if (Feature.properties.oofstatus === "Permit Recieved") {
+        layer.setIcon(
+          L.icon({
+            iconUrl: "assets/pictures/markers/b3b3b3.png",
+            iconSize: [30, 40],
+            iconAnchor: [15, 32]
+          })
+        );
+      } else if (Feature.properties.oofstatus === "Construction Underway") {
+        layer.setIcon(
+          L.icon({
+            iconUrl: "assets/pictures/markers/704b10.png",
+            iconSize: [30, 40],
+            iconAnchor: [15, 32]
+          })
+        );
+      }
+    }
+  }
+});
+
+
+
 // Fetch the Routes GeoJSON file
 
 $.getJSON(config.geojson, function (data) {
@@ -1337,9 +1400,22 @@ $.getJSON(config1.geojson, function (data) {
 });
 
 
+// Fetch the Restoration GeoJSON file
+
+$.getJSON(config2.geojson, function (data) {
+  geojson2 = data
+  features2 = $.map(geojson1.features, function(feature) {
+    return Feature.properties;
+  });
+  featureLayer2.addData(data);
+  $("#loading-mask").hide();
+});
+
+
+
 
 var map = L.map("map", {
-  layers: [mapboxOSM, SLCLLDRoute, featureLayer, featureLayer1, engineering, highlightLayer]
+  layers: [mapboxOSM, SLCLLDRoute, featureLayer, featureLayer1, featureLayer2, engineering, highlightLayer]
 }).fitWorld();
 
 var engineering = L.esri.featureLayer({
@@ -1382,6 +1458,7 @@ var baseLayers = {
 var overlayLayers = {
   "<span id='layer-name'>Routes</span>": featureLayer,
   "<span id='layer-name1'>Restoration</span>": featureLayer1,
+  "<span id='layer-name1'>Eng.Routes</span>": featureLayer2,
   "<span id='layer-name2'>Engineered</span>": SLCLLDRoute,
 };
 
