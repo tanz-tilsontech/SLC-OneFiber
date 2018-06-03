@@ -1445,6 +1445,11 @@ var featureLayer2 = L.geoJson(null, {
         color: "orange",
         weight: 7
       };
+    } else if (feature.properties.oofstatus === "In Design") {
+      return {
+        color: "white",
+        weight: 7
+      };
     }
   },
   onEachFeature: function (feature, layer) {
