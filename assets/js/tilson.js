@@ -661,23 +661,7 @@ var properties2 = [{
     sortable: true
   },
   filter: {
-    type: "integer",
-    input: "number",
-    vertical: true,
-    multiple: true,
-    operators: ["equal", "not_equal"],
-    values: []
-  }
-},
-{
-  value: "actuallength",
-  label: "Actual Length",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "integer",
+    type: "string",
     input: "number",
     vertical: true,
     multiple: true,
