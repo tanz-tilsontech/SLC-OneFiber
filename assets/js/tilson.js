@@ -1391,6 +1391,11 @@ var featureLayer1 = L.geoJson(null, {
 
 
 var featureLayer2 = L.geoJson(null, {
+  filter: function (feature) {
+    if (feature.properties.oofstatus === "Cable Placed") {
+      return true;
+    };
+  },
   pointToLayer: function (feature, latlng) {
     return L.marker(latlng, {
       title: feature.properties["fqn_id"],
