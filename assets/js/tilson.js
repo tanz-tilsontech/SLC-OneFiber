@@ -1444,7 +1444,7 @@ var featureLayer1 = L.geoJson(null, {
 
 var featureLayer2 = L.geoJson(null, {
   filter: function (feature) {
-    if (feature.properties.oofstatus != "") {
+    if (feature.properties.oofstatus === "Cable Placed" || feature.properties.oofstatus === "Construction Underway" || feature.properties.oofstatus === "Permits Received" ||feature.properties.oofstatus === "Permits Submitted" || feature.properties.oofstatus === "In Design") {
       return true;
     };
   },
@@ -1462,6 +1462,11 @@ var featureLayer2 = L.geoJson(null, {
     } else if (feature.properties.oofstatus === "Permits Received") {
       return {
         color: "orange",
+        weight: 10
+      };
+    } else if (feature.properties.oofstatus === "Permits Submitted") {
+      return {
+        color: "blue",
         weight: 10
       };
     } else if (feature.properties.oofstatus === "In Design") {
