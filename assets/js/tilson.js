@@ -1133,13 +1133,13 @@ function buildConfig() {
       "click .zoom": function (e, value, row, index) {
         var layer = featureLayer.getLayer(row.leaflet_stamp);
         map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 19);
-        highlightLayer.clearLayers();
-        highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
+        highlightLayer2.clearLayers();
+        highlightLayer2.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
       },
       "click .identify": function (e, value, row, index) {
         identifyFeature(row.leaflet_stamp);
-        highlightLayer.clearLayers();
-        highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
+        highlightLayer2.clearLayers();
+        highlightLayer2.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
       }
     }
   }];
@@ -1221,13 +1221,13 @@ function buildRestoConfig() {
       "click .zoom": function (e, value, row, index) {
         var layer = featureLayer1.getLayer(row.leaflet_stamp);
         map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 19);
-        highlightLayer.clearLayers();
-        highlightLayer.addData(featureLayer1.getLayer(row.leaflet_stamp).toGeoJSON());
+        highlightLayer2.clearLayers();
+        highlightLayer2.addData(featureLayer1.getLayer(row.leaflet_stamp).toGeoJSON());
       },
       "click .identify": function (e, value, row, index) {
         identifyFeature1(row.leaflet_stamp);
-        highlightLayer.clearLayers();
-        highlightLayer.addData(featureLayer1.getLayer(row.leaflet_stamp).toGeoJSON());
+        highlightLayer2.clearLayers();
+        highlightLayer2.addData(featureLayer1.getLayer(row.leaflet_stamp).toGeoJSON());
       }
     }
   }];
@@ -1282,6 +1282,94 @@ function buildRestoConfig() {
 
   buildRestoFilter();
   buildRestoTable();
+}
+
+
+function buildFiberConfig() {
+  filters = [];
+  table = [{
+    field: "action",
+    title: "<i class='fa fa-gear'></i>&nbsp;Action",
+    align: "center",
+    valign: "middle",
+    width: "75px",
+    cardVisible: false,
+    switchable: false,
+    formatter: function(value, row, index) {
+      return [
+        '<a class="zoom" href="javascript:void(0)" title="Zoom" style="margin-right: 10px;">',
+          '<i class="fa fa-search-plus"></i>',
+        '</a>',
+        '<a class="identify" href="javascript:void(0)" title="Identify" style="margin-right: 10px;">',
+          '<i class="fa fa-info-circle"></i>',
+        '</a>'
+      ].join("");
+    },
+    events: {
+      "click .zoom": function (e, value, row, index) {
+        var layer = featureLayer2.getLayer(row.leaflet_stamp);
+        map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 19);
+        highlightLayer.clearLayers();
+        highlightLayer.addData(featureLayer2.getLayer(row.leaflet_stamp).toGeoJSON());
+      },
+      "click .identify": function (e, value, row, index) {
+        identifyFeature2(row.leaflet_stamp);
+        highlightLayer.clearLayers();
+        highlightLayer.addData(featureLayer2.getLayer(row.leaflet_stamp).toGeoJSON());
+      }
+    }
+  }];
+
+  $.each(properties2, function(index, value) {
+    // Filter config
+    if (value.filter) {
+      var id;
+      if (value.filter.type == "integer") {
+        id = "cast(properties->"+ value.value +" as int)";
+      }
+      else if (value.filter.type == "double") {
+        id = "cast(properties->"+ value.value +" as double)";
+      }
+      else {
+        id = "properties->" + value.value;
+      }
+      filters.push({
+        id: id,
+        label: value.label
+      });
+      $.each(value.filter, function(key, val) {
+        if (filters[index]) {
+          // If values array is empty, fetch all distinct values
+          if (key == "values" && val.length === 0) {
+            alasql("SELECT DISTINCT(properties->"+value.value+") AS field FROM ? ORDER BY field ASC", [geojson2.features], function(results){
+              distinctValues = [];
+              $.each(results, function(index, value) {
+                distinctValues.push(value.field);
+              });
+            });
+            filters[index].values = distinctValues;
+          } else {
+            filters[index][key] = val;
+          }
+        }
+      });
+    }
+    // Table config
+    if (value.table) {
+      table.push({
+        field: value.value,
+        title: value.label
+      });
+      $.each(value.table, function(key, val) {
+        if (table[index+1]) {
+          table[index+1][key] = val;
+        }
+      });
+    }
+  });
+
+  buildFiberFilter();
+  buildFiberTable();
 }
 
 // Basemap Layers
@@ -1716,6 +1804,13 @@ function buildRestoFilter() {
   });
 }
 
+function buildFiberFilter() {
+  $("#fiberFilter").queryBuilder({
+    allow_empty: true,
+    filters: filters
+  });
+}
+
 
 
 function applyRoutesFilter() {
@@ -1743,6 +1838,20 @@ function applyRestoFilter() {
     syncRestoTable();
   });
 }
+
+function applyFiberFilter() {
+  var query = "SELECT * FROM ?";
+  var sql = $("#fiberFilter").queryBuilder("getSQL", false, false).sql;
+  if (sql.length > 0) {
+    query += " WHERE " + sql;
+  }
+  alasql(query, [geojson2.features], function(features){
+    featureLayer2.clearLayers();
+    featureLayer2.addData(features);
+    syncFiberTable();
+  });
+}
+
 
 function buildRoutesTable() {
   $("#table").bootstrapTable({
@@ -1820,6 +1929,45 @@ function buildRestoTable() {
   });
 }
 
+function buildFiberTable() {
+  $("#fiberTable").bootstrapTable({
+    cache: false,
+    height: $("#fiber-table-container").height(),
+    undefinedText: "",
+    striped: false,
+    pagination: false,
+    minimumCountColumns: 1,
+    sortName: config.sortProperty,
+    sortOrder: config.sortOrder,
+    toolbar: "#fiber-toolbar",
+    search: true,
+    trimOnSearch: false,
+    showColumns: true,
+    showToggle: true,
+    columns: table,
+    onClickRow: function(row, $element) {
+      var layer = featureLayer2.getLayer(row.leaflet_stamp);
+      map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 19);
+      highlightLayer.clearLayers();
+      highlightLayer.addData(featureLayer2.getLayer(row.leaflet_stamp).toGeoJSON());
+    },
+    onDblClickRow: function(row) {
+      identifyFeature2(row.leaflet_stamp);
+      highlightLayer.clearLayers();
+      highlightLayer.addData(featureLayer2.getLayer(row.leaflet_stamp).toGeoJSON());
+    },
+  });
+
+  map.fitBounds(featureLayer2.getBounds());
+
+  $(window).resize(function () {
+    $("#fiberTable").bootstrapTable("resetView", {
+      height: $("#fiber-table-container").height()
+    });
+  });
+}
+
+
 function syncRoutesTable() {
   tableFeatures = [];
   featureLayer.eachLayer(function (layer) {
@@ -1859,6 +2007,27 @@ function syncRestoTable() {
     $("#resto-feature-count").html($("#restoTable").bootstrapTable("getData").length + " visible feature");
   } else {
     $("#resto-feature-count").html($("#restoTable").bootstrapTable("getData").length + " visible features");
+  }
+}
+
+function syncFiberTable() {
+  tableFeatures = [];
+  featureLayer2.eachLayer(function (layer) {
+    layer.feature.properties.leaflet_stamp = L.stamp(layer);
+    if (map.hasLayer(featureLayer2)) {
+      featureLayer2.getLayer()
+      layer.feature.geometry.type === "Point"
+      if (map.getBounds().contains(layer.getLatLng())) {
+        tableFeatures.push(layer.feature.properties);
+      }
+    }
+  });
+  $("#fiberTable").bootstrapTable("load", JSON.parse(JSON.stringify(tableFeatures)));
+  var featureCount = $("#fiberTable").bootstrapTable("getData").length;
+  if (featureCount == 1) {
+    $("#fiber-feature-count").html($("#fiberTable").bootstrapTable("getData").length + " visible feature");
+  } else {
+    $("#fiber-feature-count").html($("#fiberTable").bootstrapTable("getData").length + " visible features");
   }
 }
 
@@ -2452,6 +2621,7 @@ $(document).ready(function() {
 $("#refresh-btn").click(function() {
   featureLayer.clearLayers();
   featureLayer1.clearLayers();
+  featureLayer2.clearLayers();
   $.getJSON(config.geojson, function (data) {
     geojson = data;
     legendItems = {};
@@ -2470,12 +2640,23 @@ $("#refresh-btn").click(function() {
     featureLayer1.addData(data);
     $("#loading-mask").hide();
   });
+  $.getJSON(config2.geojson, function (data) {
+    geojson2 = data
+    features2 = $.map(geojson2.features, function(feature) {
+      return feature.properties;
+    });
+    featureLayer2.addData(data);
+    $("#loading-mask").hide();
+  });
   syncRoutesTable();
   buildRoutesTable();
   buildRoutesFilter();
   syncRestoTable();
   buildRestoTable();
   buildRestoFilter();
+  syncFiberTable();
+  buildFiberTable();
+  buildFiberFilter();
   map.fitBounds(featureLayer.getBounds());
   $(".navbar-collapse.in").collapse("hide");
   return false;
@@ -2495,6 +2676,12 @@ $("#filter-btn").click(function() {
 
 $("#resto-filter-btn").click(function() {
   $("#RestofilterModal").modal("show");
+  $(".navbar-collapse.in").collapse("hide");
+  return false;
+});
+
+$("#fiber-filter-btn").click(function() {
+  $("#FiberfilterModal").modal("show");
   $(".navbar-collapse.in").collapse("hide");
   return false;
 });
@@ -2538,6 +2725,13 @@ $("#apply-filter-btn").click(function() {
 $("#resto-apply-filter-btn").click(function() {
   applyRestoFilter();
   $('#RestofilterModal').modal('hide');
+  $(".navbar-collapse.in").collapse("hide");
+  return false;
+});
+
+$("#fiber-apply-filter-btn").click(function() {
+  applyRestoFilter();
+  $('#FiberfilterModal').modal('hide');
   $(".navbar-collapse.in").collapse("hide");
   return false;
 });

@@ -93,7 +93,7 @@
                 </li>
               </ul>
             </li>
-            <li><a id="legend-btn" href="#" data-toggle="collapse" data-target=".navbar-collapse.in" ><i class="glyphicon glyphicon-list-alt"></i> Legend</a></li>
+            <li><a href="#" id="filter-btn" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Filter</a></li>
             <li><a href="#" id="refresh-btn" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-refresh"></i>&nbsp;&nbsp;Refresh</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
@@ -149,6 +149,28 @@
         <span id="resto-feature-count" class="text-muted" style="padding-left: 15px;"></span>
       </div>
       <table id="restoTable"></table>
+    </div>
+
+    <div id="fiber-table-container"> 
+      <div id="fiber-toolbar" style="width: 400px;">
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-default" data-toggle="modal" data-target="#FiberfilterModal">
+            <i class="fa fa-filter"></i> Filter Data
+          </button>
+          <div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fa fa-cloud-download"></i> Export Data <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a href="#" id="fiber-download-csv-btn"><i class="fa fa-file-text-o"></i> CSV</a></li>
+              <li><a href="#" id="fiber-download-excel-btn"><i class="fa fa-file-excel-o"></i> Excel</a></li>
+              <li><a href="#" id="fiber-download-pdf-btn"><i class="fa fa-file-pdf-o"></i> PDF</a></li>
+            </ul>
+          </div>
+        </div>
+        <span id="fiber-feature-count" class="text-muted" style="padding-left: 15px;"></span>
+      </div>
+      <table id="fiberTable"></table>
     </div>
 
     <div class="modal fade" id="chartModal" tabindex="-1" role="dialog">
@@ -210,10 +232,14 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Filter Route Data<span id="record-count" class="badge pull-right" style="margin-right: 15px; margin-top: 2px;"></span></h4>
+            <h4 class="modal-title">Filter Data<span id="record-count" class="badge pull-right" style="margin-right: 15px; margin-top: 2px;"></span></h4>
           </div>
           <div class="modal-body">
             <div id="routesFilter"></div>
+            <br/>
+            <div id="restoFilter"></div>
+            <br/>
+            <div id="fiberFilter"></div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-info" id="reset-filter-btn"><i class="fa fa-undo"></i> Reset Filter</button>
@@ -236,6 +262,24 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-info" id="resto-reset-filter-btn"><i class="fa fa-undo"></i> Reset Filter</button>
             <button type="button" class="btn btn-primary" id="resto-apply-filter-btn"><i class="fa fa-filter"></i> Apply Filter</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="FiberfilterModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Filter Fiber Data<span id="fiber-record-count" class="badge pull-right" style="margin-right: 15px; margin-top: 2px;"></span></h4>
+          </div>
+          <div class="modal-body">
+            <div id="fiberFilter"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-info" id="fiber-reset-filter-btn"><i class="fa fa-undo"></i> Reset Filter</button>
+            <button type="button" class="btn btn-primary" id="fiber-apply-filter-btn"><i class="fa fa-filter"></i> Apply Filter</button>
           </div>
         </div>
       </div>
