@@ -603,7 +603,7 @@ var properties1 = [{
 
 
 
-// Properties of Routes in 3GIS
+// Properties of Fiber in 3GIS
 
 var properties2 = [{
   value: "workorderid",
@@ -623,22 +623,6 @@ var properties2 = [{
 },
 {
   value: "fqn_id",
-  label: "Route FQNID",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string",
-    input: "radio",
-    vertical: true,
-    multiple: true,
-    operators: ["equal", "not_equal"],
-    values: []
-  }
-},
-{
-  value: "fibercable_fqnid",
   label: "Fiber FQNID",
   table: {
     visible: true,
@@ -670,7 +654,103 @@ var properties2 = [{
   }
 },
 {
+  value: "calculatedlength",
+  label: "Status",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    input: "number",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
   value: "oofstatus",
+  label: "Status",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    input: "radio",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
+  value: "oofdateindesign",
+  label: "Status",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    input: "radio",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
+  value: "oofdatepermitsubmitted",
+  label: "Status",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    input: "radio",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
+  value: "oofdatepermitreceived",
+  label: "Status",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    input: "radio",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
+  value: "oofdateconstructionstarted",
+  label: "Status",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    input: "radio",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
+  value: "oofdatecableplaced",
   label: "Status",
   table: {
     visible: true,
@@ -1866,6 +1946,32 @@ $("#restoPicturesBtn").click(function() {
   $("#restoPicModal").modal("show");
   return false;
 });
+
+
+function identifyFeature2(id) {
+  var featureProperties = featureLayer3.getLayer(id).feature.properties;
+  var content = "<table class='table table-striped table-bordered table-condensed'>";
+  var photoLink = "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/photos";
+  $.each(featureProperties, function(key, value) {
+    if (!value) {
+      value = "";
+    }
+    if (typeof value == "string"  && value.indexOf("http://www.fulcrumapp") === 0) {
+      value = "<a href='" + value + "' target='_blank'>" + "Fulcrum Record" + "</a>";
+    }
+    $.each(properties2, function(index, property) {
+      if (key == property.value) {
+        if (property.info !== false) {
+          content += "<tr><th>" + property.label + "</th><td>" + value + "</td></tr>";
+        }
+      }
+    });
+  });
+  content += "<table>";
+  $("#feature-info2").html(content);
+  $("#feature2Modal").modal("show");
+};
+
 
 
 function RestoBeforePics(id) {
