@@ -1300,7 +1300,7 @@ var featureLayer1 = L.geoJson(null, {
 var featureLayer2 = L.geoJson(null, {
   pointToLayer: function (feature, latlng) {
     return L.marker(latlng, {
-      title: Feature.properties["fqn_id"],
+      title: feature.properties["fqn_id"],
       riseOnHover: true,
       icon: L.icon({
         iconUrl: "assets/pictures/markers/242424.png",
@@ -1310,7 +1310,7 @@ var featureLayer2 = L.geoJson(null, {
     });
   },
   onEachFeature: function (feature, layer) {
-    if (Feature.properties) {
+    if (feature.properties) {
       layer.on({
         click: function (e) {
           highlightLayer.clearLayers();
@@ -1326,7 +1326,7 @@ var featureLayer2 = L.geoJson(null, {
           $(".info-control").hide();
         }
       });
-      if (Feature.properties.oofstatus === "Permit Recieved") {
+      if (feature.properties.oofstatus === "Permit Recieved") {
         layer.setIcon(
           L.icon({
             iconUrl: "assets/pictures/markers/b3b3b3.png",
@@ -1334,7 +1334,7 @@ var featureLayer2 = L.geoJson(null, {
             iconAnchor: [15, 32]
           })
         );
-      } else if (Feature.properties.oofstatus === "Construction Underway") {
+      } else if (feature.properties.oofstatus === "Construction Underway") {
         layer.setIcon(
           L.icon({
             iconUrl: "assets/pictures/markers/704b10.png",
@@ -1404,8 +1404,8 @@ $.getJSON(config1.geojson, function (data) {
 
 $.getJSON(config2.geojson, function (data) {
   geojson2 = data
-  features2 = $.map(geojson1.features, function(feature) {
-    return Feature.properties;
+  features2 = $.map(geojson2.features, function(feature) {
+    return feature.properties;
   });
   featureLayer2.addData(data);
   $("#loading-mask").hide();
