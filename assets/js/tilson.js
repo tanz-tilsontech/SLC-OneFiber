@@ -1474,6 +1474,9 @@ var featureLayer2 = L.geoJson(null, {
 });
 
 
+L.path.touchHelper(featureLayer2).addTo(map);
+
+
 var featureLayer3 = L.geoJson(null, {
   style: function (feature) {
     return {
