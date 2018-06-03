@@ -1273,7 +1273,7 @@ var highlightLayer = L.geoJson(null, {
     return L.circleMarker(latlng, {
       radius: 7,
       color: "#FFF",
-      weight: 3,
+      weight: 6,
       opacity: 1,
       fillColor: "#ff0000",
       fillOpacity: 1,
@@ -1283,7 +1283,7 @@ var highlightLayer = L.geoJson(null, {
   style: function (feature) {
     return {
       color: "#ff0000",
-      weight: 3,
+      weight: 6,
       opacity: 1,
       fillColor: "#ff0000",
       fillOpacity: 0.5,
@@ -1314,6 +1314,20 @@ var highlightLayer2 = L.geoJson(null, {
     };
   }
 });
+
+
+var highlightLayer3 = L.geoJson(null, {
+  style: function (feature) {
+    return {
+      color: "#ff0000",
+      weight: 3,
+      opacity: 1,
+      fillOpacity: 0.3,
+      clickable: false
+    };
+  }
+});
+
 
 
 
@@ -1495,8 +1509,8 @@ var featureLayer3 = L.geoJson(null, {
           }
         },
         dblclick: function (e) {
-          highlightLayer.clearLayers();
-          highlightLayer.addData(featureLayer3.getLayer(L.stamp(layer)).toGeoJSON());
+          highlightLayer3.clearLayers();
+          highlightLayer3.addData(featureLayer3.getLayer(L.stamp(layer)).toGeoJSON());
           $(".info-control").html(feature.properties[config3.hoverProperty]);
           $(".info-control").show();
         }
@@ -1582,15 +1596,10 @@ $.getJSON(config3.geojson, function (data) {
 });
 
 
-
 var map = L.map("map", {
-  layers: [mapboxOSM, SLCLLDRoute, featureLayer, featureLayer1, featureLayer2, featureLayer3, highlightLayer, highlightLayer2]
+  layers: [mapboxOSM, SLCLLDRoute, featureLayer, featureLayer1, featureLayer2, featureLayer3, highlightLayer, highlightLayer2, highlightLayer3]
 }).fitWorld();
 
-
-$(document).ready(function() {
-  L.path.touchHelper(featureLayer2).addTo(map);
-});
 
 // ESRI geocoder
 var searchControl = L.esri.Geocoding.Controls.geosearch({
