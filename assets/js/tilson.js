@@ -1315,7 +1315,7 @@ var highlightLayer = L.geoJson(null, {
   style: function (feature) {
     return {
       color: "#ff0000",
-      weight: 8,
+      weight: 3,
       opacity: 1,
       fillColor: "#ff0000",
       fillOpacity: 1,
