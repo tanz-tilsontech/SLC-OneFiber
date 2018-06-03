@@ -1424,7 +1424,7 @@ var featureLayer2 = L.geoJson(null, {
           $(".info-control").hide();
         }
       });
-      if (feature.properties.oofstatus === "Permit Recieved") {
+      if (feature.properties.oofstatus === "Cable Placed") {
         layer.setIcon(
           L.icon({
             iconUrl: "assets/pictures/markers/b3b3b3.png",
