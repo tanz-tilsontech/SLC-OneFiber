@@ -1578,7 +1578,7 @@ $.getJSON(config3.geojson, function (data) {
 
 
 var map = L.map("map", {
-  layers: [mapboxOSM, SLCLLDRoute, featureLayer, featureLayer1, featureLayer2, featureLayer3, highlightLayer]
+  layers: [mapboxOSM, SLCLLDRoute, featureLayer, featureLayer1, featureLayer2, featureLayer3, highlightLayer, highlightLayer2]
 }).fitWorld();
 
 
