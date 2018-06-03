@@ -1611,11 +1611,6 @@ var map = L.map("map", {
 }).fitWorld();
 
 
-// ESRI geocoder
-var searchControl = L.esri.Geocoding.Controls.geosearch({
-  useMapBounds: 17
-}).addTo(map);
-
 // Info control
 var info = L.control({
   position: "bottomleft"
@@ -1648,7 +1643,7 @@ var overlayLayers = {
   "<span id='layer-name'>Routes</span>": featureLayer,
   "<span id='layer-name1'>Restoration</span>": featureLayer1,
   "<span id='layer-name1'>Fiber</span>": featureLayer2,
-  "<span id='layer-name1'>WO Areas</span>": featureLayer3,
+  "<span id='layer-name1'>Hub</span>": featureLayer3,
   "<span id='layer-name2'>Engineered</span>": SLCLLDRoute,
 };
 
