@@ -1322,7 +1322,7 @@ var highlightLayer3 = L.geoJson(null, {
       color: "#ff0000",
       weight: 3,
       opacity: 1,
-      fillOpacity: 0.3,
+      fillOpacity: 0.1,
       clickable: false
     };
   }
@@ -1500,7 +1500,7 @@ var featureLayer3 = L.geoJson(null, {
     if (feature.properties) {
       layer.on({
         click: function (e) {
-          highlightLayer.clearLayers();
+          highlightLayer3.clearLayers();
         },
         mouseover: function (e) {
           if (config3.hoverProperty) {
