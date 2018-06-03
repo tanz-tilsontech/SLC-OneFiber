@@ -27,9 +27,9 @@ var config = {
 // Configuration of Engineering in 3GIS
 
 var config2 = {
-  geojson: "https://tilsonwebdraco.3-gislive.com/arcgis/rest/services/SLClld/Tilsonslc_lld/MapServer/109/query?where=fqn_id+IS+NOT+NULL&outFields=*&f=geojson",
+  geojson: "https://tilsonwebdraco.3-gislive.com/arcgis/rest/services/SLClld/Tilsonslc_lld/MapServer/7/query?where=fqn_id+IS+NOT+NULL&outFields=*&f=geojson",
   title: "SLC OneFiber Tilson QC",
-  layerName: "Eng. Routes",
+  layerName: "Eng. Fiber",
   hoverProperty: "fqn_id",
   sortProperty: "fqn_id",
   sortOrder: "ascend",
