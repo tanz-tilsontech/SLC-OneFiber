@@ -1592,7 +1592,7 @@ var overlayLayers = {
   "<span id='layer-name'>Routes</span>": featureLayer,
   "<span id='layer-name1'>Restoration</span>": featureLayer1,
   "<span id='layer-name1'>Eng.Routes</span>": featureLayer2,
-  "<span id='layer-name1'>Eng.WO Areas</span>": featureLayer2,
+  "<span id='layer-name1'>Eng.WO Areas</span>": featureLayer3,
   "<span id='layer-name2'>Engineered</span>": SLCLLDRoute,
 };
 
