@@ -51,10 +51,10 @@ var config2 = {
 // Configuration of Restoration in Fulcrum
 
 var config3 = {
-  geojson: "https://tilsonwebdraco.3-gislive.com/arcgis/rest/services/SLClld/Tilsonslc_lld/MapServer/54/query?where=objectid+IS+NOT+NULL&outFields=*&f=geojson",
+  geojson: "https://tilsonwebdraco.3-gislive.com/arcgis/rest/services/SLClld/Tilsonslc_lld/MapServer/35/query?where=objectid+IS+NOT+NULL&outFields=*&f=geojson",
   layerName: "Work Order Area",
-  hoverProperty: "hubname",
-  sortProperty: "hubname",
+  hoverProperty: "workorderid",
+  sortProperty: "workorderid",
   sortOrder: "ascend",
 };
 
@@ -1441,15 +1441,10 @@ var featureLayer2 = L.geoJson(null, {
 
 var featureLayer3 = L.geoJson(null, {
   style: function (feature) {
-    if (feature.properties.oof_status  === "Permits Received") {
-      return {
-        color: "green"
-      };
-    } else if (feature.properties.oof_status  === "Permits Submitted") {
-      return {
-        color: "yellow"
-      };
-    }
+    return {
+      color: "orange",
+      fillOpacity: 0.2
+    };
   },
   onEachFeature: function (feature, layer) {
     if (feature.properties) {
@@ -1591,8 +1586,8 @@ var baseLayers = {
 var overlayLayers = {
   "<span id='layer-name'>Routes</span>": featureLayer,
   "<span id='layer-name1'>Restoration</span>": featureLayer1,
-  "<span id='layer-name1'>Eng.Routes</span>": featureLayer2,
-  "<span id='layer-name1'>Eng.WO Areas</span>": featureLayer3,
+  "<span id='layer-name1'>Fiber</span>": featureLayer2,
+  "<span id='layer-name1'>WO Areas</span>": featureLayer3,
   "<span id='layer-name2'>Engineered</span>": SLCLLDRoute,
 };
 
