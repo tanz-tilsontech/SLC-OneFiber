@@ -1397,11 +1397,13 @@ var featureLayer2 = L.geoJson(null, {
     };
   },
   pointToLayer: function (feature, latlng) {
-    return L.polyline(latlng, {
-      title: feature.properties["fqn_id"],
-      riseOnHover: true,
-      color: 'green'
-    });
+    if (feature.properties.oofstatus === "Cable Placed") {
+      return L.polyline(latlng, {
+        title: feature.properties["fqn_id"],
+        riseOnHover: true,
+        color: 'green'
+      });
+    }
   },
   onEachFeature: function (feature, layer) {
     if (feature.properties) {
@@ -1420,15 +1422,6 @@ var featureLayer2 = L.geoJson(null, {
           $(".info-control").hide();
         }
       });
-      if (feature.properties.oofstatus === "Cable Placed") {
-        pointToLayer: function (feature, latlng) {
-          return L.polyline(latlng, {
-            title: feature.properties["fqn_id"],
-            riseOnHover: true,
-            color: 'green'
-          });
-        }
-      }
     }
   }
 });
