@@ -1344,8 +1344,8 @@ var featureLayer = L.geoJson(null, {
           featureCXSignaturePics(L.stamp(layer));
           featureCPSignaturePics(L.stamp(layer));
           featureCablePics(L.stamp(layer));
-          highlightLayer.clearLayers();
-          highlightLayer.addData(featureLayer.getLayer(L.stamp(layer)).toGeoJSON());
+          highlightLayer2.clearLayers();
+          highlightLayer2.addData(featureLayer.getLayer(L.stamp(layer)).toGeoJSON());
         },
         mouseover: function (e) {
           if (config.hoverProperty) {
@@ -1391,8 +1391,8 @@ var featureLayer1 = L.geoJson(null, {
           identifyFeature1(L.stamp(layer));
           RestoBeforePics(L.stamp(layer));
           RestoAfterPics(L.stamp(layer));
-          highlightLayer.clearLayers();
-          highlightLayer.addData(featureLayer1.getLayer(L.stamp(layer)).toGeoJSON());
+          highlightLayer2.clearLayers();
+          highlightLayer2.addData(featureLayer1.getLayer(L.stamp(layer)).toGeoJSON());
         },
         mouseover: function (e) {
           if (config1.hoverProperty) {
