@@ -1283,10 +1283,10 @@ var highlightLayer = L.geoJson(null, {
   style: function (feature) {
     return {
       color: "#ff0000",
-      weight: 6,
+      weight: 8,
       opacity: 1,
       fillColor: "#ff0000",
-      fillOpacity: 0.5,
+      fillOpacity: 1,
       clickable: false
     };
   }
@@ -1443,6 +1443,11 @@ var featureLayer1 = L.geoJson(null, {
 
 
 var featureLayer2 = L.geoJson(null, {
+  filter: function (feature) {
+    if (feature.properties.oofstatus != "") {
+      return true;
+    };
+  },
   style: function (feature) {
     if (feature.properties.oofstatus === "Cable Placed") {
       return {
