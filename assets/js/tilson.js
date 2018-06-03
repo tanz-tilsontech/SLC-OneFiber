@@ -1341,7 +1341,7 @@ var featureLayer1 = L.geoJson(null, {
       riseOnHover: true,
       icon: L.icon({
         iconUrl: "assets/pictures/markers/242424.png",
-        iconSize: [10, 20]],
+        iconSize: [10, 20],
         iconAnchor: [15, 32]
       })
     });
