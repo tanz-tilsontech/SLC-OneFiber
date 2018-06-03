@@ -1291,7 +1291,7 @@ var featureLayer = L.geoJson(null, {
       riseOnHover: true,
       icon: L.icon({
         iconUrl: "assets/pictures/markers/cb0d0c.png",
-        iconSize: [30, 40],
+        iconSize: [10, 20],
         iconAnchor: [15, 32]
       })
     });
@@ -1323,7 +1323,7 @@ var featureLayer = L.geoJson(null, {
         layer.setIcon(
           L.icon({
             iconUrl: "assets/pictures/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
-            iconSize: [30, 40],
+            iconSize: [10, 20],
             iconAnchor: [15, 32]
           })
         );
@@ -1341,7 +1341,7 @@ var featureLayer1 = L.geoJson(null, {
       riseOnHover: true,
       icon: L.icon({
         iconUrl: "assets/pictures/markers/242424.png",
-        iconSize: [30, 40],
+        iconSize: [10, 20]],
         iconAnchor: [15, 32]
       })
     });
@@ -1370,7 +1370,7 @@ var featureLayer1 = L.geoJson(null, {
         layer.setIcon(
           L.icon({
             iconUrl: "assets/pictures/markers/b3b3b3.png",
-            iconSize: [30, 40],
+            iconSize: [10, 20],
             iconAnchor: [15, 32]
           })
         );
@@ -1378,7 +1378,7 @@ var featureLayer1 = L.geoJson(null, {
         layer.setIcon(
           L.icon({
             iconUrl: "assets/pictures/markers/704b10.png",
-            iconSize: [30, 40],
+            iconSize: [10, 20],
             iconAnchor: [15, 32]
           })
         );
@@ -1394,13 +1394,13 @@ var featureLayer2 = L.geoJson(null, {
   style: function (feature) {
     if (feature.properties.oofstatus === "Cable Placed") {
       return {
-        color: "green",
-        weight: 5
+        color: "87d30f",
+        weight: 10
       };
     } else if (feature.properties.oofstatus === "Construction Underway") {
       return {
-        color: "blue",
-        weight: 5
+        color: "1891c9",
+        weight: 10
       };
     }
   },
@@ -1412,6 +1412,12 @@ var featureLayer2 = L.geoJson(null, {
           highlightLayer.addData(featureLayer2.getLayer(L.stamp(layer)).toGeoJSON());
           $(".info-control").html(feature.properties[config2.hoverProperty]);
           $(".info-control").show();
+        },
+        mouseover: function (e) {
+          if (config2.hoverProperty) {
+            $(".info-control").html(feature.properties[config2.hoverProperty]);
+            $(".info-control").show();
+          }
         }
       });
     }
