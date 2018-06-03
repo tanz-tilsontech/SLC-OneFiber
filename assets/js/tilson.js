@@ -1451,7 +1451,7 @@ var featureLayer2 = L.geoJson(null, {
       };
     } else if (feature.properties.oofstatus === "Construction Underway") {
       return {
-        color: "yellow",
+        color: "magenta",
         weight: 10
       };
     } else if (feature.properties.oofstatus === "Permits Received") {
