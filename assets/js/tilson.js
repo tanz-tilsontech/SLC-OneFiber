@@ -1337,7 +1337,7 @@ var featureLayer = L.geoJson(null, {
   onEachFeature: function (feature, layer) {
     if (feature.properties) {
       layer.on({
-        click: function (e) {
+        dblclick: function (e) {
           identifyFeature(L.stamp(layer));
           featureBluestakes(L.stamp(layer));
           featurePotholePics(L.stamp(layer));
@@ -1355,6 +1355,10 @@ var featureLayer = L.geoJson(null, {
         },
         mouseout: function (e) {
           $(".info-control").hide();
+        },
+        click: function (e) {
+          highlightLayer2.clearLayers();
+          highlightLayer2.addData(featureLayer.getLayer(L.stamp(layer)).toGeoJSON());
         }
       });
       if (feature.properties["marker-color"]) {
@@ -1387,7 +1391,7 @@ var featureLayer1 = L.geoJson(null, {
   onEachFeature: function (feature, layer) {
     if (feature.properties) {
       layer.on({
-        click: function (e) {
+        dblclick: function (e) {
           identifyFeature1(L.stamp(layer));
           RestoBeforePics(L.stamp(layer));
           RestoAfterPics(L.stamp(layer));
@@ -1402,6 +1406,10 @@ var featureLayer1 = L.geoJson(null, {
         },
         mouseout: function (e) {
           $(".info-control").hide();
+        },
+        click: function (e) {
+          highlightLayer2.clearLayers();
+          highlightLayer2.addData(featureLayer1.getLayer(L.stamp(layer)).toGeoJSON());
         }
       });
       if (feature.properties.restoration_complete_contractor === "Yes" && feature.properties.restoration_complete_tilson === "No") {
