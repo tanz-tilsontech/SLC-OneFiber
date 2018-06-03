@@ -1590,7 +1590,7 @@ var map = L.map("map", {
 
 $(document).ready(function() {
   L.path.touchHelper(featureLayer2).addTo(map);
-}
+});
 
 // ESRI geocoder
 var searchControl = L.esri.Geocoding.Controls.geosearch({
