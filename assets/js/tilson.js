@@ -1484,27 +1484,27 @@ var featureLayer2 = L.geoJson(null, {
     if (feature.properties.oofstatus === "Cable Placed") {
       return {
         color: "green",
-        weight: 10
+        weight: 6
       };
     } else if (feature.properties.oofstatus === "Construction Underway") {
       return {
         color: "magenta",
-        weight: 10
+        weight: 6
       };
     } else if (feature.properties.oofstatus === "Permits Received") {
       return {
         color: "orange",
-        weight: 10
+        weight: 6
       };
     } else if (feature.properties.oofstatus === "Permits Submitted") {
       return {
         color: "blue",
-        weight: 10
+        weight: 6
       };
     } else if (feature.properties.oofstatus === "In Design") {
       return {
         color: "gray",
-        weight: 10
+        weight: 6
       };
     }
   },
