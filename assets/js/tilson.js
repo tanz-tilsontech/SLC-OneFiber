@@ -35,6 +35,20 @@ var config2 = {
   sortOrder: "ascend",
 };
 
+
+// Configuration of Restoration in Fulcrum
+
+var config1 = {
+  geojson: "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94.geojson?child=restoration_repeat",
+  layerName: "Restoration",
+  hoverProperty: "restoration_items",
+  sortProperty: "date_resto",
+  sortOrder: "ascend",
+};
+
+
+// Properties of Routes in Fulcrum
+
 var properties = [{
   value: "prints",
   label: "Prints",
@@ -398,15 +412,8 @@ var properties = [{
 }];
 
 
-// Configuration of Restoration in Fulcrum
 
-var config1 = {
-  geojson: "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94.geojson?child=restoration_repeat",
-  layerName: "Restoration",
-  hoverProperty: "restoration_items",
-  sortProperty: "date_resto",
-  sortOrder: "ascend",
-};
+// Properties of Restoration in Fulcrum
 
 var properties1 = [{
   value: "fulcrum_record_resto",
@@ -579,6 +586,92 @@ var properties1 = [{
     values: []
   }
 }];
+
+
+
+// Properties of Routes in 3GIS
+
+var properties2 = [{
+  value: "workorderid",
+  label: "WPID",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    input: "radio",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
+  value: "fqn_id",
+  label: "Route FQNID",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    input: "radio",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
+  value: "fibercable_fqnid",
+  label: "Fiber FQNID",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    input: "radio",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
+  value: "sitespannfid",
+  label: "Site NFID",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    input: "radio",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
+  value: "oofstatus",
+  label: "Status",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    input: "radio",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+}];
+
 
 
 var restoBeforeProps = [{
@@ -1337,7 +1430,7 @@ var featureLayer2 = L.geoJson(null, {
       } else if (feature.properties.oofstatus === "Construction Underway") {
         layer.setIcon(
           L.icon({
-            iconUrl: "assets/pictures/markers/704b10.png",
+            iconUrl: "assets/pictures/markers/1891c9.png",
             iconSize: [30, 40],
             iconAnchor: [15, 32]
           })
