@@ -30,7 +30,7 @@ var config2 = {
   geojson: "https://tilsonwebdraco.3-gislive.com/arcgis/rest/services/SLClld/Tilsonslc_lld/MapServer/109/query?where=fqn_id+IS+NOT+NULL&outFields=*&f=geojson",
   title: "SLC OneFiber Tilson QC",
   layerName: "Eng. Routes",
-  hoverProperty: "status_title_github",
+  hoverProperty: "fqn_id",
   sortProperty: "fqn_id",
   sortOrder: "ascend",
 };
