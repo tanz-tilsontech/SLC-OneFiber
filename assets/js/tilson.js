@@ -2016,7 +2016,7 @@ function syncFiberTable() {
     layer.feature.properties.leaflet_stamp = L.stamp(layer);
     if (map.hasLayer(featureLayer2)) {
       featureLayer2.getLayer()
-      layer.feature.geometry.type === "Point"
+      layer.feature.geometry.type === "Polyline"
       if (map.getBounds().contains(layer.getLatLng())) {
         tableFeatures.push(layer.feature.properties);
       }
@@ -2717,6 +2717,8 @@ $("#view-sql-btn").click(function() {
 
 $("#apply-filter-btn").click(function() {
   applyRoutesFilter();
+  applyRestoFilter();
+  applyFiberFilter();
   $('#filterModal').modal('hide');
   $(".navbar-collapse.in").collapse("hide");
   return false;
@@ -2730,7 +2732,7 @@ $("#resto-apply-filter-btn").click(function() {
 });
 
 $("#fiber-apply-filter-btn").click(function() {
-  applyRestoFilter();
+  applyFiberFilter();
   $('#FiberfilterModal').modal('hide');
   $(".navbar-collapse.in").collapse("hide");
   return false;
