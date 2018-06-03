@@ -1394,21 +1394,15 @@ var featureLayer2 = L.geoJson(null, {
   style: function (feature) {
     if (feature.properties.oofstatus === "Cable Placed") {
       return {
-        color: "green"
+        color: "green",
+        weight: 5
       };
     } else if (feature.properties.oofstatus === "Construction Underway") {
       return {
-        color: "blue"
+        color: "blue",
+        weight: 5
       };
     }
-  },
-  pointToLayer: function (feature, latlng) {
-    return L.polyline(latlng, {
-      title: feature.properties["fqn_id"],
-      riseOnHover: true,
-      weight: 5,
-      color: 'green'
-    });
   },
   onEachFeature: function (feature, layer) {
     if (feature.properties) {
