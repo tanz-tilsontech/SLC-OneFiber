@@ -1394,12 +1394,12 @@ var featureLayer2 = L.geoJson(null, {
   style: function (feature) {
     if (feature.properties.oofstatus === "Cable Placed") {
       return {
-        color: "87d30f",
+        color: '87d30f',
         weight: 10
       };
     } else if (feature.properties.oofstatus === "Construction Underway") {
       return {
-        color: "1891c9",
+        color: '1891c9',
         weight: 10
       };
     }
