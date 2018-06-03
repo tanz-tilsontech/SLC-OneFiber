@@ -24,17 +24,6 @@ var config = {
   sortOrder: "ascend",
 };
 
-// Configuration of Engineering in 3GIS
-
-var config2 = {
-  geojson: "https://tilsonwebdraco.3-gislive.com/arcgis/rest/services/SLClld/Tilsonslc_lld/MapServer/7/query?where=fqn_id+IS+NOT+NULL&outFields=*&f=geojson",
-  title: "SLC OneFiber Tilson QC",
-  layerName: "Eng. Fiber",
-  hoverProperty: "fqn_id",
-  sortProperty: "fqn_id",
-  sortOrder: "ascend",
-};
-
 
 // Configuration of Restoration in Fulcrum
 
@@ -45,6 +34,31 @@ var config1 = {
   sortProperty: "date_resto",
   sortOrder: "ascend",
 };
+
+
+// Configuration of Engineering in 3GIS
+
+var config2 = {
+  geojson: "https://tilsonwebdraco.3-gislive.com/arcgis/rest/services/SLClld/Tilsonslc_lld/MapServer/54/query?where=fqn_id+IS+NOT+NULL&outFields=*&f=geojson",
+  title: "SLC OneFiber Tilson QC",
+  layerName: "Eng. Fiber",
+  hoverProperty: "fqn_id",
+  sortProperty: "fqn_id",
+  sortOrder: "ascend",
+};
+
+
+// Configuration of Restoration in Fulcrum
+
+var config3 = {
+  geojson: "https://tilsonwebdraco.3-gislive.com/arcgis/rest/services/SLClld/Tilsonslc_lld/MapServer/7/query?where=objectid+IS+NOT+NULL&outFields=*&f=geojson",
+  layerName: "Work Order Area",
+  hoverProperty: "hubname",
+  sortProperty: "hubname",
+  sortOrder: "ascend",
+};
+
+
 
 
 // Properties of Routes in Fulcrum
@@ -1291,7 +1305,7 @@ var featureLayer = L.geoJson(null, {
       riseOnHover: true,
       icon: L.icon({
         iconUrl: "assets/pictures/markers/cb0d0c.png",
-        iconSize: [10, 20],
+        iconSize: [30, 40],
         iconAnchor: [15, 32]
       })
     });
@@ -1323,7 +1337,7 @@ var featureLayer = L.geoJson(null, {
         layer.setIcon(
           L.icon({
             iconUrl: "assets/pictures/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
-            iconSize: [10, 20],
+            iconSize: [30, 40],
             iconAnchor: [15, 32]
           })
         );
@@ -1341,7 +1355,7 @@ var featureLayer1 = L.geoJson(null, {
       riseOnHover: true,
       icon: L.icon({
         iconUrl: "assets/pictures/markers/242424.png",
-        iconSize: [10, 20],
+        iconSize: [30, 40],
         iconAnchor: [15, 32]
       })
     });
@@ -1370,7 +1384,7 @@ var featureLayer1 = L.geoJson(null, {
         layer.setIcon(
           L.icon({
             iconUrl: "assets/pictures/markers/b3b3b3.png",
-            iconSize: [10, 20],
+            iconSize: [30, 40],
             iconAnchor: [15, 32]
           })
         );
@@ -1378,7 +1392,7 @@ var featureLayer1 = L.geoJson(null, {
         layer.setIcon(
           L.icon({
             iconUrl: "assets/pictures/markers/704b10.png",
-            iconSize: [10, 20],
+            iconSize: [30, 40],
             iconAnchor: [15, 32]
           })
         );
@@ -1394,12 +1408,12 @@ var featureLayer2 = L.geoJson(null, {
   style: function (feature) {
     if (feature.properties.oofstatus === "Cable Placed") {
       return {
-        color: '87d30f',
+        color: "green",
         weight: 10
       };
     } else if (feature.properties.oofstatus === "Construction Underway") {
       return {
-        color: '1891c9',
+        color: "yellow",
         weight: 10
       };
     }
@@ -1416,6 +1430,39 @@ var featureLayer2 = L.geoJson(null, {
         mouseover: function (e) {
           if (config2.hoverProperty) {
             $(".info-control").html(feature.properties[config2.hoverProperty]);
+            $(".info-control").show();
+          }
+        }
+      });
+    }
+  }
+});
+
+
+var featureLayer3 = L.geoJson(null, {
+  style: function (feature) {
+    if (feature.properties.oofstatus === "Permits Received") {
+      return {
+        color: "green"
+      };
+    } else if (feature.properties.oofstatus === "Permits Submitted") {
+      return {
+        color: "yellow"
+      };
+    }
+  },
+  onEachFeature: function (feature, layer) {
+    if (feature.properties) {
+      layer.on({
+        click: function (e) {
+          highlightLayer.clearLayers();
+          highlightLayer.addData(featureLayer3.getLayer(L.stamp(layer)).toGeoJSON());
+          $(".info-control").html(feature.properties[config3.hoverProperty]);
+          $(".info-control").show();
+        },
+        mouseover: function (e) {
+          if (config3.hoverProperty) {
+            $(".info-control").html(feature.properties[config3.hoverProperty]);
             $(".info-control").show();
           }
         }
@@ -1477,7 +1524,7 @@ $.getJSON(config1.geojson, function (data) {
 });
 
 
-// Fetch the Restoration GeoJSON file
+// Fetch the Fiber Cable GeoJSON file
 
 $.getJSON(config2.geojson, function (data) {
   geojson2 = data
@@ -1489,10 +1536,21 @@ $.getJSON(config2.geojson, function (data) {
 });
 
 
+// Fetch the Work Area GeoJSON file
+
+$.getJSON(config3.geojson, function (data) {
+  geojson3 = data
+  features3 = $.map(geojson3.features, function(feature) {
+    return feature.properties;
+  });
+  featureLayer3.addData(data);
+  $("#loading-mask").hide();
+});
+
 
 
 var map = L.map("map", {
-  layers: [mapboxOSM, SLCLLDRoute, featureLayer, featureLayer1, featureLayer2, highlightLayer]
+  layers: [mapboxOSM, SLCLLDRoute, featureLayer, featureLayer1, featureLayer2, featureLayer3, highlightLayer]
 }).fitWorld();
 
 
@@ -1534,6 +1592,7 @@ var overlayLayers = {
   "<span id='layer-name'>Routes</span>": featureLayer,
   "<span id='layer-name1'>Restoration</span>": featureLayer1,
   "<span id='layer-name1'>Eng.Routes</span>": featureLayer2,
+  "<span id='layer-name1'>Eng.WO Areas</span>": featureLayer2,
   "<span id='layer-name2'>Engineered</span>": SLCLLDRoute,
 };
 
