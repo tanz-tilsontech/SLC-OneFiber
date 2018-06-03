@@ -1474,8 +1474,8 @@ var featureLayer3 = L.geoJson(null, {
     if (feature.properties) {
       layer.on({
         click: function (e) {
-          highlightLayer2.clearLayers();
-          highlightLayer2.addData(featureLayer3.getLayer(L.stamp(layer)).toGeoJSON());
+          highlightLayer.clearLayers();
+          highlightLayer.addData(featureLayer3.getLayer(L.stamp(layer)).toGeoJSON());
           $(".info-control").html(feature.properties[config3.hoverProperty]);
           $(".info-control").show();
         },
@@ -1486,7 +1486,7 @@ var featureLayer3 = L.geoJson(null, {
           }
         },
         dblclick: function (e) {
-          highlightLayer2.clearLayers();
+          highlightLayer.clearLayers();
         }
       });
     }
