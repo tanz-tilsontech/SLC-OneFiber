@@ -1314,10 +1314,10 @@ var highlightLayer = L.geoJson(null, {
   },
   style: function (feature) {
     return {
-      color: "#ff0000",
+      color: "#242424",
       weight: 3,
       opacity: 1,
-      fillColor: "#ff0000",
+      fillColor: "#242424",
       fillOpacity: 1,
       clickable: false
     };
