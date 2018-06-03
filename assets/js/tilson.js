@@ -654,6 +654,38 @@ var properties2 = [{
   }
 },
 {
+  value: "cabletype",
+  label: "Cable Type",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    input: "radio",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
+  value: "fibercount",
+  label: "Strand Count",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "integer",
+    input: "radio",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
   value: "calculatedlength",
   label: "Engineered Length",
   table: {
@@ -661,7 +693,7 @@ var properties2 = [{
     sortable: true
   },
   filter: {
-    type: "string",
+    type: "integer",
     input: "number",
     vertical: true,
     multiple: true,
