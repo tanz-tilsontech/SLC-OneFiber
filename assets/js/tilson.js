@@ -1440,6 +1440,21 @@ var featureLayer2 = L.geoJson(null, {
         color: "yellow",
         weight: 10
       };
+    } else if (feature.properties.oofstatus === "Permits Submitted") {
+      return {
+        color: "blue",
+        weight: 10
+      };
+    } else if (feature.properties.oofstatus === "Permits Received") {
+      return {
+        color: "orange",
+        weight: 10
+      };
+    } else {
+      return {
+        color: "pink",
+        weight: 10
+      };
     }
   },
   onEachFeature: function (feature, layer) {
