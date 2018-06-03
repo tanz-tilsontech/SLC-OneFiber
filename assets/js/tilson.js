@@ -1397,14 +1397,10 @@ var featureLayer2 = L.geoJson(null, {
     };
   },
   pointToLayer: function (feature, latlng) {
-    return L.Polyline(latlng, {
+    return L.polyline(latlng, {
       title: feature.properties["fqn_id"],
       riseOnHover: true,
-      icon: L.icon({
-        iconUrl: "assets/pictures/markers/87d30f.png",
-        iconSize: [30, 40],
-        iconAnchor: [15, 32]
-      })
+      color: 'green'
     });
   },
   onEachFeature: function (feature, layer) {
@@ -1425,7 +1421,7 @@ var featureLayer2 = L.geoJson(null, {
         }
       });
       if (feature.properties.oofstatus === "Cable Placed") {
-        return L.Polyline(latlng, {
+        return L.polyline(latlng, {
           title: feature.properties["fqn_id"],
           riseOnHover: true,
           icon: L.icon({
