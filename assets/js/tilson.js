@@ -1587,7 +1587,7 @@ var map = L.map("map", {
   layers: [mapboxOSM, SLCLLDRoute, featureLayer, featureLayer1, featureLayer2, featureLayer3, highlightLayer, highlightLayer2]
 }).fitWorld();
 
-map.almostOver.addLayer(featureLayer2);
+L.path.touchHelper(featureLayer2).addTo(map);
 
 // ESRI geocoder
 var searchControl = L.esri.Geocoding.Controls.geosearch({
