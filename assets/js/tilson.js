@@ -1481,9 +1481,6 @@ var featureLayer3 = L.geoJson(null, {
       layer.on({
         click: function (e) {
           highlightLayer.clearLayers();
-          highlightLayer.addData(featureLayer3.getLayer(L.stamp(layer)).toGeoJSON());
-          $(".info-control").html(feature.properties[config3.hoverProperty]);
-          $(".info-control").show();
         },
         mouseover: function (e) {
           if (config3.hoverProperty) {
@@ -1493,6 +1490,9 @@ var featureLayer3 = L.geoJson(null, {
         },
         dblclick: function (e) {
           highlightLayer.clearLayers();
+          highlightLayer.addData(featureLayer3.getLayer(L.stamp(layer)).toGeoJSON());
+          $(".info-control").html(feature.properties[config3.hoverProperty]);
+          $(".info-control").show();
         }
       });
     }
