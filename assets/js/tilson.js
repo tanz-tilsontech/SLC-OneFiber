@@ -1424,23 +1424,6 @@ var featureLayer2 = L.geoJson(null, {
           $(".info-control").hide();
         }
       });
-      if (feature.properties.oofstatus === "Cable Placed") {
-        layer.setIcon(
-          L.icon({
-            iconUrl: "assets/pictures/markers/b3b3b3.png",
-            iconSize: [30, 40],
-            iconAnchor: [15, 32]
-          })
-        );
-      } else if (feature.properties.oofstatus === "Cable Placed") {
-        layer.setIcon(
-          L.icon({
-            iconUrl: "assets/pictures/markers/1891c9.png",
-            iconSize: [30, 40],
-            iconAnchor: [15, 32]
-          })
-        );
-      }
     }
   }
 });
