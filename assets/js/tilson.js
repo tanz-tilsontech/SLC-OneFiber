@@ -1466,8 +1466,8 @@ var featureLayer2 = L.geoJson(null, {
 var featureLayer3 = L.geoJson(null, {
   style: function (feature) {
     return {
-      color: "orange",
-      fillOpacity: 0.2
+      color: "white",
+      fillOpacity: 0.1
     };
   },
   onEachFeature: function (feature, layer) {
@@ -1486,7 +1486,7 @@ var featureLayer3 = L.geoJson(null, {
           }
         },
         dblclick: function (e) {
-          $(".info-control").hide();
+          highlightLayer2.clearLayers();
         }
       });
     }
