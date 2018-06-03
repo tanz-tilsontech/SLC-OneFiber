@@ -39,7 +39,7 @@ var config1 = {
 // Configuration of Engineering in 3GIS
 
 var config2 = {
-  geojson: "https://tilsonwebdraco.3-gislive.com/arcgis/rest/services/SLClld/Tilsonslc_lld/MapServer/54/query?where=fqn_id+IS+NOT+NULL&outFields=*&f=geojson",
+  geojson: "https://tilsonwebdraco.3-gislive.com/arcgis/rest/services/SLClld/Tilsonslc_lld/MapServer/7/query?where=fqn_id+IS+NOT+NULL&outFields=*&f=geojson",
   title: "SLC OneFiber Tilson QC",
   layerName: "Eng. Fiber",
   hoverProperty: "fqn_id",
@@ -51,7 +51,7 @@ var config2 = {
 // Configuration of Restoration in Fulcrum
 
 var config3 = {
-  geojson: "https://tilsonwebdraco.3-gislive.com/arcgis/rest/services/SLClld/Tilsonslc_lld/MapServer/7/query?where=objectid+IS+NOT+NULL&outFields=*&f=geojson",
+  geojson: "https://tilsonwebdraco.3-gislive.com/arcgis/rest/services/SLClld/Tilsonslc_lld/MapServer/54/query?where=objectid+IS+NOT+NULL&outFields=*&f=geojson",
   layerName: "Work Order Area",
   hoverProperty: "hubname",
   sortProperty: "hubname",
@@ -1441,11 +1441,11 @@ var featureLayer2 = L.geoJson(null, {
 
 var featureLayer3 = L.geoJson(null, {
   style: function (feature) {
-    if (feature.properties.oofstatus === "Permits Received") {
+    if (feature.properties.oof_status  === "Permits Received") {
       return {
         color: "green"
       };
-    } else if (feature.properties.oofstatus === "Permits Submitted") {
+    } else if (feature.properties.oof_status  === "Permits Submitted") {
       return {
         color: "yellow"
       };
