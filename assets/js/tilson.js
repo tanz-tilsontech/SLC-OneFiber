@@ -1432,7 +1432,7 @@ var featureLayer2 = L.geoJson(null, {
             iconAnchor: [15, 32]
           })
         );
-      } else if (feature.properties.oofstatus === "Construction Underway") {
+      } else if (feature.properties.oofstatus === "Cable Placed") {
         layer.setIcon(
           L.icon({
             iconUrl: "assets/pictures/markers/1891c9.png",
