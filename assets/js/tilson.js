@@ -42,7 +42,7 @@ var config2 = {
   geojson: "https://tilsonwebdraco.3-gislive.com/arcgis/rest/services/SLClld/Tilsonslc_lld/MapServer/7/query?where=fqn_id+IS+NOT+NULL&outFields=*&f=geojson",
   title: "SLC OneFiber Tilson QC",
   layerName: "Eng. Fiber",
-  hoverProperty: "fqn_id"+","+"oof_status" ,
+  hoverProperty: "fqn_id",
   sortProperty: "fqn_id",
   sortOrder: "ascend",
 };
@@ -1433,27 +1433,17 @@ var featureLayer2 = L.geoJson(null, {
     if (feature.properties.oofstatus === "Cable Placed") {
       return {
         color: "green",
-        weight: 10
+        weight: 7
       };
     } else if (feature.properties.oofstatus === "Construction Underway") {
       return {
         color: "yellow",
-        weight: 10
-      };
-    } else if (feature.properties.oofstatus === "Permits Submitted") {
-      return {
-        color: "blue",
-        weight: 10
+        weight: 7
       };
     } else if (feature.properties.oofstatus === "Permits Received") {
       return {
-        color: "orange",
-        weight: 10
-      };
-    } else {
-      return {
-        color: "pink",
-        weight: 10
+        color: "red",
+        weight: 7
       };
     }
   },
