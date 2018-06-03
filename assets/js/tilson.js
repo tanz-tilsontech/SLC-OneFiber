@@ -1474,6 +1474,9 @@ var featureLayer3 = L.geoJson(null, {
             $(".info-control").html(feature.properties[config3.hoverProperty]);
             $(".info-control").show();
           }
+        },
+        dblclick: function (e) {
+          $(".info-control").hide();
         }
       });
     }
