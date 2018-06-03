@@ -1531,6 +1531,7 @@ var featureLayer2 = L.geoJson(null, {
     if (feature.properties) {
       layer.on({
         click: function (e) {
+          identifyFeature2(L.stamp(layer));
           highlightLayer.clearLayers();
           highlightLayer.addData(featureLayer2.getLayer(L.stamp(layer)).toGeoJSON());
           $(".info-control").html(feature.properties[config2.hoverProperty]);
@@ -1949,7 +1950,7 @@ $("#restoPicturesBtn").click(function() {
 
 
 function identifyFeature2(id) {
-  var featureProperties = featureLayer3.getLayer(id).feature.properties;
+  var featureProperties = featureLayer2.getLayer(id).feature.properties;
   var content = "<table class='table table-striped table-bordered table-condensed'>";
   var photoLink = "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/photos";
   $.each(featureProperties, function(key, value) {
