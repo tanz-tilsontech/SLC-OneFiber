@@ -1391,6 +1391,11 @@ var featureLayer1 = L.geoJson(null, {
 
 
 var featureLayer2 = L.geoJson(null, {
+  style: function (feature) {
+    return {
+      color: "green"
+    };
+  },
   filter: function (feature) {
     if (feature.properties.oofstatus === "Cable Placed") {
       return true;
@@ -1410,6 +1415,8 @@ var featureLayer2 = L.geoJson(null, {
         click: function (e) {
           highlightLayer.clearLayers();
           highlightLayer.addData(featureLayer2.getLayer(L.stamp(layer)).toGeoJSON());
+          $(".info-control").html(feature.properties[config2.hoverProperty]);
+          $(".info-control").show();
         },
         mouseover: function (e) {
           if (config2.hoverProperty) {
