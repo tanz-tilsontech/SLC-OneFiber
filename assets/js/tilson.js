@@ -1392,9 +1392,15 @@ var featureLayer1 = L.geoJson(null, {
 
 var featureLayer2 = L.geoJson(null, {
   style: function (feature) {
-    return {
-      color: "green"
-    };
+    if (feature.properties.oofstatus === "Cable Placed") {
+      return {
+        color: "green"
+      };
+    } else if (feature.properties.oofstatus === "Construction Underway") {
+      return {
+        color: "blue"
+      };
+    }
   },
   filter: function (feature) {
     if (feature.properties.oofstatus === "Cable Placed") {
@@ -1423,9 +1429,6 @@ var featureLayer2 = L.geoJson(null, {
             $(".info-control").html(feature.properties[config2.hoverProperty]);
             $(".info-control").show();
           }
-        },
-        mouseout: function (e) {
-          $(".info-control").hide();
         }
       });
     }
