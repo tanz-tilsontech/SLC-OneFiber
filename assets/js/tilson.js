@@ -1294,17 +1294,27 @@ var highlightLayer = L.geoJson(null, {
 
 
 var highlightLayer2 = L.geoJson(null, {
+  pointToLayer: function (feature, latlng) {
+    return L.circleMarker(latlng, {
+      radius: 7,
+      color: "#FFF",
+      weight: 3,
+      opacity: 1,
+      fillColor: "#ff0000",
+      fillOpacity: 1,
+      clickable: false
+    });
+  },
   style: function (feature) {
     return {
       color: "#ff0000",
       weight: 3,
       opacity: 1,
-      fillColor: "#ff0000",
-      fillOpacity: 0.1,
       clickable: false
     };
   }
 });
+
 
 
 var featureLayer = L.geoJson(null, {
