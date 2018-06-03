@@ -1339,9 +1339,12 @@ $.getJSON(config1.geojson, function (data) {
 
 
 var map = L.map("map", {
-  layers: [mapboxOSM, SLCLLDRoute, featureLayer, featureLayer1, highlightLayer]
+  layers: [mapboxOSM, SLCLLDRoute, featureLayer, featureLayer1, engineering, highlightLayer]
 }).fitWorld();
 
+var engineering = L.esri.featureLayer({
+  url: "https://tilsonwebdraco.3-gislive.com/arcgis/rest/services/SLClld/Tilsonslc_lld/MapServer/109"
+})
 
 // ESRI geocoder
 var searchControl = L.esri.Geocoding.Controls.geosearch({
