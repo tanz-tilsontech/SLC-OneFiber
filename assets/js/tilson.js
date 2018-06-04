@@ -1730,6 +1730,7 @@ $.getJSON(config2.geojson, function (data) {
     return feature.properties;
   });
   featureLayer2.addData(data);
+  buildFiberConfig();
   $("#loading-mask").hide();
 });
 
@@ -1922,8 +1923,8 @@ function buildRestoTable() {
     striped: false,
     pagination: false,
     minimumCountColumns: 1,
-    sortName: config.sortProperty,
-    sortOrder: config.sortOrder,
+    sortName: config1.sortProperty,
+    sortOrder: config1.sortOrder,
     toolbar: "#resto-toolbar",
     search: true,
     trimOnSearch: false,
@@ -1960,8 +1961,8 @@ function buildFiberTable() {
     striped: false,
     pagination: false,
     minimumCountColumns: 1,
-    sortName: config.sortProperty,
-    sortOrder: config.sortOrder,
+    sortName: config2.sortProperty,
+    sortOrder: config2.sortOrder,
     toolbar: "#fiber-toolbar",
     search: true,
     trimOnSearch: false,
@@ -1980,8 +1981,6 @@ function buildFiberTable() {
       highlightLayer.addData(featureLayer2.getLayer(row.leaflet_stamp).toGeoJSON());
     },
   });
-
-  map.fitBounds(featureLayer2.getBounds());
 
   $(window).resize(function () {
     $("#fiberTable").bootstrapTable("resetView", {
@@ -2419,11 +2418,11 @@ function switchView(view) {
     $("#map-container").hide();
     $("#resto-table-container").hide();
     $(window).resize();
-  } else if (view == "fiberTable") {
+  } else if (view == "restoTable") {
     $("#view").html("Table View");
     location.hash = "#table";
-    $("#fiber-table-container").show();
-    $("#fiber-table-container").css("height", "100%");
+    $("#resto-table-container").show();
+    $("#resto-table-container").css("height", "100%");
     $("#map-container").hide();
     $("#table-container").hide();
     $(window).resize();
@@ -2453,8 +2452,8 @@ $("[name='view']").click(function() {
   } else if (this.id === "graph-only") {
     switchView("table");
     return false;
-  } else if (this.id === "fiber-graph-only") {
-    switchView("fiberTable");
+  } else if (this.id === "resto-graph-only") {
+    switchView("restoTable");
     return false;
   } else if (this.id === "resto-map-graph") {
     switchView("restoSplit");
