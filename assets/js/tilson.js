@@ -2722,8 +2722,6 @@ $("#view-sql-btn").click(function() {
 
 $("#apply-filter-btn").click(function() {
   applyRoutesFilter();
-  applyRestoFilter();
-  applyFiberFilter();
   $('#filterModal').modal('hide');
   $(".navbar-collapse.in").collapse("hide");
   return false;
