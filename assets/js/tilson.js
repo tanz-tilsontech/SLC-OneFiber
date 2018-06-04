@@ -694,7 +694,6 @@ var properties2 = [{
   },
   filter: {
     type: "integer",
-    input: "number",
     vertical: true,
     multiple: true,
     operators: ["equal", "not_equal"],
