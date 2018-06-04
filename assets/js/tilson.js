@@ -1639,6 +1639,9 @@ var featureLayer2 = L.geoJson(null, {
             $(".info-control").html(feature.properties[config2.hoverProperty]);
             $(".info-control").show();
           }
+        },
+        dblclick: function (e) {
+          highlightLayer.clearLayers();
         }
       });
     }
