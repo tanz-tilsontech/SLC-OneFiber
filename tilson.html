@@ -71,8 +71,27 @@
                     <li><a href="#" id="download-pdf-btn"><i class="fa fa-file-pdf-o"></i> PDF</a></li>
                   </ul>
                 </li>
-              </ul>  
-            <li><a href="#" id="filter-btn" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Filter</a></li>
+                <li><a href="#" id="resto-export-btn"><i class="fa fa-cloud-download"></i> Resto Export</a>
+                  <ul class="sub-menu">
+                    <li><a href="#" id="resto-download-csv-btn"><i class="fa fa-file-text-o"></i> CSV</a></li>
+                    <li><a href="#" id="resto-download-excel-btn"><i class="fa fa-file-excel-o"></i> Excel</a></li>
+                    <li><a href="#" id="resto-download-pdf-btn"><i class="fa fa-file-pdf-o"></i> PDF</a></li>
+                  </ul>
+                </li>
+                <li><a href="#" id="fiber-export-btn"><i class="fa fa-cloud-download"></i> Fiber Export</a>
+                  <ul class="sub-menu">
+                    <li><a href="#" id="fiber-download-csv-btn"><i class="fa fa-file-text-o"></i> CSV</a></li>
+                    <li><a href="#" id="fiber-download-excel-btn"><i class="fa fa-file-excel-o"></i> Excel</a></li>
+                    <li><a href="#" id="fiber-download-pdf-btn"><i class="fa fa-file-pdf-o"></i> PDF</a></li>
+                  </ul>
+                </li>
+              </ul>
+            <li class="dropdown">
+              <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-database fa-white"></i> <span id="filterdata"> Filter </span><b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#" id="filter-btn" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Route</a></li>
+                <li><a href="#" id="resto-filter-btn" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Resto</a></li>
+                <li><a href="#" id="fiber-filter-btn" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Fiber</a></li>     
             <li><a href="#" id="refresh-btn" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-refresh"></i>&nbsp;&nbsp;Refresh</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
@@ -220,6 +239,7 @@
             <h3> Resto Filter</h3>
             <div id="restoFilter"></div>
             <br/>
+            <h3> Fiber Filter</h3>
             <div id="fiberFilter"></div>
           </div>
           <div class="modal-footer">
