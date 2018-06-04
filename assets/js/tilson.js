@@ -1821,8 +1821,9 @@ var baseLayers = {
 var overlayLayers = {
   "<span id='layer-name'>Routes</span>": featureLayer,
   "<span id='layer-name1'>Restoration</span>": featureLayer1,
-  "<span id='layer-name1'>Fiber</span>": featureLayer2,
-  "<span id='layer-name1'>Hub</span>": featureLayer3,
+  "<span id='layer-name3'>Fiber Segments</span>": featureLayer2,
+  "<span id='layer-name4'>Fiber Route</span>": featureLayer4,
+  "<span id='layer-name5'>Hub</span>": featureLayer3,
   "<span id='layer-name2'>Engineered</span>": SLCLLDRoute,
 };
 
