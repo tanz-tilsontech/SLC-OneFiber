@@ -36,25 +36,36 @@ var config1 = {
 };
 
 
-// Configuration of Engineering in 3GIS
+// Configuration of Fiber Cable in 3GIS
 
 var config2 = {
   geojson: "https://tilsonwebdraco.3-gislive.com/arcgis/rest/services/SLClld/Tilsonslc_lld/MapServer/7/query?where=fqn_id+IS+NOT+NULL&outFields=*&f=geojson",
   title: "SLC OneFiber Tilson QC",
-  layerName: "Eng. Fiber",
+  layerName: "Fiber Cable",
   hoverProperty: "fqn_id",
   sortProperty: "fqn_id",
   sortOrder: "ascend",
 };
 
 
-// Configuration of Restoration in Fulcrum
+// Configuration of Hub Area in 3GIS
 
 var config3 = {
   geojson: "https://tilsonwebdraco.3-gislive.com/arcgis/rest/services/SLClld/Tilsonslc_lld/MapServer/35/query?where=objectid+IS+NOT+NULL&outFields=*&f=geojson",
   layerName: "Work Order Area",
   hoverProperty: "name",
   sortProperty: "name",
+  sortOrder: "ascend",
+};
+
+
+// Configuration of Fiber Route in 3GIS
+
+var config4 = {
+  geojson: "https://tilsonwebdraco.3-gislive.com/arcgis/rest/services/SLClld/Tilsonslc_lld/MapServer/60/query?where=objectid+IS+NOT+NULL&outFields=*&f=geojson",
+  layerName: "Fiber Route",
+  hoverProperty: "cablename",
+  sortProperty: "fibercount",
   sortOrder: "ascend",
 };
 
@@ -1655,6 +1666,38 @@ var featureLayer3 = L.geoJson(null, {
 });
 
 
+var featureLayer4 = L.geoJson(null, {
+  style: function (feature) {
+    return {
+      color: "blue",
+      fillOpacity: 1,
+      weight: 6
+    };
+  },
+  onEachFeature: function (feature, layer) {
+    if (feature.properties) {
+      layer.on({
+        click: function (e) {
+          highlightLayer.clearLayers();
+        },
+        mouseover: function (e) {
+          if (config4.hoverProperty) {
+            $(".info-control").html(feature.properties[config4.hoverProperty]);
+            $(".info-control").show();
+          }
+        },
+        dblclick: function (e) {
+          highlightLayer.clearLayers();
+          highlightLayer.addData(featureLayer4.getLayer(L.stamp(layer)).toGeoJSON());
+          $(".info-control").html(feature.properties[config4.hoverProperty]);
+          $(".info-control").show();
+        }
+      });
+    }
+  }
+});
+
+
 
 // Fetch the Routes GeoJSON file
 
@@ -1727,6 +1770,17 @@ $.getJSON(config3.geojson, function (data) {
     return feature.properties;
   });
   featureLayer3.addData(data);
+  $("#loading-mask").hide();
+});
+
+// Fetch the FiberRoute Cable GeoJSON file
+
+$.getJSON(config4.geojson, function (data) {
+  geojson4 = data
+  features4 = $.map(geojson4.features, function(feature) {
+    return feature.properties;
+  });
+  featureLayer4.addData(data);
   $("#loading-mask").hide();
 });
 
