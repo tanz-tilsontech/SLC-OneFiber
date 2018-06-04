@@ -60,33 +60,18 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li class="dropdown">
-              <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-database fa-white"></i> <span id="mapdata">Route Data </span><b class="caret"></b></a>
+              <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-database fa-white"></i> <span id="mapdata"> Data </span><b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" name="view" id="map-only"><i class="fa fa-globe"></i> Map</a></li>
-                <li><a id="chart-btn" href="#" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-bar-chart"></i> Charts</a></li>
-                <li><a href="#" id="export-btn"><i class="fa fa-cloud-download"></i> Export</a>
+                <li><a id="chart-btn" href="#" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-bar-chart"></i> Route Charts</a></li>
+                <li><a id="resto-chart-btn" href="#" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-bar-chart"></i> Resto Charts</a></li>
+                <li><a href="#" id="export-btn"><i class="fa fa-cloud-download"></i> Route Export</a>
                   <ul class="sub-menu">
                     <li><a href="#" id="download-csv-btn"><i class="fa fa-file-text-o"></i> CSV</a></li>
                     <li><a href="#" id="download-excel-btn"><i class="fa fa-file-excel-o"></i> Excel</a></li>
                     <li><a href="#" id="download-pdf-btn"><i class="fa fa-file-pdf-o"></i> PDF</a></li>
                   </ul>
                 </li>
-              </ul>
-            </li>
-            <li class="dropdown">
-              <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-database fa-white"></i> <span id="mapdata">Resto Data </span><b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" name="view" id="map-only"><i class="fa fa-globe"></i> Map</a></li>
-                <li><a id="resto-chart-btn" href="#" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-bar-chart"></i> Charts</a></li>
-                <li><a href="#" id="resto-export-btn"><i class="fa fa-cloud-download"></i> Export</a>
-                  <ul class="sub-menu">
-                    <li><a href="#" id="resto-download-csv-btn"><i class="fa fa-file-text-o"></i> CSV</a></li>
-                    <li><a href="#" id="resto-download-excel-btn"><i class="fa fa-file-excel-o"></i> Excel</a></li>
-                    <li><a href="#" id="resto-download-pdf-btn"><i class="fa fa-file-pdf-o"></i> PDF</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
+              </ul>  
             <li><a href="#" id="filter-btn" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Filter</a></li>
             <li><a href="#" id="refresh-btn" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-refresh"></i>&nbsp;&nbsp;Refresh</a></li>
           </ul>
@@ -229,8 +214,10 @@
             <h4 class="modal-title">Filter Data<span id="record-count" class="badge pull-right" style="margin-right: 15px; margin-top: 2px;"></span></h4>
           </div>
           <div class="modal-body">
+            <h3> Route Filter</h3>
             <div id="routesFilter"></div>
             <br/>
+            <h3> Resto Filter</h3>
             <div id="restoFilter"></div>
             <br/>
             <div id="fiberFilter"></div>
