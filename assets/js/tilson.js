@@ -1855,6 +1855,9 @@ map.on("moveend", function (e) {
 
 map.on("click", function(e) {
   highlightLayer.clearLayers();
+  highlightLayer2.clearLayers();
+  highlightLayer3.clearLayers();
+  highlightLayer4.clearLayers();
 });
 
 // Table formatter to make links clickable
