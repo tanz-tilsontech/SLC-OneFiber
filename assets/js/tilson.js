@@ -1403,7 +1403,7 @@ var highlightLayer = L.geoJson(null, {
   style: function (feature) {
     return {
       color: "#242424",
-      weight: 3,
+      weight: 6,
       opacity: 1,
       fillColor: "#242424",
       fillOpacity: 1,
@@ -1572,27 +1572,32 @@ var featureLayer2 = L.geoJson(null, {
     if (feature.properties.oofstatus === "Cable Placed") {
       return {
         color: "green",
-        weight: 6
+        weight: 6,
+        opacity: 1
       };
     } else if (feature.properties.oofstatus === "Construction Underway") {
       return {
         color: "magenta",
-        weight: 6
+        weight: 6,
+        opacity: 1
       };
     } else if (feature.properties.oofstatus === "Permits Received") {
       return {
         color: "orange",
-        weight: 6
+        weight: 6,
+        opacity: 1
       };
     } else if (feature.properties.oofstatus === "Permits Submitted") {
       return {
         color: "blue",
-        weight: 6
+        weight: 6,
+        opacity: 1
       };
     } else if (feature.properties.oofstatus === "In Design") {
       return {
         color: "gray",
-        weight: 6
+        weight: 6,
+        opacity: 1
       };
     }
   },
