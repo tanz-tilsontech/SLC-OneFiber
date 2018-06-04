@@ -233,21 +233,50 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Filter Data<span id="record-count" class="badge pull-right" style="margin-right: 15px; margin-top: 2px;"></span></h4>
+            <h4 class="modal-title">Route Data<span id="record-count" class="badge pull-right" style="margin-right: 15px; margin-top: 2px;"></span></h4>
           </div>
           <div class="modal-body">
-            <h3> Route Filter</h3>
             <div id="routesFilter"></div>
-            <br/>
-            <h3> Resto Filter</h3>
-            <div id="restoFilter"></div>
-            <br/>
-            <h3> Fiber Filter</h3>
-            <div id="fiberFilter"></div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-info" id="reset-filter-btn"><i class="fa fa-undo"></i> Reset Filter</button>
             <button type="button" class="btn btn-primary" id="apply-filter-btn"><i class="fa fa-filter"></i> Apply Filter</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="RestofilterModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Resto Data<span id="resto-record-count" class="badge pull-right" style="margin-right: 15px; margin-top: 2px;"></span></h4>
+          </div>
+          <div class="modal-body">
+            <div id="restoFilter"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-info" id="resto-reset-filter-btn"><i class="fa fa-undo"></i> Reset Filter</button>
+            <button type="button" class="btn btn-primary" id="resto-apply-filter-btn"><i class="fa fa-filter"></i> Apply Filter</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="FiberfilterModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Route Data<span id="fiber-record-count" class="badge pull-right" style="margin-right: 15px; margin-top: 2px;"></span></h4>
+          </div>
+          <div class="modal-body">
+            <div id="fiberFilter"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-info" id="fiber-reset-filter-btn"><i class="fa fa-undo"></i> Reset Filter</button>
+            <button type="button" class="btn btn-primary" id="fiber-apply-filter-btn"><i class="fa fa-filter"></i> Apply Filter</button>
           </div>
         </div>
       </div>
