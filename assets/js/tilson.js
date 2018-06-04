@@ -48,17 +48,6 @@ var config2 = {
 };
 
 
-// Configuration of Hub Area in 3GIS
-
-var config3 = {
-  geojson: "https://tilsonwebdraco.3-gislive.com/arcgis/rest/services/SLClld/Tilsonslc_lld/MapServer/35/query?where=objectid+IS+NOT+NULL&outFields=*&f=geojson",
-  layerName: "Work Order Area",
-  hoverProperty: "name",
-  sortProperty: "name",
-  sortOrder: "ascend",
-};
-
-
 // Configuration of Fiber Route in 3GIS
 
 var config4 = {
@@ -1649,38 +1638,6 @@ var featureLayer2 = L.geoJson(null, {
 });
 
 
-var featureLayer3 = L.geoJson(null, {
-  style: function (feature) {
-    return {
-      color: "black",
-      fillOpacity: 0.1,
-      weight: 5
-    };
-  },
-  onEachFeature: function (feature, layer) {
-    if (feature.properties) {
-      layer.on({
-        click: function (e) {
-          highlightLayer3.clearLayers();
-        },
-        mouseover: function (e) {
-          if (config3.hoverProperty) {
-            $(".info-control").html(feature.properties[config3.hoverProperty]);
-            $(".info-control").show();
-          }
-        },
-        dblclick: function (e) {
-          highlightLayer3.clearLayers();
-          highlightLayer3.addData(featureLayer3.getLayer(L.stamp(layer)).toGeoJSON());
-          $(".info-control").html(feature.properties[config3.hoverProperty]);
-          $(".info-control").show();
-        }
-      });
-    }
-  }
-});
-
-
 var featureLayer4 = L.geoJson(null, {
   style: function (feature) {
     return {
@@ -1777,17 +1734,6 @@ $.getJSON(config2.geojson, function (data) {
 });
 
 
-// Fetch the Work Area GeoJSON file
-
-$.getJSON(config3.geojson, function (data) {
-  geojson3 = data
-  features3 = $.map(geojson3.features, function(feature) {
-    return feature.properties;
-  });
-  featureLayer3.addData(data);
-  $("#loading-mask").hide();
-});
-
 // Fetch the FiberRoute Cable GeoJSON file
 
 $.getJSON(config4.geojson, function (data) {
@@ -1838,7 +1784,6 @@ var overlayLayers = {
   "<span id='layer-name1'>Restoration</span>": featureLayer1,
   "<span id='layer-name3'>Fiber Segments</span>": featureLayer2,
   "<span id='layer-name4'>Fiber Route</span>": featureLayer4,
-  "<span id='layer-name5'>Hub</span>": featureLayer3,
   "<span id='layer-name2'>Engineered</span>": SLCLLDRoute,
 };
 
@@ -2474,11 +2419,11 @@ function switchView(view) {
     $("#map-container").hide();
     $("#resto-table-container").hide();
     $(window).resize();
-  } else if (view == "restoTable") {
+  } else if (view == "fiberTable") {
     $("#view").html("Table View");
     location.hash = "#table";
-    $("#resto-table-container").show();
-    $("#resto-table-container").css("height", "100%");
+    $("#fiber-table-container").show();
+    $("#fiber-table-container").css("height", "100%");
     $("#map-container").hide();
     $("#table-container").hide();
     $(window).resize();
@@ -2508,8 +2453,8 @@ $("[name='view']").click(function() {
   } else if (this.id === "graph-only") {
     switchView("table");
     return false;
-  } else if (this.id === "resto-graph-only") {
-    switchView("restoTable");
+  } else if (this.id === "fiber-graph-only") {
+    switchView("fiberTable");
     return false;
   } else if (this.id === "resto-map-graph") {
     switchView("restoSplit");
