@@ -2021,7 +2021,7 @@ function syncFiberTable() {
     layer.feature.properties.leaflet_stamp = L.stamp(layer);
     if (map.hasLayer(featureLayer2)) {
       featureLayer2.getLayer()
-      layer.feature.geometry.type === "Polyline"
+      layer.feature.geometry.type === "LineString"
       if (map.getBounds().contains(layer.getLatLng())) {
         tableFeatures.push(layer.feature.properties);
       }
@@ -2856,6 +2856,51 @@ $("#resto-download-pdf-btn").click(function() {
     type: "pdf",
     ignoreColumn: [0],
     fileName: "DataMap_Resto_"+ today +"",
+    jspdf: {
+      format: "bestfit",
+      margins: {
+        left: 20,
+        right: 10,
+        top: 20,
+        bottom: 20
+      },
+      autotable: {
+        extendWidth: true,
+        overflow: "linebreak"
+      }
+    }
+  });
+  $(".navbar-collapse.in").collapse("hide");
+  return false;
+});
+
+$("#fiber-download-csv-btn").click(function() {
+  $("#fiberTable").tableExport({
+    headings: true,
+    type: "csv",
+    ignoreColumn: [0],
+    fileName: "DataMap_Fiber_"+ today +""
+  });
+  $(".navbar-collapse.in").collapse("hide");
+  return false;
+});
+
+$("#fiber-download-excel-btn").click(function() {
+  $("#fiberTable").tableExport({
+    headings: true,
+    type: "excel",
+    ignoreColumn: [0],
+    fileName: "DataMap_Fiber_"+ today +""
+  });
+  $(".navbar-collapse.in").collapse("hide");
+  return false;
+});
+
+$("#fiber-download-pdf-btn").click(function() {
+  $("#fiberTable").tableExport({
+    type: "pdf",
+    ignoreColumn: [0],
+    fileName: "DataMap_Fiber_"+ today +"",
     jspdf: {
       format: "bestfit",
       margins: {
