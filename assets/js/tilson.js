@@ -2771,6 +2771,13 @@ $("#resto-reset-filter-btn").click(function() {
   $(".navbar-collapse.in").collapse("hide");
 });
 
+$("#fiber-reset-filter-btn").click(function() {
+  $("#fiberFilter").queryBuilder("reset");
+  applyFiberFilter();
+  $('#FiberfilterModal').modal('hide');
+  $(".navbar-collapse.in").collapse("hide");
+});
+
 $("#extent-btn").click(function() {
   map.fitBounds(featureLayer.getBounds());
   $(".navbar-collapse.in").collapse("hide");
