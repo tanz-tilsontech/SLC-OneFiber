@@ -1459,6 +1459,18 @@ var highlightLayer3 = L.geoJson(null, {
   }
 });
 
+var highlightLayer4 = L.geoJson(null, {
+  style: function (feature) {
+    return {
+      color: "#cb0d0c",
+      weight: 6,
+      opacity: 1,
+      fillOpacity: 1,
+      clickable: false
+    };
+  }
+});
+
 
 
 
@@ -1670,7 +1682,7 @@ var featureLayer4 = L.geoJson(null, {
   style: function (feature) {
     return {
       color: "blue",
-      fillOpacity: 1,
+      opacity: 1,
       weight: 6
     };
   },
@@ -1678,7 +1690,11 @@ var featureLayer4 = L.geoJson(null, {
     if (feature.properties) {
       layer.on({
         click: function (e) {
-          highlightLayer.clearLayers();
+          identifyFeature4(L.stamp(layer));
+          highlightLayer4.clearLayers();
+          highlightLayer4.addData(featureLayer4.getLayer(L.stamp(layer)).toGeoJSON());
+          $(".info-control").html(feature.properties[config4.hoverProperty]);
+          $(".info-control").show();
         },
         mouseover: function (e) {
           if (config4.hoverProperty) {
@@ -1687,10 +1703,7 @@ var featureLayer4 = L.geoJson(null, {
           }
         },
         dblclick: function (e) {
-          highlightLayer.clearLayers();
-          highlightLayer.addData(featureLayer4.getLayer(L.stamp(layer)).toGeoJSON());
-          $(".info-control").html(feature.properties[config4.hoverProperty]);
-          $(".info-control").show();
+          highlightLayer4.clearLayers();
         }
       });
     }
@@ -1786,7 +1799,7 @@ $.getJSON(config4.geojson, function (data) {
 
 
 var map = L.map("map", {
-  layers: [mapboxOSM, SLCLLDRoute, featureLayer, featureLayer1, featureLayer2, featureLayer3, featureLayer4, highlightLayer, highlightLayer2, highlightLayer3]
+  layers: [mapboxOSM, SLCLLDRoute, featureLayer, featureLayer1, featureLayer2, featureLayer3, featureLayer4, highlightLayer, highlightLayer2, highlightLayer3, highlightLayer4]
 }).fitWorld();
 
 
