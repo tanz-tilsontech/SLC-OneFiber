@@ -727,7 +727,7 @@ var properties2 = [{
     type: "date",
     vertical: true,
     multiple: true,
-    operators: ["equal", "not_equal"],
+    operators: ["equal", "not_equal", "contains"],
     values: []
   }
 },
@@ -742,7 +742,7 @@ var properties2 = [{
     type: "date",
     vertical: true,
     multiple: true,
-    operators: ["equal", "not_equal"],
+    operators: ["equal", "not_equal", "contains"],
     values: []
   }
 },
@@ -757,7 +757,7 @@ var properties2 = [{
     type: "date",
     vertical: true,
     multiple: true,
-    operators: ["equal", "not_equal"],
+    operators: ["equal", "not_equal", "contains"],
     values: []
   }
 },
@@ -772,7 +772,7 @@ var properties2 = [{
     type: "date",
     vertical: true,
     multiple: true,
-    operators: ["equal", "not_equal"],
+    operators: ["equal", "not_equal", "contains"],
     values: []
   }
 },
@@ -783,23 +783,12 @@ var properties2 = [{
     visible: true,
     sortable: true
   },
-  plugins: ['bt-tooltip-errors'],
   filter: {
     type: "date",
     vertical: true,
     multiple: true,
-    operators: ["equal", "not_equal"],
-    values: [],
-    validation: {
-      format: 'MM/DD/YYYY'
-    },
-    plugin: 'datepicker',
-    plugin_config: {
-      format: 'mm/dd/yyyy',
-      todayBtn: 'linked',
-      todayHighlight: true,
-      autoclose: true
-    }
+    operators: ["equal", "not_equal", "contains"],
+    values: []
   }
 }];
 
