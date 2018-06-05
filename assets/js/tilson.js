@@ -715,6 +715,36 @@ var properties2 = [{
     operators: ["equal", "not_equal"],
     values: []
   }
+  },
+{
+  value: "oofdateindesign",
+  label: "In Design",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "date",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+  },
+{
+  value: "oofdatepermitsubmitted",
+  label: "Permit Submitted",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "date",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
 }];
 
 
@@ -2377,6 +2407,9 @@ function identifyFeature2(id) {
     }
     if (typeof value == "string"  && value.indexOf("http://www.fulcrumapp") === 0) {
       value = "<a href='" + value + "' target='_blank'>" + "Fulcrum Record" + "</a>";
+    }
+    if (typeof value == "date" && value.toString().length == 13) {
+      value = new Date(0).setUTCSeconds(value);
     }
     $.each(properties2, function(index, property) {
       if (key == property.value) {
