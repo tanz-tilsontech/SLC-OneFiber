@@ -2411,7 +2411,7 @@ function identifyFeature2(id) {
     $.each(properties2, function(index, property) {
       if (key == property.value) {
         if (property.filter.type == "date") {
-          date = new Date( parseFloat( value.substr(6 )));
+          date = new Date(0).setUTCSeconds(value);
           value = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear()
         }
         if (property.info !== false) {
