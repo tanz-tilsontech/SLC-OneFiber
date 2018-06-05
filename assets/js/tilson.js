@@ -3095,6 +3095,25 @@ $("#fiber-reset-filter-btn").click(function() {
   $(".navbar-collapse.in").collapse("hide");
 });
 
+$("#fiberRoute-reset-filter-btn").click(function() {
+  $("#fiberRouteFilter").queryBuilder("reset");
+  applyFiberRouteFilter();
+  $('#FiberRoutefilterModal').modal('hide');
+  $(".navbar-collapse.in").collapse("hide");
+});
+
+$("#filter-reset-all-btn").click(function() {
+  $("#routesFilter").queryBuilder("reset");
+  applyRoutesFilter();
+  $("#restoFilter").queryBuilder("reset");
+  applyRestoFilter();
+  $("#fiberFilter").queryBuilder("reset");
+  applyFiberFilter();
+  $("#fiberRouteFilter").queryBuilder("reset");
+  applyFiberRouteFilter();
+  $(".navbar-collapse.in").collapse("hide");
+});
+
 $("#extent-btn").click(function() {
   map.fitBounds(featureLayer.getBounds());
   $(".navbar-collapse.in").collapse("hide");
