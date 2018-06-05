@@ -789,7 +789,7 @@ var properties2 = [{
     vertical: true,
     multiple: true,
     operators: ["equal", "not_equal"],
-    values: []
+    values: [],
     validation: {
       format: 'MM/DD/YYYY'
     },
