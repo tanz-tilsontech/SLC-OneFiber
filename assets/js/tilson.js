@@ -1105,25 +1105,17 @@ var featureCable = [{
 }];
 
 
-var potholePictures = [{
-  value: "asphalt_potholes_url",
-  label: "Asphalt",
+var hardscapePictures = [{
+  value: "hardscape_cx_url",
+  label: "Pipe Hardscape",
   table: {
     visible: false,
     sortable: false
   }
 },
 {
-  value: "concrete_potholes_url",
-  label: "Concrete",
-  table: {
-    visible: false,
-    sortable: false
-  }
-},
-{
-  value: "dirt_potholes_url",
-  label: "Dirt",
+  value: "photos_hardscape_url",
+  label: "Additional Hardscape",
   table: {
     visible: false,
     sortable: false
@@ -2574,36 +2566,6 @@ function featureCablePics(id) {
 
 
 
-$("#featureBluestakes").click(function() {
-  $("#bluestakesModal").modal("show");
-  return false;
-});
-
-
-function featureBluestakes(id) {
-  var featureProperties = featureLayer.getLayer(id).feature.properties;
-  var content = "<table class='table table-striped table-bordered table-condensed'>";
-  var photoLink = "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/videos";
-  $.each(featureProperties, function(key, value) {
-    if (!value) {
-      value = "";
-    }
-    if (typeof value == "string"  && value.indexOf(photoLink) === 0) {
-      value = "<a href='#' onclick='videoGallery(\""+ value +"\")'; return false;'>View Video</a>";
-    }
-    $.each(featureBluestakesVid, function(index, property) {
-      if (key == property.value) {
-        if (property.info !== false) {
-          content += "<tr><th>" + property.label + "</th><td>" + value + "</td></tr>";
-        }
-      }
-    });
-  });
-  content += "<table>";
-  $("#bluestakesModalBody").html(content);
-};
-
-
 
 $("#featurePictures").click(function() {
   $("#featuresPicturesModal").modal("show");
@@ -2611,7 +2573,7 @@ $("#featurePictures").click(function() {
 });
 
 
-function featurePotholePics(id) {
+function featureHardscapePics(id) {
   var featureProperties = featureLayer.getLayer(id).feature.properties;
   var content = "<table class='table table-striped table-bordered table-condensed'>";
   var photoLink = "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/photos/";
@@ -2622,7 +2584,7 @@ function featurePotholePics(id) {
     if (typeof value == "string"  && value.indexOf(photoLink) === 0) {
       value = "<a href='#' onclick='photoGallery(\""+ value +"\")'; return false;'>View Photos</a>";
     }
-    $.each(potholePictures, function(index, property) {
+    $.each(hardscapePictures, function(index, property) {
       if (key == property.value) {
         if (property.info !== false) {
           content += "<tr><th>" + property.label + "</th><td>" + value + "</td></tr>";
@@ -2631,7 +2593,7 @@ function featurePotholePics(id) {
     });
   });
   content += "<table>";
-  $("#potholesPic").html(content);
+  $("#hardscapePic").html(content);
 };
 
 
