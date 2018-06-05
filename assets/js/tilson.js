@@ -1929,7 +1929,7 @@ $.getJSON(config3.geojson, function (data) {
   features3 = $.map(geojson3.features, function(feature) {
     return feature.properties;
   });
-  featureLayer4.addData(data);
+  featureLayer3.addData(data);
   $("#loading-mask").hide();
 });
 
