@@ -36,18 +36,6 @@ var config1 = {
 };
 
 
-
-// Configuration of Fiber Route in 3GIS
-
-var config3 = {
-  geojson: "https://tilsonwebdraco.3-gislive.com/arcgis/rest/services/SLClld/Tilsonslc_lld/MapServer/60/query?where=objectid+IS+NOT+NULL&outFields=*&f=geojson",
-  layerName: "Fiber Route",
-  hoverProperty: "cablename",
-  sortProperty: "fibercount",
-  sortOrder: "ascend",
-};
-
-
 // Configuration of Fiber Cable in 3GIS
 
 var config2 = {
@@ -56,6 +44,17 @@ var config2 = {
   layerName: "Fiber Cable",
   hoverProperty: "fqn_id",
   sortProperty: "fqn_id",
+  sortOrder: "ascend",
+};
+
+
+// Configuration of Fiber Route in 3GIS
+
+var config3 = {
+  geojson: "https://tilsonwebdraco.3-gislive.com/arcgis/rest/services/SLClld/Tilsonslc_lld/MapServer/60/query?where=objectid+IS+NOT+NULL&outFields=*&f=geojson",
+  layerName: "Fiber Route",
+  hoverProperty: "cablename",
+  sortProperty: "fibercount",
   sortOrder: "ascend",
 };
 
@@ -724,11 +723,10 @@ var properties2 = [{
     sortable: true
   },
   filter: {
-    value: "date",
     type: "string",
     vertical: true,
     multiple: true,
-    operators: ["equal", "not_equal", "contains"],
+    operators: ["begins_with"],
     values: []
   }
 },
@@ -740,11 +738,10 @@ var properties2 = [{
     sortable: true
   },
   filter: {
-    value: "date",
     type: "string",
     vertical: true,
     multiple: true,
-    operators: ["equal", "not_equal", "contains"],
+    operators: ["begins_with"],
     values: []
   }
 },
@@ -756,11 +753,10 @@ var properties2 = [{
     sortable: true
   },
   filter: {
-    value: "date",
     type: "string",
     vertical: true,
     multiple: true,
-    operators: ["equal", "not_equal", "contains"],
+    operators: ["begins_with"],
     values: []
   }
 },
@@ -772,11 +768,10 @@ var properties2 = [{
     sortable: true
   },
   filter: {
-    value: "date",
     type: "string",
     vertical: true,
     multiple: true,
-    operators: ["equal", "not_equal", "contains"],
+    operators: ["begins_with"],
     values: []
   }
 },
@@ -788,11 +783,10 @@ var properties2 = [{
     sortable: true
   },
   filter: {
-    value: "date",
     type: "string",
     vertical: true,
     multiple: true,
-    operators: ["equal", "not_equal", "contains"],
+    operators: ["begins_with"],
     values: []
   }
 }];
@@ -2460,22 +2454,9 @@ function identifyFeature2(id) {
     }
     $.each(properties2, function(index, property) {
       if (key == property.value) {
-        if (value && property.filter.value == "date") {
+        if (value && property.filter.type == "date") {
           date = new Date(value);
-          var month = new Array();
-          month[0] = "January";
-          month[1] = "February";
-          month[2] = "March";
-          month[3] = "April";
-          month[4] = "May";
-          month[5] = "June";
-          month[6] = "July";
-          month[7] = "August";
-          month[8] = "September";
-          month[9] = "October";
-          month[10] = "November";
-          month[11] = "December";
-          value = month[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear();
+          value = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
         }
         if (property.info !== false) {
           content += "<tr><th>" + property.label + "</th><td>" + value + "</td></tr>";
