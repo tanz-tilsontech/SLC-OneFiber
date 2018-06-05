@@ -1743,8 +1743,7 @@ var featureLayer = L.geoJson(null, {
       layer.on({
         click: function (e) {
           identifyFeature(L.stamp(layer));
-          featureBluestakes(L.stamp(layer));
-          featurePotholePics(L.stamp(layer));
+          featureHardscapePics(L.stamp(layer));
           featureCXSignaturePics(L.stamp(layer));
           featureCPSignaturePics(L.stamp(layer));
           featureCablePics(L.stamp(layer));
