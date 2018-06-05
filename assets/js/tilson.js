@@ -568,24 +568,8 @@ var properties1 = [{
   }
 },
 {
-  value: "restoration_complete_contractor",
-  label: "Restoration Complete (Contractor)",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string",
-    input: "radio",
-    vertical: true,
-    multiple: true,
-    operators: ["equal", "not_equal"],
-    values: []
-  }
-},
-{
   value: "restoration_complete_tilson",
-  label: "Restoration Complete (Tilson)",
+  label: "Restoration Complete",
   table: {
     visible: true,
     sortable: true
@@ -1807,18 +1791,10 @@ var featureLayer1 = L.geoJson(null, {
           $(".info-control").hide();
         }
       });
-      if (feature.properties.restoration_complete_contractor === "Yes" && feature.properties.restoration_complete_tilson === "No") {
+      if (feature.properties.restoration_complete_tilson === "Yes") {
         layer.setIcon(
           L.icon({
             iconUrl: "assets/pictures/markers/b3b3b3.png",
-            iconSize: [30, 40],
-            iconAnchor: [15, 32]
-          })
-        );
-      } else if (feature.properties.restoration_complete_contractor === "Yes" && feature.properties.restoration_complete_tilson === "Yes") {
-        layer.setIcon(
-          L.icon({
-            iconUrl: "assets/pictures/markers/704b10.png",
             iconSize: [30, 40],
             iconAnchor: [15, 32]
           })
