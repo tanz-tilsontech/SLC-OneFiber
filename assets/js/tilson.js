@@ -715,7 +715,7 @@ var properties2 = [{
     operators: ["equal", "not_equal"],
     values: []
   }
-  },
+},
 {
   value: "oofdateindesign",
   label: "In Design",
@@ -730,10 +730,55 @@ var properties2 = [{
     operators: ["equal", "not_equal"],
     values: []
   }
-  },
+},
 {
   value: "oofdatepermitsubmitted",
   label: "Permit Submitted",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "date",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
+  value: "oofdatepermitreceived",
+  label: "Permit Received",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "date",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
+  value: "oofdatecableplaced",
+  label: "Cable Placed",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "date",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
+  value: "oofdatesplicedandtested ",
+  label: "Spliced/Tested",
   table: {
     visible: true,
     sortable: true
