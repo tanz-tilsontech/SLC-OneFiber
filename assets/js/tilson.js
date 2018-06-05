@@ -724,7 +724,8 @@ var properties2 = [{
     sortable: true
   },
   filter: {
-    type: "date",
+    value: "date",
+    type: "string",
     vertical: true,
     multiple: true,
     operators: ["equal", "not_equal", "contains"],
@@ -739,7 +740,8 @@ var properties2 = [{
     sortable: true
   },
   filter: {
-    type: "date",
+    value: "date",
+    type: "string",
     vertical: true,
     multiple: true,
     operators: ["equal", "not_equal", "contains"],
@@ -754,7 +756,8 @@ var properties2 = [{
     sortable: true
   },
   filter: {
-    type: "date",
+    value: "date",
+    type: "string",
     vertical: true,
     multiple: true,
     operators: ["equal", "not_equal", "contains"],
@@ -769,7 +772,8 @@ var properties2 = [{
     sortable: true
   },
   filter: {
-    type: "date",
+    value: "date",
+    type: "string",
     vertical: true,
     multiple: true,
     operators: ["equal", "not_equal", "contains"],
@@ -784,7 +788,8 @@ var properties2 = [{
     sortable: true
   },
   filter: {
-    type: "date",
+    value: "date",
+    type: "string",
     vertical: true,
     multiple: true,
     operators: ["equal", "not_equal", "contains"],
@@ -2455,7 +2460,7 @@ function identifyFeature2(id) {
     }
     $.each(properties2, function(index, property) {
       if (key == property.value) {
-        if (value && property.filter.type == "date") {
+        if (value && property.filter.value == "date") {
           date = new Date(value);
           var month = new Array();
           month[0] = "January";
