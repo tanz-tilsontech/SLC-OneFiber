@@ -723,6 +723,7 @@ var properties2 = [{
     sortable: true
   },
   filter: {
+    value: "date",
     type: "string",
     vertical: true,
     multiple: true,
@@ -738,6 +739,7 @@ var properties2 = [{
     sortable: true
   },
   filter: {
+    value: "date",
     type: "string",
     vertical: true,
     multiple: true,
@@ -753,6 +755,7 @@ var properties2 = [{
     sortable: true
   },
   filter: {
+    value: "date",
     type: "string",
     vertical: true,
     multiple: true,
@@ -768,6 +771,7 @@ var properties2 = [{
     sortable: true
   },
   filter: {
+    value: "date",
     type: "string",
     vertical: true,
     multiple: true,
@@ -783,6 +787,7 @@ var properties2 = [{
     sortable: true
   },
   filter: {
+    value: "date",
     type: "string",
     vertical: true,
     multiple: true,
@@ -2454,7 +2459,7 @@ function identifyFeature2(id) {
     }
     $.each(properties2, function(index, property) {
       if (key == property.value) {
-        if (value && property.filter.type == "date") {
+        if (value && property.filter.value == "date") {
           date = new Date(value);
           value = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
         }
