@@ -1837,6 +1837,7 @@ var featureLayer3 = L.geoJson(null, {
     if (feature.properties) {
       layer.on({
         click: function (e) {
+          identifyFeature3(L.stamp(layer));
           highlightLayer4.clearLayers();
           highlightLayer4.addData(featureLayer4.getLayer(L.stamp(layer)).toGeoJSON());
           $(".info-control").html(feature.properties[config4.hoverProperty]);
