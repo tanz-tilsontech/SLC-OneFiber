@@ -93,6 +93,7 @@
                 <li><a href="#" id="filter-btn" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Route</a></li>
                 <li><a href="#" id="resto-filter-btn" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Restoration</a></li>
                 <li><a href="#" id="fiber-filter-btn" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Fiber Segments</a></li>
+                <li><a href="#" id="fiberRoute-filter-btn" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Fiber Routes</a></li>
               </ul>
             </li>     
             <li><a href="#" id="refresh-btn" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-refresh"></i>&nbsp;&nbsp;Refresh</a></li>
@@ -173,6 +174,28 @@
         <span id="fiber-feature-count" class="text-muted" style="padding-left: 15px;"></span>
       </div>
       <table id="fiberTable"></table>
+    </div>
+
+    <div id="fiberRoute-table-container"> 
+      <div id="fiberRoute-toolbar" style="width: 400px;">
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-default" data-toggle="modal" data-target="#FiberRoutefilterModal">
+            <i class="fa fa-filter"></i> Filter Data
+          </button>
+          <div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fa fa-cloud-download"></i> Export Data <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a href="#" id="fiberRoute-download-csv-btn"><i class="fa fa-file-text-o"></i> CSV</a></li>
+              <li><a href="#" id="fiberRoute-download-excel-btn"><i class="fa fa-file-excel-o"></i> Excel</a></li>
+              <li><a href="#" id="fiberRoute-download-pdf-btn"><i class="fa fa-file-pdf-o"></i> PDF</a></li>
+            </ul>
+          </div>
+        </div>
+        <span id="fiberRoute-feature-count" class="text-muted" style="padding-left: 15px;"></span>
+      </div>
+      <table id="fiberRouteTable"></table>
     </div>
 
     <div class="modal fade" id="chartModal" tabindex="-1" role="dialog">
@@ -283,6 +306,24 @@
       </div>
     </div>
 
+    <div class="modal fade" id="FiberRoutefilterModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Fiber Route Data<span id="fiberRoute-record-count" class="badge pull-right" style="margin-right: 15px; margin-top: 2px;"></span></h4>
+          </div>
+          <div class="modal-body">
+            <div id="fiberRouteFilter"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-info" id="fiberRoute-reset-filter-btn"><i class="fa fa-undo"></i> Reset Filter</button>
+            <button type="button" class="btn btn-primary" id="fiberRoute-apply-filter-btn"><i class="fa fa-filter"></i> Apply Filter</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="modal fade" id="featureModal" tabindex="-1" role="dialog">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -377,6 +418,21 @@
             <h4 class="modal-title">Fiber Info</h4>
           </div>
           <div class="modal-body" id="feature-info2"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="feature3Modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Fiber Info</h4>
+          </div>
+          <div class="modal-body" id="feature-info3"></div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           </div>
