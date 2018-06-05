@@ -2457,7 +2457,20 @@ function identifyFeature2(id) {
       if (key == property.value) {
         if (value && property.filter.type == "date") {
           date = new Date(value);
-          value = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
+          var month = new Array();
+          month[0] = "January";
+          month[1] = "February";
+          month[2] = "March";
+          month[3] = "April";
+          month[4] = "May";
+          month[5] = "June";
+          month[6] = "July";
+          month[7] = "August";
+          month[8] = "September";
+          month[9] = "October";
+          month[10] = "November";
+          month[11] = "December";
+          value = month[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear();
         }
         if (property.info !== false) {
           content += "<tr><th>" + property.label + "</th><td>" + value + "</td></tr>";
