@@ -1930,6 +1930,7 @@ $.getJSON(config3.geojson, function (data) {
     return feature.properties;
   });
   featureLayer3.addData(data);
+  buildFiberRouteConfig();
   $("#loading-mask").hide();
 });
 
