@@ -1533,10 +1533,6 @@ function buildFiberConfig() {
     }
     // Table config
     if (value.table) {
-      if (value && value.filter.value == "date") {
-        date = new Date(value);
-        value.value = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
-      }
       table.push({
         field: value.value,
         title: value.label
