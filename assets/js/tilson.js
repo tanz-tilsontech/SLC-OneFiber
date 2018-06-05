@@ -1510,6 +1510,10 @@ function buildFiberConfig() {
       else {
         id = "properties->" + value.value;
       }
+      if (value && value.filter.value == "date") {
+        date = new Date(value);
+        value = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
+      }
       filters.push({
         id: id,
         label: value.label
@@ -1535,7 +1539,7 @@ function buildFiberConfig() {
     if (value.table) {
       if (value && value.filter.value == "date") {
         date = new Date(value);
-        value = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
+        value.value = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
       }
       table.push({
         field: value.value,
