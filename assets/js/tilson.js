@@ -1839,13 +1839,13 @@ var featureLayer3 = L.geoJson(null, {
         click: function (e) {
           identifyFeature3(L.stamp(layer));
           highlightLayer4.clearLayers();
-          highlightLayer4.addData(featureLayer4.getLayer(L.stamp(layer)).toGeoJSON());
-          $(".info-control").html(feature.properties[config4.hoverProperty]);
+          highlightLayer4.addData(featureLayer3.getLayer(L.stamp(layer)).toGeoJSON());
+          $(".info-control").html(feature.properties[config3.hoverProperty]);
           $(".info-control").show();
         },
         mouseover: function (e) {
-          if (config4.hoverProperty) {
-            $(".info-control").html(feature.properties[config4.hoverProperty]);
+          if (config3.hoverProperty) {
+            $(".info-control").html(feature.properties[config3.hoverProperty]);
             $(".info-control").show();
           }
         },
