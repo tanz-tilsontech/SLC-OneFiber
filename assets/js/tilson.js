@@ -2455,7 +2455,7 @@ function identifyFeature2(id) {
     }
     $.each(properties2, function(index, property) {
       if (key == property.value) {
-        if (property.filter.type == "date") {
+        if (property.filter.type == "date" && property.value != 0) {
           date = new Date(value);
           value = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
         }
