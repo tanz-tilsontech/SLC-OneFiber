@@ -2281,13 +2281,6 @@ function syncFiberTable() {
   tableFeatures = [];
   featureLayer2.eachLayer(function (layer) {
     layer.feature.properties.leaflet_stamp = L.stamp(layer);
-    if (map.hasLayer(featureLayer2)) {
-      featureLayer2.getLayer()
-      layer.feature.geometry.type === "LineString"
-      if (map.getBounds().contains(layer.getLatLng())) {
-        tableFeatures.push(layer.feature.properties);
-      }
-    }
   });
   $("#fiberTable").bootstrapTable("load", JSON.parse(JSON.stringify(tableFeatures)));
   var featureCount = $("#fiberTable").bootstrapTable("getData").length;
@@ -2303,13 +2296,6 @@ function syncFiberRouteTable() {
   tableFeatures = [];
   featureLayer3.eachLayer(function (layer) {
     layer.feature.properties.leaflet_stamp = L.stamp(layer);
-    if (map.hasLayer(featureLayer3)) {
-      featureLayer3.getLayer()
-      layer.feature.geometry.type === "LineString"
-      if (map.getBounds().contains(layer.getLatLng())) {
-        tableFeatures.push(layer.feature.properties);
-      }
-    }
   });
   $("#fiberRouteTable").bootstrapTable("load", JSON.parse(JSON.stringify(tableFeatures)));
   var featureCount = $("#fiberRouteTable").bootstrapTable("getData").length;
