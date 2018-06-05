@@ -2408,8 +2408,9 @@ function identifyFeature2(id) {
     if (typeof value == "string"  && value.indexOf("http://www.fulcrumapp") === 0) {
       value = "<a href='" + value + "' target='_blank'>" + "Fulcrum Record" + "</a>";
     }
-    if (value.toString().length == 13) {
-      value = new Date(0).setUTCSeconds(value);
+    if (typeof value == "date") {
+      date = new Date( parseFloat( value.substr(6 )));
+      value = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear()
     }
     $.each(properties2, function(index, property) {
       if (key == property.value) {
