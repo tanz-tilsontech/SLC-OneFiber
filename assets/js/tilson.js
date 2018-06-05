@@ -777,7 +777,7 @@ var properties2 = [{
   }
 },
 {
-  value: "oofdatesplicedandtested ",
+  value: "oofdatesplicedandtested",
   label: "Spliced/Tested",
   table: {
     visible: true,
