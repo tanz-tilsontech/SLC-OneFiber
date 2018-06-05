@@ -2455,9 +2455,12 @@ function identifyFeature2(id) {
     }
     $.each(properties2, function(index, property) {
       if (key == property.value) {
-        if (property.filter.type == "date" && property.value != 0) {
+        if (property.filter.type == "date") {
           date = new Date(value);
           value = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
+        }
+        if (property.value == "NaN/NaN/NaN") {
+          value = ""
         }
         if (property.info !== false) {
           content += "<tr><th>" + property.label + "</th><td>" + value + "</td></tr>";
