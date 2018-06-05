@@ -2408,7 +2408,7 @@ function identifyFeature2(id) {
     if (typeof value == "string"  && value.indexOf("http://www.fulcrumapp") === 0) {
       value = "<a href='" + value + "' target='_blank'>" + "Fulcrum Record" + "</a>";
     }
-    if (typeof value == "date" && value.toString().length == 13) {
+    if (value.toString().length == 13) {
       value = new Date(0).setUTCSeconds(value);
     }
     $.each(properties2, function(index, property) {
