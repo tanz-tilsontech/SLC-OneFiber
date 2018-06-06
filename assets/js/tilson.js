@@ -1813,41 +1813,43 @@ var featureLayer2 = L.geoJson(null, {
       return true;
     };
   },
-  style: function (feature) {
+  style: function (feature, layer) {
     if (feature.properties.oofstatus === "Cable Placed") {
       return {
         color: "green",
         weight: 6,
         opacity: 1,
-        dashArray: "2"
       };
     } else if (feature.properties.oofstatus === "Construction Underway") {
       return {
         color: "magenta",
         weight: 6,
         opacity: 1,
-        dashArray: "2"
       };
     } else if (feature.properties.oofstatus === "Permits Received") {
-      return {
+      return { 
+        function (feature, layer) {
+          L.polylineDecorator(layer,{
+            patterns:
+            [{ offset: 12, repeat: 25, symbol: L.Symbol.dash({pixelSize: 10, pathOptions: {color: '#f00', weight: 2}}) },
+            { offset: 0, repeat: 25, symbol: L.Symbol.dash({pixelSize: 0}) }]
+          });
+        },
         color: "orange",
         weight: 6,
         opacity: 1,
-        dashArray: "2"
       };
     } else if (feature.properties.oofstatus === "Permits Submitted") {
       return {
         color: "blue",
         weight: 6,
         opacity: 1,
-        dashArray: "2"
       };
     } else if (feature.properties.oofstatus === "In Design") {
       return {
         color: "gray",
         weight: 6,
         opacity: 1,
-        dashArray: "2"
       };
     }
   },
