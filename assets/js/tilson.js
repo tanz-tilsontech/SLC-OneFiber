@@ -1818,31 +1818,36 @@ var featureLayer2 = L.geoJson(null, {
       return {
         color: "green",
         weight: 6,
-        opacity: 1
+        opacity: 1,
+        dashArray: "30 10"
       };
     } else if (feature.properties.oofstatus === "Construction Underway") {
       return {
         color: "magenta",
         weight: 6,
-        opacity: 1
+        opacity: 1,
+        dashArray: "30 10"
       };
     } else if (feature.properties.oofstatus === "Permits Received") {
       return {
         color: "orange",
         weight: 6,
-        opacity: 1
+        opacity: 1,
+        dashArray: "30 10"
       };
     } else if (feature.properties.oofstatus === "Permits Submitted") {
       return {
         color: "blue",
         weight: 6,
-        opacity: 1
+        opacity: 1,
+        dashArray: "30 10"
       };
     } else if (feature.properties.oofstatus === "In Design") {
       return {
         color: "gray",
         weight: 6,
-        opacity: 1
+        opacity: 1,
+        dashArray: "30 10"
       };
     }
   },
