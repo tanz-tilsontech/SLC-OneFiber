@@ -1854,6 +1854,11 @@ var featureLayer2 = L.geoJson(null, {
     }
   },
   onEachFeature: function (feature, layer) {
+    L.polylineDecorator(layer,{
+      patterns:
+      [{ offset: 12, repeat: 25, symbol: L.Symbol.dash({pixelSize: 10, pathOptions: {color: '#f00', weight: 2}}) },
+      { offset: 0, repeat: 25, symbol: L.Symbol.dash({pixelSize: 0}) }]
+    });
     if (feature.properties) {
       layer.on({
         click: function (e) {
