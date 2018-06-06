@@ -1854,11 +1854,6 @@ var featureLayer2 = L.geoJson(null, {
     }
   },
   onEachFeature: function (feature, layer) {
-    L.polylineDecorator(layer,{
-      patterns:
-      [{ offset: 12, repeat: 25, symbol: L.Symbol.dash({pixelSize: 10, pathOptions: {color: '#f00', weight: 2}}) },
-      { offset: 0, repeat: 25, symbol: L.Symbol.dash({pixelSize: 0}) }]
-    });
     if (feature.properties) {
       layer.on({
         click: function (e) {
@@ -1882,6 +1877,12 @@ var featureLayer2 = L.geoJson(null, {
   }
 });
 
+var decorator = L.polylineDecorator(featureLayer2, {
+  patterns: [
+      // defines a pattern of 10px-wide dashes, repeated every 20px on the line
+      {offset: 0, repeat: 20, symbol: L.Symbol.dash({pixelSize: 10})}
+  ]
+}).addTo(map);
 
 var featureLayer3 = L.geoJson(null, {
   style: function (feature) {
