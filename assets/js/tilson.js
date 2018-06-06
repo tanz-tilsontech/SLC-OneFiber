@@ -1816,33 +1816,33 @@ var featureLayer2 = L.geoJson(null, {
   style: function (feature, layer) {
     if (feature.properties.oofstatus === "Cable Placed") {
       return {
-        color: "green",
+        color: "#2AE100",
         weight: 6,
-        opacity: 0.5
+        opacity: 0.7
       };
     } else if (feature.properties.oofstatus === "Construction Underway") {
       return {
-        color: "magenta",
+        color: "#FF1ED9",
         weight: 6,
-        opacity: 0.5
+        opacity: 0.7
       };
     } else if (feature.properties.oofstatus === "Permits Received") {
       return { 
-        color: "orange",
+        color: "#F47200",
         weight: 6,
-        opacity: 0.5
+        opacity: 0.7
       };
     } else if (feature.properties.oofstatus === "Permits Submitted") {
       return {
-        color: "blue",
+        color: "#0008C5",
         weight: 6,
-        opacity: 0.5
+        opacity: 0.7
       };
     } else if (feature.properties.oofstatus === "In Design") {
       return {
-        color: "gray",
+        color: "#828282",
         weight: 6,
-        opacity: 0.5
+        opacity: 0.7
       };
     }
   },
