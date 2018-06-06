@@ -1819,6 +1819,7 @@ var featureLayer2 = L.geoJson(null, {
         color: "green",
         weight: 6,
         opacity: 1,
+        dashOffset: "5",
         dashArray: "5, 10"
       };
     } else if (feature.properties.oofstatus === "Construction Underway") {
@@ -1826,6 +1827,7 @@ var featureLayer2 = L.geoJson(null, {
         color: "magenta",
         weight: 6,
         opacity: 1,
+        dashOffset: "5",
         dashArray: "5, 10"
       };
     } else if (feature.properties.oofstatus === "Permits Received") {
@@ -1833,6 +1835,7 @@ var featureLayer2 = L.geoJson(null, {
         color: "orange",
         weight: 6,
         opacity: 1,
+        dashOffset: "5",
         dashArray: "5, 10"
       };
     } else if (feature.properties.oofstatus === "Permits Submitted") {
@@ -1840,6 +1843,7 @@ var featureLayer2 = L.geoJson(null, {
         color: "blue",
         weight: 6,
         opacity: 1,
+        dashOffset: "5",
         dashArray: "5, 10"
       };
     } else if (feature.properties.oofstatus === "In Design") {
@@ -1847,6 +1851,7 @@ var featureLayer2 = L.geoJson(null, {
         color: "gray",
         weight: 6,
         opacity: 1,
+        dashOffset: "5",
         dashArray: "5, 10"
       };
     }
