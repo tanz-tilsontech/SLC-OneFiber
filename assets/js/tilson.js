@@ -1813,6 +1813,13 @@ var featureLayer2 = L.geoJson(null, {
       return true;
     };
   },
+  pointToLayer: function (feature, latlng) {
+    return L.polylineDecorator(latlng, {
+      patterns: [
+      { offset: 12, repeat: 25, symbol: L.Symbol.dash({pixelSize: 10, pathOptions: {color: '#f00', weight: 2}}) },
+      { offset: 0, repeat: 25, symbol: L.Symbol.dash({pixelSize: 0}) }]
+    })
+  },
   style: function (feature, layer) {
     if (feature.properties.oofstatus === "Cable Placed") {
       return {
@@ -1869,13 +1876,6 @@ var featureLayer2 = L.geoJson(null, {
     }
   }
 });
-
-var decorator = L.polylineDecorator(featureLayer2, {
-  patterns: [
-      // defines a pattern of 10px-wide dashes, repeated every 20px on the line
-      {offset: 0, repeat: 20, symbol: L.Symbol.dash({pixelSize: 10})}
-  ]
-}).addTo(map);
 
 
 var featureLayer3 = L.geoJson(null, {
