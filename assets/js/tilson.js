@@ -1828,13 +1828,6 @@ var featureLayer2 = L.geoJson(null, {
       };
     } else if (feature.properties.oofstatus === "Permits Received") {
       return { 
-        function (feature, layer) {
-          L.polylineDecorator(layer,{
-            patterns:
-            [{ offset: 12, repeat: 25, symbol: L.Symbol.dash({pixelSize: 10, pathOptions: {color: '#f00', weight: 2}}) },
-            { offset: 0, repeat: 25, symbol: L.Symbol.dash({pixelSize: 0}) }]
-          });
-        },
         color: "orange",
         weight: 6,
         opacity: 1,
@@ -1883,6 +1876,7 @@ var decorator = L.polylineDecorator(featureLayer2, {
       {offset: 0, repeat: 20, symbol: L.Symbol.dash({pixelSize: 10})}
   ]
 }).addTo(map);
+
 
 var featureLayer3 = L.geoJson(null, {
   style: function (feature) {
