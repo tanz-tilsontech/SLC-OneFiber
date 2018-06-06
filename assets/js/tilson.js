@@ -1819,45 +1819,40 @@ var featureLayer2 = L.geoJson(null, {
         color: "green",
         weight: 6,
         opacity: 1,
-        dashOffset: "5",
-        dashArray: "5, 15",
-        lineCap: "round"
+        dashOffset: "15",
+        dashArray: "10, 15"
       };
     } else if (feature.properties.oofstatus === "Construction Underway") {
       return {
         color: "magenta",
         weight: 6,
         opacity: 1,
-        dashOffset: "5",
-        dashArray: "5, 15",
-        lineCap: "round"
+        dashOffset: "15",
+        dashArray: "10, 15"
       };
     } else if (feature.properties.oofstatus === "Permits Received") {
       return { 
         color: "orange",
         weight: 6,
         opacity: 1,
-        dashOffset: "5",
-        dashArray: "5, 15",
-        lineCap: "round"
+        dashOffset: "15",
+        dashArray: "10, 15"
       };
     } else if (feature.properties.oofstatus === "Permits Submitted") {
       return {
         color: "blue",
         weight: 6,
         opacity: 1,
-        dashOffset: "5",
-        dashArray: "5, 15",
-        lineCap: "round"
+        dashOffset: "15",
+        dashArray: "10, 15"
       };
     } else if (feature.properties.oofstatus === "In Design") {
       return {
         color: "gray",
         weight: 6,
         opacity: 1,
-        dashOffset: "5",
-        dashArray: "5, 15",
-        lineCap: "round"
+        dashOffset: "15",
+        dashArray: "10, 15"
       };
     }
   },
