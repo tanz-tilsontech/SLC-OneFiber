@@ -11,7 +11,10 @@ function verifyUser() {
     $("#legend-btn").hide();
     $("#refresh-btn").hide();
     $(".navbar-collapse").css("opacity", "0");
-    alert("This login does not have access to this page.");
+    window.confirm
+    if (window.confirm('Click OK to go to Login Page')) {
+      window.location.href='https://tanz-tilsontech.github.io/SLC-OneFiber/index.html';
+    };
   };
 };
 
