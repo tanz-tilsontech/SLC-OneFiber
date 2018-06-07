@@ -4,6 +4,9 @@ function verifyUser() {
   var owner = "tilson"
   if (sessionStorage.getItem("fulcrum_useremail") === null || sessionStorage.getItem("fulcrum_useremail").indexOf(owner) === -1) {
     $("#table-container").hide();
+    $("#resto-table-container").hide();
+    $("#fiber-table-container").hide();
+    $("#fiberRoute-table-container").hide();
     $("#map-container").hide();
     $("#legend-btn").hide();
     $("#refresh-btn").hide();
