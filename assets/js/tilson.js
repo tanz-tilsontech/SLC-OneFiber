@@ -1830,8 +1830,8 @@ var featureLayer2 = L.geoJson(null, {
 var featureLayer3 = L.geoJson(null, {
   style: function (feature) {
     return {
-      color: "blue",
-      opacity: 1,
+      color: "black",
+      opacity: 0.7,
       weight: 6
     };
   },
