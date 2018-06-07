@@ -204,6 +204,7 @@ var properties = [{
     input: "radio",
     vertical: true,
     multiple: true,
+    size: 0.5,
     operators: ["equal", "not_equal"],
     values: []
   }
