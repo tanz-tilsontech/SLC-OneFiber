@@ -1416,19 +1416,6 @@ function buildFiberConfig() {
           '<i class="fa fa-info-circle"></i>',
         '</a>'
       ].join("");
-    },
-    events: {
-      "click .zoom": function (e, value, row, index) {
-        var layer = featureLayer2.getLayer(row.leaflet_stamp);
-        map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 19);
-        highlightLayer.clearLayers();
-        highlightLayer.addData(featureLayer2.getLayer(row.leaflet_stamp).toGeoJSON());
-      },
-      "click .identify": function (e, value, row, index) {
-        identifyFeature2(row.leaflet_stamp);
-        highlightLayer.clearLayers();
-        highlightLayer.addData(featureLayer2.getLayer(row.leaflet_stamp).toGeoJSON());
-      }
     }
   }];
 
@@ -2181,18 +2168,7 @@ function buildFiberTable() {
     trimOnSearch: false,
     showColumns: true,
     showToggle: true,
-    columns: table,
-    onClickRow: function(row, $element) {
-      var layer = featureLayer2.getLayer(row.leaflet_stamp);
-      map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 19);
-      highlightLayer.clearLayers();
-      highlightLayer.addData(featureLayer2.getLayer(row.leaflet_stamp).toGeoJSON());
-    },
-    onDblClickRow: function(row) {
-      identifyFeature2(row.leaflet_stamp);
-      highlightLayer.clearLayers();
-      highlightLayer.addData(featureLayer2.getLayer(row.leaflet_stamp).toGeoJSON());
-    },
+    columns: table
   });
 
   $(window).resize(function () {
@@ -2217,18 +2193,7 @@ function buildFiberRouteTable() {
     trimOnSearch: false,
     showColumns: true,
     showToggle: true,
-    columns: table,
-    onClickRow: function(row, $element) {
-      var layer = featureLayer3.getLayer(row.leaflet_stamp);
-      map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 19);
-      highlightLayer4.clearLayers();
-      highlightLayer4.addData(featureLayer3.getLayer(row.leaflet_stamp).toGeoJSON());
-    },
-    onDblClickRow: function(row) {
-      identifyFeature3(row.leaflet_stamp);
-      highlightLayer4.clearLayers();
-      highlightLayer4.addData(featureLayer3.getLayer(row.leaflet_stamp).toGeoJSON());
-    },
+    columns: table
   });
 
   $(window).resize(function () {
