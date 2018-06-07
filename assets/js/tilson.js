@@ -202,9 +202,8 @@ var properties = [{
   filter: {
     type: "string",
     input: "radio",
-    vertical: true,
+    vertical: false,
     multiple: true,
-    size: 1,
     operators: ["equal", "not_equal"],
     values: []
   }
