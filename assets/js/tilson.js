@@ -2636,14 +2636,13 @@ function switchView(view) {
     if (map) {
       map.invalidateSize();
     }
-  } else if (view == "fiberTable") {
+  } else if (view == "table") {
     $("#view").html("Table View");
     location.hash = "#table";
-    $("#fiber-table-container").show();
-    $("#fiber-table-container").css("height", "100%");
+    $("#table-container").show();
+    $("#table-container").css("height", "100%");
     $("#map-container").hide();
     $("#resto-table-container").hide();
-    $("#table-container").hide();
     $(window).resize();
   } else if (view == "restoTable") {
     $("#view").html("Table View");
@@ -2679,8 +2678,8 @@ $("[name='view']").click(function() {
   } else if (this.id === "graph-only") {
     switchView("table");
     return false;
-  } else if (this.id === "fiber-graph-only") {
-    switchView("fiberTable");
+  } else if (this.id === "resto-graph-only") {
+    switchView("restoTable");
     return false;
   } else if (this.id === "resto-map-graph") {
     switchView("restoSplit");
