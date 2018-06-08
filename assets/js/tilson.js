@@ -2037,6 +2037,7 @@ function applyRoutesFilter() {
     featureLayer.clearLayers();
     featureLayer.addData(features);
     syncRoutesTable();
+    map.fitBounds(featureLayer.getBounds());
   });
 }
 
@@ -2050,6 +2051,7 @@ function applyRestoFilter() {
     featureLayer1.clearLayers();
     featureLayer1.addData(features);
     syncRestoTable();
+    map.fitBounds(featureLayer1.getBounds());
   });
 }
 
