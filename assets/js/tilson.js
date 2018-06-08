@@ -251,9 +251,7 @@ var properties = [{
     sortable: true
   },
   filter: {
-    type: "string",
-    operators: ["contains"],
-    values: []
+    type: "date"
   }
 },
 {
@@ -264,10 +262,7 @@ var properties = [{
     sortable: true
   },
   filter: {
-    type: "string",
-    input: "radio",
-    operators: ["equal"],
-    values: []
+    type: "string"
   }
 },
 {
@@ -278,10 +273,7 @@ var properties = [{
     sortable: true
   },
   filter: {
-    type: "string",
-    input: "radio",
-    operators: ["equal"],
-    values: []
+    type: "string"
   }
 },
 {
@@ -293,8 +285,6 @@ var properties = [{
   },
   filter: {
     type: "integer",
-    operators: ["between", "greater", "less"],
-    values: []
   }
 },
 {
@@ -305,9 +295,7 @@ var properties = [{
     sortable: true
   },
   filter: {
-    type: "string",
-    operators: ["contains"],
-    values: []
+    type: "date"
   }
 },
 {
@@ -318,9 +306,7 @@ var properties = [{
     sortable: true
   },
   filter: {
-    type: "string",
-    operators: ["contains"],
-    values: []
+    type: "date"
   }
 },
 {
@@ -348,8 +334,6 @@ var properties = [{
   },
   filter: {
     type: "integer",
-    operators: ["between", "greater", "less"],
-    values: []
   }
 },
 {
@@ -360,9 +344,7 @@ var properties = [{
     sortable: true
   },
   filter: {
-    type: "string",
-    operators: ["contains"],
-    values: []
+    type: "date"
   }
 },
 {
@@ -373,9 +355,7 @@ var properties = [{
     sortable: true
   },
   filter: {
-    type: "string",
-    operators: ["contains"],
-    values: []
+    type: "date"
   }
 },
 {
@@ -403,10 +383,9 @@ var properties = [{
   },
   filter: {
     type: "integer",
-    operators: ["between", "greater", "less"],
-    values: []
   },
 }];
+
 
 
 // Properties of Restoration in Fulcrum
@@ -420,6 +399,7 @@ var properties1 = [{
   },
   filter: {
     type: "string",
+    input: "radio",
     vertical: true,
     multiple: true,
     operators: ["equal", "not_equal"],
@@ -483,9 +463,10 @@ var properties1 = [{
   },
   filter: {
     type: "string",
+    input: "radio",
     vertical: true,
     multiple: true,
-    operators: ["equal", "not_equal", "contains"],
+    operators: ["equal", "not_equal"],
     values: []
   }
 },
@@ -498,9 +479,10 @@ var properties1 = [{
   },
   filter: {
     type: "string",
+    input: "radio",
     vertical: true,
     multiple: true,
-    operators: ["equal", "not_equal", "contains"],
+    operators: ["equal", "not_equal"],
     values: []
   }
 },
@@ -544,9 +526,7 @@ var properties1 = [{
     sortable: true
   },
   filter: {
-    type: "string",
-    operators: ["contains"],
-    values: []
+    type: "date"
   }
 },
 {
@@ -595,6 +575,7 @@ var properties2 = [{
   },
   filter: {
     type: "string",
+    input: "radio",
     vertical: true,
     multiple: true,
     operators: ["equal", "not_equal"],
@@ -660,7 +641,7 @@ var properties2 = [{
     type: "integer",
     vertical: true,
     multiple: true,
-    operators: ["between", "greater", "less"],
+    operators: ["equal", "not_equal"],
     values: []
   }
 },
