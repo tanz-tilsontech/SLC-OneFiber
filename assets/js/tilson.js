@@ -75,7 +75,7 @@ var properties = [{
     visible: false
   },
   filter: {
-    type: "text",
+    type: "string",
     input: "radio",
     vertical: true,
     multiple: true,
@@ -90,7 +90,7 @@ var properties = [{
     visible: false
   },
   filter: {
-    type: "text",
+    type: "string",
     input: "radio",
     vertical: true,
     multiple: true,
@@ -106,7 +106,7 @@ var properties = [{
     sortable: true
   },
   filter: {
-    type: "text",
+    type: "string",
     input: "radio",
     vertical: true,
     multiple: true,
@@ -123,7 +123,7 @@ var properties = [{
     sortable: true
   },
   filter: {
-    type: "text",
+    type: "string",
     input: "radio",
     vertical: true,
     multiple: true,
@@ -139,7 +139,7 @@ var properties = [{
     sortable: false
   },
   filter: {
-    type: "text",
+    type: "string",
     input: "radio",
     vertical: true,
     multiple: true,
@@ -155,7 +155,7 @@ var properties = [{
     sortable: true
   },
   filter: {
-    type: "text",
+    type: "string",
     input: "radio",
     vertical: true,
     multiple: true,
@@ -171,7 +171,7 @@ var properties = [{
     sortable: true
   },
   filter: {
-    type: "text",
+    type: "string",
     input: "radio",
     vertical: true,
     multiple: true,
@@ -187,7 +187,7 @@ var properties = [{
     sortable: true
   },
   filter: {
-    type: "text",
+    type: "string",
     input: "radio",
     vertical: true,
     multiple: true,
@@ -203,7 +203,7 @@ var properties = [{
     sortable: true
   },
   filter: {
-    type: "text",
+    type: "string",
     input: "radio",
     vertical: false,
     multiple: true,
@@ -219,7 +219,7 @@ var properties = [{
     sortable: true
   },
   filter: {
-    type: "text",
+    type: "string",
     input: "text",
     vertical: true,
     multiple: true,
@@ -235,7 +235,7 @@ var properties = [{
     sortable: true
   },
   filter: {
-    type: "text",
+    type: "string",
     input: "text",
     vertical: true,
     multiple: true,
@@ -251,7 +251,9 @@ var properties = [{
     sortable: true
   },
   filter: {
-    type: "date"
+    type: "string",
+    operators: ["contains"],
+    values: []
   }
 },
 {
@@ -262,7 +264,10 @@ var properties = [{
     sortable: true
   },
   filter: {
-    type: "text"
+    type: "string",
+    input: ["radio"],
+    operators: ["equal"],
+    values: []
   }
 },
 {
@@ -273,7 +278,10 @@ var properties = [{
     sortable: true
   },
   filter: {
-    type: "text"
+    type: "string",
+    input: ["radio"],
+    operators: ["equal"],
+    values: []
   }
 },
 {
@@ -285,6 +293,8 @@ var properties = [{
   },
   filter: {
     type: "integer",
+    operators: ["between", "greater", "less"],
+    values: []
   }
 },
 {
@@ -295,7 +305,9 @@ var properties = [{
     sortable: true
   },
   filter: {
-    type: "date"
+    type: "string",
+    operators: ["contains"],
+    values: []
   }
 },
 {
@@ -306,7 +318,9 @@ var properties = [{
     sortable: true
   },
   filter: {
-    type: "date"
+    type: "string",
+    operators: ["contains"],
+    values: []
   }
 },
 {
@@ -317,7 +331,7 @@ var properties = [{
     sortable: true
   },
   filter: {
-    type: "text",
+    type: "string",
     input: "radio",
     vertical: true,
     multiple: true,
@@ -334,6 +348,8 @@ var properties = [{
   },
   filter: {
     type: "integer",
+    operators: ["between", "greater", "less"],
+    values: []
   }
 },
 {
@@ -344,7 +360,9 @@ var properties = [{
     sortable: true
   },
   filter: {
-    type: "date"
+    type: "string",
+    operators: ["contains"],
+    values: []
   }
 },
 {
@@ -355,7 +373,9 @@ var properties = [{
     sortable: true
   },
   filter: {
-    type: "date"
+    type: "string",
+    operators: ["contains"],
+    values: []
   }
 },
 {
@@ -366,7 +386,7 @@ var properties = [{
     sortable: true
   },
   filter: {
-    type: "text",
+    type: "string",
     input: "radio",
     vertical: true,
     multiple: true,
@@ -383,9 +403,10 @@ var properties = [{
   },
   filter: {
     type: "integer",
+    operators: ["between", "greater", "less"],
+    values: []
   },
 }];
-
 
 
 // Properties of Restoration in Fulcrum
@@ -398,8 +419,7 @@ var properties1 = [{
     sortable: false
   },
   filter: {
-    type: "text",
-    input: "radio",
+    type: "string",
     vertical: true,
     multiple: true,
     operators: ["equal", "not_equal"],
@@ -414,7 +434,7 @@ var properties1 = [{
     sortable: true
   },
   filter: {
-    type: "text",
+    type: "string",
     input: "radio",
     vertical: true,
     multiple: true,
@@ -430,7 +450,7 @@ var properties1 = [{
     sortable: true
   },
   filter: {
-    type: "text",
+    type: "string",
     input: "radio",
     vertical: true,
     multiple: true,
@@ -446,7 +466,7 @@ var properties1 = [{
     sortable: true
   },
   filter: {
-    type: "text",
+    type: "string",
     input: "radio",
     vertical: true,
     multiple: true,
@@ -462,11 +482,10 @@ var properties1 = [{
     sortable: true
   },
   filter: {
-    type: "text",
-    input: "radio",
+    type: "string",
     vertical: true,
     multiple: true,
-    operators: ["equal", "not_equal"],
+    operators: ["equal", "not_equal", "contains"],
     values: []
   }
 },
@@ -478,11 +497,10 @@ var properties1 = [{
     sortable: true
   },
   filter: {
-    type: "text",
-    input: "radio",
+    type: "string",
     vertical: true,
     multiple: true,
-    operators: ["equal", "not_equal"],
+    operators: ["equal", "not_equal", "contains"],
     values: []
   }
 },
@@ -494,7 +512,7 @@ var properties1 = [{
     sortable: true
   },
   filter: {
-    type: "text",
+    type: "string",
     input: "radio",
     vertical: true,
     multiple: true,
@@ -510,7 +528,7 @@ var properties1 = [{
     sortable: true
   },
   filter: {
-    type: "text",
+    type: "string",
     input: "radio",
     vertical: true,
     multiple: true,
@@ -526,7 +544,9 @@ var properties1 = [{
     sortable: true
   },
   filter: {
-    type: "date"
+    type: "string",
+    operators: ["contains"],
+    values: []
   }
 },
 {
@@ -537,7 +557,7 @@ var properties1 = [{
     sortable: true
   },
   filter: {
-    type: "text",
+    type: "string",
     input: "radio",
     vertical: true,
     multiple: true,
@@ -558,7 +578,7 @@ var properties2 = [{
     sortable: true
   },
   filter: {
-    type: "text",
+    type: "string",
     input: "radio",
     vertical: true,
     multiple: true,
@@ -574,8 +594,7 @@ var properties2 = [{
     sortable: true
   },
   filter: {
-    type: "text",
-    input: "text",
+    type: "string",
     vertical: true,
     multiple: true,
     operators: ["equal", "not_equal"],
@@ -590,7 +609,7 @@ var properties2 = [{
     sortable: true
   },
   filter: {
-    type: "text",
+    type: "string",
     input: "radio",
     vertical: true,
     multiple: true,
@@ -606,7 +625,7 @@ var properties2 = [{
     sortable: true
   },
   filter: {
-    type: "text",
+    type: "string",
     input: "radio",
     vertical: true,
     multiple: true,
@@ -641,7 +660,7 @@ var properties2 = [{
     type: "integer",
     vertical: true,
     multiple: true,
-    operators: ["equal", "not_equal"],
+    operators: ["between", "greater", "less"],
     values: []
   }
 },
@@ -653,7 +672,7 @@ var properties2 = [{
     sortable: true
   },
   filter: {
-    type: "text",
+    type: "string",
     input: "radio",
     vertical: true,
     multiple: true,
@@ -670,7 +689,7 @@ var properties2 = [{
   },
   filter: {
     value: "date",
-    type: "text",
+    type: "string",
     vertical: true,
     multiple: true,
     operators: ["begins_with"],
@@ -686,7 +705,7 @@ var properties2 = [{
   },
   filter: {
     value: "date",
-    type: "text",
+    type: "string",
     vertical: true,
     multiple: true,
     operators: ["begins_with"],
@@ -702,7 +721,7 @@ var properties2 = [{
   },
   filter: {
     value: "date",
-    type: "text",
+    type: "string",
     vertical: true,
     multiple: true,
     operators: ["begins_with"],
@@ -718,7 +737,7 @@ var properties2 = [{
   },
   filter: {
     value: "date",
-    type: "text",
+    type: "string",
     vertical: true,
     multiple: true,
     operators: ["begins_with"],
@@ -734,7 +753,7 @@ var properties2 = [{
   },
   filter: {
     value: "date",
-    type: "text",
+    type: "string",
     vertical: true,
     multiple: true,
     operators: ["begins_with"],
@@ -754,7 +773,7 @@ var properties3 = [{
     sortable: true
   },
   filter: {
-    type: "text",
+    type: "string",
     input: "radio",
     vertical: true,
     multiple: true,
@@ -770,7 +789,7 @@ var properties3 = [{
     sortable: true
   },
   filter: {
-    type: "text",
+    type: "string",
     input: "radio",
     vertical: true,
     multiple: true,
@@ -786,7 +805,7 @@ var properties3 = [{
     sortable: true
   },
   filter: {
-    type: "text",
+    type: "string",
     input: "radio",
     vertical: true,
     multiple: true,
@@ -802,7 +821,7 @@ var properties3 = [{
     sortable: true
   },
   filter: {
-    type: "text",
+    type: "string",
     input: "radio",
     vertical: true,
     multiple: true,
@@ -851,7 +870,7 @@ var restoBeforeProps = [{
     sortable: false
   },
   filter: {
-    type: "text",
+    type: "string",
     input: "radio",
     vertical: true,
     multiple: true,
@@ -867,7 +886,7 @@ var restoBeforeProps = [{
     sortable: false
   },
   filter: {
-    type: "text",
+    type: "string",
     input: "radio",
     vertical: true,
     multiple: true,
@@ -883,7 +902,7 @@ var restoBeforeProps = [{
     sortable: false
   },
   filter: {
-    type: "text",
+    type: "string",
     input: "radio",
     vertical: true,
     multiple: true,
@@ -899,7 +918,7 @@ var restoBeforeProps = [{
     sortable: false
   },
   filter: {
-    type: "text",
+    type: "string",
     input: "radio",
     vertical: true,
     multiple: true,
@@ -915,7 +934,7 @@ var restoBeforeProps = [{
     sortable: false
   },
   filter: {
-    type: "text",
+    type: "string",
     input: "radio",
     vertical: true,
     multiple: true,
@@ -933,7 +952,7 @@ var restoAfterProps = [{
     sortable: false
   },
   filter: {
-    type: "text",
+    type: "string",
     input: "radio",
     vertical: true,
     multiple: true,
@@ -949,7 +968,7 @@ var restoAfterProps = [{
     sortable: false
   },
   filter: {
-    type: "text",
+    type: "string",
     input: "radio",
     vertical: true,
     multiple: true,
@@ -965,7 +984,7 @@ var restoAfterProps = [{
     sortable: false
   },
   filter: {
-    type: "text",
+    type: "string",
     input: "radio",
     vertical: true,
     multiple: true,
@@ -981,7 +1000,7 @@ var restoAfterProps = [{
     sortable: false
   },
   filter: {
-    type: "text",
+    type: "string",
     input: "radio",
     vertical: true,
     multiple: true,
@@ -997,7 +1016,7 @@ var restoAfterProps = [{
     sortable: false
   },
   filter: {
-    type: "text",
+    type: "string",
     input: "radio",
     vertical: true,
     multiple: true,
