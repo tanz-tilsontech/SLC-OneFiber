@@ -265,7 +265,7 @@ var properties = [{
   },
   filter: {
     type: "string",
-    input: ["radio"],
+    input: "radio",
     operators: ["equal"],
     values: []
   }
@@ -279,7 +279,7 @@ var properties = [{
   },
   filter: {
     type: "string",
-    input: ["radio"],
+    input: "radio",
     operators: ["equal"],
     values: []
   }
