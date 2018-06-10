@@ -65,6 +65,17 @@ var config3 = {
 };
 
 
+// Configuration of Splice Closures in 3GIS
+
+var config4 = {
+  geojson: "https://tilsonwebdraco.3-gislive.com/arcgis/rest/services/SLClld/Tilsonslc_lld/MapServer/1/query?where=objectid+IS+NOT+NULL&outFields=*&f=geojson",
+  layerName: "Splice Closures",
+  hoverProperty: "fqn_id",
+  sortProperty: "splicecount",
+  sortOrder: "ascend",
+};
+
+
 
 // Properties of Routes in Fulcrum
 
@@ -843,6 +854,227 @@ var properties3 = [{
 }];
 
 
+// Properties of Fiber Route in 3GIS
+
+var properties4 = [{
+  value: "splice_name",
+  label: "Splice Name",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    input: "radio",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
+  value: "workorderid",
+  label: "WPID",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    input: "radio",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
+  value: "splicetype",
+  label: "Splice Type",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    input: "radio",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
+  value: "fqn_id",
+  label: "Splice FQNID",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal", "contains"],
+    values: []
+  }
+},
+{
+  value: "status",
+  label: "Status",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    input: "radio",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
+  value: "c500spliceloose",
+  label: "Loose Tube",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "integer",
+    input: "radio",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
+  value: "c510spliceribbon",
+  label: "Ribbon",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "integer",
+    input: "radio",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
+  value: "fibercable_fqnid",
+  label: "Fiber 1 FQNID",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal", "contains"],
+    values: []
+  }
+},
+{
+  value: "cable_fqnid_2",
+  label: "Fiber 2 FQNID",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal", "contains"],
+    values: []
+  }
+},
+{
+  value: "cable_fqnid_3",
+  label: "Fiber 3 FQNID",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal", "contains"],
+    values: []
+  }
+},
+{
+  value: "cable_fqnid_4",
+  label: "Fiber 4 FQNID",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal", "contains"],
+    values: []
+  }
+},
+{
+  value: "cable_fqnid_5",
+  label: "Fiber 5 FQNID",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal", "contains"],
+    values: []
+  }
+},
+{
+  value: "cable_fqnid_6",
+  label: "Fiber 6 FQNID",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal", "contains"],
+    values: []
+  }
+},
+{
+  value: "splicingcomplete",
+  label: "Splice Complete",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal", "contains"],
+    values: []
+  }
+}];
+
+
+
 var restoBeforeProps = [{
   value: "dirt_resto_b_cx_url",
   label: "Dirt",
@@ -1563,6 +1795,94 @@ function buildFiberRouteConfig() {
   buildFiberRouteTable();
 }
 
+
+function buildSpliceConfig() {
+  filters = [];
+  table = [{
+    field: "action",
+    title: "<i class='fa fa-gear'></i>&nbsp;Action",
+    align: "center",
+    valign: "middle",
+    width: "75px",
+    cardVisible: false,
+    switchable: false,
+    formatter: function(value, row, index) {
+      return [
+        '<a class="zoom" href="javascript:void(0)" title="Zoom" style="margin-right: 10px;">',
+          '<i class="fa fa-search-plus"></i>',
+        '</a>',
+        '<a class="identify" href="javascript:void(0)" title="Identify" style="margin-right: 10px;">',
+          '<i class="fa fa-info-circle"></i>',
+        '</a>'
+      ].join("");
+    },
+    events: {
+      "click .zoom": function (e, value, row, index) {
+        var layer = featureLayer4.getLayer(row.leaflet_stamp);
+        map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 19);
+        highlightLayer.clearLayers();
+        highlightLayer.addData(featureLayer4.getLayer(row.leaflet_stamp).toGeoJSON());
+      },
+      "click .identify": function (e, value, row, index) {
+        identifyFeature4(row.leaflet_stamp);
+        highlightLayer.clearLayers();
+        highlightLayer.addData(featureLayer4.getLayer(row.leaflet_stamp).toGeoJSON());
+      }
+    }
+  }];
+
+  $.each(properties4, function(index, value) {
+    // Filter config
+    if (value.filter) {
+      var id;
+      if (value.filter.type == "integer") {
+        id = "cast(properties->"+ value.value +" as int)";
+      }
+      else if (value.filter.type == "double") {
+        id = "cast(properties->"+ value.value +" as double)";
+      }
+      else {
+        id = "properties->" + value.value;
+      }
+      filters.push({
+        id: id,
+        label: value.label
+      });
+      $.each(value.filter, function(key, val) {
+        if (filters[index]) {
+          // If values array is empty, fetch all distinct values
+          if (key == "values" && val.length === 0) {
+            alasql("SELECT DISTINCT(properties->"+value.value+") AS field FROM ? ORDER BY field ASC", [geojson4.features], function(results){
+              distinctValues = [];
+              $.each(results, function(index, value) {
+                distinctValues.push(value.field);
+              });
+            });
+            filters[index].values = distinctValues;
+          } else {
+            filters[index][key] = val;
+          }
+        }
+      });
+    }
+    // Table config
+    if (value.table) {
+      table.push({
+        field: value.value,
+        title: value.label
+      });
+      $.each(value.table, function(key, val) {
+        if (table[index+1]) {
+          table[index+1][key] = val;
+        }
+      });
+    }
+  });
+
+  buildSpliceFilter();
+  buildSpliceTable();
+}
+
 // Basemap Layers
 var mapboxOSM = L.tileLayer('http://{s}.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZWNvdHJ1c3QiLCJhIjoibGo4TG5nOCJ9.QJnT2dgjL4_4EA7WlK8Zkw', {
     maxZoom: 20
@@ -1854,6 +2174,33 @@ var featureLayer3 = L.geoJson(null, {
 
 
 
+var featureLayer4 = L.geoJson(null, {
+  onEachFeature: function (feature, layer) {
+    if (feature.properties) {
+      layer.on({
+        click: function (e) {
+          identifyFeature4(L.stamp(layer));
+          highlightLayer.clearLayers();
+          highlightLayer.addData(featureLayer4.getLayer(L.stamp(layer)).toGeoJSON());
+          $(".info-control").html(feature.properties[config4.hoverProperty]);
+          $(".info-control").show();
+        },
+        mouseover: function (e) {
+          if (config4.hoverProperty) {
+            $(".info-control").html(feature.properties[config4.hoverProperty]);
+            $(".info-control").show();
+          }
+        },
+        dblclick: function (e) {
+          highlightLayer.clearLayers();
+        }
+      });
+    }
+  }
+});
+
+
+
 // Fetch the Routes GeoJSON file
 
 $.getJSON(config.geojson, function (data) {
@@ -1931,8 +2278,22 @@ $.getJSON(config3.geojson, function (data) {
 });
 
 
+
+// Fetch the Splice Closure GeoJSON file
+
+$.getJSON(config4.geojson, function (data) {
+  geojson4 = data
+  features4 = $.map(geojson4.features, function(feature) {
+    return feature.properties;
+  });
+  featureLayer4.addData(data);
+  buildSpliceConfig();
+  $("#loading-mask").hide();
+});
+
+
 var map = L.map("map", {
-  layers: [mapboxOSM, SLCLLDRoute, featureLayer, featureLayer1, featureLayer2, featureLayer3, highlightLayer, highlightLayer2, highlightLayer3, highlightLayer4]
+  layers: [mapboxOSM, SLCLLDRoute, featureLayer, featureLayer1, featureLayer2, featureLayer3, featureLayer4, highlightLayer, highlightLayer2, highlightLayer3, highlightLayer4]
 }).fitWorld();
 
 
@@ -1969,6 +2330,7 @@ var overlayLayers = {
   "<span id='layer-name1'>Restoration</span>": featureLayer1,
   "<span id='layer-name3'>Fiber Segments</span>": featureLayer2,
   "<span id='layer-name4'>Fiber Route</span>": featureLayer3,
+  "<span id='layer-name4'>Splice Closure</span>": featureLayer4,
   "<span id='layer-name2'>Engineered</span>": SLCLLDRoute,
 };
 
@@ -2026,6 +2388,13 @@ function buildFiberRouteFilter() {
   });
 }
 
+function buildSpliceFilter() {
+  $("#spliceFilter").queryBuilder({
+    allow_empty: true,
+    filters: filters
+  });
+}
+
 
 function applyRoutesFilter() {
   var query = "SELECT * FROM ?";
@@ -2078,6 +2447,19 @@ function applyFiberRouteFilter() {
     featureLayer3.clearLayers();
     featureLayer3.addData(features);
     syncFiberRouteTable();
+  });
+}
+
+function applySpliceFilter() {
+  var query = "SELECT * FROM ?";
+  var sql = $("#spliceFilter").queryBuilder("getSQL", false, false).sql;
+  if (sql.length > 0) {
+    query += " WHERE " + sql;
+  }
+  alasql(query, [geojson4.features], function(features){
+    featureLayer4.clearLayers();
+    featureLayer4.addData(features);
+    syncSpliceTable();
   });
 }
 
@@ -2208,6 +2590,31 @@ function buildFiberRouteTable() {
   });
 }
 
+function buildSpliceTable() {
+  $("#spliceTable").bootstrapTable({
+    cache: false,
+    height: $("#splice-table-container").height(),
+    undefinedText: "",
+    striped: false,
+    pagination: false,
+    minimumCountColumns: 1,
+    sortName: config4.sortProperty,
+    sortOrder: config4.sortOrder,
+    toolbar: "#splice-toolbar",
+    search: true,
+    trimOnSearch: false,
+    showColumns: true,
+    showToggle: true,
+    columns: table
+  });
+
+  $(window).resize(function () {
+    $("#spliceTable").bootstrapTable("resetView", {
+      height: $("#slice-table-container").height()
+    });
+  });
+}
+
 
 
 function syncRoutesTable() {
@@ -2278,6 +2685,21 @@ function syncFiberRouteTable() {
     $("#fiberRoute-feature-count").html($("#fiberRouteTable").bootstrapTable("getData").length + " visible feature");
   } else {
     $("#fiberRoute-feature-count").html($("#fiberRouteTable").bootstrapTable("getData").length + " visible features");
+  }
+}
+
+
+function syncSpliceTable() {
+  tableFeatures = [];
+  featureLayer4.eachLayer(function (layer) {
+    layer.feature.properties.leaflet_stamp = L.stamp(layer);
+  });
+  $("#spliceTable").bootstrapTable("load", JSON.parse(JSON.stringify(tableFeatures)));
+  var featureCount = $("#spliceTable").bootstrapTable("getData").length;
+  if (featureCount == 1) {
+    $("#splice-feature-count").html($("#spliceTable").bootstrapTable("getData").length + " visible feature");
+  } else {
+    $("#splice-feature-count").html($("#spliceTable").bootstrapTable("getData").length + " visible features");
   }
 }
 
@@ -2392,6 +2814,30 @@ function identifyFeature3(id) {
   content += "<table>";
   $("#feature-info3").html(content);
   $("#feature3Modal").modal("show");
+};
+
+function identifyFeature4(id) {
+  var featureProperties = featureLayer4.getLayer(id).feature.properties;
+  var content = "<table class='table table-striped table-bordered table-condensed'>";
+  var photoLink = "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/photos";
+  $.each(featureProperties, function(key, value) {
+    if (!value) {
+      value = "";
+    }
+    if (typeof value == "string"  && value.indexOf("http://www.fulcrumapp") === 0) {
+      value = "<a href='" + value + "' target='_blank'>" + "Fulcrum Record" + "</a>";
+    }
+    $.each(properties4, function(index, property) {
+      if (key == property.value) {
+        if (property.info !== false) {
+          content += "<tr><th>" + property.label + "</th><td>" + value + "</td></tr>";
+        }
+      }
+    });
+  });
+  content += "<table>";
+  $("#feature-info4").html(content);
+  $("#feature4Modal").modal("show");
 };
 
 
@@ -2871,6 +3317,7 @@ $("#refresh-btn").click(function() {
   featureLayer1.clearLayers();
   featureLayer2.clearLayers();
   featureLayer3.clearLayers();
+  featureLayer4.clearLayers();
   $.getJSON(config.geojson, function (data) {
     geojson = data;
     legendItems = {};
@@ -2905,6 +3352,14 @@ $("#refresh-btn").click(function() {
     featureLayer3.addData(data);
     $("#loading-mask").hide();
   });
+  $.getJSON(config4.geojson, function (data) {
+    geojson4 = data
+    features4 = $.map(geojson4.features, function(feature) {
+      return feature.properties;
+    });
+    featureLayer4.addData(data);
+    $("#loading-mask").hide();
+  });
   syncRoutesTable();
   buildRoutesTable();
   buildRoutesFilter();
@@ -2917,6 +3372,9 @@ $("#refresh-btn").click(function() {
   syncFiberRouteTable();
   buildFiberRouteTable();
   buildFiberRouteFilter();
+  syncSpliceTable();
+  buildSpliceTable();
+  buildSpliceFilter();
   map.fitBounds(featureLayer.getBounds());
   $(".navbar-collapse.in").collapse("hide");
   return false;
@@ -2948,6 +3406,12 @@ $("#fiber-filter-btn").click(function() {
 
 $("#fiberRoute-filter-btn").click(function() {
   $("#FiberRoutefilterModal").modal("show");
+  $(".navbar-collapse.in").collapse("hide");
+  return false;
+});
+
+$("#splice-filter-btn").click(function() {
+  $("#SplicefilterModal").modal("show");
   $(".navbar-collapse.in").collapse("hide");
   return false;
 });
@@ -3009,6 +3473,13 @@ $("#fiberRoute-apply-filter-btn").click(function() {
   return false;
 });
 
+$("#splice-apply-filter-btn").click(function() {
+  applySpliceFilter();
+  $('#SplicefilterModal').modal('hide');
+  $(".navbar-collapse.in").collapse("hide");
+  return false;
+});
+
 $("#reset-filter-btn").click(function() {
   $("#routesFilter").queryBuilder("reset");
   applyRoutesFilter();
@@ -3037,6 +3508,13 @@ $("#fiberRoute-reset-filter-btn").click(function() {
   $(".navbar-collapse.in").collapse("hide");
 });
 
+$("#splice-reset-filter-btn").click(function() {
+  $("#spliceFilter").queryBuilder("reset");
+  applySpliceFilter();
+  $('#SplicefilterModal').modal('hide');
+  $(".navbar-collapse.in").collapse("hide");
+});
+
 $("#filter-reset-all-btn").click(function() {
   $("#routesFilter").queryBuilder("reset");
   applyRoutesFilter();
@@ -3046,6 +3524,8 @@ $("#filter-reset-all-btn").click(function() {
   applyFiberFilter();
   $("#fiberRouteFilter").queryBuilder("reset");
   applyFiberRouteFilter();
+  $("#spliceFilter").queryBuilder("reset");
+  applySpliceFilter();
   $(".navbar-collapse.in").collapse("hide");
 });
 
