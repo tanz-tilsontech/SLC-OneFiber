@@ -2186,7 +2186,7 @@ var featureLayer4 = L.geoJson(null, {
         title: feature.properties["fqn_id"],
         riseOnHover: true,
         icon: L.icon({
-          iconUrl: "assets/pictures/mca.png",
+          iconUrl: "assets/pictures/MCA.png",
           iconSize: [30, 40],
           iconAnchor: [15, 32]
         })
