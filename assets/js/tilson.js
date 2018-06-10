@@ -1411,11 +1411,11 @@ function drawRestoCharts() {
 
 
 function drawFiberSegmentCharts() {
- // STATUS FOOTAGE
+ // STATUS MILES
   $(function() {
-    var result = alasql("SELECT CASE WHEN oofstatus = 'Permits Submitted' END AS label, SUM(COALESCE(calculatedlength::NUMBER)) AS footage FROM ? GROUP BY oofstatus", [features2]);
+    var result = alasql("SELECT oofstatus AS label, SUM(COALESCE(calculatedlength::NUMBER)/5280) AS miles FROM ? GROUP BY oofstatus", [features2]);
     var columns = $.map(result, function(data) {
-      return [[data.label, data.footage]];
+      return [[data.label, data.miles]];
     });
     var chart = c3.generate({
         bindto: "#fiber-footage-chart",
@@ -1426,7 +1426,7 @@ function drawFiberSegmentCharts() {
         axis: {
           x: {
             type: 'category',
-            categories: ["Cable Footage"]
+            categories: ["Cable Miles"]
           }
         }
     });
