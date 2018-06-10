@@ -1413,7 +1413,7 @@ function drawRestoCharts() {
 function drawFiberSegmentCharts() {
  // STATUS FOOTAGE
   $(function() {
-    var result = alasql("SELECT oofstatus AS label, SUM(COALESCE(calculatedlength::NUMBER)) AS footage FROM ? GROUP BY oofstatus", [features4]);
+    var result = alasql("SELECT oofstatus AS label, SUM(COALESCE(calculatedlength::NUMBER)) AS footage FROM ? GROUP BY oofstatus", [features2]);
     var columns = $.map(result, function(data) {
       return [[data.label, data.footage]];
     });
@@ -1434,7 +1434,7 @@ function drawFiberSegmentCharts() {
 
   // STATUS COMPLETED 
   $(function() {
-    var result = alasql("SELECT oofstatus AS label, COUNT(oofstatus) AS total FROM ? GROUP BY oofstatus", [features4]);
+    var result = alasql("SELECT oofstatus AS label, COUNT(oofstatus) AS total FROM ? GROUP BY oofstatus", [features2]);
     var columns = $.map(result, function(data) {
       return [[data.label, data.total]];
     });
