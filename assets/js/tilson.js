@@ -1375,29 +1375,6 @@ function drawCharts() {
     });
   });
 
-
-    // HUB MONTHLY FOOTAGE
-  $(function() {
-    var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? GROUP BY hub", [features]);
-    var columns = $.map(result, function(data) {
-      return [[data.label, data.footage]];
-    });
-    var chart = c3.generate({
-        bindto: "#hub-footage-chart",
-        data: {
-          type: "bar",
-          columns: columns
-        },
-        axis: {
-          x: {
-            type: 'category',
-            categories: ["Cable Footage"]
-          }
-        }
-    });
-  });
-
-
   // HUB STATUS 
   $(function() {
     var result = alasql("SELECT status AS label, COUNT(status) AS total FROM ? GROUP BY status", [features]);
