@@ -1413,7 +1413,7 @@ function drawRestoCharts() {
 function drawFiberSegmentCharts() {
  // STATUS FOOTAGE
   $(function() {
-    var result = alasql("SELECT oofstatus.Permits Submitted AS label, SUM(COALESCE(calculatedlength::NUMBER)) AS footage FROM ? GROUP BY oofstatus.Permits Submitted", [features2]);
+    var result = alasql("SELECT CASE WHEN oofstatus = 'Permits Submitted' END AS label, SUM(COALESCE(calculatedlength::NUMBER)) AS footage FROM ? GROUP BY oofstatus", [features2]);
     var columns = $.map(result, function(data) {
       return [[data.label, data.footage]];
     });
