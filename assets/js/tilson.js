@@ -1341,7 +1341,7 @@ var cpSignatures = [{
 function drawCharts() {
   // HUB COMPLETE
   $(function() {
-    var result = alasql("SELECT hub AS label, COUNT(NULLIF(cable_placement_total_footage_cx_final::NUMBER,0)) AS total FROM ? GROUP BY hub", [features]);
+    var result = alasql("SELECT hub AS label, COUNT(NULLIF(cable_placement_total_footage_final::NUMBER,0)) AS total FROM ? GROUP BY hub", [features]);
     var columns = $.map(result, function(data) {
       return [[data.label, data.total]];
     });
@@ -1356,7 +1356,7 @@ function drawCharts() {
 
   // HUB TOTAL FOOTAGE
   $(function() {
-    var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? GROUP BY hub", [features]);
+    var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_final::NUMBER)) AS footage FROM ? GROUP BY hub", [features]);
     var columns = $.map(result, function(data) {
       return [[data.label, data.footage]];
     });
@@ -1393,7 +1393,7 @@ function drawCharts() {
 
 
 function drawRestoCharts() {
-    // TILSON COMPLETED 
+  // TILSON COMPLETED 
   $(function() {
     var result = alasql("SELECT restoration_complete_tilson AS label, COUNT(restoration_complete_tilson) AS total FROM ? GROUP BY restoration_complete_tilson", [features1]);
     var columns = $.map(result, function(data) {
