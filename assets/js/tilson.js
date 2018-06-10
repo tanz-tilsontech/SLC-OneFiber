@@ -3474,7 +3474,7 @@ $("#resto-chart-btn").click(function() {
   return false;
 });
 
-$("#fiberSegment-chart-btn").click(function() {
+$("#fiberSegement-chart-btn").click(function() {
   $("#FiberSegmentchartModal").modal("show");
   $(".navbar-collapse.in").collapse("hide");
   return false;
