@@ -2176,7 +2176,7 @@ var featureLayer3 = L.geoJson(null, {
 
 var featureLayer4 = L.geoJson(null, {
   filter: function (feature) {
-    if (feature.properties.splicetype != "Virtual") {
+    if (feature.properties.splicetype === "MCA" || feature.properties.splicetype === "Reel End") {
       return true;
     };
   },
@@ -2204,16 +2204,16 @@ var featureLayer4 = L.geoJson(null, {
         layer.setIcon(
           L.icon({
             iconUrl: "assets/pictures/MCA.png",
-            iconSize: [30, 40],
-            iconAnchor: [15, 32]
+            iconSize: [15, 20],
+            iconAnchor: [5, 12]
           })
         );
       } else if (feature.properties.splicetype === "Reel End") {
         layer.setIcon(
           L.icon({
             iconUrl: "assets/pictures/Reel-End.png",
-            iconSize: [30, 40],
-            iconAnchor: [15, 32]
+            iconSize: [15, 20],
+            iconAnchor: [5, 12]
           })
         );
       }
