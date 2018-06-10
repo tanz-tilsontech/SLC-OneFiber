@@ -1416,21 +1416,6 @@ function drawCharts() {
 
 
 function drawRestoCharts() {
-    // CONTRACTOR COMPLETED 
-  $(function() {
-    var result = alasql("SELECT restoration_complete_contractor AS label, COUNT(restoration_complete_contractor) AS total FROM ? GROUP BY restoration_complete_contractor", [features1]);
-    var columns = $.map(result, function(data) {
-      return [[data.label, data.total]];
-    });
-    var chart = c3.generate({
-        bindto: "#resto-contractor-completed",
-        data: {
-          type: "pie",
-          columns: columns
-        }
-    });
-  });
-
     // TILSON COMPLETED 
   $(function() {
     var result = alasql("SELECT restoration_complete_tilson AS label, COUNT(restoration_complete_tilson) AS total FROM ? GROUP BY restoration_complete_tilson", [features1]);
@@ -1439,6 +1424,45 @@ function drawRestoCharts() {
     });
     var chart = c3.generate({
         bindto: "#resto-tilson-completed",
+        data: {
+          type: "pie",
+          columns: columns
+        }
+    });
+  });
+}
+
+
+function drawFiberSegmentCharts() {
+ // STATUS FOOTAGE
+  $(function() {
+    var result = alasql("SELECT oofstatus AS label, SUM(COALESCE(calculatedlength::NUMBER)) AS footage FROM ? GROUP BY oofstatus", [features4]);
+    var columns = $.map(result, function(data) {
+      return [[data.label, data.footage]];
+    });
+    var chart = c3.generate({
+        bindto: "#fiber-footage-chart",
+        data: {
+          type: "bar",
+          columns: columns
+        },
+        axis: {
+          x: {
+            type: 'category',
+            categories: ["Cable Footage"]
+          }
+        }
+    });
+  });
+
+  // STATUS COMPLETED 
+  $(function() {
+    var result = alasql("SELECT oofstatus AS label, COUNT(oofstatus) AS total FROM ? GROUP BY oofstatus", [features4]);
+    var columns = $.map(result, function(data) {
+      return [[data.label, data.total]];
+    });
+    var chart = c3.generate({
+        bindto: "#fiber-status-chart",
         data: {
           type: "pie",
           columns: columns
@@ -3450,6 +3474,12 @@ $("#resto-chart-btn").click(function() {
   return false;
 });
 
+$("#fiberSegment-chart-btn").click(function() {
+  $("#FiberSegmentchartModal").modal("show");
+  $(".navbar-collapse.in").collapse("hide");
+  return false;
+});
+
 $("#sites-btn").click(function() {
   $("#sites-modal").modal("show");
   $(".navbar-collapse.in").collapse("hide");
@@ -3721,4 +3751,8 @@ $("#chartModal").on("shown.bs.modal", function (e) {
 
 $("#RestochartModal").on("shown.bs.modal", function (e) {
   drawRestoCharts();
+});
+
+$("#FiberSegmentchartModal").on("shown.bs.modal", function (e) {
+  drawFiberSegmentCharts();
 });

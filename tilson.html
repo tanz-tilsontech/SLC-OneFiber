@@ -64,6 +64,7 @@
               <ul class="dropdown-menu">
                 <li><a id="chart-btn" href="#" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-bar-chart"></i> Routes</a></li>
                 <li><a id="resto-chart-btn" href="#" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-bar-chart"></i> Resto</a></li>
+                <li><a id="fiberSegement-chart-btn" href="#" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-bar-chart"></i> Fiber Segments</a></li>
               </ul>
             </li>
             <li class="dropdown">
@@ -244,6 +245,32 @@
               <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="resto-contractor-completed"></div>
                 <div role="tabpanel" class="tab-pane" id="resto-tilson-completed"></div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="FiberSegmentchartModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Fiber Segment Charts</h4>
+          </div>
+          <div class="modal-body" style="overflow: auto;">
+            <div role="tabpanel">
+              <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#fiber-status-chart" aria-controls="charts" role="tab" data-toggle="tab">FIBER STATUS</a></li>
+                <li role="presentation" class="active"><a href="#fiber-footage-chart" aria-controls="charts" role="tab" data-toggle="tab">FIBER FOOTAGE</a></li>
+              </ul>
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="fiber-status-chart"></div>
+                <div role="tabpanel" class="tab-pane" id="fiber-footage-chart"></div>
               </div>
             </div>
           </div>
