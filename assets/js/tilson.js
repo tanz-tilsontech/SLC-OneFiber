@@ -2180,29 +2180,6 @@ var featureLayer4 = L.geoJson(null, {
       return true;
     };
   },
-  pointToLayer: function (feature, latlng) {
-    if (feature.properties.splicetype = "MCA") {
-      return L.marker(latlng, {
-        title: feature.properties["fqn_id"],
-        riseOnHover: true,
-        icon: L.icon({
-          iconUrl: "assets/pictures/MCA.png",
-          iconSize: [30, 40],
-          iconAnchor: [15, 32]
-        })
-      });
-    } else if (feature.properties.splicetype = "Reel End") {
-      return L.marker(latlng, {
-        title: feature.properties["fqn_id"],
-        riseOnHover: true,
-        icon: L.icon({
-          iconUrl: "assets/pictures/Reel-End.png",
-          iconSize: [30, 40],
-          iconAnchor: [15, 32]
-        })
-      });
-    }
-  },
   onEachFeature: function (feature, layer) {
     if (feature.properties) {
       layer.on({
@@ -2223,6 +2200,23 @@ var featureLayer4 = L.geoJson(null, {
           highlightLayer.clearLayers();
         }
       });
+      if (feature.properties.splicetype === "MCA") {
+        layer.setIcon(
+          L.icon({
+            iconUrl: "assets/pictures/MCA.png",
+            iconSize: [30, 40],
+            iconAnchor: [15, 32]
+          })
+        );
+      } else if (feature.properties.splicetype === "Reel End") {
+        layer.setIcon(
+          L.icon({
+            iconUrl: "assets/pictures/Reel-End.png",
+            iconSize: [30, 40],
+            iconAnchor: [15, 32]
+          })
+        );
+      }
     }
   }
 });
