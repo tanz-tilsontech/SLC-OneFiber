@@ -5,7 +5,7 @@ $(function() {
 
 // BUILD TABLE/FILTER CONFIGURATION FOR ROUTES
 
-function buildConfig() {
+function buildRoutesConfig() {
   filters = [];
   table = [{
     field: "action",
@@ -27,15 +27,15 @@ function buildConfig() {
     },
     events: {
       "click .zoom": function (e, value, row, index) {
-        var layer = featureLayer.getLayer(row.leaflet_stamp);
+        var layer = routesLayer.getLayer(row.leaflet_stamp);
         map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 19);
         highlightLayer2.clearLayers();
-        highlightLayer2.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
+        highlightLayer2.addData(routesLayer.getLayer(row.leaflet_stamp).toGeoJSON());
       },
       "click .identify": function (e, value, row, index) {
         identifyFeature(row.leaflet_stamp);
         highlightLayer2.clearLayers();
-        highlightLayer2.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
+        highlightLayer2.addData(routesLayer.getLayer(row.leaflet_stamp).toGeoJSON());
       }
     }
   }];
@@ -61,7 +61,7 @@ function buildConfig() {
         if (filters[index]) {
           // If values array is empty, fetch all distinct values
           if (key == "values" && val.length === 0) {
-            alasql("SELECT DISTINCT(properties->"+value.value+") AS field FROM ? ORDER BY field ASC", [geojson.features], function(results){
+            alasql("SELECT DISTINCT(properties->"+value.value+") AS field FROM ? ORDER BY field ASC", [routes.features], function(results){
               distinctValues = [];
               $.each(results, function(index, value) {
                 distinctValues.push(value.field);

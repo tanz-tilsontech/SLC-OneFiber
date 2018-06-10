@@ -1,4 +1,4 @@
-function drawCharts() {
+function drawRouteCharts() {
   // HUB COMPLETE
   $(function() {
     var result = alasql("SELECT hub AS label, COUNT(NULLIF(cable_placement_total_footage_cx_final::NUMBER,0)) AS total FROM ? GROUP BY hub", [features]);
@@ -6,7 +6,7 @@ function drawCharts() {
       return [[data.label, data.total]];
     });
     var chart = c3.generate({
-        bindto: "#hub-complete-chart",
+        bindto: "#route-hub-complete-chart",
         data: {
           type: "gauge",
           columns: columns
@@ -21,7 +21,7 @@ function drawCharts() {
       return [[data.label, data.footage]];
     });
     var chart = c3.generate({
-        bindto: "#hub-footage-chart",
+        bindto: "#route-hub-footage-chart",
         data: {
           type: "bar",
           columns: columns
@@ -34,29 +34,6 @@ function drawCharts() {
         }
     });
   });
-
-
-    // HUB MONTHLY FOOTAGE
-  $(function() {
-    var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_cx_final::NUMBER)) AS footage FROM ? GROUP BY hub", [features]);
-    var columns = $.map(result, function(data) {
-      return [[data.label, data.footage]];
-    });
-    var chart = c3.generate({
-        bindto: "#hub-footage-chart",
-        data: {
-          type: "bar",
-          columns: columns
-        },
-        axis: {
-          x: {
-            type: 'category',
-            categories: ["Cable Footage"]
-          }
-        }
-    });
-  });
-
 
   // HUB STATUS 
   $(function() {
@@ -65,7 +42,7 @@ function drawCharts() {
       return [[data.label, data.total]];
     });
     var chart = c3.generate({
-        bindto: "#hub-status-chart",
+        bindto: "#route-hub-status-chart",
         data: {
           type: "pie",
           columns: columns
@@ -73,3 +50,8 @@ function drawCharts() {
     });
   });
 }
+
+
+$("#chartModal").on("shown.bs.modal", function (e) {
+  drawCharts();
+});
