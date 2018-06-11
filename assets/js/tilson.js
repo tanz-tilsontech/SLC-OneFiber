@@ -2238,31 +2238,6 @@ $.getJSON(config.geojson, function (data) {
   featureLayer.addData(data);
   buildConfig();
   $("#loading-mask").hide();
-  var style = {
-    "property": "status",
-    "values": {
-      "Route Ready": "https://github.com/tanz-tilsontech/SLC-OneFiber-TilsonQC/blob/master/assets/pictures/markers/1891c9.png?raw=true",
-      "Construction Started": "https://github.com/tanz-tilsontech/SLC-OneFiber-TilsonQC/blob/master/assets/pictures/markers/ffd300.png?raw=true",
-      "Construction QC": "https://github.com/tanz-tilsontech/SLC-OneFiber-TilsonQC/blob/master/assets/pictures/markers/294184.png?raw=true",
-      "Construction Fix": "https://github.com/tanz-tilsontech/SLC-OneFiber-TilsonQC/blob/master/assets/pictures/markers/cb0d0c.png?raw=true",
-      "Cable Placement Ready": "https://github.com/tanz-tilsontech/SLC-OneFiber-TilsonQC/blob/master/assets/pictures/markers/ff8819.png?raw=true",
-      "Cable Placement QC": "https://github.com/tanz-tilsontech/SLC-OneFiber-TilsonQC/blob/master/assets/pictures/markers/da0796.png?raw=true",
-      "Cable Placement Fix": "https://github.com/tanz-tilsontech/SLC-OneFiber-TilsonQC/blob/master/assets/pictures/markers/cb0d0c.png?raw=true",
-      "Splicing/Testing Pending": "https://github.com/tanz-tilsontech/SLC-OneFiber-TilsonQC/blob/master/assets/pictures/markers/87d30f.png?raw=true"
-    }
-  }
-  JSON.stringify(style);
-  if (style.property && style.values) {
-    $("#legend-item").removeClass("hidden");
-    $("#legend-title").html(style.property.toUpperCase().replace(/_/g, " "));
-    $.each(style.values, function(property, value) {
-      if (value.startsWith("http")) {
-        $("#legend").append("<p><img src='" + value + "'></i> " + property + "</p>");
-      } else {
-        $("#legend").append("<p><i style='background:" + value + "'></i> " + property + "</p>");
-      }
-    });
-  }
 });
 
 
