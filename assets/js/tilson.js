@@ -18,6 +18,10 @@ function verifyUser() {
   };
 };
 
+$(document).ready(function() {
+  $("#introModal").modal("show");
+});
+
 
 // Configuration of Routes in Fulcrum
 
