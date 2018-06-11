@@ -1,4 +1,4 @@
-var highlightRoutesLayer = L.geoJson(null, {
+var highlight_routesLayer = L.geoJson(null, {
   pointToLayer: function (feature, latlng) {
     return L.circleMarker(latlng, {
       radius: 7,
@@ -45,18 +45,18 @@ var routesLayer = L.geoJson(null, {
     if (feature.properties) {
       layer.on({
         click: function (e) {
-          identifyRoutes(L.stamp(layer));
+          routesInfo(L.stamp(layer));
           featureBluestakes(L.stamp(layer));
           featurePotholePics(L.stamp(layer));
           featureCXSignaturePics(L.stamp(layer));
           featureCPSignaturePics(L.stamp(layer));
-          featureCablePics(L.stamp(layer));
+          routesCablePictures(L.stamp(layer));
           highlightLayer2.clearLayers();
           highlightLayer2.addData(routesLayer.getLayer(L.stamp(layer)).toGeoJSON());
         },
         mouseover: function (e) {
-          if (routes.hoverProperty) {
-            $(".info-control").html(feature.properties[routes.hoverProperty]);
+          if (routesGeojson.hoverProperty) {
+            $(".info-control").html(feature.properties[routesGeojson.hoverProperty]);
             $(".info-control").show();
           }
         },
@@ -81,22 +81,22 @@ var routesLayer = L.geoJson(null, {
 
 // Fetch the Routes GeoJSON file
 
-$.getJSON(routes.geojson, function (data) {
-  routes = data;
-  features = $.map(routes.features, function(feature) {
+$.getJSON(routesConfig.geojson, function (data) {
+  routesGeojson = data;
+  routesFeatures = $.map(routesGeojson.features, function(feature) {
     return feature.properties;
   });
   routesLayer.addData(data);
-  buildRoutesConfig();
+  routesConfig();
   $("#loading-mask").hide();
 });
 
 
 
-function identifyRoutes(id) {
-  var featureProperties = routesLayer.getLayer(id).feature.properties;
-  var content = "<table class='table table-striped table-bordered table-condensed'>";
-  $.each(featureProperties, function(key, value) {
+function routesInfo(id) {
+  var routesData = routesLayer.getLayer(id).feature.properties;
+  var routesContent = "<table class='table table-striped table-bordered table-condensed'>";
+  $.each(routesData, function(key, value) {
     if (!value) {
       value = "";
     }
@@ -109,17 +109,17 @@ function identifyRoutes(id) {
     if (typeof value == "string"  && value.indexOf("https://tilson.egnyte") === 0) {
       value = "<a href='" + value + "' target='_blank'>" + "Prints" + "</a>";
     }
-    $.each(routesProps, function(index, property) {
+    $.each(routesProperties, function(index, property) {
       if (key == property.value) {
         if (property.info !== false) {
-          content += "<tr><th>" + property.label + "</th><td>" + value + "</td></tr>";
+          routesContent += "<tr><th>" + property.label + "</th><td>" + value + "</td></tr>";
         }
       }
     });
   });
-  content += "<table>";
-  $("#routes-info").html(content);
-  $("#routesModal").modal("show");
+  routesContent += "<table>";
+  $("#routes_info").html(routesContent);
+  $("#routes_info_modal").modal("show");
 }
 
 
@@ -144,13 +144,13 @@ function photoGallery(photos) {
 
 
 
-function videoGallery(photos) {
-  var photoArray = [];
-  var photoIDs = photos.split("videos=")[1];
-  $.each(photoIDs.split("%2C"), function(index, id) {
-    photoArray.push({href: "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/videos/" + id});
+function videoGallery(video) {
+  var videoArray = [];
+  var videoIDs = video.split("videos=")[1];
+  $.each(videoIDs.split("%2C"), function(index, id) {
+    videoArray.push({href: "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/videos/" + id});
   });
-  $.fancybox(photoArray, {
+  $.fancybox(videoArray, {
     "type": "iframe",
     "showNavArrows": true,
     "padding": 0,
@@ -164,13 +164,13 @@ function videoGallery(photos) {
 
 
 
-function signatureGallery(photos) {
-  var photoArray = [];
-  var photoIDs = photos.split("signatures=")[1];
-  $.each(photoIDs.split("%2C"), function(index, id) {
-    photoArray.push({href: "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/signatures/" + id});
+function signatureGallery(signature) {
+  var signatureArray = [];
+  var signatureIDs = signature.split("signatures=")[1];
+  $.each(signatureIDs.split("%2C"), function(index, id) {
+    signatureArray.push({href: "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/signatures/" + id});
   });
-  $.fancybox(photoArray, {
+  $.fancybox(signatureArray, {
     "type": "image",
     "showNavArrows": true,
     "padding": 0,
@@ -180,4 +180,28 @@ function signatureGallery(photos) {
     }
   });
   return false;
+};
+
+
+function routesCablePictures(id) {
+  var featureProperties = featureLayer.getLayer(id).feature.properties;
+  var content = "<table class='table table-striped table-bordered table-condensed'>";
+  var photoLink = "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/photos";
+  $.each(featureProperties, function(key, value) {
+    if (!value) {
+      value = "";
+    }
+    if (typeof value == "string"  && value.indexOf(photoLink) === 0) {
+      value = "<a href='#' onclick='photoGallery(\""+ value +"\")'; return false;'>View Photos</a>";
+    }
+    $.each(featureCable, function(index, property) {
+      if (key == property.value) {
+        if (property.info !== false) {
+          content += "<tr><th>" + property.label + "</th><td>" + value + "</td></tr>";
+        }
+      }
+    });
+  });
+  content += "<table>";
+  $("#fibercablePic").html(content);
 };

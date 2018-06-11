@@ -2351,10 +2351,10 @@ var baseLayers = {
 var overlayLayers = {
   "<span id='layer-name'>Routes</span>": featureLayer,
   "<span id='layer-name1'>Restoration</span>": featureLayer1,
-  "<span id='layer-name3'>Fiber Segments</span>": featureLayer2,
-  "<span id='layer-name4'>Fiber Route</span>": featureLayer3,
-  "<span id='layer-name4'>Splice Closure</span>": featureLayer4,
-  "<span id='layer-name2'>Engineered</span>": SLCLLDRoute,
+  "<span id='layer-name3'>Segments</span>": featureLayer2,
+  "<span id='layer-name4'>Sections</span>": featureLayer3,
+  "<span id='layer-name4'>Splices</span>": featureLayer4,
+  "<span id='layer-name2'>Sites</span>": SLCLLDRoute,
 };
 
 
@@ -2914,28 +2914,7 @@ function RestoAfterPics(id) {
 
 
 
-function featureCablePics(id) {
-  var featureProperties = featureLayer.getLayer(id).feature.properties;
-  var content = "<table class='table table-striped table-bordered table-condensed'>";
-  var photoLink = "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/photos";
-  $.each(featureProperties, function(key, value) {
-    if (!value) {
-      value = "";
-    }
-    if (typeof value == "string"  && value.indexOf(photoLink) === 0) {
-      value = "<a href='#' onclick='photoGallery(\""+ value +"\")'; return false;'>View Photos</a>";
-    }
-    $.each(featureCable, function(index, property) {
-      if (key == property.value) {
-        if (property.info !== false) {
-          content += "<tr><th>" + property.label + "</th><td>" + value + "</td></tr>";
-        }
-      }
-    });
-  });
-  content += "<table>";
-  $("#fibercablePic").html(content);
-};
+
 
 
 
