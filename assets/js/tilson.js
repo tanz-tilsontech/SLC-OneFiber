@@ -3387,7 +3387,7 @@ $("#refresh-btn").click(function() {
 });
 
 $("#about-btn").click(function() {
-  $("#aboutModal").modal("show");
+  $("#introModal").modal("show");
   $(".navbar-collapse.in").collapse("hide");
   return false;
 });
