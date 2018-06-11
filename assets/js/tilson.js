@@ -2221,8 +2221,16 @@ var featureLayer4 = L.geoJson(null, {
             iconAnchor: [5, 12]
           })
         );
+      } else if (feature.properties.splicetype === "Reel End" && (feature.properties.c510spliceribbon === 864 || feature.properties.c500spliceloose === 864 ||)) {
+        layer.setIcon(
+          L.icon({
+            iconUrl: "assets/pictures/Reel-End2.png",
+            iconSize: [20, 30],
+            iconAnchor: [5, 12]
+          })
+        );
       }
-    }
+    } 
   }
 });
 
@@ -2436,6 +2444,7 @@ function applyFiberFilter() {
     featureLayer2.clearLayers();
     featureLayer2.addData(features);
     syncFiberTable();
+    map.fitBounds(featureLayer2.getBounds());
   });
 }
 
@@ -2449,6 +2458,7 @@ function applyFiberRouteFilter() {
     featureLayer3.clearLayers();
     featureLayer3.addData(features);
     syncFiberRouteTable();
+    map.fitBounds(featureLayer3.getBounds());
   });
 }
 
