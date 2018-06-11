@@ -2213,18 +2213,18 @@ var featureLayer4 = L.geoJson(null, {
             iconAnchor: [5, 12]
           })
         );
-      } else if (feature.properties.splicetype === "Reel End") {
-        layer.setIcon(
-          L.icon({
-            iconUrl: "assets/pictures/Reel-End.png",
-            iconSize: [20, 30],
-            iconAnchor: [5, 12]
-          })
-        );
       } else if (feature.properties.splicetype === "Reel End" && (feature.properties.c510spliceribbon === 864 || feature.properties.c500spliceloose === 864)) {
         layer.setIcon(
           L.icon({
             iconUrl: "assets/pictures/Reel-End2.png",
+            iconSize: [20, 30],
+            iconAnchor: [5, 12]
+          })
+        );
+      } else if (feature.properties.splicetype === "Reel End") {
+        layer.setIcon(
+          L.icon({
+            iconUrl: "assets/pictures/Reel-End.png",
             iconSize: [20, 30],
             iconAnchor: [5, 12]
           })
