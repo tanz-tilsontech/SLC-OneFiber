@@ -53,5 +53,5 @@ function drawRouteCharts() {
 
 
 $("#chartModal").on("shown.bs.modal", function (e) {
-  drawCharts();
+  drawRouteCharts();
 });

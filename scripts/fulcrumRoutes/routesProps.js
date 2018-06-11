@@ -1,6 +1,6 @@
 // Configuration of Routes in Fulcrum
 
-var config = {
+var routes = {
   geojson: "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94.geojson",
   title: "SLC OneFiber Tilson QC",
   layerName: "Routes",
@@ -13,7 +13,7 @@ var config = {
 
 // Properties of Routes in Fulcrum
 
-var properties = [{
+var routesProps = [{
   value: "prints",
   label: "Prints",
   table: {

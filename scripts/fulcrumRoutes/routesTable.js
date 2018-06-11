@@ -1,37 +1,37 @@
 function buildRoutesTable() {
-  $("#table").bootstrapTable({
+  $("#routesTable").bootstrapTable({
     cache: false,
-    height: $("#table-container").height(),
+    height: $("#routesTable-container").height(),
     undefinedText: "",
     striped: false,
     pagination: false,
     minimumCountColumns: 1,
-    sortName: config.sortProperty,
-    sortOrder: config.sortOrder,
-    toolbar: "#toolbar",
+    sortName: routes.sortProperty,
+    sortOrder: routes.sortOrder,
+    toolbar: "#routesToolbar",
     search: true,
     trimOnSearch: false,
     showColumns: true,
     showToggle: true,
     columns: table,
     onClickRow: function(row, $element) {
-      var layer = featureLayer.getLayer(row.leaflet_stamp);
+      var layer = routesLayer.getLayer(row.leaflet_stamp);
       map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 19);
-      highlightLayer.clearLayers();
-      highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
+      highlightRoutesLayer.clearLayers();
+      highlightRoutesLayer.addData(routesLayer.getLayer(row.leaflet_stamp).toGeoJSON());
     },
     onDblClickRow: function(row) {
       identifyFeature(row.leaflet_stamp);
-      highlightLayer.clearLayers();
-      highlightLayer.addData(featureLayer.getLayer(row.leaflet_stamp).toGeoJSON());
+      highlightRoutesLayer.clearLayers();
+      highlightRoutesLayer.addData(routesLayer.getLayer(row.leaflet_stamp).toGeoJSON());
     },
   });
 
-  map.fitBounds(featureLayer.getBounds());
+  map.fitBounds(routesLayer.getBounds());
 
   $(window).resize(function () {
-    $("#table").bootstrapTable("resetView", {
-      height: $("#table-container").height()
+    $("#routesTable").bootstrapTable("resetView", {
+      height: $("#routesTable-container").height()
     });
   });
 }
@@ -39,21 +39,21 @@ function buildRoutesTable() {
 
 function syncRoutesTable() {
   tableFeatures = [];
-  featureLayer.eachLayer(function (layer) {
+  routesLayer.eachLayer(function (layer) {
     layer.feature.properties.leaflet_stamp = L.stamp(layer);
-    if (map.hasLayer(featureLayer)) {
-      featureLayer.getLayer()
+    if (map.hasLayer(routesLayer)) {
+      routesLayer.getLayer()
       layer.feature.geometry.type === "Point"
       if (map.getBounds().contains(layer.getLatLng())) {
         tableFeatures.push(layer.feature.properties);
       }
     }
   });
-  $("#table").bootstrapTable("load", JSON.parse(JSON.stringify(tableFeatures)));
-  var featureCount = $("#table").bootstrapTable("getData").length;
+  $("#routesTable").bootstrapTable("load", JSON.parse(JSON.stringify(tableFeatures)));
+  var featureCount = $("#routesTable").bootstrapTable("getData").length;
   if (featureCount == 1) {
-    $("#feature-count").html($("#table").bootstrapTable("getData").length + " visible feature");
+    $("#feature-count").html($("#routesTable").bootstrapTable("getData").length + " visible feature");
   } else {
-    $("#feature-count").html($("#table").bootstrapTable("getData").length + " visible features");
+    $("#feature-count").html($("#routesTable").bootstrapTable("getData").length + " visible features");
   }
 }

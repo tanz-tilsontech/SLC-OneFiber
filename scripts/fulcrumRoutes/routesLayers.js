@@ -1,4 +1,4 @@
-var highlightLayer = L.geoJson(null, {
+var highlightRoutesLayer = L.geoJson(null, {
   pointToLayer: function (feature, latlng) {
     return L.circleMarker(latlng, {
       radius: 7,
@@ -24,7 +24,7 @@ var highlightLayer = L.geoJson(null, {
 
 
 
-var featureLayer = L.geoJson(null, {
+var routesLayer = L.geoJson(null, {
   filter: function (feature) {
     if (feature.properties.contractor != "Tilson") {
       return true;
@@ -45,18 +45,18 @@ var featureLayer = L.geoJson(null, {
     if (feature.properties) {
       layer.on({
         click: function (e) {
-          identifyFeature(L.stamp(layer));
+          identifyRoutes(L.stamp(layer));
           featureBluestakes(L.stamp(layer));
           featurePotholePics(L.stamp(layer));
           featureCXSignaturePics(L.stamp(layer));
           featureCPSignaturePics(L.stamp(layer));
           featureCablePics(L.stamp(layer));
           highlightLayer2.clearLayers();
-          highlightLayer2.addData(featureLayer.getLayer(L.stamp(layer)).toGeoJSON());
+          highlightLayer2.addData(routesLayer.getLayer(L.stamp(layer)).toGeoJSON());
         },
         mouseover: function (e) {
-          if (config.hoverProperty) {
-            $(".info-control").html(feature.properties[config.hoverProperty]);
+          if (routes.hoverProperty) {
+            $(".info-control").html(feature.properties[routes.hoverProperty]);
             $(".info-control").show();
           }
         },
@@ -81,45 +81,20 @@ var featureLayer = L.geoJson(null, {
 
 // Fetch the Routes GeoJSON file
 
-$.getJSON(config.geojson, function (data) {
-  geojson = data;
-  features = $.map(geojson.features, function(feature) {
+$.getJSON(routes.geojson, function (data) {
+  routes = data;
+  features = $.map(routes.features, function(feature) {
     return feature.properties;
   });
-  featureLayer.addData(data);
-  buildConfig();
+  routesLayer.addData(data);
+  buildRoutesConfig();
   $("#loading-mask").hide();
-  var style = {
-    "property": "status",
-    "values": {
-      "Route Ready": "https://github.com/tanz-tilsontech/SLC-OneFiber-TilsonQC/blob/master/assets/pictures/markers/1891c9.png?raw=true",
-      "Construction Started": "https://github.com/tanz-tilsontech/SLC-OneFiber-TilsonQC/blob/master/assets/pictures/markers/ffd300.png?raw=true",
-      "Construction QC": "https://github.com/tanz-tilsontech/SLC-OneFiber-TilsonQC/blob/master/assets/pictures/markers/294184.png?raw=true",
-      "Construction Fix": "https://github.com/tanz-tilsontech/SLC-OneFiber-TilsonQC/blob/master/assets/pictures/markers/cb0d0c.png?raw=true",
-      "Cable Placement Ready": "https://github.com/tanz-tilsontech/SLC-OneFiber-TilsonQC/blob/master/assets/pictures/markers/ff8819.png?raw=true",
-      "Cable Placement QC": "https://github.com/tanz-tilsontech/SLC-OneFiber-TilsonQC/blob/master/assets/pictures/markers/da0796.png?raw=true",
-      "Cable Placement Fix": "https://github.com/tanz-tilsontech/SLC-OneFiber-TilsonQC/blob/master/assets/pictures/markers/cb0d0c.png?raw=true",
-      "Splicing/Testing Pending": "https://github.com/tanz-tilsontech/SLC-OneFiber-TilsonQC/blob/master/assets/pictures/markers/87d30f.png?raw=true"
-    }
-  }
-  JSON.stringify(style);
-  if (style.property && style.values) {
-    $("#legend-item").removeClass("hidden");
-    $("#legend-title").html(style.property.toUpperCase().replace(/_/g, " "));
-    $.each(style.values, function(property, value) {
-      if (value.startsWith("http")) {
-        $("#legend").append("<p><img src='" + value + "'></i> " + property + "</p>");
-      } else {
-        $("#legend").append("<p><i style='background:" + value + "'></i> " + property + "</p>");
-      }
-    });
-  }
 });
 
 
 
-function identifyFeature(id) {
-  var featureProperties = featureLayer.getLayer(id).feature.properties;
+function identifyRoutes(id) {
+  var featureProperties = routesLayer.getLayer(id).feature.properties;
   var content = "<table class='table table-striped table-bordered table-condensed'>";
   $.each(featureProperties, function(key, value) {
     if (!value) {
@@ -134,7 +109,7 @@ function identifyFeature(id) {
     if (typeof value == "string"  && value.indexOf("https://tilson.egnyte") === 0) {
       value = "<a href='" + value + "' target='_blank'>" + "Prints" + "</a>";
     }
-    $.each(properties, function(index, property) {
+    $.each(routesProps, function(index, property) {
       if (key == property.value) {
         if (property.info !== false) {
           content += "<tr><th>" + property.label + "</th><td>" + value + "</td></tr>";
@@ -143,8 +118,8 @@ function identifyFeature(id) {
     });
   });
   content += "<table>";
-  $("#feature-info").html(content);
-  $("#featureModal").modal("show");
+  $("#routes-info").html(content);
+  $("#routesModal").modal("show");
 }
 
 

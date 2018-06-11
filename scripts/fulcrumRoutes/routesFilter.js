@@ -12,9 +12,9 @@ function applyRoutesFilter() {
   if (sql.length > 0) {
     query += " WHERE " + sql;
   }
-  alasql(query, [geojson.features], function(features){
-    featureLayer.clearLayers();
-    featureLayer.addData(features);
+  alasql(query, [routes.features], function(features){
+    routesLayer.clearLayers();
+    routesLayer.addData(features);
     syncRoutesTable();
   });
 }
