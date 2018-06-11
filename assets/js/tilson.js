@@ -2205,7 +2205,7 @@ var featureLayer4 = L.geoJson(null, {
         layer.setIcon(
           L.icon({
             iconUrl: "assets/pictures/MCA.png",
-            iconSize: [15, 20],
+            iconSize: [20, 30],
             iconAnchor: [5, 12]
           })
         );
@@ -2213,7 +2213,7 @@ var featureLayer4 = L.geoJson(null, {
         layer.setIcon(
           L.icon({
             iconUrl: "assets/pictures/Reel-End.png",
-            iconSize: [15, 20],
+            iconSize: [20, 30],
             iconAnchor: [5, 12]
           })
         );
