@@ -2763,7 +2763,6 @@ if (document.body.clientWidth <= 767) {
 var baseLayers = {
   "Street Map": mapboxOSM,
   "Satellite Map": mapboxSat,
-  "SLC LLD Route": SLCLLDRoute,
 };
 var overlayLayers = {
   "<span id='layer-name'>Fulcrum Routes</span>": featureLayer,
