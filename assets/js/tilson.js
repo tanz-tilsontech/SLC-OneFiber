@@ -590,7 +590,7 @@ var properties5 = [{
 },
 {
   value: "calculatedlength",
-  label: "Engineered Length",
+  label: "Engineered Footage",
   table: {
     visible: true
   },
@@ -698,7 +698,7 @@ var properties5 = [{
 },
 {
   value: "cableplacedfootage",
-  label: "Actual Length",
+  label: "Actual Footage",
   table: {
     visible: true,
     sortable: true
@@ -735,6 +735,7 @@ var properties5 = [{
     sortable: true
   },
   filter: {
+    value: "date",
     type: "string",
     vertical: true,
     multiple: true,
@@ -750,6 +751,7 @@ var properties5 = [{
     sortable: true
   },
   filter: {
+    value: "date",
     type: "string",
     vertical: true,
     multiple: true,
@@ -759,7 +761,7 @@ var properties5 = [{
 },
 {
   value: "construction_new_aerial",
-  label: "New Aerial Length",
+  label: "New Aerial Footage",
   table: {
     visible: true,
     sortable: true
@@ -774,7 +776,7 @@ var properties5 = [{
 },
 {
   value: "construction_overlash_aerial",
-  label: "Overlash Aerial Length",
+  label: "Overlash Aerial Footage",
   table: {
     visible: true,
     sortable: true
@@ -789,7 +791,7 @@ var properties5 = [{
 },
 {
   value: "construction_new_ug",
-  label: "New Underground Length",
+  label: "New Underground Footage",
   table: {
     visible: true,
     sortable: true
@@ -804,7 +806,7 @@ var properties5 = [{
 },
 {
   value: "construction_new_hardscape",
-  label: "New Hardscape Length",
+  label: "New Hardscape Footage",
   table: {
     visible: true,
     sortable: true
@@ -819,7 +821,7 @@ var properties5 = [{
 },
 {
   value: "construction_existingvz",
-  label: "Existing Vz Length",
+  label: "Existing Vz Footage",
   table: {
     visible: true,
     sortable: true
@@ -834,7 +836,7 @@ var properties5 = [{
 },
 {
   value: "construction_existingthird",
-  label: "Exisitng 3rd Length",
+  label: "Exisitng 3rd Footage",
   table: {
     visible: false,
     sortable: true
@@ -2275,10 +2277,6 @@ var mapboxSat = L.tileLayer('https://api.mapbox.com/v4/cfritz1387.573ca1ee/{z}/{
 });
 
 
-var SLCLLDRoute = L.tileLayer('http://ttm-tileify-proxy.herokuapp.com/tiles/{z}/{x}/{y}?url=https%3A%2F%2Ftilsonwebdraco.3-gislive.com%2Farcgis%2Frest%2Fservices%2FSLClld%2FTilsonslc_lld%2FMapServer&transparent=true&layers=show%3A3%2C10%2C31%2C44%2C47%2C49', {
-    maxZoom: 20
-});
-
 
 var highlightLayer = L.geoJson(null, {
   pointToLayer: function (feature, latlng) {
@@ -2735,7 +2733,7 @@ $.getJSON(config5.geojson, function (data) {
 
 
 var map = L.map("map", {
-  layers: [mapboxOSM, featureLayer, featureLayer1, SLCLLDRoute, featureLayer5, featureLayer2, featureLayer3, featureLayer4, highlightLayer, highlightLayer2, highlightLayer3, highlightLayer4]
+  layers: [mapboxOSM, featureLayer, featureLayer1, featureLayer5, featureLayer2, featureLayer3, featureLayer4, highlightLayer, highlightLayer2, highlightLayer3, highlightLayer4]
 }).fitWorld();
 
 
@@ -2774,7 +2772,6 @@ var overlayLayers = {
   "<span id='layer-name4'>3GIS Sections</span>": featureLayer3,
   "<span id='layer-name5'>3GIS Splices</span>": featureLayer4,
   "<span id='layer-name6'>3GIS Routes</span>": featureLayer5,
-  "<span id='layer-name2'>3GIS Sites</span>": SLCLLDRoute,
 };
 
 
@@ -3353,17 +3350,12 @@ function identifyFeature5(id) {
     if (!value) {
       value = "";
     }
-    if (typeof value == "string"  && value.indexOf("https://www.google") === 0) {
-      value = "<a href='" + value + "' target='_blank'>" + "GPS Directions" + "</a>";
-    }
-    if (typeof value == "string"  && value.indexOf("http://www.fulcrumapp") === 0) {
-      value = "<a href='" + value + "' target='_blank'>" + "Fulcrum Record" + "</a>";
-    }
-    if (typeof value == "string"  && value.indexOf("https://tilson.egnyte") === 0) {
-      value = "<a href='" + value + "' target='_blank'>" + "Prints" + "</a>";
-    }
     $.each(properties5, function(index, property) {
       if (key == property.value) {
+        if (value && property.filter.value == "date") {
+          date = new Date(value);
+          value = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
+        }
         if (property.info !== false) {
           content += "<tr><th>" + property.label + "</th><td>" + value + "</td></tr>";
         }
