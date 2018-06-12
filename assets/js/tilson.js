@@ -2335,19 +2335,14 @@ var featureLayer4 = L.geoJson(null, {
 
 
 var featureLayer5 = L.geoJson(null, {
-  filter: function (feature) {
-    if (feature.properties.fqn_id != "") {
-      return true;
-    };
-  },
   style: function (feature, layer) {
-    if (feature.properties.cableplaced != "") {
+    if (feature.properties.cableplaced !== null || feature.properties.cableplaced !== '') {
       return {
         color: "#2AE100",
         weight: 6,
         opacity: 0.7
       };
-    } else if (feature.properties.constructionstart != "") {
+    } else if (feature.properties.constructionstart !== null || feature.properties.constructionstart !== '') {
       return {
         color: "#FF1ED9",
         weight: 6,
