@@ -2336,13 +2336,13 @@ var featureLayer4 = L.geoJson(null, {
 
 var featureLayer5 = L.geoJson(null, {
   style: function (feature, layer) {
-    if (feature.properties.cableplaced !== null || feature.properties.cableplaced !== '') {
+    if (feature.properties.cableplaced > 0) {
       return {
         color: "#2AE100",
         weight: 6,
         opacity: 0.7
       };
-    } else if (feature.properties.constructionstart !== null || feature.properties.constructionstart !== '') {
+    } else if (feature.properties.constructionstart > 0) {
       return {
         color: "#FF1ED9",
         weight: 6,
