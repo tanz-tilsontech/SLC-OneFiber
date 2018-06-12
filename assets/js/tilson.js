@@ -2249,8 +2249,8 @@ var featureLayer4 = L.geoJson(null, {
 var featureLayer5 = L.geoJson(null, {
   style: function (feature) {
     return {
-      color: "#D255D2",
-      fillColor: "#C9C9C9",
+      color: "#B147B1",
+      fillColor: "#626262",
       fillOpacity: 0.3,
       weight: 6
     };
