@@ -1919,7 +1919,7 @@ var highlightLayer = L.geoJson(null, {
   style: function (feature) {
     return {
       color: "#242424",
-      weight: 3,
+      weight: 6,
       opacity: 1,
       fillColor: "#242424",
       fillOpacity: 1,
@@ -1956,7 +1956,7 @@ var highlightLayer3 = L.geoJson(null, {
   style: function (feature) {
     return {
       color: "#ff0000",
-      weight: 3,
+      weight: 6,
       opacity: 1,
       fillOpacity: 0.1,
       clickable: false
@@ -1967,7 +1967,7 @@ var highlightLayer3 = L.geoJson(null, {
 var highlightLayer4 = L.geoJson(null, {
   style: function (feature) {
     return {
-      color: "#cb0d0c",
+      color: "#ff0000",
       weight: 3,
       opacity: 1,
       fillOpacity: 1,
