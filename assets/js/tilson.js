@@ -571,6 +571,284 @@ var properties1 = [{
 }];
 
 
+// Properties of Routes in 3GIS
+
+var properties5 = [{
+  value: "constructiontype",
+  label: "Construction Type",
+  table: {
+    visible: true
+  },
+  filter: {
+    type: "string",
+    input: "radio",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
+  value: "calculatedlength",
+  label: "Engineered Length",
+  table: {
+    visible: true
+  },
+  filter: {
+    type: "integer",
+    vertical: true,
+    multiple: true,
+    operators: ["between"],
+    values: []
+  }
+},
+{
+  value: "workorderid",
+  label: "Work Order ID",
+  table: {
+    visible: false,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    input: "radio",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  },
+  info: false
+},
+{
+  value: "sitespannfid",
+  label: "Site NFID",
+  table: {
+    visible: false,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal", "contains"],
+    values: []
+  }
+},
+{
+  value: "fqn_id",
+  label: "Route FQNID",
+  table: {
+    visible: false,
+    sortable: false
+  },
+  filter: {
+    type: "string",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal", "contains"],
+    values: []
+  }
+},
+{
+  value: "fibercable_fqnid",
+  label: "Fiber FQNID",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal", "contains"],
+    values: []
+  }
+},
+{
+  value: "duct_diameter",
+  label: "Duct Size",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "integer",
+    input: "radio",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
+  value: "duct_count",
+  label: "Duct Quantity",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "integer",
+    input: "radio",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
+  value: "cableplacedfootage",
+  label: "Actual Length",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "integer",
+    vertical: false,
+    multiple: true,
+    operators: ["between"],
+    values: []
+  }
+},
+{
+  value: "fqnid",
+  label: "Route FQNID",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    input: "text",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal", "contains"],
+    values: []
+  }
+},
+{
+  value: "constructionstart",
+  label: "Construction Start",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
+  value: "cableplaced",
+  label: "Cable Placed",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
+  value: "construction_new_aerial",
+  label: "New Aerial Length",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "integer",
+    vertical: false,
+    multiple: true,
+    operators: ["between"],
+    values: []
+  }
+},
+{
+  value: "construction_overlash_aerial",
+  label: "Overlash Aerial Length",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "integer",
+    vertical: false,
+    multiple: true,
+    operators: ["between"],
+    values: []
+  }
+},
+{
+  value: "construction_new_ug",
+  label: "New Underground Length",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "integer",
+    vertical: false,
+    multiple: true,
+    operators: ["between"],
+    values: []
+  }
+},
+{
+  value: "construction_new_hardscape",
+  label: "New Hardscape Length",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "integer",
+    vertical: false,
+    multiple: true,
+    operators: ["between"],
+    values: []
+  }
+},
+{
+  value: "construction_existingvz",
+  label: "Existing Vz Length",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "integer",
+    vertical: false,
+    multiple: true,
+    operators: ["between"],
+    values: []
+  }
+},
+{
+  value: "construction_existingthird",
+  label: "Exisitng 3rd Length",
+  table: {
+    visible: false,
+    sortable: true
+  },
+  filter: {
+    type: "integer",
+    vertical: false,
+    multiple: true,
+    operators: ["between"],
+    values: []
+  }
+}];
+
+
 
 // Properties of Fiber Cable in 3GIS
 
@@ -2457,7 +2735,7 @@ $.getJSON(config5.geojson, function (data) {
 
 
 var map = L.map("map", {
-  layers: [mapboxOSM, SLCLLDRoute, featureLayer, featureLayer1, featureLayer5, featureLayer2, featureLayer3, featureLayer4, highlightLayer, highlightLayer2, highlightLayer3, highlightLayer4]
+  layers: [mapboxOSM, featureLayer, featureLayer1, SLCLLDRoute, featureLayer5, featureLayer2, featureLayer3, featureLayer4, highlightLayer, highlightLayer2, highlightLayer3, highlightLayer4]
 }).fitWorld();
 
 
