@@ -2102,13 +2102,13 @@ var featureLayer2 = L.geoJson(null, {
       };
     } else if (feature.properties.oofstatus === "Permits Received") {
       return { 
-        color: "#1BE8F3",
+        color: "#F47200",
         weight: 6,
         opacity: 0.7
       };
     } else if (feature.properties.oofstatus === "Permits Submitted") {
       return {
-        color: "#0008C5",
+        color: "#1BE8F3",
         weight: 6,
         opacity: 0.7
       };
