@@ -275,7 +275,11 @@ var properties = [{
     sortable: true
   },
   filter: {
-    type: "date"
+    type: "string",
+    vertical: true,
+    multiple: true,
+    operators: ["is_not_empty"],
+    values: []
   }
 },
 {
@@ -319,7 +323,11 @@ var properties = [{
     sortable: true
   },
   filter: {
-    type: "date"
+    type: "string",
+    vertical: true,
+    multiple: true,
+    operators: ["is_not_empty"],
+    values: []
   }
 },
 {
@@ -330,7 +338,11 @@ var properties = [{
     sortable: true
   },
   filter: {
-    type: "date"
+    type: "string",
+    vertical: true,
+    multiple: true,
+    operators: ["is_not_empty"],
+    values: []
   }
 },
 {
@@ -368,7 +380,11 @@ var properties = [{
     sortable: true
   },
   filter: {
-    type: "date"
+    type: "string",
+    vertical: true,
+    multiple: true,
+    operators: ["is_not_empty"],
+    values: []
   }
 },
 {
@@ -379,7 +395,11 @@ var properties = [{
     sortable: true
   },
   filter: {
-    type: "date"
+    type: "string",
+    vertical: true,
+    multiple: true,
+    operators: ["is_not_empty"],
+    values: []
   }
 },
 {
@@ -550,7 +570,11 @@ var properties1 = [{
     sortable: true
   },
   filter: {
-    type: "date"
+    type: "string",
+    vertical: true,
+    multiple: true,
+    operators: ["is_not_empty"],
+    values: []
   }
 },
 {
@@ -739,7 +763,7 @@ var properties5 = [{
     type: "string",
     vertical: true,
     multiple: true,
-    operators: ["equal", "not_equal"],
+    operators: ["is_not_empty"],
     values: []
   }
 },
@@ -755,7 +779,7 @@ var properties5 = [{
     type: "string",
     vertical: true,
     multiple: true,
-    operators: ["equal", "not_equal"],
+    operators: ["is_not_empty"],
     values: []
   }
 },
@@ -977,7 +1001,7 @@ var properties2 = [{
     type: "string",
     vertical: true,
     multiple: true,
-    operators: ["begins_with"],
+    operators: ["is_not_empty"],
     values: []
   }
 },
@@ -993,7 +1017,7 @@ var properties2 = [{
     type: "string",
     vertical: true,
     multiple: true,
-    operators: ["begins_with"],
+    operators: ["is_not_empty"],
     values: []
   }
 },
@@ -1009,7 +1033,7 @@ var properties2 = [{
     type: "string",
     vertical: true,
     multiple: true,
-    operators: ["begins_with"],
+    operators: ["is_not_empty"],
     values: []
   }
 },
@@ -1025,7 +1049,7 @@ var properties2 = [{
     type: "string",
     vertical: true,
     multiple: true,
-    operators: ["begins_with"],
+    operators: ["is_not_empty"],
     values: []
   }
 },
@@ -1041,7 +1065,7 @@ var properties2 = [{
     type: "string",
     vertical: true,
     multiple: true,
-    operators: ["begins_with"],
+    operators: ["is_not_empty"],
     values: []
   }
 }];
@@ -1147,7 +1171,7 @@ var properties3 = [{
 }];
 
 
-// Properties of Fiber Route in 3GIS
+// Properties of Splice Closures in 3GIS
 
 var properties4 = [{
   value: "splice_name",
@@ -1358,10 +1382,11 @@ var properties4 = [{
     sortable: true
   },
   filter: {
+    value: "date",
     type: "string",
     vertical: true,
     multiple: true,
-    operators: ["equal", "not_equal", "contains"],
+    operators: ["is_not_empty"],
     values: []
   }
 }];
@@ -1528,16 +1553,6 @@ var restoAfterProps = [{
     multiple: true,
     operators: ["in", "not_in", "equal", "not_equal"],
     values: []
-  }
-}];
-
-
-var featureBluestakesVid = [{
-  value: "locates_cx_url",
-  label: "BlueStakes",
-  table: {
-    visible: false,
-    sortable: false
   }
 }];
 
