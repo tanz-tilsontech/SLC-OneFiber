@@ -83,9 +83,9 @@ var config4 = {
 // Configuration of Cluster Rings in 3GIS
 
 var config5 = {
-  geojson: "https://tilsonwebdraco.3-gislive.com/arcgis/rest/services/SLClld/Tilsonslc_lld/MapServer/35/query?where=objectid+IS+NOT+NULL&outFields=*&f=geojson",
-  layerName: "CRAN Polygons",
-  hoverProperty: "name"
+  geojson: "https://tilsonwebdraco.3-gislive.com/arcgis/rest/services/SLClld/Tilsonslc_lld/MapServer/10/query?where=fqn_id+IS+NOT+NULL&outFields=*&f=geojson",
+  layerName: "3GIS Routes",
+  hoverProperty: "fqn_id"
 };
 
 
@@ -1897,6 +1897,93 @@ function buildSpliceConfig() {
   buildSpliceTable();
 }
 
+function buildGISRoutesConfig() {
+  filters = [];
+  table = [{
+    field: "action",
+    title: "<i class='fa fa-gear'></i>&nbsp;Action",
+    align: "center",
+    valign: "middle",
+    width: "75px",
+    cardVisible: false,
+    switchable: false,
+    formatter: function(value, row, index) {
+      return [
+        '<a class="zoom" href="javascript:void(0)" title="Zoom" style="margin-right: 10px;">',
+          '<i class="fa fa-search-plus"></i>',
+        '</a>',
+        '<a class="identify" href="javascript:void(0)" title="Identify" style="margin-right: 10px;">',
+          '<i class="fa fa-info-circle"></i>',
+        '</a>'
+      ].join("");
+    },
+    events: {
+      "click .zoom": function (e, value, row, index) {
+        var layer = featureLayer5.getLayer(row.leaflet_stamp);
+        map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 19);
+        highlightLayer2.clearLayers();
+        highlightLayer2.addData(featureLayer5.getLayer(row.leaflet_stamp).toGeoJSON());
+      },
+      "click .identify": function (e, value, row, index) {
+        identifyFeature5(row.leaflet_stamp);
+        highlightLayer2.clearLayers();
+        highlightLayer2.addData(featureLayer5.getLayer(row.leaflet_stamp).toGeoJSON());
+      }
+    }
+  }];
+
+  $.each(properties, function(index, value) {
+    // Filter config
+    if (value.filter) {
+      var id;
+      if (value.filter.type == "integer") {
+        id = "cast(properties->"+ value.value +" as int)";
+      }
+      else if (value.filter.type == "double") {
+        id = "cast(properties->"+ value.value +" as double)";
+      }
+      else {
+        id = "properties->" + value.value;
+      }
+      filters.push({
+        id: id,
+        label: value.label
+      });
+      $.each(value.filter, function(key, val) {
+        if (filters[index]) {
+          // If values array is empty, fetch all distinct values
+          if (key == "values" && val.length === 0) {
+            alasql("SELECT DISTINCT(properties->"+value.value+") AS field FROM ? ORDER BY field ASC", [geojson5.features], function(results){
+              distinctValues = [];
+              $.each(results, function(index, value) {
+                distinctValues.push(value.field);
+              });
+            });
+            filters[index].values = distinctValues;
+          } else {
+            filters[index][key] = val;
+          }
+        }
+      });
+    }
+    // Table config
+    if (value.table) {
+      table.push({
+        field: value.value,
+        title: value.label
+      });
+      $.each(value.table, function(key, val) {
+        if (table[index+1]) {
+          table[index+1][key] = val;
+        }
+      });
+    }
+  });
+
+  buildGISRoutesFilter();
+  buildGISRoutesTable();
+}
+
 
 
 // Basemap Layers
@@ -2247,6 +2334,53 @@ var featureLayer4 = L.geoJson(null, {
 
 
 
+var featureLayer5 = L.geoJson(null, {
+  filter: function (feature) {
+    if (feature.properties.fqn_id != "") {
+      return true;
+    };
+  },
+  style: function (feature, layer) {
+    if (feature.properties.cableplaced != "") {
+      return {
+        color: "#2AE100",
+        weight: 6,
+        opacity: 0.7
+      };
+    } else if (feature.properties.constructionstart != "") {
+      return {
+        color: "#FF1ED9",
+        weight: 6,
+        opacity: 0.7
+      };
+    }
+  },
+  onEachFeature: function (feature, layer) {
+    if (feature.properties) {
+      layer.on({
+        click: function (e) {
+          identifyFeature5(L.stamp(layer));
+          highlightLayer.clearLayers();
+          highlightLayer.addData(featureLayer5.getLayer(L.stamp(layer)).toGeoJSON());
+          $(".info-control").html(feature.properties[config5.hoverProperty]);
+          $(".info-control").show();
+        },
+        mouseover: function (e) {
+          if (config5.hoverProperty) {
+            $(".info-control").html(feature.properties[config5.hoverProperty]);
+            $(".info-control").show();
+          }
+        },
+        dblclick: function (e) {
+          highlightLayer.clearLayers();
+        }
+      });
+    }
+  }
+});
+
+
+
 // Fetch the Routes GeoJSON file
 
 $.getJSON(config.geojson, function (data) {
@@ -2313,9 +2447,22 @@ $.getJSON(config4.geojson, function (data) {
 });
 
 
+// Fetch the 3GIS Routes GeoJSON file
+
+$.getJSON(config5.geojson, function (data) {
+  geojson5 = data
+  features5 = $.map(geojson5.features, function(feature) {
+    return feature.properties;
+  });
+  featureLayer5.addData(data);
+  buildGISRoutesConfig();
+  $("#loading-mask").hide();
+});
+
+
 
 var map = L.map("map", {
-  layers: [mapboxOSM, SLCLLDRoute, featureLayer, featureLayer1, featureLayer2, featureLayer3, featureLayer4, highlightLayer, highlightLayer2, highlightLayer3, highlightLayer4]
+  layers: [mapboxOSM, SLCLLDRoute, featureLayer, featureLayer1, featureLayer5, featureLayer2, featureLayer3, featureLayer4, highlightLayer, highlightLayer2, highlightLayer3, highlightLayer4]
 }).fitWorld();
 
 
@@ -2348,12 +2495,13 @@ var baseLayers = {
   "SLC LLD Route": SLCLLDRoute,
 };
 var overlayLayers = {
-  "<span id='layer-name'>Routes</span>": featureLayer,
-  "<span id='layer-name1'>Restoration</span>": featureLayer1,
-  "<span id='layer-name3'>Segments</span>": featureLayer2,
-  "<span id='layer-name4'>Sections</span>": featureLayer3,
-  "<span id='layer-name5'>Splices</span>": featureLayer4,
-  "<span id='layer-name2'>Sites</span>": SLCLLDRoute,
+  "<span id='layer-name'>Fulcrum Routes</span>": featureLayer,
+  "<span id='layer-name1'>Fulcrum Resto</span>": featureLayer1,
+  "<span id='layer-name3'>3GIS Segments</span>": featureLayer2,
+  "<span id='layer-name4'>3GIS Sections</span>": featureLayer3,
+  "<span id='layer-name5'>3GIS Splices</span>": featureLayer4,
+  "<span id='layer-name6'>3GIS Routes</span>": featureLayer5,
+  "<span id='layer-name2'>3GIS Sites</span>": SLCLLDRoute,
 };
 
 
@@ -2412,6 +2560,13 @@ function buildFiberRouteFilter() {
 
 function buildSpliceFilter() {
   $("#spliceFilter").queryBuilder({
+    allow_empty: true,
+    filters: filters
+  });
+}
+
+function buildGISRoutesFilter() {
+  $("#GISRoutesFilter").queryBuilder({
     allow_empty: true,
     filters: filters
   });
@@ -2487,6 +2642,21 @@ function applySpliceFilter() {
     map.fitBounds(featureLayer4.getBounds());
   });
 }
+
+function applyGISRoutesFilter() {
+  var query = "SELECT * FROM ?";
+  var sql = $("#GISRoutesFilter").queryBuilder("getSQL", false, false).sql;
+  if (sql.length > 0) {
+    query += " WHERE " + sql;
+  }
+  alasql(query, [geojson5.features], function(features){
+    featureLayer5.clearLayers();
+    featureLayer5.addData(features);
+    syncGISRoutesTable();
+    map.fitBounds(featureLayer5.getBounds());
+  });
+}
+
 
 
 function buildRoutesTable() {
@@ -2636,6 +2806,44 @@ function buildSpliceTable() {
   $(window).resize(function () {
     $("#spliceTable").bootstrapTable("resetView", {
       height: $("#slice-table-container").height()
+    });
+  });
+}
+
+function buildGISRoutesTable() {
+  $("#GISRoutesTable").bootstrapTable({
+    cache: false,
+    height: $("#GISRoutes-table-container").height(),
+    undefinedText: "",
+    striped: false,
+    pagination: false,
+    minimumCountColumns: 1,
+    sortName: config.sortProperty,
+    sortOrder: config.sortOrder,
+    toolbar: "#GISRoutesToolbar",
+    search: true,
+    trimOnSearch: false,
+    showColumns: true,
+    showToggle: true,
+    columns: table,
+    onClickRow: function(row, $element) {
+      var layer = featureLayer5.getLayer(row.leaflet_stamp);
+      map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 19);
+      highlightLayer.clearLayers();
+      highlightLayer.addData(featureLayer5.getLayer(row.leaflet_stamp).toGeoJSON());
+    },
+    onDblClickRow: function(row) {
+      identifyFeature5(row.leaflet_stamp);
+      highlightLayer.clearLayers();
+      highlightLayer.addData(featureLayer5.getLayer(row.leaflet_stamp).toGeoJSON());
+    },
+  });
+
+  map.fitBounds(featureLayer5.getBounds());
+
+  $(window).resize(function () {
+    $("#GISRoutesTable").bootstrapTable("resetView", {
+      height: $("#GISRoutes-table-container").height()
     });
   });
 }
@@ -2864,6 +3072,35 @@ function identifyFeature4(id) {
   $("#feature-info4").html(content);
   $("#feature4Modal").modal("show");
 };
+
+function identifyFeature5(id) {
+  var featureProperties = featureLayer5.getLayer(id).feature.properties;
+  var content = "<table class='table table-striped table-bordered table-condensed'>";
+  $.each(featureProperties, function(key, value) {
+    if (!value) {
+      value = "";
+    }
+    if (typeof value == "string"  && value.indexOf("https://www.google") === 0) {
+      value = "<a href='" + value + "' target='_blank'>" + "GPS Directions" + "</a>";
+    }
+    if (typeof value == "string"  && value.indexOf("http://www.fulcrumapp") === 0) {
+      value = "<a href='" + value + "' target='_blank'>" + "Fulcrum Record" + "</a>";
+    }
+    if (typeof value == "string"  && value.indexOf("https://tilson.egnyte") === 0) {
+      value = "<a href='" + value + "' target='_blank'>" + "Prints" + "</a>";
+    }
+    $.each(properties5, function(index, property) {
+      if (key == property.value) {
+        if (property.info !== false) {
+          content += "<tr><th>" + property.label + "</th><td>" + value + "</td></tr>";
+        }
+      }
+    });
+  });
+  content += "<table>";
+  $("#GISRoutes-feature-info").html(content);
+  $("#GISRoutes-feature-modal").modal("show");
+}
 
 
 
