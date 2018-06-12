@@ -278,7 +278,7 @@ var properties = [{
     type: "string",
     vertical: true,
     multiple: true,
-    operators: ["is_not_empty"],
+    operators: ["is_not_null"],
     values: []
   }
 },
@@ -326,7 +326,7 @@ var properties = [{
     type: "string",
     vertical: true,
     multiple: true,
-    operators: ["is_not_empty"],
+    operators: ["is_not_null"],
     values: []
   }
 },
@@ -341,7 +341,7 @@ var properties = [{
     type: "string",
     vertical: true,
     multiple: true,
-    operators: ["is_not_empty"],
+    operators: ["is_not_null"],
     values: []
   }
 },
@@ -383,7 +383,7 @@ var properties = [{
     type: "string",
     vertical: true,
     multiple: true,
-    operators: ["is_not_empty"],
+    operators: ["is_not_null"],
     values: []
   }
 },
@@ -398,7 +398,7 @@ var properties = [{
     type: "string",
     vertical: true,
     multiple: true,
-    operators: ["is_not_empty"],
+    operators: ["is_not_null"],
     values: []
   }
 },
@@ -573,7 +573,7 @@ var properties1 = [{
     type: "string",
     vertical: true,
     multiple: true,
-    operators: ["is_not_empty"],
+    operators: ["is_not_null"],
     values: []
   }
 },
@@ -763,7 +763,7 @@ var properties5 = [{
     type: "string",
     vertical: true,
     multiple: true,
-    operators: ["is_not_empty"],
+    operators: ["is_not_null"],
     values: []
   }
 },
@@ -779,7 +779,7 @@ var properties5 = [{
     type: "string",
     vertical: true,
     multiple: true,
-    operators: ["is_not_empty"],
+    operators: ["is_not_null"],
     values: []
   }
 },
@@ -1001,7 +1001,7 @@ var properties2 = [{
     type: "string",
     vertical: true,
     multiple: true,
-    operators: ["is_not_empty"],
+    operators: ["is_not_null"],
     values: []
   }
 },
@@ -1017,7 +1017,7 @@ var properties2 = [{
     type: "string",
     vertical: true,
     multiple: true,
-    operators: ["is_not_empty"],
+    operators: ["is_not_null"],
     values: []
   }
 },
@@ -1033,7 +1033,7 @@ var properties2 = [{
     type: "string",
     vertical: true,
     multiple: true,
-    operators: ["is_not_empty"],
+    operators: ["is_not_null"],
     values: []
   }
 },
@@ -1049,7 +1049,7 @@ var properties2 = [{
     type: "string",
     vertical: true,
     multiple: true,
-    operators: ["is_not_empty"],
+    operators: ["is_not_null"],
     values: []
   }
 },
@@ -1065,7 +1065,7 @@ var properties2 = [{
     type: "string",
     vertical: true,
     multiple: true,
-    operators: ["is_not_empty"],
+    operators: ["is_not_null"],
     values: []
   }
 }];
