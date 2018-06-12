@@ -2210,7 +2210,7 @@ function buildGISRoutesConfig() {
     }
   }];
 
-  $.each(properties, function(index, value) {
+  $.each(properties5, function(index, value) {
     // Filter config
     if (value.filter) {
       var id;
@@ -3371,8 +3371,8 @@ function identifyFeature5(id) {
     });
   });
   content += "<table>";
-  $("#GISRoutes-feature-info").html(content);
-  $("#GISRoutes-feature-modal").modal("show");
+  $("#feature-info5").html(content);
+  $("#feature5Modal").modal("show");
 }
 
 
@@ -3783,6 +3783,12 @@ $("#splice-filter-btn").click(function() {
   return false;
 });
 
+$("#GISRoutesfilter-btn").click(function() {
+  $("#GISRoutesfilterModal").modal("show");
+  $(".navbar-collapse.in").collapse("hide");
+  return false;
+});
+
 $("#chart-btn").click(function() {
   $("#chartModal").modal("show");
   $(".navbar-collapse.in").collapse("hide");
@@ -3853,6 +3859,13 @@ $("#splice-apply-filter-btn").click(function() {
   return false;
 });
 
+$("#GISRoutes-apply-filter-btn").click(function() {
+  applyGISRoutesFilter();
+  $('#GISRoutesfilterModal').modal('hide');
+  $(".navbar-collapse.in").collapse("hide");
+  return false;
+});
+
 $("#reset-filter-btn").click(function() {
   $("#routesFilter").queryBuilder("reset");
   applyRoutesFilter();
@@ -3899,6 +3912,8 @@ $("#filter-reset-all-btn").click(function() {
   applyFiberRouteFilter();
   $("#spliceFilter").queryBuilder("reset");
   applySpliceFilter();
+  $("#GISRoutesFilter").queryBuilder("reset");
+  applyGISRoutesFilter();
   $(".navbar-collapse.in").collapse("hide");
 });
 

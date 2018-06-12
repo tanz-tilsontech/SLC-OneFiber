@@ -115,11 +115,12 @@
             <li class="dropdown">
               <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-filter fa-white"></i> <span id="filterdata"> Filter </span><b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href="#" id="filter-btn" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Routes</a></li>
-                <li><a href="#" id="fiber-filter-btn" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Segments</a></li>
-                <li><a href="#" id="fiberRoute-filter-btn" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Sections</a></li>
-                <li><a href="#" id="splice-filter-btn" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Splices</a></li>
-                <li><a href="#" id="resto-filter-btn" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Restoration</a></li>
+                <li><a href="#" id="filter-btn" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Fulcrum Routes</a></li>
+                <li><a href="#" id="resto-filter-btn" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Fulcrum Restoration</a></li>
+                <li><a href="#" id="GISRoutesfilter-btn" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> 3GIS Routes</a></li>
+                <li><a href="#" id="fiber-filter-btn" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> 3GIS Segments</a></li>
+                <li><a href="#" id="fiberRoute-filter-btn" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> 3GIS Sections</a></li>
+                <li><a href="#" id="splice-filter-btn" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> 3GIS Splices</a></li> 
               </ul>
             </li>     
             <li><a href="#" id="refresh-btn" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-refresh fa-white"></i>&nbsp;&nbsp;Refresh</a></li>
@@ -415,6 +416,24 @@
       </div>
     </div>
 
+    <div class="modal fade" id="GISRoutesfilterModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Route Data<span id="GISRoutes-record-count" class="badge pull-right" style="margin-right: 15px; margin-top: 2px;"></span></h4>
+          </div>
+          <div class="modal-body">
+            <div id="GISRoutesFilter"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-info" id="GISRoutes-reset-filter-btn"><i class="fa fa-undo"></i> Reset Filter</button>
+            <button type="button" class="btn btn-primary" id="GISRoutes-apply-filter-btn"><i class="fa fa-filter"></i> Apply Filter</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="modal fade" id="featureModal" tabindex="-1" role="dialog">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -538,6 +557,21 @@
             <h4 class="modal-title">Splice Info</h4>
           </div>
           <div class="modal-body" id="feature-info4"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="feature5Modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Route Info</h4>
+          </div>
+          <div class="modal-body" id="feature-info5"></div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           </div>
