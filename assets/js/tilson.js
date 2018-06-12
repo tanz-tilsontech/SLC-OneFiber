@@ -80,6 +80,15 @@ var config4 = {
 };
 
 
+// Configuration of Cluster Rings in 3GIS
+
+var config5 = {
+  geojson: "https://tilsonwebdraco.3-gislive.com/arcgis/rest/services/SLClld/Tilsonslc_lld/MapServer/35/query?where=objectid+IS+NOT+NULL&outFields=*&f=geojson",
+  layerName: "CRAN Polygons",
+  hoverProperty: "name"
+};
+
+
 
 // Properties of Routes in Fulcrum
 
@@ -1888,6 +1897,8 @@ function buildSpliceConfig() {
   buildSpliceTable();
 }
 
+
+
 // Basemap Layers
 var mapboxOSM = L.tileLayer('http://{s}.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZWNvdHJ1c3QiLCJhIjoibGo4TG5nOCJ9.QJnT2dgjL4_4EA7WlK8Zkw', {
     maxZoom: 20
@@ -2235,6 +2246,30 @@ var featureLayer4 = L.geoJson(null, {
 });
 
 
+var featureLayer5 = L.geoJson(null, {
+  style: function (feature) {
+    return {
+      color: "#4F4F42",
+      fillColor: "#F3F1A5",
+      fillOpacity: 0.3,
+      weight: 6
+    };
+  },
+  onEachFeature: function (feature, layer) {
+    if (feature.properties) {
+      layer.on({
+        mouseover: function (e) {
+          if (config5.hoverProperty) {
+            $(".info-control").html(feature.properties[config5.hoverProperty]);
+            $(".info-control").show();
+          }
+        },
+      });
+    } 
+  }
+});
+
+
 
 // Fetch the Routes GeoJSON file
 
@@ -2302,8 +2337,21 @@ $.getJSON(config4.geojson, function (data) {
 });
 
 
+
+// Fetch the CRAN Polygon GeoJSON file
+
+$.getJSON(config5.geojson, function (data) {
+  geojson5 = data
+  features5 = $.map(geojson5.features, function(feature) {
+    return feature.properties;
+  });
+  featureLayer5.addData(data);
+  $("#loading-mask").hide();
+});
+
+
 var map = L.map("map", {
-  layers: [mapboxOSM, SLCLLDRoute, featureLayer, featureLayer1, featureLayer2, featureLayer3, featureLayer4, highlightLayer, highlightLayer2, highlightLayer3, highlightLayer4]
+  layers: [mapboxOSM, SLCLLDRoute, featureLayer, featureLayer1, featureLayer2, featureLayer3, featureLayer4, featureLayer5, highlightLayer, highlightLayer2, highlightLayer3, highlightLayer4]
 }).fitWorld();
 
 
@@ -2340,7 +2388,8 @@ var overlayLayers = {
   "<span id='layer-name1'>Restoration</span>": featureLayer1,
   "<span id='layer-name3'>Segments</span>": featureLayer2,
   "<span id='layer-name4'>Sections</span>": featureLayer3,
-  "<span id='layer-name4'>Splices</span>": featureLayer4,
+  "<span id='layer-name5'>Splices</span>": featureLayer4,
+  "<span id='layer-name6'>Hubs</span>": featureLayer5,
   "<span id='layer-name2'>Sites</span>": SLCLLDRoute,
 };
 
