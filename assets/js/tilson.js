@@ -2102,7 +2102,7 @@ var featureLayer2 = L.geoJson(null, {
       };
     } else if (feature.properties.oofstatus === "Permits Received") {
       return { 
-        color: "#F47200",
+        color: "#1BE8F3",
         weight: 6,
         opacity: 0.7
       };
