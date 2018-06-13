@@ -4079,8 +4079,8 @@ $("#fulcrumResto-ApplyFilter_BTN").click(function() {
 });
 
 $("#fulcrumHardscape-ApplyFilter_BTN").click(function() {
-  fulcrumRestoApplyFilter();
-  $('#fulcrumResto-Filter_MODAL').modal('hide');
+  fulcrumHardscapeApplyFilter();
+  $('#fulcrumHardscape-Filter_MODAL').modal('hide');
   $(".navbar-collapse.in").collapse("hide");
   return false;
 });
