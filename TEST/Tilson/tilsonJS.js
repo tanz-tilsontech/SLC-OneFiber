@@ -2120,7 +2120,7 @@ function gisSectionsBuildConfig() {
 }
 
 
-function gisSplicesConfig() {
+function gisSplicesBuildConfig() {
   filters = [];
   table = [{
     field: "action",
