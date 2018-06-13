@@ -2361,7 +2361,7 @@ var fulcrumRoutes = L.geoJson(null, {
           fulcrumRoutesHardscapePictures(L.stamp(layer));
           fulcrumRoutesCablePictures(L.stamp(layer));
           fulcrumRoutesSignaturesCX(L.stamp(layer));
-          fulcrumRoutesSignturesCP(L.stamp(layer));
+          fulcrumRoutesSignaturesCP(L.stamp(layer));
           fuclrumRoutesHighlight.clearLayers();
           fuclrumRoutesHighlight.addData(fulcrumRoutes.getLayer(L.stamp(layer)).toGeoJSON());
         },
