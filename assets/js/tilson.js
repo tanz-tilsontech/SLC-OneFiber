@@ -4205,8 +4205,8 @@ $("#fulcrumResto-Chart_BTN").click(function() {
   return false;
 });
 
-$("#gisSegements-Chart_BTN").click(function() {
-  $("#gisSegements-Chart_MODAL").modal("show");
+$("#gisSegments-Chart_BTN").click(function() {
+  $("#gisSegments-Chart_MODAL").modal("show");
   $(".navbar-collapse.in").collapse("hide");
   return false;
 });
@@ -4255,8 +4255,8 @@ $("#fulcrumResto-Chart_MODAL").on("shown.bs.modal", function (e) {
   fulcrumRestoDrawCharts();
 });
 
-$("#gisSegements-Chart_MODAL").on("shown.bs.modal", function (e) {
-  gisSegementsDrawCharts();
+$("#gisSegments-Chart_MODAL").on("shown.bs.modal", function (e) {
+  gisSegmentsDrawCharts();
 });
 
 
