@@ -1813,19 +1813,6 @@ function fulcrumRoutesBuildConfig() {
         '</a>'
       ].join("");
     },
-    events: {
-      "click .zoom": function (e, value, row, index) {
-        var layer = fulcrumRoutes.getLayer(row.leaflet_stamp);
-        map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 19);
-        fuclrumRoutesHighlight.clearLayers();
-        fuclrumRoutesHighlight.addData(fulcrumRoutes.getLayer(row.leaflet_stamp).toGeoJSON());
-      },
-      "click .identify": function (e, value, row, index) {
-        fulcrumRoutesInfo(row.leaflet_stamp);
-        fuclrumRoutesHighlight.clearLayers();
-        fuclrumRoutesHighlight.addData(fulcrumRoutes.getLayer(row.leaflet_stamp).toGeoJSON());
-      }
-    }
   }];
 
   $.each(fulcrumRoutesProperties, function(index, value) {
@@ -1901,19 +1888,6 @@ function fulcrumRestoBuildConfig() {
         '</a>'
       ].join("");
     },
-    /*events: {
-      "click .zoom": function (e, value, row, index) {
-        var layer = fulcrumResto.getLayer(row.leaflet_stamp);
-        map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 19);
-        fuclrumRoutesHighlight.clearLayers();
-        fuclrumRoutesHighlight.addData(fulcrumResto.getLayer(row.leaflet_stamp).toGeoJSON());
-      },
-      "click .identify": function (e, value, row, index) {
-        fulcrumRestoInfo(row.leaflet_stamp);
-        fuclrumRoutesHighlight.clearLayers();
-        fuclrumRoutesHighlight.addData(fulcrumResto.getLayer(row.leaflet_stamp).toGeoJSON());
-      }
-    }*/
   }];
 
   $.each(fulcrumRestoProperties, function(index, value) {
@@ -2433,8 +2407,8 @@ var fulcrumResto = L.geoJson(null, {
           fulcrumRestoInfo(L.stamp(layer));
           fulcrumRestoBeforePictures(L.stamp(layer));
           fulcrumRestoAfterPictures(L.stamp(layer));
-          fuclrumRestoHighlight.clearLayers();
-          fuclrumRestoHighlight.addData(fulcrumResto.getLayer(L.stamp(layer)).toGeoJSON());
+          fuclrumRoutesHighlight.clearLayers();
+          fuclrumRoutesHighlight.addData(fulcrumResto.getLayer(L.stamp(layer)).toGeoJSON());
         },
         mouseover: function (e) {
           if (fulcrumRestoConfig.hoverProperty) {
@@ -2665,9 +2639,9 @@ $.getJSON(fulcrumRoutesConfig.geojson, function (data) {
 
 // FULCRUM RESTO GEOJSON
 
-$.getJSON(fulcrumRoutesConfig.geojson, function (data) {
+$.getJSON(fulcrumRestoConfig.geojson, function (data) {
   fulcrumRestoGeojson = data
-  fulcrumRestoFeatures = $.map(fulcrumRoutesGeojson.features, function(feature) {
+  fulcrumRestoFeatures = $.map(fulcrumRestoGeojson.features, function(feature) {
     return feature.properties;
   });
   fulcrumResto.addData(data);
@@ -3656,10 +3630,9 @@ $("#refresh_BTN").click(function() {
   gisSections.clearLayers();
   gisSplices.clearLayers();
 
-  $.getJSON(gisRoutesConfig.geojson, function (data) {
+  $.getJSON(fulcrumRoutesConfig.geojson, function (data) {
     fulcrumRoutesGeojson = data;
-    legendItems = {};
-    gisRoutesFeatures = $.map(fulcrumRoutesGeojson.features, function(feature) {
+    fulcrumRoutesFeatures = $.map(fulcrumRoutesGeojson.features, function(feature) {
       return feature.properties;
     });
     fulcrumRoutes.addData(data);
@@ -3673,7 +3646,7 @@ $("#refresh_BTN").click(function() {
       return feature.properties;
     });
     fulcrumResto.addData(data);
-    fulcrumRoutesBuildConfig();
+    fulcrumRestoBuildConfig();
     $("#loading-mask").hide();
   });
 
@@ -3719,6 +3692,7 @@ $("#refresh_BTN").click(function() {
 
   fulcrumRoutesBuildFilters();
   fulcrumRestoBuildFilters();
+  gisRoutesBuildFilter();
   gisSegmentsBuildFilter();
   gisSectionsBuildFilter();
   gisSplicesBuildFilter();
