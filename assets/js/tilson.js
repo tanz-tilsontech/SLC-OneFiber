@@ -4269,10 +4269,35 @@ $("#fulcrumResto-Chart_BTN").click(function() {
   return false;
 });
 
+$("#gisRoutes-Chart_BTN").click(function() {
+  $("#gisRoutes-Chart_MODAL").modal("show");
+  $(".navbar-collapse.in").collapse("hide");
+  return false;
+});
+
 $("#gisSegments-Chart_BTN").click(function() {
   $("#gisSegments-Chart_MODAL").modal("show");
   $(".navbar-collapse.in").collapse("hide");
   return false;
+});
+
+
+// DRAW CHARTS
+
+$("#fulcrumRoutes-Chart_MODAL").on("shown.bs.modal", function (e) {
+  fulcrumRoutesDrawCharts();
+});
+
+$("#fulcrumResto-Chart_MODAL").on("shown.bs.modal", function (e) {
+  fulcrumRestoDrawCharts();
+});
+
+$("#gisRoutes-Chart_MODAL").on("shown.bs.modal", function (e) {
+  gisRoutesDrawCharts();
+});
+
+$("#gisSegments-Chart_MODAL").on("shown.bs.modal", function (e) {
+  gisSegmentsDrawCharts();
 });
 
 
@@ -4304,23 +4329,6 @@ $("#fulcrumResto-Pictures_BTN").click(function() {
 $("#fulcrumHardscape-Pictures_BTN").click(function() {
   $("#fulcrumHardscape-Pictures_MODAL").modal("show");
   return false;
-});
-
-
-
-
-// DRAW CHARTS
-
-$("#fulcrumRoutes-Chart_MODAL").on("shown.bs.modal", function (e) {
-  fulcrumRoutesDrawCharts();
-});
-
-$("#fulcrumResto-Chart_MODAL").on("shown.bs.modal", function (e) {
-  fulcrumRestoDrawCharts();
-});
-
-$("#gisSegments-Chart_MODAL").on("shown.bs.modal", function (e) {
-  gisSegmentsDrawCharts();
 });
 
 
