@@ -3181,7 +3181,7 @@ function syncSpliceTable() {
 */
 
 function fulcrumRoutesInfo(id) {
-  var featureProperties = fulcrumResto.getLayer(id).feature.properties;
+  var featureProperties = fulcrumRoutes.getLayer(id).feature.properties;
   var content = "<table class='table table-striped table-bordered table-condensed'>";
   $.each(featureProperties, function(key, value) {
     if (!value) {
@@ -3326,54 +3326,8 @@ function gisSplicesInfo(id) {
 
 
 
-function fulcrumRestoBeforePictures(id) {
-  var featureProperties = fulcrumResto.getLayer(id).feature.properties;
-  var content = "<table class='table table-striped table-bordered table-condensed'>";
-  var photoLink = "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/photos";
-  $.each(featureProperties, function(key, value) {
-    if (!value) {
-      value = "";
-    }
-    if (typeof value == "string"  && value.indexOf(photoLink) === 0) {
-      value = "<a href='#' onclick='photoGallery(\""+ value +"\")'; return false;'>View Photos</a>";
-    }
-    $.each(fulcrumRestoBeforeProperties, function(index, property) {
-      if (key == property.value) {
-        if (property.info !== false) {
-          content += "<tr><th>" + property.label + "</th><td>" + value + "</td></tr>";
-        }
-      }
-    });
-  });
-  content += "<table>";
-  $("#fulcrumResto-Before_PICS").html(content);
-};
 
-
-function fulcrumRestoAfterPictures(id) {
-  var featureProperties = fulcrumResto.getLayer(id).feature.properties;
-  var content = "<table class='table table-striped table-bordered table-condensed'>";
-  var photoLink = "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/photos";
-  $.each(featureProperties, function(key, value) {
-    if (!value) {
-      value = "";
-    }
-    if (typeof value == "string"  && value.indexOf(photoLink) === 0) {
-      value = "<a href='#' onclick='photoGallery(\""+ value +"\")'; return false;'>View Photos</a>";
-    }
-    $.each(fulcrumRestoAfterProperties, function(index, property) {
-      if (key == property.value) {
-        if (property.info !== false) {
-          content += "<tr><th>" + property.label + "</th><td>" + value + "</td></tr>";
-        }
-      }
-    });
-  });
-  content += "<table>";
-  $("#fulcrumResto-After_PICS").html(content);
-};
-
-
+// FULCRUM PICTURES
 
 function fulcrumRoutesHardscapePictures(id) {
   var featureProperties = fulcrumRoutes.getLayer(id).feature.properties;
@@ -3422,6 +3376,7 @@ function fulcrumRoutesCablePictures(id) {
 };
 
 
+
 function fulcrumRoutesSignaturesCX(id) {
   var featureProperties = fulcrumRoutes.getLayer(id).feature.properties;
   var content = "<table class='table table-striped table-bordered table-condensed'>";
@@ -3467,6 +3422,55 @@ function fulcrumRoutesSignaturesCP(id) {
   });
   content += "<table>";
   $("#fulcrumRoutes-CP_SIGS").html(content);
+};
+
+
+
+function fulcrumRestoBeforePictures(id) {
+  var featureProperties = fulcrumResto.getLayer(id).feature.properties;
+  var content = "<table class='table table-striped table-bordered table-condensed'>";
+  var photoLink = "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/photos";
+  $.each(featureProperties, function(key, value) {
+    if (!value) {
+      value = "";
+    }
+    if (typeof value == "string"  && value.indexOf(photoLink) === 0) {
+      value = "<a href='#' onclick='photoGallery(\""+ value +"\")'; return false;'>View Photos</a>";
+    }
+    $.each(fulcrumRestoBeforeProperties, function(index, property) {
+      if (key == property.value) {
+        if (property.info !== false) {
+          content += "<tr><th>" + property.label + "</th><td>" + value + "</td></tr>";
+        }
+      }
+    });
+  });
+  content += "<table>";
+  $("#fulcrumResto-Before_PICS").html(content);
+};
+
+
+function fulcrumRestoAfterPictures(id) {
+  var featureProperties = fulcrumResto.getLayer(id).feature.properties;
+  var content = "<table class='table table-striped table-bordered table-condensed'>";
+  var photoLink = "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/photos";
+  $.each(featureProperties, function(key, value) {
+    if (!value) {
+      value = "";
+    }
+    if (typeof value == "string"  && value.indexOf(photoLink) === 0) {
+      value = "<a href='#' onclick='photoGallery(\""+ value +"\")'; return false;'>View Photos</a>";
+    }
+    $.each(fulcrumRestoAfterProperties, function(index, property) {
+      if (key == property.value) {
+        if (property.info !== false) {
+          content += "<tr><th>" + property.label + "</th><td>" + value + "</td></tr>";
+        }
+      }
+    });
+  });
+  content += "<table>";
+  $("#fulcrumResto-After_PICS").html(content);
 };
 
 
