@@ -1907,7 +1907,7 @@ function gisRoutesDrawCharts() {
     alasql.tables.construction_footages.data = data;
 
     var columns = $.map(data, function(data) {
-      return [[data.footage]];
+      return [[data.New_Aerial.Footage]];
     });
     var chart = c3.generate({
         bindto: "#gisRoutes-Construction_Footage",
