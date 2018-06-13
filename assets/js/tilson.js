@@ -4034,7 +4034,7 @@ $("#fulcrumHardscape-Filter_BTN").click(function() {
   return false;
 });
 
-$("#gisRoutes-FilterModal_BTN").click(function() {
+$("#gisRoutes-Filter_BTN").click(function() {
   $("#gisRoutes-Filter_MODAL").modal("show");
   $(".navbar-collapse.in").collapse("hide");
   return false;
@@ -4052,7 +4052,7 @@ $("#gisSections-Filter_BTN").click(function() {
   return false;
 });
 
-$("#gisSplices-FilterModal_BTN").click(function() {
+$("#gisSplices-Filter_BTN").click(function() {
   $("#gisSplices-Filter_MODAL").modal("show");
   $(".navbar-collapse.in").collapse("hide");
   return false;
