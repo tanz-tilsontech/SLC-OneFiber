@@ -52,6 +52,17 @@ var fulcrumRestoConfig = {
 };
 
 
+// FULCRUM HARDSCAPE CONFIG
+
+var fulcrumHardscapeConfig = {
+  geojson: "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94.geojson?child=additional_hardscape_repeat",
+  layerName: "Hadrscape",
+  hoverProperty: "type_hardscape",
+  sortProperty: "date_hardscape",
+  sortOrder: "ascend",
+};
+
+
 // GIS ROUTES CONFIG
 
 var gisRoutesConfig = {
@@ -596,6 +607,132 @@ var fulcrumRestoProperties = [{
     vertical: true,
     multiple: true,
     operators: ["equal", "not_equal"],
+    values: []
+  }
+}];
+
+
+
+// FULCRUM HARDSCAPE PROPERTIES
+
+var fulcrumHardscapeProperties = [{
+  value: "fiber_fqnid_hardscape",
+  label: "Segment FQNID",
+  table: {
+    visible: false,
+    sortable: false
+  },
+  filter: {
+    type: "string",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal", "contains"],
+    values: []
+  }
+},
+{
+  value: "route_fqnid_hardscape",
+  label: "Route FQNID",
+  table: {
+    visible: false,
+    sortable: false
+  },
+  filter: {
+    type: "string",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal", "contains"],
+    values: []
+  }
+},
+{
+  value: "site_nfid_hardscape",
+  label: "Site NFID",
+  table: {
+    visible: false,
+    sortable: false
+  },
+  filter: {
+    type: "string",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal", "contains"],
+    values: []
+  }
+},
+{
+  value: "date_hardscape",
+  label: "Date",
+  table: {
+    visible: false,
+    sortable: false
+  },
+  filter: {
+    type: "date",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal", "contains"],
+    values: []
+  }
+},
+{
+  value: "type_hardscape",
+  label: "Type",
+  table: {
+    visible: false,
+    sortable: false
+  },
+  filter: {
+    type: "string",
+    input: "radio",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal", "contains"],
+    values: []
+  }
+},
+{
+  value: "footage_hardscape",
+  label: "Footage",
+  table: {
+    visible: false,
+    sortable: false
+  },
+  filter: {
+    type: "integer",
+    vertical: true,
+    multiple: true,
+    operators: ["between"],
+    values: []
+  }
+},
+{
+  value: "hardscape_cx_url",
+  label: "Pipe Hardscape",
+  table: {
+    visible: false,
+    sortable: false
+  },
+  filter: {
+    type: "string",
+    vertical: true,
+    multiple: true,
+    operators: ["contains"],
+    values: []
+  }
+},
+{
+  value: "photos_hardscape_url",
+  label: "Additional Hardscape/Potholes",
+  table: {
+    visible: false,
+    sortable: false
+  },
+  filter: {
+    type: "string",
+    vertical: true,
+    multiple: true,
+    operators: ["contains"],
     values: []
   }
 }];
@@ -1608,29 +1745,6 @@ var fulcrumRoutesCableProperties = [{
 
 
 
-
-// FULCRUM ROUTES HARDSCAPE PICTURES PROPERTIES
-
-var fulcrumRoutesHardscapeProperties = [{
-  value: "hardscape_cx_url",
-  label: "Pipe Hardscape",
-  table: {
-    visible: false,
-    sortable: false
-  }
-},
-{
-  value: "photos_hardscape_url",
-  label: "Additional Hardscape",
-  table: {
-    visible: false,
-    sortable: false
-  }
-}];
-
-
-
-
 // FULCRUM SIGNATURE PICTURES PROPERTIES
 
 var fulcrumRoutesSignaturesCXProperties = [{
@@ -1940,6 +2054,81 @@ function fulcrumRestoBuildConfig() {
 
   fulcrumRestoBuildFilter();
   //fulcrumRestoBuildTable();
+}
+
+
+function fulcrumHardscapeBuildConfig() {
+  filters = [];
+  table = [{
+    field: "action",
+    title: "<i class='fa fa-gear'></i>&nbsp;Action",
+    align: "center",
+    valign: "middle",
+    width: "75px",
+    cardVisible: false,
+    switchable: false,
+    formatter: function(value, row, index) {
+      return [
+        '<a class="zoom" href="javascript:void(0)" title="Zoom" style="margin-right: 10px;">',
+          '<i class="fa fa-search-plus"></i>',
+        '</a>',
+        '<a class="identify" href="javascript:void(0)" title="Identify" style="margin-right: 10px;">',
+          '<i class="fa fa-info-circle"></i>',
+        '</a>'
+      ].join("");
+    },
+  }];
+
+  $.each(fulcrumHardscapeProperties, function(index, value) {
+    // Filter config
+    if (value.filter) {
+      var id;
+      if (value.filter.type == "integer") {
+        id = "cast(properties->"+ value.value +" as int)";
+      }
+      else if (value.filter.type == "double") {
+        id = "cast(properties->"+ value.value +" as double)";
+      }
+      else {
+        id = "properties->" + value.value;
+      }
+      filters.push({
+        id: id,
+        label: value.label
+      });
+      $.each(value.filter, function(key, val) {
+        if (filters[index]) {
+          // If values array is empty, fetch all distinct values
+          if (key == "values" && val.length === 0) {
+            alasql("SELECT DISTINCT(properties->"+value.value+") AS field FROM ? ORDER BY field ASC", [fulcrumHardscapeGeojson.features], function(results){
+              distinctValues = [];
+              $.each(results, function(index, value) {
+                distinctValues.push(value.field);
+              });
+            });
+            filters[index].values = distinctValues;
+          } else {
+            filters[index][key] = val;
+          }
+        }
+      });
+    }
+    // Table config
+    if (value.table) {
+      table.push({
+        field: value.value,
+        title: value.label
+      });
+      $.each(value.table, function(key, val) {
+        if (table[index+1]) {
+          table[index+1][key] = val;
+        }
+      });
+    }
+  });
+
+  fulcrumHardscapeBuildFilter();
+  //fulcrumHardscapeBuildTable();
 }
 
 
@@ -2436,6 +2625,41 @@ var fulcrumResto = L.geoJson(null, {
 });
 
 
+var fulcrumHardscape = L.geoJson(null, {
+  pointToLayer: function (feature, latlng) {
+    return L.marker(latlng, {
+      title: feature.properties["type_hardscape"],
+      riseOnHover: true,
+      icon: L.icon({
+        iconUrl: "assets/pictures/markers/cb0d0c.png",
+        iconSize: [30, 40],
+        iconAnchor: [15, 32]
+      })
+    });
+  },
+  onEachFeature: function (feature, layer) {
+    if (feature.properties) {
+      layer.on({
+        click: function (e) {
+          fulcrumHardscapeInfo(L.stamp(layer));
+          fuclrumRoutesHighlight.clearLayers();
+          fuclrumRoutesHighlight.addData(fulcrumHardscape.getLayer(L.stamp(layer)).toGeoJSON());
+        },
+        mouseover: function (e) {
+          if (fulcrumHardscapeConfig.hoverProperty) {
+            $(".info-control").html(feature.properties[fulcrumHardscapeConfig.hoverProperty]);
+            $(".info-control").show();
+          }
+        },
+        mouseout: function (e) {
+          $(".info-control").hide();
+        }
+      });
+    }
+  }
+});
+
+
 var gisRoutes = L.geoJson(null, {
   style: function (feature, layer) {
     if (feature.properties.cableplaced > 0) {
@@ -2652,6 +2876,19 @@ $.getJSON(fulcrumRestoConfig.geojson, function (data) {
 });
 
 
+// FULCRUM HARDSCAPE GEOJSON
+
+$.getJSON(fulcrumHardscapeConfig.geojson, function (data) {
+  fulcrumHardscapeGeojson = data
+  fulcrumHardscapeFeatures = $.map(fulcrumHardscapeGeojson.features, function(feature) {
+    return feature.properties;
+  });
+  fulcrumHardscape.addData(data);
+  fulcrumHardscapeBuildConfig();
+  $("#loading-mask").hide();
+});
+
+
 // GIS ROUTES GEOJSON
 
 $.getJSON(gisRoutesConfig.geojson, function (data) {
@@ -2708,7 +2945,7 @@ $.getJSON(gisSplicesConfig.geojson, function (data) {
 
 
 var map = L.map("map", {
-  layers: [mapboxOSM, fulcrumRoutes, fulcrumResto, gisRoutes, gisSegments, gisSections, gisSplices, highlightLayer, fuclrumRoutesHighlight, highlightLayer3, highlightLayer4]
+  layers: [mapboxOSM, fulcrumRoutes, fulcrumResto, fulcrumHardscape, gisRoutes, gisSegments, gisSections, gisSplices, highlightLayer, fuclrumRoutesHighlight, highlightLayer3, highlightLayer4]
 }).fitWorld();
 
 
@@ -2742,6 +2979,7 @@ var baseLayers = {
 var overlayLayers = {
   "<span id='layer-name'>Fulcrum Routes</span>": fulcrumRoutes,
   "<span id='layer-name1'>Fulcrum Resto</span>": fulcrumResto,
+  "<span id='layer-name1'>Fulcrum Hardscape</span>": fulcrumHardscape,
   "<span id='layer-name6'>3GIS Routes</span>": gisRoutes,
   "<span id='layer-name3'>3GIS Segments</span>": gisSegments,
   "<span id='layer-name4'>3GIS Sections</span>": gisSections,
@@ -2784,6 +3022,13 @@ function fulcrumRoutesBuildFilter() {
 
 function fulcrumRestoBuildFilter() {
   $("#fulcrumResto-Filter_DATA").queryBuilder({
+    allow_empty: true,
+    filters: filters
+  });
+}
+
+function fulcrumHardscapeBuildFilter() {
+  $("#fulcrumHardscape-Filter_DATA").queryBuilder({
     allow_empty: true,
     filters: filters
   });
@@ -2843,6 +3088,20 @@ function fulcrumRestoApplyFilter() {
     fulcrumResto.addData(features);
     //syncRestoTable();
     map.fitBounds(fulcrumResto.getBounds());
+  });
+}
+
+function fulcrumHardscapeApplyFilter() {
+  var query = "SELECT * FROM ?";
+  var sql = $("#fulcrumHardscape-Filter_DATA").queryBuilder("getSQL", false, false).sql;
+  if (sql.length > 0) {
+    query += " WHERE " + sql;
+  }
+  alasql(query, [fulcrumHardscapeGeojson.features], function(features){
+    fulcrumHardscape.clearLayers();
+    fulcrumHardscape.addData(features);
+    //syncHardscapeTable();
+    map.fitBounds(fulcrumHardscape.getBounds());
   });
 }
 
@@ -3237,6 +3496,31 @@ function fulcrumRestoInfo(id) {
 };
 
 
+function fulcrumHardscapeInfo(id) {
+  var featureProperties = fulcrumHardscape.getLayer(id).feature.properties;
+  var content = "<table class='table table-striped table-bordered table-condensed'>";
+  var photoLink = "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/photos";
+  $.each(featureProperties, function(key, value) {
+    if (!value) {
+      value = "";
+    }
+    if (typeof value == "string"  && value.indexOf("http://www.fulcrumapp") === 0) {
+      value = "<a href='" + value + "' target='_blank'>" + "Fulcrum Record" + "</a>";
+    }
+    $.each(fulcrumHardscapeProperties, function(index, property) {
+      if (key == property.value) {
+        if (property.info !== false) {
+          content += "<tr><th>" + property.label + "</th><td>" + value + "</td></tr>";
+        }
+      }
+    });
+  });
+  content += "<table>";
+  $("#fulcrumHardscape-Info_DATA").html(content);
+  $("#fulcrumHardscape-Info_MODAL").modal("show");
+};
+
+
 function gisRoutesInfo(id) {
   var featureProperties = gisRoutes.getLayer(id).feature.properties;
   var content = "<table class='table table-striped table-bordered table-condensed'>";
@@ -3326,33 +3610,6 @@ function gisSplicesInfo(id) {
   $("#gisSplices-Info_MODAL").modal("show");
 };
 
-
-
-
-// FULCRUM PICTURES
-
-function fulcrumRoutesHardscapePictures(id) {
-  var featureProperties = fulcrumRoutes.getLayer(id).feature.properties;
-  var content = "<table class='table table-striped table-bordered table-condensed'>";
-  var photoLink = "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/photos/";
-  $.each(featureProperties, function(key, value) {
-    if (!value) {
-      value = "";
-    }
-    if (typeof value == "string"  && value.indexOf(photoLink) === 0) {
-      value = "<a href='#' onclick='photoGallery(\""+ value +"\")'; return false;'>View Photos</a>";
-    }
-    $.each(fulcrumRoutesHardscapeProperties, function(index, property) {
-      if (key == property.value) {
-        if (property.info !== false) {
-          content += "<tr><th>" + property.label + "</th><td>" + value + "</td></tr>";
-        }
-      }
-    });
-  });
-  content += "<table>";
-  $("#fulcrumRoutes-Hardscape_PICS").html(content);
-};
 
 function fulcrumRoutesCablePictures(id) {
   var featureProperties = fulcrumRoutes.getLayer(id).feature.properties;
@@ -3631,6 +3888,7 @@ L.easyPrint({
 $("#refresh_BTN").click(function() {
   fulcrumRoutes.clearLayers();
   fulcrumResto.clearLayers();
+  fulcrumHardscape.clearLayers();
   gisRoutes.clearLayers();
   gisSegments.clearLayers();
   gisSections.clearLayers();
@@ -3653,6 +3911,16 @@ $("#refresh_BTN").click(function() {
     });
     fulcrumResto.addData(data);
     fulcrumRestoBuildConfig();
+    $("#loading-mask").hide();
+  });
+
+  $.getJSON(fulcrumHardscapeConfig.geojson, function (data) {
+    fulcrumHardscapeGeojson = data
+    fulcrumHardscapeFeatures = $.map(fulcrumHardscapeGeojson.features, function(feature) {
+      return feature.properties;
+    });
+    fulcrumHardscape.addData(data);
+    fulcrumHardscapeBuildConfig();
     $("#loading-mask").hide();
   });
 
@@ -3698,6 +3966,7 @@ $("#refresh_BTN").click(function() {
 
   fulcrumRoutesBuildFilter();
   fulcrumRestoBuildFilter();
+  fulcrumHardscapeBuildFilter();
   gisRoutesBuildFilter();
   gisSegmentsBuildFilter();
   gisSectionsBuildFilter();
@@ -3729,6 +3998,12 @@ $("#fulcurmRoutes-Filter_BTN").click(function() {
 
 $("#fulcrumResto-Filter_BTN").click(function() {
   $("#fulcrumResto-Filter_MODAL").modal("show");
+  $(".navbar-collapse.in").collapse("hide");
+  return false;
+});
+
+$("#fulcrumHardscape-Filter_BTN").click(function() {
+  $("#fulcrumHardscape-Filter_MODAL").modal("show");
   $(".navbar-collapse.in").collapse("hide");
   return false;
 });
@@ -3771,6 +4046,13 @@ $("#fulcrumRoutes-ApplyFilter_BTN").click(function() {
 });
 
 $("#fulcrumResto-ApplyFilter_BTN").click(function() {
+  fulcrumRestoApplyFilter();
+  $('#fulcrumResto-Filter_MODAL').modal('hide');
+  $(".navbar-collapse.in").collapse("hide");
+  return false;
+});
+
+$("#fulcrumHardscape-ApplyFilter_BTN").click(function() {
   fulcrumRestoApplyFilter();
   $('#fulcrumResto-Filter_MODAL').modal('hide');
   $(".navbar-collapse.in").collapse("hide");
@@ -3821,7 +4103,14 @@ $("#fulcrumRoutes-ResetFilter_BTN").click(function() {
 $("#fulcrumResto-ResetFilter_BTN").click(function() {
   $("#fulcrumResto-Filter_DATA").queryBuilder("reset");
   fulcrumRestoApplyFilter();
-  $('#fulcrumRoutes-Filter_MODAL').modal('hide');
+  $('#fulcrumResto-Filter_MODAL').modal('hide');
+  $(".navbar-collapse.in").collapse("hide");
+});
+
+$("#fulcrumHardscape-ResetFilter_BTN").click(function() {
+  $("#fulcrumHardscape-Filter_DATA").queryBuilder("reset");
+  fulcrumHardscapeApplyFilter();
+  $('#fulcrumHardscape-Filter_MODAL').modal('hide');
   $(".navbar-collapse.in").collapse("hide");
 });
 
@@ -3860,6 +4149,8 @@ $("#allLayers-ResetFilter_BTN").click(function() {
   fulcrumRoutesApplyFilter();
   $("#fulcrumResto-Filter_DATA").queryBuilder("reset");
   fulcrumRestoApplyFilter();
+  $("#fulcrumHardscape-Filter_DATA").queryBuilder("reset");
+  fulcrumHardscapeApplyFilter();
   $("#gisSegments-Filter_DATA").queryBuilder("reset");
   gisSegmentsApplyFilter();
   $("#gisSections-Filter_DATA").queryBuilder("reset");
@@ -3917,6 +4208,14 @@ $("#fulcrumResto-Pictures_BTN").click(function() {
   $("#fulcrumResto-Pictures_MODAL").modal("show");
   return false;
 });
+
+// FULCRUM HARDSCAPE PICTURES
+
+$("#fulcrumHardscape-Pictures_BTN").click(function() {
+  $("#fulcrumHardscape-Pictures_MODAL").modal("show");
+  return false;
+});
+
 
 
 
