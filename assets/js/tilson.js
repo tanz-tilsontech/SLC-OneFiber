@@ -2549,7 +2549,6 @@ var fulcrumRoutes = L.geoJson(null, {
       layer.on({
         click: function (e) {
           fulcrumRoutesInfo(L.stamp(layer));
-          fulcrumRoutesHardscapePictures(L.stamp(layer));
           fulcrumRoutesCablePictures(L.stamp(layer));
           fulcrumRoutesSignaturesCX(L.stamp(layer));
           fulcrumRoutesSignaturesCP(L.stamp(layer));
