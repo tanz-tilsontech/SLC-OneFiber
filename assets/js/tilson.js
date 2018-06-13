@@ -1791,7 +1791,24 @@ var fulcrumHardscapePicturesProperties = [{
 
 
 function fulcrumRoutesDrawCharts() {
-  // HUB COMPLETE
+
+  // STATUS 
+  $(function() {
+    var result = alasql("SELECT status AS label, COUNT(status) AS total FROM ? GROUP BY status", [fulcrumRoutesFeatures]);
+    var columns = $.map(result, function(data) {
+      return [[data.label, data.total]];
+    });
+    var chart = c3.generate({
+        bindto: "#fulcrumRoutes-Status",
+        data: {
+          type: "pie",
+          columns: columns
+        }
+    });
+  });
+
+
+  /* HUB COMPLETE
   $(function() {
     var result = alasql("SELECT hub AS label, COUNT(NULLIF(cable_placement_total_footage_final::NUMBER,0)) AS total FROM ? GROUP BY hub", [fulcrumRoutesFeatures]);
     var columns = $.map(result, function(data) {
@@ -1805,8 +1822,10 @@ function fulcrumRoutesDrawCharts() {
         }
     });
   });
+  */
 
-  // HUB TOTAL FOOTAGE
+  /*
+  // CONSTRUCTION FOOTAGE
   $(function() {
     var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_final::NUMBER)) AS footage FROM ? GROUP BY hub", [fulcrumRoutesFeatures]);
     var columns = $.map(result, function(data) {
@@ -1826,21 +1845,7 @@ function fulcrumRoutesDrawCharts() {
         }
     });
   });
-
-  // STATUS 
-  $(function() {
-    var result = alasql("SELECT status AS label, COUNT(status) AS total FROM ? GROUP BY status", [fulcrumRoutesFeatures]);
-    var columns = $.map(result, function(data) {
-      return [[data.label, data.total]];
-    });
-    var chart = c3.generate({
-        bindto: "#fulcrumRoutes-Status",
-        data: {
-          type: "pie",
-          columns: columns
-        }
-    });
-  });
+  */
 }
 
 
@@ -1856,6 +1861,65 @@ function fulcrumRestoDrawCharts() {
         data: {
           type: "pie",
           columns: columns
+        }
+    });
+  });
+}
+
+
+function gisRoutesDrawCharts() {
+ 
+  /* CONSTRUCTION ENGINEERED FOOTAGE
+  $(function() {
+    var result = alasql("SELECT oofstatus AS label, SUM(COALESCE(calculatedlength::NUMBER)) AS footage FROM ? GROUP BY oofstatus", [gisRoutesFeatures]);
+    var columns = $.map(result, function(data) {
+      return [[data.label, data.footage]];
+    });
+    var chart = c3.generate({
+        bindto: "#gisRoutes-Status_Footage",
+        data: {
+          type: "bar",
+          columns: columns
+        },
+        axis: {
+          x: {
+            type: 'category',
+            categories: ["Cable Footage"]
+          }
+        }
+    });
+  });
+  */
+
+
+  // CONSTRUCTION ACTUAL FOOTAGE
+  $(function() {
+    
+    var result1 = alasql("SELECT SUM(COALESCE(construction_new_aerial::NUMBER)) as Footage FROM ?", [gisRoutesFeatures]);
+    var result2 = alasql("SELECT SUM(COALESCE(construction_overlash_aerial::NUMBER)) as Footage FROM ?", [gisRoutesFeatures]);
+    var result3 = alasql("SELECT SUM(COALESCE(construction_new_ug::NUMBER)) as Footage FROM ?", [gisRoutesFeatures]);
+    var result4 = alasql("SELECT SUM(COALESCE(construction_new_hardscape::NUMBER)) as Footage FROM ?", [gisRoutesFeatures]);
+    var result5 = alasql("SELECT SUM(COALESCE(construction_existingvz::NUMBER)) as Footage FROM ?", [gisRoutesFeatures]);
+    var result6 = alasql("SELECT SUM(COALESCE(construction_existingthird::NUMBER)) as Footage FROM ?", [gisRoutesFeatures]);
+
+    alasql('CREATE TABLE construction_footages');
+    var data = [{New_Aerial:result1}, {Overlash_Aerial:result2}, {New_Underground:result3}, {New_Hardscape:result4}, {Existing_Vz:result5}, {Existing_3rd:result6}]
+    alasql.tables.construction_footages.data = data;
+
+    var columns = $.map(data, function(data) {
+      return [[data.footage]];
+    });
+    var chart = c3.generate({
+        bindto: "#gisRoutes-Construction_Footage",
+        data: {
+          type: "bar",
+          columns: columns
+        },
+        axis: {
+          x: {
+            type: 'category',
+            categories: ["Cable Footage"]
+          }
         }
     });
   });
