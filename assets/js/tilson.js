@@ -3874,19 +3874,19 @@ $("#allLayers-ResetFilter_BTN").click(function() {
 
 //CHARTS MODAL
 
-$("#fulcrumRoutesChart_BTN").click(function() {
+$("#fulcrumRoutes-Chart_BTN").click(function() {
   $("#fulcrumRoutes-Chart_MODAL").modal("show");
   $(".navbar-collapse.in").collapse("hide");
   return false;
 });
 
-$("#fulcrumRestoChart_BTN").click(function() {
+$("#fulcrumResto-Chart_BTN").click(function() {
   $("#fulcrumResto-Charts_MODAL").modal("show");
   $(".navbar-collapse.in").collapse("hide");
   return false;
 });
 
-$("#gisSegementsChart_BTN").click(function() {
+$("#gisSegements-Chart_BTN").click(function() {
   $("#gisSegements-Charts_MODAL").modal("show");
   $(".navbar-collapse.in").collapse("hide");
   return false;
