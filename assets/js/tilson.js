@@ -4200,13 +4200,13 @@ $("#fulcrumRoutes-Chart_BTN").click(function() {
 });
 
 $("#fulcrumResto-Chart_BTN").click(function() {
-  $("#fulcrumResto-Charts_MODAL").modal("show");
+  $("#fulcrumResto-Chart_MODAL").modal("show");
   $(".navbar-collapse.in").collapse("hide");
   return false;
 });
 
 $("#gisSegements-Chart_BTN").click(function() {
-  $("#gisSegements-Charts_MODAL").modal("show");
+  $("#gisSegements-Chart_MODAL").modal("show");
   $(".navbar-collapse.in").collapse("hide");
   return false;
 });
