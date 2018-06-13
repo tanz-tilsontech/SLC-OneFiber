@@ -4016,7 +4016,7 @@ $("#about_BTN").click(function() {
 
 //FILTER MODAL
 
-$("#fulcurmRoutes-Filter_BTN").click(function() {
+$("#fulcrumRoutes-Filter_BTN").click(function() {
   $("#fulcrumRoutes-Filter_MODAL").modal("show");
   $(".navbar-collapse.in").collapse("hide");
   return false;
