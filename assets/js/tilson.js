@@ -705,36 +705,6 @@ var fulcrumHardscapeProperties = [{
     operators: ["between"],
     values: []
   }
-},
-{
-  value: "hardscape_cx_url",
-  label: "Pipe Hardscape",
-  table: {
-    visible: false,
-    sortable: false
-  },
-  filter: {
-    type: "string",
-    vertical: true,
-    multiple: true,
-    operators: ["contains"],
-    values: []
-  }
-},
-{
-  value: "photos_hardscape_url",
-  label: "Additional Hardscape/Potholes",
-  table: {
-    visible: false,
-    sortable: false
-  },
-  filter: {
-    type: "string",
-    vertical: true,
-    multiple: true,
-    operators: ["contains"],
-    values: []
-  }
 }];
 
 
@@ -1783,6 +1753,38 @@ var fulcrumRoutesSignaturesCPProperties = [{
 }];
 
 
+var fulcrumHardscapePicturesProperties = [{
+  value: "hardscape_cx_url",
+  label: "Pipe Hardscape",
+  table: {
+    visible: false,
+    sortable: false
+  },
+  filter: {
+    type: "string",
+    vertical: true,
+    multiple: true,
+    operators: ["contains"],
+    values: []
+  }
+},
+{
+  value: "photos_hardscape_url",
+  label: "Additional Hardscape/Potholes",
+  table: {
+    visible: false,
+    sortable: false
+  },
+  filter: {
+    type: "string",
+    vertical: true,
+    multiple: true,
+    operators: ["contains"],
+    values: []
+  }
+}];
+
+
 
 
 // FULCRUM ROUTES CHARTS
@@ -2642,6 +2644,7 @@ var fulcrumHardscape = L.geoJson(null, {
       layer.on({
         click: function (e) {
           fulcrumHardscapeInfo(L.stamp(layer));
+          fulcrumHardscapePictures(L.stamp(layer));
           fuclrumRoutesHighlight.clearLayers();
           fuclrumRoutesHighlight.addData(fulcrumHardscape.getLayer(L.stamp(layer)).toGeoJSON());
         },
@@ -3730,6 +3733,30 @@ function fulcrumRestoAfterPictures(id) {
   });
   content += "<table>";
   $("#fulcrumResto-After_PICS").html(content);
+};
+
+
+function fulcrumHardscapePictures(id) {
+  var featureProperties = fulcrumHardscape.getLayer(id).feature.properties;
+  var content = "<table class='table table-striped table-bordered table-condensed'>";
+  var photoLink = "https://web.fulcrumapp.com/shares/fb96b48deb5cfb94/photos";
+  $.each(featureProperties, function(key, value) {
+    if (!value) {
+      value = "";
+    }
+    if (typeof value == "string"  && value.indexOf(photoLink) === 0) {
+      value = "<a href='#' onclick='photoGallery(\""+ value +"\")'; return false;'>View Photos</a>";
+    }
+    $.each(fulcrumHardscapePicturesProperties, function(index, property) {
+      if (key == property.value) {
+        if (property.info !== false) {
+          content += "<tr><th>" + property.label + "</th><td>" + value + "</td></tr>";
+        }
+      }
+    });
+  });
+  content += "<table>";
+  $("#fulcrumHardscape_PICS").html(content);
 };
 
 
