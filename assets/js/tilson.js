@@ -1903,17 +1903,15 @@ function gisRoutesDrawCharts() {
     var result6 = alasql("SELECT SUM(COALESCE(construction_existingthird::NUMBER)) as Footage FROM ?", [gisRoutesFeatures]);
 
     alasql('CREATE TABLE construction_footages');
+    
     var data = [{New_Aerial:result1}, {Overlash_Aerial:result2}, {New_Underground:result3}, {New_Hardscape:result4}, {Existing_Vz:result5}, {Existing_3rd:result6}]
     alasql.tables.construction_footages.data = data;
 
-    var columns = $.map(data, function(data) {
-      return [[data.New_Aerial]];
-    });
     var chart = c3.generate({
         bindto: "#gisRoutes-Construction_Footage",
         data: {
           type: "bar",
-          columns: columns
+          columns: data
         },
         axis: {
           x: {
