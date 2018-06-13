@@ -1633,7 +1633,7 @@ var fulcrumRoutesHardscapeProperties = [{
 
 // FULCRUM SIGNATURE PICTURES PROPERTIES
 
-var fulcrumSignaturesProperties = [{
+var fulcrumRoutesSignaturesCXProperties = [{
   value: "contractor_signature_construction_pass_url",
   label: "Contractor",
   table: {
@@ -1651,7 +1651,7 @@ var fulcrumSignaturesProperties = [{
 }];
 
 
-var cpSignatures = [{
+var fulcrumRoutesSignaturesCPProperties = [{
   value: "contractor_signature_cable_placement_pass_url",
   label: "Contractor",
   table: {
@@ -3390,7 +3390,7 @@ function fulcrumRoutesSignaturesCX(id) {
     if (typeof value == "string"  && value.indexOf(photoLink) === 0) {
       value = "<a href='#' onclick='signatureGallery(\""+ value +"\")'; return false;'>View Signatures</a>";
     }
-    $.each(fulcrumSignaturesProperties, function(index, property) {
+    $.each(fulcrumRoutesSignaturesCXProperties, function(index, property) {
       if (key == property.value) {
         if (property.info !== false) {
           content += "<tr><th>" + property.label + "</th><td>" + value + "</td></tr>";
@@ -3414,7 +3414,7 @@ function fulcrumRoutesSignaturesCP(id) {
     if (typeof value == "string"  && value.indexOf(photoLink) === 0) {
       value = "<a href='#' onclick='signatureGallery(\""+ value +"\")'; return false;'>View Signatures</a>";
     }
-    $.each(cpSignatures, function(index, property) {
+    $.each(fulcrumRoutesSignaturesCPProperties, function(index, property) {
       if (key == property.value) {
         if (property.info !== false) {
           content += "<tr><th>" + property.label + "</th><td>" + value + "</td></tr>";
