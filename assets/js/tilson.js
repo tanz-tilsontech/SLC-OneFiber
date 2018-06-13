@@ -2813,7 +2813,7 @@ function fulcrumRestoBuildFilters() {
   });
 }
 
-function buildGISRoutesFilter() {
+function gisRoutesBuildFilter() {
   $("#gisRoutes-Filter_DATA").queryBuilder({
     allow_empty: true,
     filters: filters
