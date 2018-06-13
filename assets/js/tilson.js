@@ -2190,8 +2190,8 @@ function gisSplicesConfig() {
     }
   });
 
-  gisSpliceBuildFilter();
-  //gisSpliceBuildTable();
+  gisSplicesBuildFilter();
+  //gisSplicesBuildTable();
 }
 
 function gisRoutesBuildConfig() {
