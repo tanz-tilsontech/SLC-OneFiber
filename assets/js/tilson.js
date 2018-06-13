@@ -1788,7 +1788,7 @@ function gisSegmentsDrawCharts() {
 
 
 $(function() {
-  $(".title").html(config.title);
+  $(".title").html(fulcrumRoutesConfig.title);
 });
 
 
