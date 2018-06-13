@@ -1980,6 +1980,7 @@ function fulcrumRoutesBuildConfig() {
   });
 
   fulcrumRoutesBuildFilter();
+  map.fitBounds(fulcrumRoutes.getBounds());
   //fulcrumRoutesBuildTable();
 }
 
@@ -2206,7 +2207,6 @@ function gisRoutesBuildConfig() {
 
   gisRoutesBuildFilter();
   //gisRoutesBuildTable();
-  map.fitBounds(gisRoutes.getBounds());
 }
 
 
