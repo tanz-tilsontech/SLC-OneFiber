@@ -1863,7 +1863,7 @@ function fulcrumRoutesBuildConfig() {
     }
   });
 
-  fulcrumRoutesBuildFilters();
+  fulcrumRoutesBuildFilter();
   //fulcrumRoutesBuildTable();
 }
 
@@ -2094,7 +2094,7 @@ function gisSectionsBuildConfig() {
 }
 
 
-function gisSplicesConfig() {
+function gisSplicesBuildConfig() {
   filters = [];
   table = [{
     field: "action",
@@ -2357,9 +2357,9 @@ var fulcrumRoutes = L.geoJson(null, {
         click: function (e) {
           fulcrumRoutesInfo(L.stamp(layer));
           fulcrumRoutesHardscapePictures(L.stamp(layer));
-          fulcrumRoutesSignautesCX(L.stamp(layer));
-          fulcrumRoutesSignautesCP(L.stamp(layer));
           fulcrumRoutesCablePictures(L.stamp(layer));
+          fulcrumRoutesSignaturesCX(L.stamp(layer));
+          fulcrumRoutesSignturesCP(L.stamp(layer));
           fuclrumRoutesHighlight.clearLayers();
           fuclrumRoutesHighlight.addData(fulcrumRoutes.getLayer(L.stamp(layer)).toGeoJSON());
         },
@@ -2773,14 +2773,14 @@ function urlFormatter (value, row, index) {
 }
 
 
-function fulcrumRoutesBuildFilters() {
+function fulcrumRoutesBuildFilter() {
   $("#fulcrumRoutes-Filter_DATA").queryBuilder({
     allow_empty: true,
     filters: filters
   });
 }
 
-function fulcrumRestoBuildFilters() {
+function fulcrumRestoBuildFilter() {
   $("#fulcrumResto-Filter_DATA").queryBuilder({
     allow_empty: true,
     filters: filters
@@ -3694,8 +3694,8 @@ $("#refresh_BTN").click(function() {
     $("#loading-mask").hide();
   });
 
-  fulcrumRoutesBuildFilters();
-  fulcrumRestoBuildFilters();
+  fulcrumRoutesBuildFilter();
+  fulcrumRestoBuildFilter();
   gisRoutesBuildFilter();
   gisSegmentsBuildFilter();
   gisSectionsBuildFilter();
