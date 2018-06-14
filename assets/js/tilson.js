@@ -2897,7 +2897,7 @@ var gisDemandPoints = L.geoJson(null, {
           iconAnchor: [5, 12]
         })
       );
-    } else if (feature.properties.clustername === "SAL UTSL-KEARNS MTSO") {
+    } else if (feature.properties.clustername === "UTSL-KEARNS MTSO") {
       layer.setIcon(
         L.icon({
           iconUrl: "Pictures/demandPoints/SAL%20KEARNS.png",
