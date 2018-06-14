@@ -1888,7 +1888,6 @@ function DrawCharts() {
     var chart = c3.generate({
         bindto: "#hardscapeComplete",
         data: {
-        data: {
           type: "bar",
           columns: columns
         },
