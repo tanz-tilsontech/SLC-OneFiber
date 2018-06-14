@@ -234,21 +234,6 @@ var gisDemandPointsProperties = [{
     operators: ["equal", "not_equal"],
     values: []
   }
-},
-{
-  value: "site_name",
-  label: "Site Name",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string",
-    vertical: true,
-    multiple: true,
-    operators: ["equal", "not_equal"],
-    values: []
-  }
 }];
 
 
