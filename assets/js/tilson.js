@@ -28,6 +28,23 @@ $(document).ready(function() {
 
 
 
+// GIS DEMAND POINTS CONFIG
+
+var gisDemandPointsConfig = {
+  geojson: "https://tilsonwebdraco.3-gislive.com/arcgis/rest/services/SLClld/Tilsonslc_lld/MapServer/47/query?where=fqn_id+IS+NOT+NULL&outFields=*&f=geojson",
+  layerName: "GIS Demand Points",
+  hoverProperty: "site_name "
+};
+
+
+// GIS VES2K CONFIG
+
+var gisVes2KConfig = {
+  geojson: "https://tilsonwebdraco.3-gislive.com/arcgis/rest/services/SLClld/Tilsonslc_lld/MapServer/49/query?where=fqn_id+IS+NOT+NULL&outFields=*&f=geojson",
+  layerName: "GIS VES2k",
+  hoverProperty: "site_name "
+};
+
 
 // FULCRUM ROUTES CONFIG
 
@@ -104,6 +121,135 @@ var gisSplicesConfig = {
   sortProperty: "splicecount",
   sortOrder: "ascend",
 };
+
+
+// DEMAND POINTS PROPERTIES
+
+var gisDemandPointsProperties = [{
+  value: "type",
+  label: "Type",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    input: "radio",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
+  value: "tower_type ",
+  label: "Tower Type",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    input: "radio",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
+  value: "carrier_sector_count ",
+  label: "Sector Count",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
+  value: "city",
+  label: "City",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    input: "radio",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
+  value: "workorderid",
+  label: "Work Order ID",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    input: "radio",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
+  value: "clustername",
+  label: "Cluster Name",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    input: "radio",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
+  value: "site_name",
+  label: "Site Name",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
+  value: "site_name",
+  label: "Site Name",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+}];
 
 
 
@@ -1924,6 +2070,82 @@ $(function() {
   $(".title").html(fulcrumRoutesConfig.title);
 });
 
+
+
+
+function gisDemandPointsBuildConfig() {
+  filters = [];
+  table = [{
+    field: "action",
+    title: "<i class='fa fa-gear'></i>&nbsp;Action",
+    align: "center",
+    valign: "middle",
+    width: "75px",
+    cardVisible: false,
+    switchable: false,
+    formatter: function(value, row, index) {
+      return [
+        '<a class="zoom" href="javascript:void(0)" title="Zoom" style="margin-right: 10px;">',
+          '<i class="fa fa-search-plus"></i>',
+        '</a>',
+        '<a class="identify" href="javascript:void(0)" title="Identify" style="margin-right: 10px;">',
+          '<i class="fa fa-info-circle"></i>',
+        '</a>'
+      ].join("");
+    },
+  }];
+
+  $.each(gisDemandPointsProperties, function(index, value) {
+    // Filter config
+    if (value.filter) {
+      var id;
+      if (value.filter.type == "integer") {
+        id = "cast(properties->"+ value.value +" as int)";
+      }
+      else if (value.filter.type == "double") {
+        id = "cast(properties->"+ value.value +" as double)";
+      }
+      else {
+        id = "properties->" + value.value;
+      }
+      filters.push({
+        id: id,
+        label: value.label
+      });
+      $.each(value.filter, function(key, val) {
+        if (filters[index]) {
+          // If values array is empty, fetch all distinct values
+          if (key == "values" && val.length === 0) {
+            alasql("SELECT DISTINCT(properties->"+value.value+") AS field FROM ? ORDER BY field ASC", [gisDemandPointsGeojson.features], function(results){
+              distinctValues = [];
+              $.each(results, function(index, value) {
+                distinctValues.push(value.field);
+              });
+            });
+            filters[index].values = distinctValues;
+          } else {
+            filters[index][key] = val;
+          }
+        }
+      });
+    }
+    // Table config
+    if (value.table) {
+      table.push({
+        field: value.value,
+        title: value.label
+      });
+      $.each(value.table, function(key, val) {
+        if (table[index+1]) {
+          table[index+1][key] = val;
+        }
+      });
+    }
+  });
+
+  gisDemandPointsBuildFilter();
+  //fulcrumRoutesBuildTable();
+}
 
 
 function fulcrumRoutesBuildConfig() {
