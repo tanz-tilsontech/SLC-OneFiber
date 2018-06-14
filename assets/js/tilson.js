@@ -2790,7 +2790,6 @@ var gisDemandPoints = L.geoJson(null, {
         L.icon({
           iconUrl: "Pictures/demandPoints/removed.png",
           iconSize: [15, 15],
-          iconAnchor: [20, 20]
         })
       );
     } else if (feature.properties.clustername === "SAL BROADWAY") {
@@ -2798,7 +2797,6 @@ var gisDemandPoints = L.geoJson(null, {
         L.icon({
           iconUrl: "Pictures/demandPoints/SAL%20BROADWAY.png",
           iconSize: [15, 15],
-          iconAnchor: [20, 20]
         })
       );
     } else if (feature.properties.clustername === "SAL CRESCENT") {
@@ -2806,7 +2804,6 @@ var gisDemandPoints = L.geoJson(null, {
         L.icon({
           iconUrl: "Pictures/demandPoints/SAL%20CRESCENT.png",
           iconSize: [15, 15],
-          iconAnchor: [20, 20]
         })
       );
     } else if (feature.properties.clustername === "SAL HOLLADAY") {
@@ -2814,7 +2811,6 @@ var gisDemandPoints = L.geoJson(null, {
         L.icon({
           iconUrl: "Pictures/demandPoints/SAL%20HOLLADAY.png",
           iconSize: [15, 15],
-          iconAnchor: [20, 20]
         })
       );
     } else if (feature.properties.clustername === "SAL HONEY") {
@@ -2822,7 +2818,6 @@ var gisDemandPoints = L.geoJson(null, {
         L.icon({
           iconUrl: "Pictures/demandPoints/SAL%20HONEY.png",
           iconSize: [15, 15],
-          iconAnchor: [20, 20]
         })
       );
     } else if (feature.properties.clustername === "SAL RED HANGER") {
@@ -2830,7 +2825,6 @@ var gisDemandPoints = L.geoJson(null, {
         L.icon({
           iconUrl: "Pictures/demandPoints/SAL%20RED%20HANGER.png",
           iconSize: [15, 15],
-          iconAnchor: [20, 20]
         })
       );
     } else if (feature.properties.clustername === "SAL RELIEVER") {
@@ -2838,7 +2832,6 @@ var gisDemandPoints = L.geoJson(null, {
         L.icon({
           iconUrl: "Pictures/demandPoints/SAL%20RELIEVER.png",
           iconSize: [15, 15],
-          iconAnchor: [20, 20]
         })
       );
     } else if (feature.properties.clustername === "SAL ROXANNE") {
@@ -2846,7 +2839,6 @@ var gisDemandPoints = L.geoJson(null, {
         L.icon({
           iconUrl: "Pictures/demandPoints/SAL%20ROXANNE.png",
           iconSize: [15, 15],
-          iconAnchor: [20, 20]
         })
       );
     } else if (feature.properties.clustername === "SAL SAND JUMP") {
@@ -2854,7 +2846,6 @@ var gisDemandPoints = L.geoJson(null, {
         L.icon({
           iconUrl: "Pictures/demandPoints/SAL%20SAND%20JUMP.png",
           iconSize: [15, 15],
-          iconAnchor: [20, 20]
         })
       );
     } else if (feature.properties.clustername === "SAL SANDY") {
@@ -2862,7 +2853,6 @@ var gisDemandPoints = L.geoJson(null, {
         L.icon({
           iconUrl: "Pictures/demandPoints/SAL%20SANDY.png",
           iconSize: [15, 15],
-          iconAnchor: [20, 20]
         })
       );
     } else if (feature.properties.clustername === "SAL SHERWOOD PARK") {
@@ -2870,7 +2860,6 @@ var gisDemandPoints = L.geoJson(null, {
         L.icon({
           iconUrl: "Pictures/demandPoints/SAL%20SHERWOOD%20PARK.png",
           iconSize: [15, 15],
-          iconAnchor: [20, 20]
         })
       );
     } else if (feature.properties.clustername === "SAL SOUTH JORDAN") {
@@ -2878,7 +2867,6 @@ var gisDemandPoints = L.geoJson(null, {
         L.icon({
           iconUrl: "Pictures/demandPoints/SAL%20SOUTH%20JORDAN.png",
           iconSize: [15, 15],
-          iconAnchor: [20, 20]
         })
       );
     } else if (feature.properties.clustername === "SAL SOUTH SALT LAKE CITY") {
@@ -2886,7 +2874,6 @@ var gisDemandPoints = L.geoJson(null, {
         L.icon({
           iconUrl: "Pictures/demandPoints/SAL%20SOUTH%20SALT%20LAKE.png",
           iconSize: [15, 15],
-          iconAnchor: [20, 20]
         })
       );
     } else if (feature.properties.clustername === "SAL SUGARHOUSE") {
@@ -2894,7 +2881,6 @@ var gisDemandPoints = L.geoJson(null, {
         L.icon({
           iconUrl: "Pictures/demandPoints/SAL%20SUGARHOUSE.png",
           iconSize: [15, 15],
-          iconAnchor: [20, 20]
         })
       );
     } else if (feature.properties.clustername === "UTSL-KEARNS MTSO") {
@@ -2902,7 +2888,6 @@ var gisDemandPoints = L.geoJson(null, {
         L.icon({
           iconUrl: "Pictures/demandPoints/SAL%20KEARNS.png",
           iconSize: [15, 15],
-          iconAnchor: [20, 20]
         })
       );
     }
@@ -3208,7 +3193,6 @@ var gisSplices = L.geoJson(null, {
           L.icon({
             iconUrl: "assets/pictures/MCA.png",
             iconSize: [20, 30],
-            iconAnchor: [5, 12]
           })
         );
       } else if (feature.properties.splicetype === "Reel End" && (feature.properties.c510spliceribbon === 864 || feature.properties.c500spliceloose === 864)) {
@@ -3216,7 +3200,6 @@ var gisSplices = L.geoJson(null, {
           L.icon({
             iconUrl: "assets/pictures/Reel-End2.png",
             iconSize: [20, 30],
-            iconAnchor: [5, 12]
           })
         );
       } else if (feature.properties.splicetype === "Reel End") {
@@ -3224,7 +3207,6 @@ var gisSplices = L.geoJson(null, {
           L.icon({
             iconUrl: "assets/pictures/Reel-End.png",
             iconSize: [20, 30],
-            iconAnchor: [5, 12]
           })
         );
       }
