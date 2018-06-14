@@ -3325,7 +3325,7 @@ $.getJSON(gisSplicesConfig.geojson, function (data) {
 
 
 var map = L.map("map", {
-  layers: [mapboxOSM, gisDemandPoints, fulcrumRoutes, fulcrumResto, fulcrumHardscape, gisRoutes, gisSegments, gisSections, gisSplices, highlightLayer, fuclrumRoutesHighlight, highlightLayer3, highlightLayer4]
+  layers: [mapboxOSM, gisDemandPoints, gisRoutes, highlightLayer, fuclrumRoutesHighlight, highlightLayer3, highlightLayer4]
 }).fitWorld();
 
 
