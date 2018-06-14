@@ -181,10 +181,9 @@ var gisDemandPointsProperties = [{
   },
   filter: {
     type: "string",
-    input: "radio",
     vertical: true,
     multiple: true,
-    operators: ["equal", "not_equal"],
+    operators: ["equal", "not_equal", "contains"],
     values: []
   }
 },
@@ -200,7 +199,7 @@ var gisDemandPointsProperties = [{
     input: "radio",
     vertical: true,
     multiple: true,
-    operators: ["equal", "not_equal"],
+    operators: ["equal", "not_equal", "contains"],
     values: []
   }
 },
@@ -231,7 +230,22 @@ var gisDemandPointsProperties = [{
     type: "string",
     vertical: true,
     multiple: true,
-    operators: ["equal", "not_equal"],
+    operators: ["equal", "not_equal", "contains"],
+    values: []
+  }
+},
+{
+  value: "nfid",
+  label: "Site NFID",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal", "contains"],
     values: []
   }
 }];
