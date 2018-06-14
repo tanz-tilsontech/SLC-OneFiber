@@ -3375,7 +3375,7 @@ var baseLayers = {
   "Satellite Map": mapboxSat,
 };
 var overlayLayers = {
-  "<span id='layer-name'>3GIS Demand Points</span>": gisDemandPoints,
+  "<span id='layer-name'>Demand Points</span>": gisDemandPoints,
   "<span id='layer-name'>Fulcrum Routes</span>": fulcrumRoutes,
   "<span id='layer-name1'>Fulcrum Resto</span>": fulcrumResto,
   "<span id='layer-name1'>Fulcrum Hardscape</span>": fulcrumHardscape,
