@@ -4211,14 +4211,14 @@ $("#allLayers-ResetFilter_BTN").click(function() {
 
 //CHARTS MODAL
 
-$("#Chart_BTN").click(function() {
-  $("#Chart_MODAL").modal("show");
+$("#chart_BTN").click(function() {
+  $("#chart_MODAL").modal("show");
   $(".navbar-collapse.in").collapse("hide");
   return false;
 });
 
 
-$("#Chart_MODAL").on("shown.bs.modal", function (e) {
+$("#chart_MODAL").on("shown.bs.modal", function (e) {
   DrawCharts();
 });
 
