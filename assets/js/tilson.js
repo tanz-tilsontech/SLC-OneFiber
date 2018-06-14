@@ -2775,8 +2775,8 @@ var gisDemandPoints = L.geoJson(null, {
           highlightLayer.addData(gisDemandPoints.getLayer(L.stamp(layer)).toGeoJSON());
         },
         mouseover: function (e) {
-          if (gisDemandPoints.hoverProperty) {
-            $(".info-control").html(feature.properties[gisDemandPoints.hoverProperty]);
+          if (gisDemandPointsConfig.hoverProperty) {
+            $(".info-control").html(feature.properties[gisDemandPointsConfig.hoverProperty]);
             $(".info-control").show();
           }
         },
