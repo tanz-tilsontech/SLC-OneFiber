@@ -2766,6 +2766,151 @@ var highlightLayer4 = L.geoJson(null, {
 
 
 
+var gisDemandPoints = L.geoJson(null, {
+  onEachFeature: function (feature, layer) {
+    if (feature.properties) {
+      layer.on({
+        click: function (e) {
+          gisSegmentsInfo(L.stamp(layer));
+          highlightLayer.clearLayers();
+          highlightLayer.addData(gisSegments.getLayer(L.stamp(layer)).toGeoJSON());
+        },
+        mouseover: function (e) {
+          if (gisSegmentsConfig.hoverProperty) {
+            $(".info-control").html(feature.properties[gisSegmentsConfig.hoverProperty]);
+            $(".info-control").show();
+          }
+        },
+        dblclick: function (e) {
+          highlightLayer.clearLayers();
+        }
+      });
+    }
+    if (feature.properties.clustername === "REMOVE") {
+      layer.setIcon(
+        L.icon({
+          iconUrl: "Pictures/demandPoints/removed.png",
+          iconSize: [20, 30],
+          iconAnchor: [5, 12]
+        })
+      );
+    } else if (feature.properties.clustername === "SAL BROADWAY") {
+      layer.setIcon(
+        L.icon({
+          iconUrl: "Pictures/demandPoints/SAL%20BROADWAY.png",
+          iconSize: [20, 30],
+          iconAnchor: [5, 12]
+        })
+      );
+    } else if (feature.properties.clustername === "SAL CRESCENT") {
+      layer.setIcon(
+        L.icon({
+          iconUrl: "Pictures/demandPoints/SAL%20CRESCENT.png",
+          iconSize: [20, 30],
+          iconAnchor: [5, 12]
+        })
+      );
+    } else if (feature.properties.clustername === "SAL HOLLADAY") {
+      layer.setIcon(
+        L.icon({
+          iconUrl: "Pictures/demandPoints/SAL%20HOLLADAY.png",
+          iconSize: [20, 30],
+          iconAnchor: [5, 12]
+        })
+      );
+    } else if (feature.properties.clustername === "SAL HONEY") {
+      layer.setIcon(
+        L.icon({
+          iconUrl: "Pictures/demandPoints/SAL%20HONEY.png",
+          iconSize: [20, 30],
+          iconAnchor: [5, 12]
+        })
+      );
+    } else if (feature.properties.clustername === "SAL RED HANGER") {
+      layer.setIcon(
+        L.icon({
+          iconUrl: "Pictures/demandPoints/SAL%20RED%20HANGER.png",
+          iconSize: [20, 30],
+          iconAnchor: [5, 12]
+        })
+      );
+    } else if (feature.properties.clustername === "SAL RELIEVER") {
+      layer.setIcon(
+        L.icon({
+          iconUrl: "Pictures/demandPoints/SAL%20RELIEVER.png",
+          iconSize: [20, 30],
+          iconAnchor: [5, 12]
+        })
+      );
+    } else if (feature.properties.clustername === "SAL ROXANNE") {
+      layer.setIcon(
+        L.icon({
+          iconUrl: "Pictures/demandPoints/SAL%20ROXANNE.png",
+          iconSize: [20, 30],
+          iconAnchor: [5, 12]
+        })
+      );
+    } else if (feature.properties.clustername === "SAL SAND JUMP") {
+      layer.setIcon(
+        L.icon({
+          iconUrl: "Pictures/demandPoints/SAL%20SAND%20JUMP.png",
+          iconSize: [20, 30],
+          iconAnchor: [5, 12]
+        })
+      );
+    } else if (feature.properties.clustername === "SAL SANDY") {
+      layer.setIcon(
+        L.icon({
+          iconUrl: "Pictures/demandPoints/SAL%20SANDY.png",
+          iconSize: [20, 30],
+          iconAnchor: [5, 12]
+        })
+      );
+    } else if (feature.properties.clustername === "SAL SHERWOOD PARK") {
+      layer.setIcon(
+        L.icon({
+          iconUrl: "Pictures/demandPoints/SAL%20SHERWOOD%20PARK.png",
+          iconSize: [20, 30],
+          iconAnchor: [5, 12]
+        })
+      );
+    } else if (feature.properties.clustername === "SAL SOUTH JORDAN") {
+      layer.setIcon(
+        L.icon({
+          iconUrl: "Pictures/demandPoints/SAL%20SOUTH%20JORDAN.png",
+          iconSize: [20, 30],
+          iconAnchor: [5, 12]
+        })
+      );
+    } else if (feature.properties.clustername === "SAL SOUTH SALT LAKE CITY") {
+      layer.setIcon(
+        L.icon({
+          iconUrl: "Pictures/demandPoints/SAL%20SOUTH%20SALT%20LAKE.png",
+          iconSize: [20, 30],
+          iconAnchor: [5, 12]
+        })
+      );
+    } else if (feature.properties.clustername === "SAL SUGARHOUSE") {
+      layer.setIcon(
+        L.icon({
+          iconUrl: "Pictures/demandPoints/SAL%20SUGARHOUSE.png",
+          iconSize: [20, 30],
+          iconAnchor: [5, 12]
+        })
+      );
+    } else if (feature.properties.clustername === "SAL UTSL-KEARNS MTSO") {
+      layer.setIcon(
+        L.icon({
+          iconUrl: "Pictures/demandPoints/SAL%20KEARNS.png",
+          iconSize: [20, 30],
+          iconAnchor: [5, 12]
+        })
+      );
+    }
+  }
+});
+
+
 var fulcrumRoutes = L.geoJson(null, {
   filter: function (feature) {
     if (feature.properties.contractor != "Tilson") {
@@ -3091,6 +3236,19 @@ var gisSplices = L.geoJson(null, {
 
 
 
+// GIS DEMAND POINTS GEOJSON
+
+$.getJSON(gisDemandPointsConfig.geojson, function (data) {
+  gisDemandPointsGeojson = data;
+  gisDemandPointsFeatures = $.map(gisDemandPointsGeojson.features, function(feature) {
+    return feature.properties;
+  });
+  gisDemandPoints.addData(data);
+  gisDemandPointsBuildConfig();
+  $("#loading-mask").hide();
+});
+
+
 // FULCRUM ROUTES GEOJSON
 
 $.getJSON(fulcrumRoutesConfig.geojson, function (data) {
@@ -3186,7 +3344,7 @@ $.getJSON(gisSplicesConfig.geojson, function (data) {
 
 
 var map = L.map("map", {
-  layers: [mapboxOSM, fulcrumRoutes, fulcrumResto, fulcrumHardscape, gisRoutes, gisSegments, gisSections, gisSplices, highlightLayer, fuclrumRoutesHighlight, highlightLayer3, highlightLayer4]
+  layers: [mapboxOSM, gisDemandPoints, fulcrumRoutes, fulcrumResto, fulcrumHardscape, gisRoutes, gisSegments, gisSections, gisSplices, highlightLayer, fuclrumRoutesHighlight, highlightLayer3, highlightLayer4]
 }).fitWorld();
 
 
@@ -3218,6 +3376,7 @@ var baseLayers = {
   "Satellite Map": mapboxSat,
 };
 var overlayLayers = {
+  "<span id='layer-name'>3GIS Demand Points</span>": gisDemandPoints,
   "<span id='layer-name'>Fulcrum Routes</span>": fulcrumRoutes,
   "<span id='layer-name1'>Fulcrum Resto</span>": fulcrumResto,
   "<span id='layer-name1'>Fulcrum Hardscape</span>": fulcrumHardscape,
@@ -3253,6 +3412,13 @@ function urlFormatter (value, row, index) {
   }
 }
 
+
+function gisDemandPointsBuildFilter() {
+  $("#gisDemandPoints-Filter_DATA").queryBuilder({
+    allow_empty: true,
+    filters: filters
+  });
+}
 
 function fulcrumRoutesBuildFilter() {
   $("#fulcrumRoutes-Filter_DATA").queryBuilder({
@@ -3303,6 +3469,20 @@ function gisSplicesBuildFilter() {
   });
 }
 
+
+function gisDemandPointsApplyFilter() {
+  var query = "SELECT * FROM ?";
+  var sql = $("#gisDemandPoints-Filter_DATA").queryBuilder("getSQL", false, false).sql;
+  if (sql.length > 0) {
+    query += " WHERE " + sql;
+  }
+  alasql(query, [gisDemandPointsGeojson.features], function(features){
+    gisDemandPoints.clearLayers();
+    gisDemandPoints.addData(features);
+    //syncRoutesTable();
+    map.fitBounds(gisDemandPoints.getBounds());
+  });
+}
 
 function fulcrumRoutesApplyFilter() {
   var query = "SELECT * FROM ?";
@@ -3681,6 +3861,35 @@ function syncSpliceTable() {
   }
 }
 */
+
+function gisDemandPointsInfo(id) {
+  var featureProperties = gisDemandPoints.getLayer(id).feature.properties;
+  var content = "<table class='table table-striped table-bordered table-condensed'>";
+  $.each(featureProperties, function(key, value) {
+    if (!value) {
+      value = "";
+    }
+    if (typeof value == "string"  && value.indexOf("https://www.google") === 0) {
+      value = "<a href='" + value + "' target='_blank'>" + "GPS Directions" + "</a>";
+    }
+    if (typeof value == "string"  && value.indexOf("http://www.fulcrumapp") === 0) {
+      value = "<a href='" + value + "' target='_blank'>" + "Fulcrum Record" + "</a>";
+    }
+    if (typeof value == "string"  && value.indexOf("https://tilson.egnyte") === 0) {
+      value = "<a href='" + value + "' target='_blank'>" + "Prints" + "</a>";
+    }
+    $.each(gisDemandPointsProperties, function(index, property) {
+      if (key == property.value) {
+        if (property.info !== false) {
+          content += "<tr><th>" + property.label + "</th><td>" + value + "</td></tr>";
+        }
+      }
+    });
+  });
+  content += "<table>";
+  $("#gisDemandPoints-Info_DATA").html(content);
+  $("#gisDemandPoints-Info_MODAL").modal("show");
+}
 
 function fulcrumRoutesInfo(id) {
   var featureProperties = fulcrumRoutes.getLayer(id).feature.properties;
@@ -4151,6 +4360,7 @@ L.easyPrint({
 
 
 $("#refresh_BTN").click(function() {
+  gisDemandPoints.clearLayers();
   fulcrumRoutes.clearLayers();
   fulcrumResto.clearLayers();
   fulcrumHardscape.clearLayers();
@@ -4158,6 +4368,16 @@ $("#refresh_BTN").click(function() {
   gisSegments.clearLayers();
   gisSections.clearLayers();
   gisSplices.clearLayers();
+
+  $.getJSON(gisDemandPointsConfig.geojson, function (data) {
+    gisDemandPointsGeojson = data;
+    gisDemandPointsFeatures = $.map(gisDemandPointsGeojson.features, function(feature) {
+      return feature.properties;
+    });
+    gisDemandPoints.addData(data);
+    gisDemandPointsBuildConfig();
+    $("#loading-mask").hide();
+  });
 
   $.getJSON(fulcrumRoutesConfig.geojson, function (data) {
     fulcrumRoutesGeojson = data;
@@ -4229,6 +4449,7 @@ $("#refresh_BTN").click(function() {
     $("#loading-mask").hide();
   });
 
+  gisDemandPointsBuildFilter();
   fulcrumRoutesBuildFilter();
   fulcrumRestoBuildFilter();
   fulcrumHardscapeBuildFilter();
@@ -4237,7 +4458,7 @@ $("#refresh_BTN").click(function() {
   gisSectionsBuildFilter();
   gisSplicesBuildFilter();
 
-  map.fitBounds(gisRoutes.getBounds());
+  map.fitBounds(gisDemandPoints.getBounds());
   $(".navbar-collapse.in").collapse("hide");
   return false;
 });
@@ -4254,6 +4475,12 @@ $("#about_BTN").click(function() {
 
 
 //FILTER MODAL
+
+$("#gisDemandPoints-Filter_BTN").click(function() {
+  $("#gisDemandPoints-Filter_MODAL").modal("show");
+  $(".navbar-collapse.in").collapse("hide");
+  return false;
+});
 
 $("#fulcrumRoutes-Filter_BTN").click(function() {
   $("#fulcrumRoutes-Filter_MODAL").modal("show");
@@ -4302,6 +4529,13 @@ $("#gisSplices-Filter_BTN").click(function() {
 
 
 //APPLY FILTER
+
+$("#gisDemandPoints-ApplyFilter_BTN").click(function() {
+  gisDemandPointsApplyFilter();
+  $('#gisDemandPoints-Filter_MODAL').modal('hide');
+  $(".navbar-collapse.in").collapse("hide");
+  return false;
+});
 
 $("#fulcrumRoutes-ApplyFilter_BTN").click(function() {
   fulcrumRoutesApplyFilter();
@@ -4358,6 +4592,13 @@ $("#gisSplices-ApplyFilter_BTN").click(function() {
 
 //RESET FILTER
 
+$("#gisDemandPoints-ResetFilter_BTN").click(function() {
+  $("#gisDemandPoints-Filter_DATA").queryBuilder("reset");
+  gisDemandPointsApplyFilter();
+  $('#gisDemandPoints-Filter_MODAL').modal('hide');
+  $(".navbar-collapse.in").collapse("hide");
+});
+
 $("#fulcrumRoutes-ResetFilter_BTN").click(function() {
   $("#fulcrumRoutes-Filter_DATA").queryBuilder("reset");
   fulcrumRoutesApplyFilter();
@@ -4410,6 +4651,8 @@ $("#gisSplices-ResetFilter_BTN").click(function() {
 
 
 $("#allLayers-ResetFilter_BTN").click(function() {
+  $("#gisDemandPoints-Filter_DATA").queryBuilder("reset");
+  gisDemandPointsApplyFilter();
   $("#fulcrumRoutes-Filter_DATA").queryBuilder("reset");
   fulcrumRoutesApplyFilter();
   $("#fulcrumResto-Filter_DATA").queryBuilder("reset");
