@@ -1943,7 +1943,8 @@ function DrawCharts() {
         bindto: "#engineeredStatus",
         data: {
           type: "pie",
-          columns: columns
+          columns: columns,
+          labels: true
         }
     });
   });
@@ -1959,7 +1960,8 @@ function DrawCharts() {
         bindto: "#constructionStatus",
         data: {
           type: "pie",
-          columns: columns
+          columns: columns,
+          labels: true
         }
     });
   });
@@ -1975,7 +1977,8 @@ function DrawCharts() {
         bindto: "#milesComplete",
         data: {
           type: "bar",
-          columns: columns
+          columns: columns,
+          labels: true
         },
         axis: {
           x: {
@@ -2012,7 +2015,8 @@ function DrawCharts() {
         bindto: "#footageComplete",
         data: {
           type: "bar",
-          columns: columns
+          columns: columns,
+          labels: true
         },
         axis: {
           x: {
@@ -2034,7 +2038,8 @@ function DrawCharts() {
         bindto: "#hardscapeComplete",
         data: {
           type: "bar",
-          columns: columns
+          columns: columns,
+          labels: true
         },
         axis: {
           x: {
@@ -2056,7 +2061,8 @@ function DrawCharts() {
         bindto: "#restorationComplete",
         data: {
           type: "pie",
-          columns: columns
+          columns: columns,
+          labels: true
         }
     });
   });
