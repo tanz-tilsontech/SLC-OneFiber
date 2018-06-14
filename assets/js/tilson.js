@@ -2771,13 +2771,13 @@ var gisDemandPoints = L.geoJson(null, {
     if (feature.properties) {
       layer.on({
         click: function (e) {
-          gisSegmentsInfo(L.stamp(layer));
+          gisDemandPointsInfo(L.stamp(layer));
           highlightLayer.clearLayers();
-          highlightLayer.addData(gisSegments.getLayer(L.stamp(layer)).toGeoJSON());
+          highlightLayer.addData(gisDemandPoints.getLayer(L.stamp(layer)).toGeoJSON());
         },
         mouseover: function (e) {
-          if (gisSegmentsConfig.hoverProperty) {
-            $(".info-control").html(feature.properties[gisSegmentsConfig.hoverProperty]);
+          if (gisDemandPoints.hoverProperty) {
+            $(".info-control").html(feature.properties[gisDemandPoints.hoverProperty]);
             $(".info-control").show();
           }
         },
