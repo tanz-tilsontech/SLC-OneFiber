@@ -1895,23 +1895,29 @@ function gisRoutesDrawCharts() {
   // CONSTRUCTION ACTUAL FOOTAGE
   $(function() {
     
-    var result1 = alasql("SELECT SUM(COALESCE(construction_new_aerial::NUMBER)) as Footage FROM ?", [gisRoutesFeatures]);
-    var result2 = alasql("SELECT SUM(COALESCE(construction_overlash_aerial::NUMBER)) as Footage FROM ?", [gisRoutesFeatures]);
-    var result3 = alasql("SELECT SUM(COALESCE(construction_new_ug::NUMBER)) as Footage FROM ?", [gisRoutesFeatures]);
-    var result4 = alasql("SELECT SUM(COALESCE(construction_new_hardscape::NUMBER)) as Footage FROM ?", [gisRoutesFeatures]);
-    var result5 = alasql("SELECT SUM(COALESCE(construction_existingvz::NUMBER)) as Footage FROM ?", [gisRoutesFeatures]);
-    var result6 = alasql("SELECT SUM(COALESCE(construction_existingthird::NUMBER)) as Footage FROM ?", [gisRoutesFeatures]);
+    var result1 = alasql("COLUMN OF SELECT SUM(COALESCE(construction_new_aerial::NUMBER)) FROM ?", [gisRoutesFeatures]);
+    var result2 = alasql("COLUMN OF SELECT SUM(COALESCE(construction_overlash_aerial::NUMBER)) FROM ?", [gisRoutesFeatures]);
+    var result3 = alasql("COLUMN OF SELECT SUM(COALESCE(construction_new_ug::NUMBER)) FROM ?", [gisRoutesFeatures]);
+    var result4 = alasql("COLUMN OF SELECT SUM(COALESCE(construction_new_hardscape::NUMBER)) FROM ?", [gisRoutesFeatures]);
+    var result5 = alasql("COLUMN OF SELECT SUM(COALESCE(construction_existingvz::NUMBER)) FROM ?", [gisRoutesFeatures]);
+    var result6 = alasql("COLUMN OF SELECT SUM(COALESCE(construction_existingthird::NUMBER)) FROM ?", [gisRoutesFeatures]);
 
-    alasql('CREATE TABLE construction_footages');
+    alasql('CREATE TABLE construction_footages(type TEXT,footage INT)');
     
-    var data = [{New_Aerial:result1}, {Overlash_Aerial:result2}, {New_Underground:result3}, {New_Hardscape:result4}, {Existing_Vz:result5}, {Existing_3rd:result6}]
+    var data = [{"type" : "New Aerial", "footage" : result1}, {"type" : "Overlash Aerial", "footage" : result2}, {"type" : "New Underground", "footage" : result3}, 
+    {"type" : "New Hardscape", "footage" : result4}, {"type" : "Existing Vz", "footage" : result5}, {"type" : "Existing Third", "footage" : result6}]
+
     alasql.tables.construction_footages.data = data;
+
+    var columns = $.map(alasql.tables.construction_footages.data, function(data) {
+      return [[data.type, data.footage]];
+    });
 
     var chart = c3.generate({
         bindto: "#gisRoutes-Construction_Footage",
         data: {
           type: "bar",
-          columns: data
+          columns: columns
         },
         axis: {
           x: {
