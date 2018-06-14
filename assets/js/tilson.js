@@ -33,7 +33,7 @@ $(document).ready(function() {
 var gisDemandPointsConfig = {
   geojson: "https://tilsonwebdraco.3-gislive.com/arcgis/rest/services/SLClld/Tilsonslc_lld/MapServer/47/query?where=objectid+IS+NOT+NULL&outFields=*&f=geojson",
   layerName: "GIS Demand Points",
-  hoverProperty: "site_name "
+  hoverProperty: "site_name"
 };
 
 
@@ -42,7 +42,7 @@ var gisDemandPointsConfig = {
 var gisVes2KConfig = {
   geojson: "https://tilsonwebdraco.3-gislive.com/arcgis/rest/services/SLClld/Tilsonslc_lld/MapServer/49/query?where=objectid+IS+NOT+NULL&outFields=*&f=geojson",
   layerName: "GIS VES2k",
-  hoverProperty: "site_name "
+  hoverProperty: "site_name"
 };
 
 
