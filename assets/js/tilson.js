@@ -1786,20 +1786,32 @@ var fulcrumHardscapePicturesProperties = [{
 
 
 
+function DrawCharts() {
 
-// FULCRUM ROUTES CHARTS
+  // ENGINEERED STATUS
+  $(function() {
+    var result = alasql("SELECT oofstatus AS label, COUNT(oofstatus) AS total FROM ? GROUP BY oofstatus", [gisSegmentsFeatures]);
+    var columns = $.map(result, function(data) {
+      return [[data.label, data.total]];
+    });
+    var chart = c3.generate({
+        bindto: "#engineeredStatus",
+        data: {
+          type: "pie",
+          columns: columns
+        }
+    });
+  });
 
 
-function fulcrumRoutesDrawCharts() {
-
-  // STATUS 
+  // CONSTRUCTION STATUS
   $(function() {
     var result = alasql("SELECT status AS label, COUNT(status) AS total FROM ? GROUP BY status", [fulcrumRoutesFeatures]);
     var columns = $.map(result, function(data) {
       return [[data.label, data.total]];
     });
     var chart = c3.generate({
-        bindto: "#fulcrumRoutes-Status",
+        bindto: "#constructionStatus",
         data: {
           type: "pie",
           columns: columns
@@ -1808,31 +1820,14 @@ function fulcrumRoutesDrawCharts() {
   });
 
 
-  /* HUB COMPLETE
+  // MILES COMPLETED
   $(function() {
-    var result = alasql("SELECT hub AS label, COUNT(NULLIF(cable_placement_total_footage_final::NUMBER,0)) AS total FROM ? GROUP BY hub", [fulcrumRoutesFeatures]);
+    var result = alasql("SELECT oofstatus AS label, SUM(COALESCE(calculatedlength::NUMBER)/5280) AS miles FROM ? GROUP BY oofstatus", [gisSegmentsFeatures]);
     var columns = $.map(result, function(data) {
-      return [[data.label, data.total]];
+      return [[data.label, data.miles]];
     });
     var chart = c3.generate({
-        bindto: "#fulcrumRoutes-Hub_Complete",
-        data: {
-          type: "gauge",
-          columns: columns
-        }
-    });
-  });
-  */
-
-  /*
-  // CONSTRUCTION FOOTAGE
-  $(function() {
-    var result = alasql("SELECT hub AS label, SUM(COALESCE(cable_placement_total_footage_final::NUMBER)) AS footage FROM ? GROUP BY hub", [fulcrumRoutesFeatures]);
-    var columns = $.map(result, function(data) {
-      return [[data.label, data.footage]];
-    });
-    var chart = c3.generate({
-        bindto: "#fulcrumRoutes-Hub_Footage",
+        bindto: "#milesComplete",
         data: {
           type: "bar",
           columns: columns
@@ -1840,59 +1835,14 @@ function fulcrumRoutesDrawCharts() {
         axis: {
           x: {
             type: 'category',
-            categories: ["Cable Footage"]
+            categories: ["Cable Miles"]
           }
         }
     });
   });
-  */
-}
 
 
-function fulcrumRestoDrawCharts() {
-  // TILSON COMPLETED 
-  $(function() {
-    var result = alasql("SELECT restoration_complete_tilson AS label, COUNT(restoration_complete_tilson) AS total FROM ? GROUP BY restoration_complete_tilson", [fulcrumRestoFeatures]);
-    var columns = $.map(result, function(data) {
-      return [[data.label, data.total]];
-    });
-    var chart = c3.generate({
-        bindto: "#fulcrumResto_Complete",
-        data: {
-          type: "pie",
-          columns: columns
-        }
-    });
-  });
-}
-
-
-function gisRoutesDrawCharts() {
- 
-  /* CONSTRUCTION ENGINEERED FOOTAGE
-  $(function() {
-    var result = alasql("SELECT oofstatus AS label, SUM(COALESCE(calculatedlength::NUMBER)) AS footage FROM ? GROUP BY oofstatus", [gisRoutesFeatures]);
-    var columns = $.map(result, function(data) {
-      return [[data.label, data.footage]];
-    });
-    var chart = c3.generate({
-        bindto: "#gisRoutes-Status_Footage",
-        data: {
-          type: "bar",
-          columns: columns
-        },
-        axis: {
-          x: {
-            type: 'category',
-            categories: ["Cable Footage"]
-          }
-        }
-    });
-  });
-  */
-
-
-  // CONSTRUCTION ACTUAL FOOTAGE
+  // CABLE FOOTAGE
   $(function() {
     
     var result1 = alasql("COLUMN OF SELECT SUM(COALESCE(construction_new_aerial::NUMBER)) FROM ?", [gisRoutesFeatures]);
@@ -1914,7 +1864,7 @@ function gisRoutesDrawCharts() {
     });
 
     var chart = c3.generate({
-        bindto: "#gisRoutes-Construction_Footage",
+        bindto: "#footageComplete",
         data: {
           type: "bar",
           columns: columns
@@ -1927,18 +1877,17 @@ function gisRoutesDrawCharts() {
         }
     });
   });
-}
 
 
-function gisSegmentsDrawCharts() {
- // STATUS MILES
+  // HARDSCAPE FOOTAGE 
   $(function() {
-    var result = alasql("SELECT oofstatus AS label, SUM(COALESCE(calculatedlength::NUMBER)/5280) AS miles FROM ? GROUP BY oofstatus", [gisSegmentsFeatures]);
+    var result = alasql("SELECT type_hardscape AS label, SUM(COALESCE(footage_hardscape::NUMBER)) AS total FROM ? GROUP BY type_hardscape", [fulcrumHardscapeFeatures]);
     var columns = $.map(result, function(data) {
-      return [[data.label, data.miles]];
+      return [[data.label, data.total]];
     });
     var chart = c3.generate({
-        bindto: "#gisSegments-Status_Miles",
+        bindto: "#hardscapeComplete",
+        data: {
         data: {
           type: "bar",
           columns: columns
@@ -1946,20 +1895,21 @@ function gisSegmentsDrawCharts() {
         axis: {
           x: {
             type: 'category',
-            categories: ["Cable Miles"]
+            categories: ["Hardscape Footage"]
           }
         }
     });
   });
 
-  // STATUS COMPLETED 
+
+  // RESTORATION COMPLETED 
   $(function() {
-    var result = alasql("SELECT oofstatus AS label, COUNT(oofstatus) AS total FROM ? GROUP BY oofstatus", [gisSegmentsFeatures]);
+    var result = alasql("SELECT restoration_complete_tilson AS label, COUNT(restoration_complete_tilson) AS total FROM ? GROUP BY restoration_complete_tilson", [fulcrumRestoFeatures]);
     var columns = $.map(result, function(data) {
       return [[data.label, data.total]];
     });
     var chart = c3.generate({
-        bindto: "#gisSegments-Status_Complete",
+        bindto: "#restorationComplete",
         data: {
           type: "pie",
           columns: columns
@@ -4261,48 +4211,17 @@ $("#allLayers-ResetFilter_BTN").click(function() {
 
 //CHARTS MODAL
 
-$("#fulcrumRoutes-Chart_BTN").click(function() {
-  $("#fulcrumRoutes-Chart_MODAL").modal("show");
-  $(".navbar-collapse.in").collapse("hide");
-  return false;
-});
-
-$("#fulcrumResto-Chart_BTN").click(function() {
-  $("#fulcrumResto-Chart_MODAL").modal("show");
-  $(".navbar-collapse.in").collapse("hide");
-  return false;
-});
-
-$("#gisRoutes-Chart_BTN").click(function() {
-  $("#gisRoutes-Chart_MODAL").modal("show");
-  $(".navbar-collapse.in").collapse("hide");
-  return false;
-});
-
-$("#gisSegments-Chart_BTN").click(function() {
-  $("#gisSegments-Chart_MODAL").modal("show");
+$("#Chart_BTN").click(function() {
+  $("#Chart_MODAL").modal("show");
   $(".navbar-collapse.in").collapse("hide");
   return false;
 });
 
 
-// DRAW CHARTS
-
-$("#fulcrumRoutes-Chart_MODAL").on("shown.bs.modal", function (e) {
-  fulcrumRoutesDrawCharts();
+$("#Chart_MODAL").on("shown.bs.modal", function (e) {
+  DrawCharts();
 });
 
-$("#fulcrumResto-Chart_MODAL").on("shown.bs.modal", function (e) {
-  fulcrumRestoDrawCharts();
-});
-
-$("#gisRoutes-Chart_MODAL").on("shown.bs.modal", function (e) {
-  gisRoutesDrawCharts();
-});
-
-$("#gisSegments-Chart_MODAL").on("shown.bs.modal", function (e) {
-  gisSegmentsDrawCharts();
-});
 
 
 // FULCRUM ROUTES PICTURES

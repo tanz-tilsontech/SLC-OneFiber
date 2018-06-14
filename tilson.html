@@ -260,98 +260,30 @@
     </div>
   -->
 
-    <div class="modal fade" id="fulcrumRoutes-Chart_MODAL" tabindex="-1" role="dialog">
+    <div class="modal fade" id="Chart_MODAL" tabindex="-1" role="dialog">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Fulcrum Routes</h4>
+            <h4 class="modal-title">Charts</h4>
           </div>
           <div class="modal-body" style="overflow: auto;">
             <div role="tabpanel">
               <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#fulcrumRoutes-Status" aria-controls="reports" role="tab" data-toggle="tab">STATUS</a></li>
-                <li role="presentation"><a href="#fulcrumRoutes-Hub_Complete" aria-controls="charts" role="tab" data-toggle="tab">COMPLETE</a></li>
-                <li role="presentation"><a href="#fulcrumRoutes-Hub_Footage" aria-controls="charts" role="tab" data-toggle="tab">FOOTAGE</a></li>
+                <li role="presentation" class="active"><a href="#engineeredStatus" aria-controls="charts" role="tab" data-toggle="tab">ENGINEERED STATUS</a></li>
+                <li role="presentation"><a href="#constructionStatus" aria-controls="charts" role="tab" data-toggle="tab">CONSTRUCTION STATUS</a></li>
+                <li role="presentation"><a href="#milesComplete" aria-controls="charts" role="tab" data-toggle="tab">MILES COMPLETED</a></li>
+                <li role="presentation"><a href="#footageComplete" aria-controls="charts" role="tab" data-toggle="tab">FOOTAGE COMPLETED</a></li>
+                <li role="presentation"><a href="#hardscapeComplete" aria-controls="charts" role="tab" data-toggle="tab">HARDSCAPE COMPLETED</a></li>
+                <li role="presentation"><a href="#restorationComplete" aria-controls="charts" role="tab" data-toggle="tab">RESTORATION COMPLETED</a></li>
               </ul>
               <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active" id="fulcrumRoutes-Status"></div>
-                <div role="tabpanel" class="tab-pane" id="fulcrumRoutes-Hub_Complete"></div>
-                <div role="tabpanel" class="tab-pane" id="fulcrumRoutes-Hub_Footage"></div>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="modal fade" id="fulcrumResto-Chart_MODAL" tabindex="-1" role="dialog">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Fulcrum Resto</h4>
-          </div>
-          <div class="modal-body" style="overflow: auto;">
-            <div role="tabpanel">
-              <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#fulcrumResto_Complete" aria-controls="charts" role="tab" data-toggle="tab">COMPLETED</a></li>
-              </ul>
-              <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active" id="fulcrumResto_Complete"></div>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="modal fade" id="gisRoutes-Chart_MODAL" tabindex="-1" role="dialog">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">3GIS Routes</h4>
-          </div>
-          <div class="modal-body" style="overflow: auto;">
-            <div role="tabpanel">
-              <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#gisRoutes-Construction_Footage" aria-controls="charts" role="tab" data-toggle="tab">CONSTRUCTION FOOTAGE</a></li>
-              </ul>
-              <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active" id="gisRoutes-Construction_Footage"></div>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="modal fade" id="gisSegments-Chart_MODAL" tabindex="-1" role="dialog">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">3GIS Segments</h4>
-          </div>
-          <div class="modal-body" style="overflow: auto;">
-            <div role="tabpanel">
-              <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#gisSegments-Status_Complete" aria-controls="charts" role="tab" data-toggle="tab">STATUS</a></li>
-                <li role="presentation"><a href="#gisSegments-Status_Miles" aria-controls="charts" role="tab" data-toggle="tab">MILES</a></li>
-              </ul>
-              <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active" id="gisSegments-Status_Complete"></div>
-                <div role="tabpanel" class="tab-pane" id="gisSegments-Status_Miles"></div>
+                <div role="tabpanel" class="tab-pane active" id="engineeredStatus"></div>
+                <div role="tabpanel" class="tab-pane" id="constructionStatus"></div>
+                <div role="tabpanel" class="tab-pane" id="milesComplete"></div>
+                <div role="tabpanel" class="tab-pane" id="footageComplete"></div>
+                <div role="tabpanel" class="tab-pane" id="hardscapeComplete"></div>
+                <div role="tabpanel" class="tab-pane" id="restorationComplete"></div>
               </div>
             </div>
           </div>
