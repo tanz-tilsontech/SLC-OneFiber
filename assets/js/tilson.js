@@ -2143,6 +2143,7 @@ function gisDemandPointsBuildConfig() {
   });
 
   gisDemandPointsBuildFilter();
+  map.fitBounds(gisDemandPoints.getBounds());
   //fulcrumRoutesBuildTable();
 }
 
@@ -2218,7 +2219,6 @@ function fulcrumRoutesBuildConfig() {
   });
 
   fulcrumRoutesBuildFilter();
-  map.fitBounds(fulcrumRoutes.getBounds());
   //fulcrumRoutesBuildTable();
 }
 
