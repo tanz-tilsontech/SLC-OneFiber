@@ -95,7 +95,7 @@ var gisSegmentsConfig = {
   geojson: "https://tilsonwebdraco.3-gislive.com/arcgis/rest/services/SLClld/Tilsonslc_lld/MapServer/7/query?where=fqn_id+IS+NOT+NULL&outFields=*&f=geojson",
   title: "SLC OneFiber Tilson QC",
   layerName: "Fiber Cable",
-  hoverProperty: "fqn_id",
+  hoverProperty: "oofstatus",
   sortProperty: "fqn_id",
   sortOrder: "ascend",
 };
