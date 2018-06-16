@@ -79,6 +79,16 @@ var fulcrumHardscapeConfig = {
   sortOrder: "ascend",
 };
 
+// GIS STRUCTURES CONFIG
+
+var gisStructuresConfig = {
+  geojson: "https://tilsonwebdraco.3-gislive.com/arcgis/rest/services/SLClld/Tilsonslc_lld/MapServer/1/query?where=objectid+IS+NOT+NULL&outFields=*&f=geojson",
+  layerName: "Structures",
+  hoverProperty: "fqn_id",
+  sortProperty: "splicecount",
+  sortOrder: "ascend",
+};
+
 
 // GIS ROUTES CONFIG
 
@@ -2942,7 +2952,7 @@ var fulcrumRoutes = L.geoJson(null, {
       if (feature.properties["marker-color"]) {
         layer.setIcon(
           L.icon({
-            iconUrl: "assets/pictures/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
+            iconUrl: "Pictures/routes/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
             iconSize: [30, 40],
             iconAnchor: [15, 32]
           })
@@ -2989,7 +2999,15 @@ var fulcrumResto = L.geoJson(null, {
       if (feature.properties.restoration_complete_tilson === "Yes") {
         layer.setIcon(
           L.icon({
-            iconUrl: "assets/pictures/markers/b3b3b3.png",
+            iconUrl: "Pictures/resto/completed.png",
+            iconSize: [30, 40],
+            iconAnchor: [15, 32]
+          })
+        );
+      } else {
+        layer.setIcon(
+          L.icon({
+            iconUrl: "Pictures/resto/new.png",
             iconSize: [30, 40],
             iconAnchor: [15, 32]
           })
@@ -3006,7 +3024,7 @@ var fulcrumHardscape = L.geoJson(null, {
       title: feature.properties["type_hardscape"],
       riseOnHover: true,
       icon: L.icon({
-        iconUrl: "assets/pictures/markers/cb0d0c.png",
+        iconUrl: "Pictures/hardscape/Concrete_Mixer.png",
         iconSize: [30, 40],
         iconAnchor: [15, 32]
       })
@@ -3197,21 +3215,21 @@ var gisSplices = L.geoJson(null, {
       if (feature.properties.splicetype === "MCA") {
         layer.setIcon(
           L.icon({
-            iconUrl: "assets/pictures/MCA.png",
+            iconUrl: "Pictures/splices/mca.png",
             iconSize: [15, 25],
           })
         );
       } else if (feature.properties.splicetype === "Reel End" && (feature.properties.c510spliceribbon === 864 || feature.properties.c500spliceloose === 864)) {
         layer.setIcon(
           L.icon({
-            iconUrl: "assets/pictures/Reel-End2.png",
+            iconUrl: "Pictures/splices/reel_end.png",
             iconSize: [15, 25],
           })
         );
       } else if (feature.properties.splicetype === "Reel End") {
         layer.setIcon(
           L.icon({
-            iconUrl: "assets/pictures/Reel-End.png",
+            iconUrl: "Pictures/splices/dead_end.png",
             iconSize: [15, 25],
           })
         );
