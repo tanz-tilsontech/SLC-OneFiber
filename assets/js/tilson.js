@@ -4566,13 +4566,31 @@ $("#gisSections-ApplyFilter_BTN").click(function() {
   return false;
 });
 
-$("#gisSplices-ApplyFilter_BTN").click(function() {
-  gisSplicesApplyFilter();
-  $('#gisSplices-Filter_MODAL').modal('hide');
+$("#terms_BTN").click(function() {
+  $('#terms_MODAL').modal('show');
   $(".navbar-collapse.in").collapse("hide");
   return false;
 });
 
+
+
+// TERMS AND CONDITIONS
+
+$("#terms_BTN").click(function() {
+  $('#terms_MODAL').modal('show');
+  $(".navbar-collapse.in").collapse("hide");
+  return false;
+});
+
+
+
+
+$("#gisDemandPoints-ResetFilter_BTN").click(function() {
+  $("#gisDemandPoints-Filter_DATA").queryBuilder("reset");
+  gisDemandPointsApplyFilter();
+  $('#gisDemandPoints-Filter_MODAL').modal('hide');
+  $(".navbar-collapse.in").collapse("hide");
+});
 
 
 
