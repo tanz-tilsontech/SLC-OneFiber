@@ -85,7 +85,7 @@ var gisStructuresConfig = {
   geojson: "https://tilsonwebdraco.3-gislive.com/arcgis/rest/services/SLClld/Tilsonslc_lld/MapServer/1/query?where=objectid+IS+NOT+NULL&outFields=*&f=geojson",
   layerName: "Structures",
   hoverProperty: "fqn_id",
-  sortProperty: "splicecount",
+  sortProperty: "fqn_id",
   sortOrder: "ascend",
 };
 
@@ -861,6 +861,120 @@ var fulcrumHardscapeProperties = [{
     values: []
   }
 }];
+
+
+// GIS STRUCTURES PROPERTIES
+
+var gisStructuresProperties = [{
+  value: "vaultsize",
+  label: "Size",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    input: "radio",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
+  value: "fqn_id",
+  label: "Structure FQNID",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal", "contains"],
+    values: []
+  }
+},
+{
+  value: "material",
+  label: "Material",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    input: "radio",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
+  value: "slack_loop",
+  label: "Slack Loop",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    input: "radio",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
+  value: "openingtype",
+  label: "Lid Type",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    input: "radio",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
+  value: "clusterringnfid",
+  label: "Hub NFID",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
+  value: "sitespannfid",
+  label: "Site NFID",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal", "contains"],
+    values: []
+  }
+}];
+
 
 
 // GIS ROUTES PROPERTIES
@@ -2164,6 +2278,81 @@ function gisDemandPointsBuildConfig() {
 }
 
 
+function gisStructuresBuildConfig() {
+  filters = [];
+  table = [{
+    field: "action",
+    title: "<i class='fa fa-gear'></i>&nbsp;Action",
+    align: "center",
+    valign: "middle",
+    width: "75px",
+    cardVisible: false,
+    switchable: false,
+    formatter: function(value, row, index) {
+      return [
+        '<a class="zoom" href="javascript:void(0)" title="Zoom" style="margin-right: 10px;">',
+          '<i class="fa fa-search-plus"></i>',
+        '</a>',
+        '<a class="identify" href="javascript:void(0)" title="Identify" style="margin-right: 10px;">',
+          '<i class="fa fa-info-circle"></i>',
+        '</a>'
+      ].join("");
+    },
+  }];
+
+  $.each(gisStructuresProperties, function(index, value) {
+    // Filter config
+    if (value.filter) {
+      var id;
+      if (value.filter.type == "integer") {
+        id = "cast(properties->"+ value.value +" as int)";
+      }
+      else if (value.filter.type == "double") {
+        id = "cast(properties->"+ value.value +" as double)";
+      }
+      else {
+        id = "properties->" + value.value;
+      }
+      filters.push({
+        id: id,
+        label: value.label
+      });
+      $.each(value.filter, function(key, val) {
+        if (filters[index]) {
+          // If values array is empty, fetch all distinct values
+          if (key == "values" && val.length === 0) {
+            alasql("SELECT DISTINCT(properties->"+value.value+") AS field FROM ? ORDER BY field ASC", [gisStructuresGeojson.features], function(results){
+              distinctValues = [];
+              $.each(results, function(index, value) {
+                distinctValues.push(value.field);
+              });
+            });
+            filters[index].values = distinctValues;
+          } else {
+            filters[index][key] = val;
+          }
+        }
+      });
+    }
+    // Table config
+    if (value.table) {
+      table.push({
+        field: value.value,
+        title: value.label
+      });
+      $.each(value.table, function(key, val) {
+        if (table[index+1]) {
+          table[index+1][key] = val;
+        }
+      });
+    }
+  });
+
+  gisStructuresBuildFilter();
+  //gisStructuresBuildTable();
+}
+
+
 function fulcrumRoutesBuildConfig() {
   filters = [];
   table = [{
@@ -2911,6 +3100,50 @@ var gisDemandPoints = L.geoJson(null, {
 });
 
 
+var gisStructures = L.geoJson(null, {
+  pointToLayer: function (feature, latlng) {
+    return L.marker(latlng, {
+      title: feature.properties["restoration_items"],
+      riseOnHover: true,
+      icon: L.icon({
+        iconUrl: "assets/pictures/markers/242424.png",
+        iconSize: [30, 40],
+        iconAnchor: [15, 32]
+      })
+    });
+  },
+  onEachFeature: function (feature, layer) {
+    if (feature.properties) {
+      layer.on({
+        click: function (e) {
+          gisStructuresInfo(L.stamp(layer));
+          fuclrumRoutesHighlight.clearLayers();
+          fuclrumRoutesHighlight.addData(gisStructures.getLayer(L.stamp(layer)).toGeoJSON());
+        },
+        mouseover: function (e) {
+          if (gisStructuresConfig.hoverProperty) {
+            $(".info-control").html(feature.properties[gisStructuresConfig.hoverProperty]);
+            $(".info-control").show();
+          }
+        },
+        mouseout: function (e) {
+          $(".info-control").hide();
+        }
+      });
+      if (feature.properties.fqn_id) {
+        layer.setIcon(
+          L.icon({
+            iconUrl: "Pictures/structure.png",
+            iconSize: [30, 40],
+            iconAnchor: [15, 32]
+          })
+        );
+      }
+    }
+  }
+});
+
+
 var fulcrumRoutes = L.geoJson(null, {
   filter: function (feature) {
     if (feature.properties.contractor != "Tilson") {
@@ -3246,6 +3479,19 @@ $.getJSON(gisDemandPointsConfig.geojson, function (data) {
 });
 
 
+// GIS STRUCTURES GEOJSON
+
+$.getJSON(gisStructuresConfig.geojson, function (data) {
+  gisStructuresGeojson = data
+  gisStructuresFeatures = $.map(gisStructuresGeojson.features, function(feature) {
+    return feature.properties;
+  });
+  gisStructures.addData(data);
+  gisStructuresBuildConfig();
+  $("#loading-mask").hide();
+});
+
+
 // FULCRUM ROUTES GEOJSON
 
 $.getJSON(fulcrumRoutesConfig.geojson, function (data) {
@@ -3341,7 +3587,7 @@ $.getJSON(gisSplicesConfig.geojson, function (data) {
 
 
 var map = L.map("map", {
-  layers: [mapboxOSM, gisDemandPoints, highlightLayer, fuclrumRoutesHighlight, highlightLayer3, highlightLayer4]
+  layers: [mapboxOSM, gisDemandPoints, gisStructures, highlightLayer, fuclrumRoutesHighlight, highlightLayer3, highlightLayer4]
 }).fitWorld();
 
 
@@ -3374,6 +3620,7 @@ var baseLayers = {
 };
 var overlayLayers = {
   "<span id='layer-name'>Demand Points</span>": gisDemandPoints,
+  "<span id='layer-name'>3GIS Structures</span>": gisStructures,
   "<span id='layer-name'>Fulcrum Routes</span>": fulcrumRoutes,
   "<span id='layer-name1'>Fulcrum Resto</span>": fulcrumResto,
   "<span id='layer-name1'>Fulcrum Hardscape</span>": fulcrumHardscape,
@@ -3412,6 +3659,13 @@ function urlFormatter (value, row, index) {
 
 function gisDemandPointsBuildFilter() {
   $("#gisDemandPoints-Filter_DATA").queryBuilder({
+    allow_empty: true,
+    filters: filters
+  });
+}
+
+function gisStructuresBuildFilter() {
+  $("#gisStructures-Filter_DATA").queryBuilder({
     allow_empty: true,
     filters: filters
   });
@@ -3480,6 +3734,21 @@ function gisDemandPointsApplyFilter() {
     map.fitBounds(gisDemandPoints.getBounds());
   });
 }
+
+function gisStructuresApplyFilter() {
+  var query = "SELECT * FROM ?";
+  var sql = $("#gisStructures-Filter_DATA").queryBuilder("getSQL", false, false).sql;
+  if (sql.length > 0) {
+    query += " WHERE " + sql;
+  }
+  alasql(query, [gisStructuresGeojson.features], function(features){
+    gisStructures.clearLayers();
+    gisStructures.addData(features);
+    //syncRoutesTable();
+    map.fitBounds(gisStructures.getBounds());
+  });
+}
+
 
 function fulcrumRoutesApplyFilter() {
   var query = "SELECT * FROM ?";
@@ -3866,15 +4135,6 @@ function gisDemandPointsInfo(id) {
     if (!value) {
       value = "";
     }
-    if (typeof value == "string"  && value.indexOf("https://www.google") === 0) {
-      value = "<a href='" + value + "' target='_blank'>" + "GPS Directions" + "</a>";
-    }
-    if (typeof value == "string"  && value.indexOf("http://www.fulcrumapp") === 0) {
-      value = "<a href='" + value + "' target='_blank'>" + "Fulcrum Record" + "</a>";
-    }
-    if (typeof value == "string"  && value.indexOf("https://tilson.egnyte") === 0) {
-      value = "<a href='" + value + "' target='_blank'>" + "Prints" + "</a>";
-    }
     $.each(gisDemandPointsProperties, function(index, property) {
       if (key == property.value) {
         if (property.info !== false) {
@@ -3886,6 +4146,27 @@ function gisDemandPointsInfo(id) {
   content += "<table>";
   $("#gisDemandPoints-Info_DATA").html(content);
   $("#gisDemandPoints-Info_MODAL").modal("show");
+}
+
+
+function gisStructuresInfo(id) {
+  var featureProperties = gisStructures.getLayer(id).feature.properties;
+  var content = "<table class='table table-striped table-bordered table-condensed'>";
+  $.each(featureProperties, function(key, value) {
+    if (!value) {
+      value = "";
+    }
+    $.each(gisStructuresProperties, function(index, property) {
+      if (key == property.value) {
+        if (property.info !== false) {
+          content += "<tr><th>" + property.label + "</th><td>" + value + "</td></tr>";
+        }
+      }
+    });
+  });
+  content += "<table>";
+  $("#gisStructures-Info_DATA").html(content);
+  $("#gisStructures-Info_MODAL").modal("show");
 }
 
 function fulcrumRoutesInfo(id) {
@@ -3916,6 +4197,9 @@ function fulcrumRoutesInfo(id) {
   $("#fulcrumRoutes-Info_DATA").html(content);
   $("#fulcrumRoutes-Info_MODAL").modal("show");
 }
+
+
+
 
 
 function fulcrumRestoInfo(id) {
@@ -4358,6 +4642,7 @@ L.easyPrint({
 
 $("#refresh_BTN").click(function() {
   gisDemandPoints.clearLayers();
+  gisStructures.clearLayers();
   fulcrumRoutes.clearLayers();
   fulcrumResto.clearLayers();
   fulcrumHardscape.clearLayers();
@@ -4373,6 +4658,16 @@ $("#refresh_BTN").click(function() {
     });
     gisDemandPoints.addData(data);
     gisDemandPointsBuildConfig();
+    $("#loading-mask").hide();
+  });
+
+  $.getJSON(gisStructuresConfig.geojson, function (data) {
+    gisStructuresGeojson = data;
+    gisStructuresFeatures = $.map(gisStructuresGeojson.features, function(feature) {
+      return feature.properties;
+    });
+    gisStructures.addData(data);
+    gisStructuresBuildConfig();
     $("#loading-mask").hide();
   });
 
@@ -4447,6 +4742,7 @@ $("#refresh_BTN").click(function() {
   });
 
   gisDemandPointsBuildFilter();
+  gisStructuresBuildFilter();
   fulcrumRoutesBuildFilter();
   fulcrumRestoBuildFilter();
   fulcrumHardscapeBuildFilter();
@@ -4475,6 +4771,12 @@ $("#about_BTN").click(function() {
 
 $("#gisDemandPoints-Filter_BTN").click(function() {
   $("#gisDemandPoints-Filter_MODAL").modal("show");
+  $(".navbar-collapse.in").collapse("hide");
+  return false;
+});
+
+$("#gisStructures-Filter_BTN").click(function() {
+  $("#gisStructures-Filter_MODAL").modal("show");
   $(".navbar-collapse.in").collapse("hide");
   return false;
 });
@@ -4534,6 +4836,14 @@ $("#gisDemandPoints-ApplyFilter_BTN").click(function() {
   return false;
 });
 
+$("#gisStructures-ApplyFilter_BTN").click(function() {
+  gisStructuresApplyFilter();
+  $('#gisStructures-Filter_MODAL').modal('hide');
+  $(".navbar-collapse.in").collapse("hide");
+  return false;
+});
+
+
 $("#fulcrumRoutes-ApplyFilter_BTN").click(function() {
   fulcrumRoutesApplyFilter();
   $('#fulcrumRoutes-Filter_MODAL').modal('hide');
@@ -4582,6 +4892,13 @@ $("#terms_BTN").click(function() {
   return false;
 });
 
+$("#gisDemandPoints-ResetFilter_BTN").click(function() {
+  $("#gisDemandPoints-Filter_DATA").queryBuilder("reset");
+  gisDemandPointsApplyFilter();
+  $('#gisDemandPoints-Filter_MODAL').modal('hide');
+  $(".navbar-collapse.in").collapse("hide");
+});
+
 
 
 // TERMS AND CONDITIONS
@@ -4593,7 +4910,7 @@ $("#terms_BTN").click(function() {
 });
 
 
-
+//RESET FILTER
 
 $("#gisDemandPoints-ResetFilter_BTN").click(function() {
   $("#gisDemandPoints-Filter_DATA").queryBuilder("reset");
@@ -4602,15 +4919,10 @@ $("#gisDemandPoints-ResetFilter_BTN").click(function() {
   $(".navbar-collapse.in").collapse("hide");
 });
 
-
-
-
-//RESET FILTER
-
-$("#gisDemandPoints-ResetFilter_BTN").click(function() {
-  $("#gisDemandPoints-Filter_DATA").queryBuilder("reset");
-  gisDemandPointsApplyFilter();
-  $('#gisDemandPoints-Filter_MODAL').modal('hide');
+$("#gisStructures-ResetFilter_BTN").click(function() {
+  $("#gisStructures-Filter_DATA").queryBuilder("reset");
+  gisStructuresApplyFilter();
+  $('#gisStructures-Filter_MODAL').modal('hide');
   $(".navbar-collapse.in").collapse("hide");
 });
 
@@ -4668,6 +4980,8 @@ $("#gisSplices-ResetFilter_BTN").click(function() {
 $("#allLayers-ResetFilter_BTN").click(function() {
   $("#gisDemandPoints-Filter_DATA").queryBuilder("reset");
   gisDemandPointsApplyFilter();
+  $("#gisStructures-Filter_DATA").queryBuilder("reset");
+  gisStructuresApplyFilter();
   $("#fulcrumRoutes-Filter_DATA").queryBuilder("reset");
   fulcrumRoutesApplyFilter();
   $("#fulcrumResto-Filter_DATA").queryBuilder("reset");
