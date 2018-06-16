@@ -2952,7 +2952,7 @@ var fulcrumRoutes = L.geoJson(null, {
       if (feature.properties["marker-color"]) {
         layer.setIcon(
           L.icon({
-            iconUrl: "Pictures/routes/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
+            iconUrl: "pictures/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
             iconSize: [30, 40],
             iconAnchor: [15, 32]
           })
@@ -2999,15 +2999,7 @@ var fulcrumResto = L.geoJson(null, {
       if (feature.properties.restoration_complete_tilson === "Yes") {
         layer.setIcon(
           L.icon({
-            iconUrl: "Pictures/resto/completed.png",
-            iconSize: [30, 40],
-            iconAnchor: [15, 32]
-          })
-        );
-      } else {
-        layer.setIcon(
-          L.icon({
-            iconUrl: "Pictures/resto/new.png",
+            iconUrl: "assets/pictures/markers/b3b3b3.png",
             iconSize: [30, 40],
             iconAnchor: [15, 32]
           })
@@ -3024,7 +3016,7 @@ var fulcrumHardscape = L.geoJson(null, {
       title: feature.properties["type_hardscape"],
       riseOnHover: true,
       icon: L.icon({
-        iconUrl: "Pictures/hardscape/Concrete_Mixer.png",
+        iconUrl: "assets/pictures/markers/cb0d0c.png",
         iconSize: [30, 40],
         iconAnchor: [15, 32]
       })
@@ -3215,21 +3207,21 @@ var gisSplices = L.geoJson(null, {
       if (feature.properties.splicetype === "MCA") {
         layer.setIcon(
           L.icon({
-            iconUrl: "Pictures/splices/mca.png",
+            iconUrl: "assets/pictures/MCA.png",
             iconSize: [15, 25],
           })
         );
       } else if (feature.properties.splicetype === "Reel End" && (feature.properties.c510spliceribbon === 864 || feature.properties.c500spliceloose === 864)) {
         layer.setIcon(
           L.icon({
-            iconUrl: "Pictures/splices/reel_end.png",
+            iconUrl: "assets/pictures/Reel-End2.png",
             iconSize: [15, 25],
           })
         );
       } else if (feature.properties.splicetype === "Reel End") {
         layer.setIcon(
           L.icon({
-            iconUrl: "Pictures/splices/dead_end.png",
+            iconUrl: "assets/pictures/Reel-End.png",
             iconSize: [15, 25],
           })
         );
