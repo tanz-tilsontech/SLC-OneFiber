@@ -3122,7 +3122,7 @@ var gisStructures = L.geoJson(null, {
       if (feature.properties.objectid) {
         layer.setIcon(
           L.icon({
-            iconUrl: "Pictures/handhole.png",
+            iconUrl: "Pictures/structure.png",
             iconSize: [12, 20],
           })
         );
