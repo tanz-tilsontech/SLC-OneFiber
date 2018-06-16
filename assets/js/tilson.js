@@ -3101,17 +3101,6 @@ var gisDemandPoints = L.geoJson(null, {
 
 
 var gisStructures = L.geoJson(null, {
-  pointToLayer: function (feature, latlng) {
-    return L.marker(latlng, {
-      title: feature.properties["restoration_items"],
-      riseOnHover: true,
-      icon: L.icon({
-        iconUrl: "assets/pictures/markers/242424.png",
-        iconSize: [30, 40],
-        iconAnchor: [15, 32]
-      })
-    });
-  },
   onEachFeature: function (feature, layer) {
     if (feature.properties) {
       layer.on({
@@ -3130,7 +3119,7 @@ var gisStructures = L.geoJson(null, {
           $(".info-control").hide();
         }
       });
-      if (feature.properties.fqn_id) {
+      if (feature.properties.objectid) {
         layer.setIcon(
           L.icon({
             iconUrl: "Pictures/structure.png",
