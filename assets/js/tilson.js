@@ -82,7 +82,7 @@ var fulcrumHardscapeConfig = {
 // GIS STRUCTURES CONFIG
 
 var gisStructuresConfig = {
-  geojson: "https://tilsonwebdraco.3-gislive.com/arcgis/rest/services/SLClld/Tilsonslc_lld/MapServer/1/query?where=objectid+IS+NOT+NULL&outFields=*&f=geojson",
+  geojson: "https://tilsonwebdraco.3-gislive.com/arcgis/rest/services/SLClld/Tilsonslc_lld/MapServer/3/query?where=objectid+IS+NOT+NULL&outFields=*&f=geojson",
   layerName: "Structures",
   hoverProperty: "fqn_id",
   sortProperty: "fqn_id",
@@ -3184,7 +3184,7 @@ var fulcrumRoutes = L.geoJson(null, {
       if (feature.properties["marker-color"]) {
         layer.setIcon(
           L.icon({
-            iconUrl: "pictures/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
+            iconUrl: "assets/pictures/markers/" + feature.properties["marker-color"].replace("#",'').toLowerCase() + ".png",
             iconSize: [30, 40],
             iconAnchor: [15, 32]
           })
