@@ -20,7 +20,7 @@
     <meta name="description" content="">
     <meta name="keywords" content="">
     <meta name="author" content="Tanner Anz">
-    <title class="title">Tilson DataMap</title>
+    <title class="title">geoDataMap</title>
     <link href='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.css' rel='stylesheet' />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
@@ -62,33 +62,32 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title">Welcome to the Tilson DataMap!</h4>
+            <h4 class="modal-title">Welcome to the geoDataMap!</h4>
           </div>
           <div class="modal-body">
-            <button type="button" id= "terms_BTN" class="btn btn-primary">CLICK TO SEE TERMS & CONDITIONS</button>
-            <p>The <em>Tilson DataMap</em> is a tool for viewing and analyzing real-time data collected on Tilson projects. Data has been collected with 3GIS and Fulcrum.</p>
+            <p>The <em>geoDataMap</em> is a tool for viewing and analyzing real-time data collected. The list below is data imported from Tilson Tecnhology. All data imported is property of Tilson Technology.</p>
             <ul style="list-style-type:square">
-              <li><b>Fulcrum Routes</b></li>
-                <p> Fulcrum Collected Data for Construction on Underground & Aerial Routes </p>
-              <li><b>Fulcrum Resto</b></li>
-                <p> Fulcrum Collected Data for Construction Restoration Locations </p>
-              <li><b>Fulcrum Hardscape</b></li>
-                <p> Fulcrum Collected Data for Construction Hardscape Locations </p>
               <li><b>Demand Points</b></li>
-                <p> End Locations where Fiber Segments are terminated. </p>
-              <!--<li><b>3GIS Structures</b></li>
-                <p> Engineered Tile Layer for Sites, Hubs, Handholes & Poles </p>-->
-              <li><b>3GIS Routes</b></li>
-                <p> Engineered Construction Routes that break at Handholes and/or Poles </p>
-              <li><b>3GIS Segments</b></li>
-                <p> Engineered Fiber Segments that break at Underground to Aerial Transitions or Virtual Splices </p>
-              <li><b>3GIS Sections</b></li>
-                <p> Engineered Fiber Routes that break at MCA or Reel-End Splice Locations </p>
-              <li><b>3GIS Splices</b></li>
-                <p> Engineered Splice Closures that Splices Segments together </p>
+                <p> Locations where Fiber Cables Connect to the Equipment. </p>
+              <li><b>Construction Routes</b></li>
+                <p> Fulcrum Collected Data for Construction on Underground & Aerial Routes </p>
+              <li><b>Construction Resto</b></li>
+                <p> Fulcrum Collected Data for Construction Restoration Locations </p>
+              <li><b>Construction Hardscape</b></li>
+                <p> Fulcrum Collected Data for Construction Hardscape Locations </p>
+              <li><b>Engineered Structures</b></li>
+                <p> Engineered Data for Handoles </p>
+              <li><b>Engineered Routes</b></li>
+                <p> Engineered Data where Cable Pathways Break at Handholes and/or Poles </p>
+              <li><b>Engineered Segments</b></li>
+                <p> Engineered Data where Fiber Cables Break at Underground to Aerial Transitions or Splices </p>
+              <li><b>Engineered Sections</b></li>
+                <p> Engineered Data that Represent a Full Reel of Fiber Cable </p>
+              <li><b>Engineered Splices</b></li>
+                <p> Engineered Data where Fiber Cables Splice Together </p>
             </ul>
             <br>
-            <p> <b> For questions related to the Tilson DataMap, contact us at </b> <a href="mailto:tanz@tilsontech.com">E-Mail</a> <b> or visit our website @ </b> <a href="https://tilsontech.com" target="_blank">TilsonTech</a>.</p>
+            <p> <b> For questions related to the geoDataMap, contact us at </b> <a href="mailto:tanz@tilsontech.com">E-Mail</a>.</p>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
@@ -97,26 +96,27 @@
       </div>
     </div>
 
+    <!--
     <div class="modal fade" id="terms_MODAL" abindex="-1" role="dialog">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title">Tilson DataMap
+            <h4 class="modal-title">geoDataMap
 				Terms and Conditions ("Terms")</h4>
           </div>
           <div class="modal-body">
             <p class="alert alert-info text-center" role="info">
 				Last updated: June 16, 2018
 				<br>
-				Please read these Terms and Conditions ("Terms", "Terms and Conditions") carefully before using the https://tanz-tilsontech.github.io/SLC-OneFiber/tilson.html website (the "Service").
+				Please read these Terms and Conditions ("Terms", "Terms and Conditions") carefully before using the geoDataMap (the "Service").
 				Your access to and use of the Service is conditioned on your acceptance of and compliance with these Terms. These Terms apply to all visitors, users and others who access or use the Service.
 				<br>
-				By accessing or using the Service you agree to be bound by these Terms. If you disagree with any part of the terms then you may not access the Service. This Terms and Conditions agreement for Tilson DataMap is powered by TermsFeed.
+				By accessing or using the Service you agree to be bound by these Terms. If you disagree with any part of the terms then you may not access the Service. This Terms and Conditions agreement for geoDataMap is powered by TermsFeed.
 				<br>
 				Links To Other Web Sites
 				<br>
-				Our Service may contain links to third-party web sites or services that are not owned or controlled by Tilson DataMap.
-				Tilson DataMap has no control over, and assumes no responsibility for, the content, privacy policies, or practices of any third party web sites or services. You further acknowledge and agree that Tilson DataMap shall not be responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with use of or reliance on any such content, goods or services available on or through any such web sites or services.
+				Our Service may contain links to third-party web sites or services that are not owned or controlled by the geoDataMap.
+				The geoDataMap has no control over, and assumes no responsibility for, the content, privacy policies, or practices of any third party web sites or services. You further acknowledge and agree that geoDataMap shall not be responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with use of or reliance on any such content, goods or services available on or through any such web sites or services.
 				We strongly advise you to read the terms and conditions and privacy policies of any third-party web sites or services that you visit.
 				<br>
 				Termination
@@ -140,7 +140,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div>-->
 
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
@@ -159,13 +159,13 @@
               <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-filter fa-white"></i> <span id="filterdata"> Filter </span><b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a href="#" id="gisDemandPoints-Filter_BTN" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Demand Points</a></li>
-                <li><a href="#" id="fulcrumRoutes-Filter_BTN" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Fulcrum Routes</a></li>
-                <li><a href="#" id="fulcrumResto-Filter_BTN" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Fulcrum Resto</a></li>
-                <li><a href="#" id="fulcrumHardscape-Filter_BTN" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Fulcrum Hardscape</a></li>
-                <li><a href="#" id="gisRoutes-Filter_BTN" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> 3GIS Routes</a></li>
-                <li><a href="#" id="gisSegments-Filter_BTN" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> 3GIS Segments</a></li>
-                <li><a href="#" id="gisSections-Filter_BTN" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> 3GIS Sections</a></li>
-                <li><a href="#" id="gisSplices-Filter_BTN" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> 3GIS Splices</a></li> 
+                <li><a href="#" id="fulcrumRoutes-Filter_BTN" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Construction Routes</a></li>
+                <li><a href="#" id="fulcrumResto-Filter_BTN" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Construction Resto</a></li>
+                <li><a href="#" id="fulcrumHardscape-Filter_BTN" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Construction Hardscape</a></li>
+                <li><a href="#" id="gisRoutes-Filter_BTN" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Engineered Routes</a></li>
+                <li><a href="#" id="gisSegments-Filter_BTN" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Engineered Segments</a></li>
+                <li><a href="#" id="gisSections-Filter_BTN" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Engineered Sections</a></li>
+                <li><a href="#" id="gisSplices-Filter_BTN" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Engineered Splices</a></li> 
               </ul>
             </li>     
             <li><a href="#" id="refresh_BTN" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-refresh fa-white"></i>&nbsp;&nbsp;Refresh</a></li>
@@ -407,7 +407,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">3GIS Routes<span id="record-count" class="badge pull-right" style="margin-right: 15px; margin-top: 2px;"></span></h4>
+            <h4 class="modal-title">Engineered Routes<span id="record-count" class="badge pull-right" style="margin-right: 15px; margin-top: 2px;"></span></h4>
           </div>
           <div class="modal-body">
             <div id="gisRoutes-Filter_DATA"></div>
@@ -425,7 +425,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">3GIS Segments<span id="record-count" class="badge pull-right" style="margin-right: 15px; margin-top: 2px;"></span></h4>
+            <h4 class="modal-title">Engineered Segments<span id="record-count" class="badge pull-right" style="margin-right: 15px; margin-top: 2px;"></span></h4>
           </div>
           <div class="modal-body">
             <div id="gisSegments-Filter_DATA"></div>
@@ -443,7 +443,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">3GIS Sections<span id="record-count" class="badge pull-right" style="margin-right: 15px; margin-top: 2px;"></span></h4>
+            <h4 class="modal-title">Engineered Sections<span id="record-count" class="badge pull-right" style="margin-right: 15px; margin-top: 2px;"></span></h4>
           </div>
           <div class="modal-body">
             <div id="gisSections-Filter_DATA"></div>
@@ -461,7 +461,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">3GIS Splices<span id="record-count" class="badge pull-right" style="margin-right: 15px; margin-top: 2px;"></span></h4>
+            <h4 class="modal-title">Engineered Splices<span id="record-count" class="badge pull-right" style="margin-right: 15px; margin-top: 2px;"></span></h4>
           </div>
           <div class="modal-body">
             <div id="gisSplices-Filter_DATA"></div>
@@ -543,7 +543,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">3GIS Routes</h4>
+            <h4 class="modal-title">Engineered Routes</h4>
           </div>
           <div class="modal-body" id="gisRoutes-Info_DATA"></div>
           <div class="modal-footer">
@@ -558,7 +558,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">3GIS Segments</h4>
+            <h4 class="modal-title">Engineered Segments</h4>
           </div>
           <div class="modal-body" id="gisSegments-Info_DATA"></div>
           <div class="modal-footer">
@@ -573,7 +573,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">3GIS Sections</h4>
+            <h4 class="modal-title">Engineered Sections</h4>
           </div>
           <div class="modal-body" id="gisSections-Info_DATA"></div>
           <div class="modal-footer">
@@ -588,7 +588,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">3GIS Splices</h4>
+            <h4 class="modal-title">Engineered Splices</h4>
           </div>
           <div class="modal-body" id="gisSplices-Info_DATA"></div>
           <div class="modal-footer">
@@ -603,7 +603,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Fulcrum Routes</h4>
+            <h4 class="modal-title">Construction Routes</h4>
           </div>
           <div class="modal-body" id="fulcrumRoutes-Pictures_BODY">
             <div role="tabpanel">
@@ -627,7 +627,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Fulcrum Routes</h4>
+            <h4 class="modal-title">Construction Routes</h4>
           </div>
           <div class="modal-body" id="fulcrumRoutes-Signatures_BODY">
             <div role="tabpanel">
@@ -653,7 +653,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Fulcrum Resto</h4>
+            <h4 class="modal-title">Construction Resto</h4>
           </div>
           <div class="modal-body" id="fulcrumResto-Pictures_BODY">
             <div role="tabpanel">
@@ -679,7 +679,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Fulcrum Hardscape</h4>
+            <h4 class="modal-title">Construction Hardscape</h4>
           </div>
           <div class="modal-body" id="fulcrumHardscape-Pictures_BODY">
             <div role="tabpanel">

@@ -3608,14 +3608,14 @@ var baseLayers = {
 };
 var overlayLayers = {
   "<span id='layer-name'>Demand Points</span>": gisDemandPoints,
-  "<span id='layer-name'>3GIS Structures</span>": gisStructures,
-  "<span id='layer-name'>Fulcrum Routes</span>": fulcrumRoutes,
-  "<span id='layer-name1'>Fulcrum Resto</span>": fulcrumResto,
-  "<span id='layer-name1'>Fulcrum Hardscape</span>": fulcrumHardscape,
-  "<span id='layer-name6'>3GIS Routes</span>": gisRoutes,
-  "<span id='layer-name3'>3GIS Segments</span>": gisSegments,
-  "<span id='layer-name4'>3GIS Sections</span>": gisSections,
-  "<span id='layer-name5'>3GIS Splices</span>": gisSplices,
+  "<span id='layer-name'>Engineered Structures</span>": gisStructures,
+  "<span id='layer-name'>Construction Routes</span>": fulcrumRoutes,
+  "<span id='layer-name1'>Construction Resto</span>": fulcrumResto,
+  "<span id='layer-name1'>Construction Hardscape</span>": fulcrumHardscape,
+  "<span id='layer-name6'>Engineered Routes</span>": gisRoutes,
+  "<span id='layer-name3'>Engineered Segments</span>": gisSegments,
+  "<span id='layer-name4'>Engineered Sections</span>": gisSections,
+  "<span id='layer-name5'>Engineered Splices</span>": gisSplices,
 };
 
 
