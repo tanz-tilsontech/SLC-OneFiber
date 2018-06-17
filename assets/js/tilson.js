@@ -3575,7 +3575,7 @@ $.getJSON(gisSplicesConfig.geojson, function (data) {
 
 
 var map = L.map("map", {
-  layers: [mapboxOSM, gisDemandPoints, gisRoutes, highlightLayer, fuclrumRoutesHighlight, highlightLayer3, highlightLayer4]
+  layers: [mapboxOSM, gisDemandPoints, highlightLayer, fuclrumRoutesHighlight, highlightLayer3, highlightLayer4]
 }).fitWorld();
 
 
@@ -3608,10 +3608,10 @@ var baseLayers = {
 };
 var overlayLayers = {
   "<span id='layer-name'>Demand Points</span>": gisDemandPoints,
-  "<span id='layer-name'>Engineered Structures</span>": gisStructures,
   "<span id='layer-name'>Construction Routes</span>": fulcrumRoutes,
   "<span id='layer-name1'>Construction Resto</span>": fulcrumResto,
   "<span id='layer-name1'>Construction Hardscape</span>": fulcrumHardscape,
+  "<span id='layer-name'>Engineered Structures</span>": gisStructures,
   "<span id='layer-name6'>Engineered Routes</span>": gisRoutes,
   "<span id='layer-name3'>Engineered Segments</span>": gisSegments,
   "<span id='layer-name4'>Engineered Sections</span>": gisSections,
