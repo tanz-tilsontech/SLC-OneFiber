@@ -3198,39 +3198,6 @@ var fulcrumResto = L.geoJson(null, {
 });
 
 
-var gisStructures = L.geoJson(null, {
-  onEachFeature: function (feature, layer) {
-    if (feature.properties) {
-      layer.on({
-        click: function (e) {
-          gisStructuresInfo(L.stamp(layer));
-          fuclrumRoutesHighlight.clearLayers();
-          fuclrumRoutesHighlight.addData(gisStructures.getLayer(L.stamp(layer)).toGeoJSON());
-        },
-        mouseover: function (e) {
-          if (gisStructuresConfig.hoverProperty) {
-            $(".info-control").html(feature.properties[gisStructuresConfig.hoverProperty]);
-            $(".info-control").show();
-          }
-        },
-        mouseout: function (e) {
-          $(".info-control").hide();
-        }
-      });
-      if (feature.properties.objectid) {
-        layer.setIcon(
-          L.icon({
-            iconUrl: "Pictures/structure.png",
-            iconSize: [16, 8],
-          })
-        );
-      }
-    }
-  }
-});
-
-
-
 var fulcrumHardscape = L.geoJson(null, {
   pointToLayer: function (feature, latlng) {
     return L.marker(latlng, {
@@ -3262,6 +3229,38 @@ var fulcrumHardscape = L.geoJson(null, {
           $(".info-control").hide();
         }
       });
+    }
+  }
+});
+
+
+var gisStructures = L.geoJson(null, {
+  onEachFeature: function (feature, layer) {
+    if (feature.properties) {
+      layer.on({
+        click: function (e) {
+          gisStructuresInfo(L.stamp(layer));
+          fuclrumRoutesHighlight.clearLayers();
+          fuclrumRoutesHighlight.addData(gisStructures.getLayer(L.stamp(layer)).toGeoJSON());
+        },
+        mouseover: function (e) {
+          if (gisStructuresConfig.hoverProperty) {
+            $(".info-control").html(feature.properties[gisStructuresConfig.hoverProperty]);
+            $(".info-control").show();
+          }
+        },
+        mouseout: function (e) {
+          $(".info-control").hide();
+        }
+      });
+      if (feature.properties.objectid) {
+        layer.setIcon(
+          L.icon({
+            iconUrl: "Pictures/structure.png",
+            iconSize: [16, 8],
+          })
+        );
+      }
     }
   }
 });
@@ -3308,11 +3307,6 @@ var gisRoutes = L.geoJson(null, {
 
 
 var gisSegments = L.geoJson(null, {
-  filter: function (feature) {
-    if (feature.properties.oofstatus === "Cable Placed" || feature.properties.oofstatus === "Construction Underway" || feature.properties.oofstatus === "Permits Received" ||feature.properties.oofstatus === "Permits Submitted" || feature.properties.oofstatus === "In Design") {
-      return true;
-    };
-  },
   style: function (feature, layer) {
     if (feature.properties.oofstatus === "Cable Placed") {
       return {
