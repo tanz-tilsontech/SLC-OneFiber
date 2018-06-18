@@ -3099,39 +3099,6 @@ var gisDemandPoints = L.geoJson(null, {
   }
 });
 
-
-var gisStructures = L.geoJson(null, {
-  onEachFeature: function (feature, layer) {
-    if (feature.properties) {
-      layer.on({
-        click: function (e) {
-          gisStructuresInfo(L.stamp(layer));
-          fuclrumRoutesHighlight.clearLayers();
-          fuclrumRoutesHighlight.addData(gisStructures.getLayer(L.stamp(layer)).toGeoJSON());
-        },
-        mouseover: function (e) {
-          if (gisStructuresConfig.hoverProperty) {
-            $(".info-control").html(feature.properties[gisStructuresConfig.hoverProperty]);
-            $(".info-control").show();
-          }
-        },
-        mouseout: function (e) {
-          $(".info-control").hide();
-        }
-      });
-      if (feature.properties.objectid) {
-        layer.setIcon(
-          L.icon({
-            iconUrl: "Pictures/structure.png",
-            iconSize: [12, 20],
-          })
-        );
-      }
-    }
-  }
-});
-
-
 var fulcrumRoutes = L.geoJson(null, {
   filter: function (feature) {
     if (feature.properties.contractor != "Tilson") {
@@ -3229,6 +3196,39 @@ var fulcrumResto = L.geoJson(null, {
     }
   }
 });
+
+
+var gisStructures = L.geoJson(null, {
+  onEachFeature: function (feature, layer) {
+    if (feature.properties) {
+      layer.on({
+        click: function (e) {
+          gisStructuresInfo(L.stamp(layer));
+          fuclrumRoutesHighlight.clearLayers();
+          fuclrumRoutesHighlight.addData(gisStructures.getLayer(L.stamp(layer)).toGeoJSON());
+        },
+        mouseover: function (e) {
+          if (gisStructuresConfig.hoverProperty) {
+            $(".info-control").html(feature.properties[gisStructuresConfig.hoverProperty]);
+            $(".info-control").show();
+          }
+        },
+        mouseout: function (e) {
+          $(".info-control").hide();
+        }
+      });
+      if (feature.properties.objectid) {
+        layer.setIcon(
+          L.icon({
+            iconUrl: "Pictures/structure.png",
+            iconSize: [8, 16],
+          })
+        );
+      }
+    }
+  }
+});
+
 
 
 var fulcrumHardscape = L.geoJson(null, {
