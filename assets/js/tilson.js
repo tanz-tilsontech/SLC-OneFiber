@@ -3257,7 +3257,7 @@ var gisStructures = L.geoJson(null, {
         layer.setIcon(
           L.icon({
             iconUrl: "Pictures/structure.png",
-            iconSize: [16, 8],
+            iconSize: [14, 14],
           })
         );
       }
