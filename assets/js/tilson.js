@@ -3307,6 +3307,11 @@ var gisRoutes = L.geoJson(null, {
 
 
 var gisSegments = L.geoJson(null, {
+  filter: function (feature) {
+    if (feature.properties.oofstatus === "Cable Placed" || feature.properties.oofstatus === "Construction Started" || feature.properties.oofstatus === "Permits Received" ||feature.properties.oofstatus === "Permits Submitted" || feature.properties.oofstatus === "In Design") {
+      return true;
+    };
+  },
   style: function (feature, layer) {
     if (feature.properties.oofstatus === "Cable Placed") {
       return {
@@ -3314,7 +3319,7 @@ var gisSegments = L.geoJson(null, {
         weight: 6,
         opacity: 0.7
       };
-    } else if (feature.properties.oofstatus === "Construction Underway") {
+    } else if (feature.properties.oofstatus === "Construction Started") {
       return {
         color: "#FF1ED9",
         weight: 6,
