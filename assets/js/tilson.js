@@ -1404,7 +1404,7 @@ var gisSegmentsProperties = [{
   }
 },
 {
-  value: "oofdatepermitreceived",
+  value: "permit_received",
   label: "Permit Received",
   table: {
     visible: true,
