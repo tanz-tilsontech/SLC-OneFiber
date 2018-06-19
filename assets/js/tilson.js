@@ -2150,7 +2150,11 @@ function DrawCharts() {
         data: {
           type: "bar",
           columns: columns,
-          labels: true
+          labels: {
+            format: {
+              columns: d3.format('.2f')
+            }
+          }
         },
         axis: {
           x: {
@@ -2178,7 +2182,11 @@ function DrawCharts() {
         data: {
           type: "bar",
           columns: columns,
-          labels: true
+          labels: {
+            format: {
+              columns: d3.format('.2f')
+            }
+          }
         },
         axis: {
           x: {
