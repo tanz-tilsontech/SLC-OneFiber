@@ -2156,6 +2156,11 @@ function DrawCharts() {
           x: {
             type: 'category',
             categories: ["Duct Miles"]
+          },
+          y: {
+            tick: {
+              format: d3.format('.2f')
+            }
           }
         }
     });
@@ -2179,6 +2184,11 @@ function DrawCharts() {
           x: {
             type: 'category',
             categories: ["Cable Miles"]
+          },
+          y: {
+            tick: {
+              format: d3.format('.2f')
+            }
           }
         }
     });
