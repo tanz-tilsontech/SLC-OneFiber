@@ -1134,6 +1134,22 @@ var gisRoutesProperties = [{
   }
 },
 {
+  value: "permit_submitted",
+  label: "Permit Submitted",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    value: "date",
+    type: "string",
+    vertical: true,
+    multiple: true,
+    operators: ["is_not_null"],
+    values: []
+  }
+},
+{
   value: "permit_received",
   label: "Permit Received",
   table: {
@@ -3338,6 +3354,12 @@ var gisRoutes = L.geoJson(null, {
     } else if (feature.properties.permit_received > 0) {
       return {
         color: "#F47200",
+        weight: 6,
+        opacity: 0.7
+      };
+    } else if (feature.properties.permit_submitted > 0) {
+      return {
+        color: "#1BE8F3",
         weight: 6,
         opacity: 0.7
       };
