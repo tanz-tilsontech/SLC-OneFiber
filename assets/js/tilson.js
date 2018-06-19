@@ -764,22 +764,6 @@ var fulcrumRestoProperties = [{
     operators: ["equal", "not_equal"],
     values: []
   }
-},
-{
-  value: "oofstatus",
-  label: "Status",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string",
-    input: "radio",
-    vertical: true,
-    multiple: true,
-    operators: ["equal", "not_equal"],
-    values: []
-  }
 }];
 
 
@@ -1284,6 +1268,22 @@ var gisRoutesProperties = [{
     vertical: false,
     multiple: true,
     operators: ["between"],
+    values: []
+  }
+},
+{
+  value: "oofstatus",
+  label: "Status",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    input: "radio",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
     values: []
   }
 }];
@@ -2123,14 +2123,37 @@ function DrawCharts() {
   });
 
 
-  // MILES COMPLETED
+  // ENGINEERED ROUTES
+  $(function() {
+    var result = alasql("SELECT oofstatus AS label, SUM(COALESCE(calculatedlength::NUMBER)/5280) AS miles FROM ? GROUP BY oofstatus", [gisRoutesFeatures]);
+    var columns = $.map(result, function(data) {
+      return [[data.label, data.miles]];
+    });
+    var chart = c3.generate({
+        bindto: "#engineeredRoutes",
+        data: {
+          type: "bar",
+          columns: columns,
+          labels: true
+        },
+        axis: {
+          x: {
+            type: 'category',
+            categories: ["Duct Miles"]
+          }
+        }
+    });
+  });
+
+
+  // ENGINEERED SEGMENTS
   $(function() {
     var result = alasql("SELECT oofstatus AS label, SUM(COALESCE(calculatedlength::NUMBER)/5280) AS miles FROM ? GROUP BY oofstatus", [gisSegmentsFeatures]);
     var columns = $.map(result, function(data) {
       return [[data.label, data.miles]];
     });
     var chart = c3.generate({
-        bindto: "#milesComplete",
+        bindto: "#engineeredSegments",
         data: {
           type: "bar",
           columns: columns,
