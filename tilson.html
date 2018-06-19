@@ -162,6 +162,7 @@
                 <li><a href="#" id="fulcrumRoutes-Filter_BTN" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Construction Routes</a></li>
                 <li><a href="#" id="fulcrumResto-Filter_BTN" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Construction Resto</a></li>
                 <li><a href="#" id="fulcrumHardscape-Filter_BTN" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Construction Hardscape</a></li>
+                <li><a href="#" id="gisStructures-Filter_BTN" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Engineered Structures</a></li>
                 <li><a href="#" id="gisRoutes-Filter_BTN" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Engineered Routes</a></li>
                 <li><a href="#" id="gisSegments-Filter_BTN" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Engineered Segments</a></li>
                 <li><a href="#" id="gisSections-Filter_BTN" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Engineered Sections</a></li>
@@ -404,6 +405,24 @@
       </div>
     </div>
 
+    <div class="modal fade" id="gisStructures-Filter_MODAL" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Engineered Structures<span id="record-count" class="badge pull-right" style="margin-right: 15px; margin-top: 2px;"></span></h4>
+          </div>
+          <div class="modal-body">
+            <div id="gisStructures-Filter_DATA"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-info" id="gisStructures-ResetFilter_BTN"><i class="fa fa-undo"></i> Reset Filter</button>
+            <button type="button" class="btn btn-primary" id="gisStructures-ApplyFilter_BTN"><i class="fa fa-filter"></i> Apply Filter</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="modal fade" id="gisRoutes-Filter_MODAL" tabindex="-1" role="dialog">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -533,6 +552,21 @@
             <button type="button" class="btn btn-warning" id="fulcrumHardscape-Pictures_BTN">Pictures</button>
           </div>
           <div class="modal-body" id="fulcrumHardscape-Info_DATA"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="gisStructures-Info_MODAL" tabindex="-1" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Engineered Structures</h4>
+          </div>
+          <div class="modal-body" id="gisStructures-Info_DATA"></div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           </div>
