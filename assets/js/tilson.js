@@ -764,6 +764,22 @@ var fulcrumRestoProperties = [{
     operators: ["equal", "not_equal"],
     values: []
   }
+},
+{
+  value: "oofstatus",
+  label: "Status",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    input: "radio",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
 }];
 
 
@@ -1130,6 +1146,22 @@ var gisRoutesProperties = [{
     vertical: true,
     multiple: true,
     operators: ["equal", "not_equal", "contains"],
+    values: []
+  }
+},
+{
+  value: "permit_received",
+  label: "Permit Received",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    value: "date",
+    type: "string",
+    vertical: true,
+    multiple: true,
+    operators: ["is_not_null"],
     values: []
   }
 },
@@ -3277,6 +3309,12 @@ var gisRoutes = L.geoJson(null, {
     } else if (feature.properties.constructionstart > 0) {
       return {
         color: "#FF1ED9",
+        weight: 6,
+        opacity: 0.7
+      };
+    } else if (feature.properties.permit_received > 0) {
+      return {
+        color: "#F47200",
         weight: 6,
         opacity: 0.7
       };
