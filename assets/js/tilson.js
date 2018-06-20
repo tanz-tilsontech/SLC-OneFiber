@@ -2738,7 +2738,7 @@ function gisRoutesBuildConfig() {
   });
 
   gisRoutesBuildFilter();
-  gisRoutesBuildTable();
+  //gisRoutesBuildTable();
 }
 
 
@@ -4088,6 +4088,45 @@ function buildSpliceTable() {
   });
 }
 
+function buildGISRoutesTable() {
+  $("#GISRoutesTable").bootstrapTable({
+    cache: false,
+    height: $("#GISRoutes-table-container").height(),
+    undefinedText: "",
+    striped: false,
+    pagination: false,
+    minimumCountColumns: 1,
+    sortName: config.sortProperty,
+    sortOrder: config.sortOrder,
+    toolbar: "#GISRoutesToolbar",
+    search: true,
+    trimOnSearch: false,
+    showColumns: true,
+    showToggle: true,
+    columns: table,
+    onClickRow: function(row, $element) {
+      var layer = featureLayer5.getLayer(row.leaflet_stamp);
+      map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 19);
+      highlightLayer.clearLayers();
+      highlightLayer.addData(featureLayer5.getLayer(row.leaflet_stamp).toGeoJSON());
+    },
+    onDblClickRow: function(row) {
+      fulcrumRoutesInfo5(row.leaflet_stamp);
+      highlightLayer.clearLayers();
+      highlightLayer.addData(featureLayer5.getLayer(row.leaflet_stamp).toGeoJSON());
+    },
+  });
+
+  map.fitBounds(featureLayer5.getBounds());
+
+  $(window).resize(function () {
+    $("#GISRoutesTable").bootstrapTable("resetView", {
+      height: $("#GISRoutes-table-container").height()
+    });
+  });
+}
+
+
 
 function syncRoutesTable() {
   tableFeatures = [];
@@ -4175,60 +4214,6 @@ function syncSpliceTable() {
   }
 }
 */
-
-function gisRoutesBuildTable() {
-  $("#gisRoutesTable").bootstrapTable({
-    cache: false,
-    height: $("#gisRoutes-tableContainer").height(),
-    undefinedText: "",
-    striped: false,
-    pagination: false,
-    minimumCountColumns: 1,
-    sortName: gisRoutesConfig.sortProperty,
-    sortOrder: gisRoutesConfig.sortOrder,
-    search: true,
-    trimOnSearch: false,
-    showColumns: true,
-    showToggle: true,
-    columns: table,
-    onClickRow: function(row, $element) {
-      var layer = gisRoutes.getLayer(row.leaflet_stamp);
-      map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 19);
-      highlightLayer.clearLayers();
-      highlightLayer.addData(gisRoutes.getLayer(row.leaflet_stamp).toGeoJSON());
-    },
-    onDblClickRow: function(row) {
-      gisRoutesInfo(row.leaflet_stamp);
-      highlightLayer.clearLayers();
-      highlightLayer.addData(gisRoutes.getLayer(row.leaflet_stamp).toGeoJSON());
-    },
-  });
-
-  map.fitBounds(gisRoutes.getBounds());
-
-  $(window).resize(function () {
-    $("#gisRoutesTable").bootstrapTable("resetView", {
-      height: $("#gisRoutes-tableContainer").height()
-    });
-  });
-}
-
-
-function gisRoutesSyncTable() {
-  tableFeatures = [];
-  gisRoutes.eachLayer(function (layer) {
-    layer.feature.properties.leaflet_stamp = L.stamp(layer);
-  });
-  $("#gisRoutesTable").bootstrapTable("load", JSON.parse(JSON.stringify(tableFeatures)));
-  var featureCount = $("#gisRoutesTable").bootstrapTable("getData").length;
-  if (featureCount == 1) {
-    $("#gisRoutes-featureCount").html($("#gisRoutesTable").bootstrapTable("getData").length + " visible feature");
-  } else {
-    $("#gisRoutes-featureCount").html($("#gisRoutesTable").bootstrapTable("getData").length + " visible features");
-  }
-}
-
-
 
 function gisDemandPointsInfo(id) {
   var featureProperties = gisDemandPoints.getLayer(id).feature.properties;
@@ -4864,15 +4849,6 @@ $("#about_BTN").click(function() {
   $("#about_MODAL").modal("show");
   $(".navbar-collapse.in").collapse("hide");
   return false;
-});
-
-
-//TABLE MODAL
-
-$("#gisRoutes-table_BTN").click(function() {
-  $("#gisRoutes-tableContainer").show();
-  $("#gisRoutes-tableContainer").css("height", "100%");
-  $("#map-container").hide();
 });
 
 
