@@ -4336,7 +4336,7 @@ function gisRoutesInfo(id) {
   $("#gisRoutes-Info_MODAL").modal("show");
 }
 
-function gisRoutesBuildTable(id) {
+function gisRoutesBuildTable() {
   table = [{
     field: "action",
     title: "<i class='fa fa-gear'></i>&nbsp;Action",
@@ -4357,7 +4357,7 @@ function gisRoutesBuildTable(id) {
     },
   }];
 
-  var featureProperties = gisRoutes.getLayer(id).feature.properties;
+  var featureProperties = gisRoutesFeatures;
   $.each(featureProperties, function(key, value) {
     if (!value) {
       value = "";
