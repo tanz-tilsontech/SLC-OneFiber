@@ -4336,7 +4336,7 @@ function gisRoutesInfo(id) {
   $("#gisRoutes-Info_MODAL").modal("show");
 }
 
-function gisRoutesBuildTable() {
+function gisRoutesBuildTable(id) {
   table = [{
     field: "action",
     title: "<i class='fa fa-gear'></i>&nbsp;Action",
