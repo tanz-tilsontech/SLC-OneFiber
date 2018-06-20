@@ -3686,7 +3686,7 @@ var info = L.control({
 
 // Created By
 L.control.attribution({
-  prefix: "Created By: Tanner Anz"
+  prefix: "Created By: Tanner Anz",
   position: "bottomright"
 }).addTo(map);
 
