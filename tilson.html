@@ -168,7 +168,8 @@
                 <li><a href="#" id="gisSections-Filter_BTN" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Engineered Sections</a></li>
                 <li><a href="#" id="gisSplices-Filter_BTN" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Engineered Splices</a></li> 
               </ul>
-            </li>     
+            </li>
+            <li><a href="#" id="gisRoutes-table_BTN" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-refresh fa-white"></i>&nbsp;&nbsp;Tables</a></li>     
             <li><a href="#" id="refresh_BTN" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-refresh fa-white"></i>&nbsp;&nbsp;Refresh</a></li>
             <li><a href="#" id="allLayers-ResetFilter_BTN" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-exclamation-triangle fa-white"></i>&nbsp;&nbsp;Reset Filter</a></li>
             <li><a href="#" id="about_BTN" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-info fa-white"></i>&nbsp;&nbsp;About</a></li>
@@ -184,12 +185,10 @@
       <div id="map"></div>
     </div>
 
-    <!--
-
-    <div id="table-container"> 
+    <div id="gisRoutes-tableContainer"> 
       <div id="toolbar" style="width: 400px;">
         <div class="btn-group" role="group">
-          <button type="button" class="btn btn-default" data-toggle="modal" data-target="#filterModal">
+          <button type="button" class="btn btn-default" data-toggle="modal" data-target="#gisRoutes-Filter_MODAL">
             <i class="fa fa-filter"></i> Filter Data
           </button>
           <div class="btn-group">
@@ -197,16 +196,18 @@
               <i class="fa fa-cloud-download"></i> Export Data <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-              <li><a href="#" id="download-csv-btn"><i class="fa fa-file-text-o"></i> CSV</a></li>
-              <li><a href="#" id="download-excel-btn"><i class="fa fa-file-excel-o"></i> Excel</a></li>
-              <li><a href="#" id="download-pdf-btn"><i class="fa fa-file-pdf-o"></i> PDF</a></li>
+              <li><a href="#" id="gisRoutes-download-csv-btn"><i class="fa fa-file-text-o"></i> CSV</a></li>
+              <li><a href="#" id="gisRoutes-download-excel-btn"><i class="fa fa-file-excel-o"></i> Excel</a></li>
+              <li><a href="#" id="gisRoutes-download-pdf-btn"><i class="fa fa-file-pdf-o"></i> PDF</a></li>
             </ul>
           </div>
         </div>
-        <span id="feature-count" class="text-muted" style="padding-left: 15px;"></span>
+        <span id="gisRoutes-featureCount" class="text-muted" style="padding-left: 15px;"></span>
       </div>
-      <table id="table"></table>
+      <table id="gisRoutesTable"></table>
     </div>
+
+    <!--
 
     <div id="resto-table-container"> 
       <div id="resto-toolbar" style="width: 400px;">
