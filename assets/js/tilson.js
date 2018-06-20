@@ -3684,6 +3684,13 @@ var info = L.control({
   position: "bottomleft"
 });
 
+// Created By
+L.control.attribution({
+  prefix: "Created By: Tanner Anz"
+  position: "bottomright"
+}).addTo(map);
+
+
 // Custom info hover control
 info.onAdd = function (map) {
   this._div = L.DomUtil.create("div", "info-control");
