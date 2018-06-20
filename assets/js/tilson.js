@@ -2669,6 +2669,26 @@ function fulcrumHardscapeBuildConfig() {
 
 function gisRoutesBuildConfig() {
   filters = [];
+  table = [{
+    field: "action",
+    title: "<i class='fa fa-gear'></i>&nbsp;Action",
+    align: "center",
+    valign: "middle",
+    width: "75px",
+    cardVisible: false,
+    switchable: false,
+    formatter: function(value, row, index) {
+      return [
+        '<a class="zoom" href="javascript:void(0)" title="Zoom" style="margin-right: 10px;">',
+          '<i class="fa fa-search-plus"></i>',
+        '</a>',
+        '<a class="identify" href="javascript:void(0)" title="Identify" style="margin-right: 10px;">',
+          '<i class="fa fa-info-circle"></i>',
+        '</a>'
+      ].join("");
+    },
+  }];
+
   $.each(gisRoutesProperties, function(index, value) {
     // Filter config
     if (value.filter) {
@@ -2703,10 +2723,22 @@ function gisRoutesBuildConfig() {
         }
       });
     }
+    // Table config
+    if (value.table) {
+      table.push({
+        field: value.value,
+        title: value.label
+      });
+      $.each(value.table, function(key, val) {
+        if (table[index+1]) {
+          table[index+1][key] = val;
+        }
+      });
+    }
   });
 
   gisRoutesBuildFilter();
-  gisRoutesBuildTable();
+  //gisRoutesBuildTable();
 }
 
 
@@ -4336,90 +4368,6 @@ function gisRoutesInfo(id) {
   $("#gisRoutes-Info_MODAL").modal("show");
 }
 
-function gisRoutesBuildTable() {
-  table = [{
-    field: "action",
-    title: "<i class='fa fa-gear'></i>&nbsp;Action",
-    align: "center",
-    valign: "middle",
-    width: "75px",
-    cardVisible: false,
-    switchable: false,
-    formatter: function(value, row, index) {
-      return [
-        '<a class="zoom" href="javascript:void(0)" title="Zoom" style="margin-right: 10px;">',
-          '<i class="fa fa-search-plus"></i>',
-        '</a>',
-        '<a class="identify" href="javascript:void(0)" title="Identify" style="margin-right: 10px;">',
-          '<i class="fa fa-info-circle"></i>',
-        '</a>'
-      ].join("");
-    },
-  }];
-
-  var featureProperties = gisRoutesFeatures;
-  $.each(featureProperties, function(key, value) {
-    if (!value) {
-      value = "";
-    }
-    $.each(gisRoutesProperties, function(index, property) {
-      if (key == property.value) {
-        if (value && property.filter.value == "date") {
-          date = new Date(value);
-          value = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
-        }
-      }
-      if (property.table) {
-        table.push({
-          field: property.value,
-          title: property.label
-        });
-        $.each(property.table, function(key, val) {
-          if (table[index+1]) {
-            table[index+1][key] = val;
-          }
-        });
-      };
-    });
-  });
-
-  $("#gisRoutes-Table").bootstrapTable({
-    cache: false,
-    height: $("#gisRoutes-tableContainer").height(),
-    undefinedText: "",
-    striped: false,
-    pagination: false,
-    minimumCountColumns: 1,
-    sortName: gisRoutesConfig.sortProperty,
-    sortOrder: gisRoutesConfig.sortOrder,
-    toolbar: "#gisRoutes-Toolbar",
-    search: true,
-    trimOnSearch: false,
-    showColumns: true,
-    showToggle: true,
-    columns: table,
-    onClickRow: function(row, $element) {
-      var layer = gisRoutes.getLayer(row.leaflet_stamp);
-      map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 19);
-      highlightLayer.clearLayers();
-      highlightLayer.addData(gisRoutes.getLayer(row.leaflet_stamp).toGeoJSON());
-    },
-    onDblClickRow: function(row) {
-      gisRoutesInfo(row.leaflet_stamp);
-      highlightLayer.clearLayers();
-      highlightLayer.addData(gisRoutes.getLayer(row.leaflet_stamp).toGeoJSON());
-    },
-  });
-
-  map.fitBounds(gisRoutes.getBounds());
-
-  $(window).resize(function () {
-    $("#gisRoutes-Table").bootstrapTable("resetView", {
-      height: $("#gisRoutes-tableContainer").height()
-    });
-  });
-}
-
 
 function gisSegmentsInfo(id) {
   var featureProperties = gisSegments.getLayer(id).feature.properties;
@@ -4908,15 +4856,6 @@ $("#about_BTN").click(function() {
   $("#about_MODAL").modal("show");
   $(".navbar-collapse.in").collapse("hide");
   return false;
-});
-
-
-//TABLE MODAL
-
-$("#table_BTN").click(function() {
-  $("#gisRoutes-tableContainer").show();
-  $("#gisRoutes-tableContainer").css("height", "100%");
-  $("#map-container").hide();
 });
 
 
