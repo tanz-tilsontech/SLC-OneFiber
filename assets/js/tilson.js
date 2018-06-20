@@ -3904,6 +3904,20 @@ function gisSegmentsApplyFilter() {
     gisSegments.addData(features);
     //syncFiberTable();
     map.fitBounds(gisSegments.getBounds());
+    $(function() {
+      var result = alasql("SELECT oofstatus AS label, COUNT(oofstatus) AS total FROM ? GROUP BY oofstatus", [features.properties]);
+      var columns = $.map(result, function(data) {
+        return [[data.label, data.total]];
+      });
+      var chart = c3.generate({
+          bindto: "#engineeredStatus",
+          data: {
+            type: "pie",
+            columns: columns,
+            labels: true
+          }
+      });
+    });
   });
 }
 
