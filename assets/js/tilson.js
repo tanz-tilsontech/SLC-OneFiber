@@ -2669,26 +2669,6 @@ function fulcrumHardscapeBuildConfig() {
 
 function gisRoutesBuildConfig() {
   filters = [];
-  table = [{
-    field: "action",
-    title: "<i class='fa fa-gear'></i>&nbsp;Action",
-    align: "center",
-    valign: "middle",
-    width: "75px",
-    cardVisible: false,
-    switchable: false,
-    formatter: function(value, row, index) {
-      return [
-        '<a class="zoom" href="javascript:void(0)" title="Zoom" style="margin-right: 10px;">',
-          '<i class="fa fa-search-plus"></i>',
-        '</a>',
-        '<a class="identify" href="javascript:void(0)" title="Identify" style="margin-right: 10px;">',
-          '<i class="fa fa-info-circle"></i>',
-        '</a>'
-      ].join("");
-    },
-  }];
-
   $.each(gisRoutesProperties, function(index, value) {
     // Filter config
     if (value.filter) {
@@ -2723,22 +2703,10 @@ function gisRoutesBuildConfig() {
         }
       });
     }
-    // Table config
-    if (value.table) {
-      table.push({
-        field: value.value,
-        title: value.label
-      });
-      $.each(value.table, function(key, val) {
-        if (table[index+1]) {
-          table[index+1][key] = val;
-        }
-      });
-    }
   });
 
   gisRoutesBuildFilter();
-  //gisRoutesBuildTable();
+  gisRoutesBuildTable();
 }
 
 
