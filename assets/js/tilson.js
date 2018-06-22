@@ -221,7 +221,7 @@ var gisDemandPointsProperties = [{
     sortable: true
   },
   filter: {
-    type: "string",
+    type: "integer",
     input: "radio",
     vertical: true,
     multiple: true,
