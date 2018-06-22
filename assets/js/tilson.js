@@ -214,6 +214,22 @@ var gisDemandPointsProperties = [{
   }
 },
 {
+  value: "spoke",
+  label: "Spoke",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "string",
+    input: "radio",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
   value: "clustername",
   label: "Cluster Name",
   table: {
