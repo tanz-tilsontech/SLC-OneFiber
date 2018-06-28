@@ -3105,7 +3105,7 @@ var gisDemandPoints = L.geoJson(null, {
       layer.setIcon(
         L.icon({
           iconUrl: "Pictures/hubs/SAL%20BROADWAY.png",
-          iconSize: [20, 20],
+          iconSize: [30, 30],
         })
       );
     } else if (feature.properties.clustername === "SAL BROADWAY") {
@@ -3119,7 +3119,7 @@ var gisDemandPoints = L.geoJson(null, {
       layer.setIcon(
         L.icon({
           iconUrl: "Pictures/hubs/SAL%20CRESCENT.png",
-          iconSize: [20, 20],
+          iconSize: [30, 30],
         })
       );
     } else if (feature.properties.clustername === "SAL CRESCENT") {
