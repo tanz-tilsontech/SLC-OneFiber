@@ -3101,10 +3101,24 @@ var gisDemandPoints = L.geoJson(null, {
           iconSize: [20, 20],
         })
       );
+    } else if (feature.properties.clustername === "SAL BROADWAY" && feature.properties.site_name === "SAL BROADWAY") {
+      layer.setIcon(
+        L.icon({
+          iconUrl: "Pictures/hubs/SAL%20BROADWAY.png",
+          iconSize: [20, 20],
+        })
+      );
     } else if (feature.properties.clustername === "SAL BROADWAY") {
       layer.setIcon(
         L.icon({
           iconUrl: "Pictures/demandPoints/SAL%20BROADWAY.png",
+          iconSize: [20, 20],
+        })
+      );
+    } else if (feature.properties.clustername === "SAL CRESCENT" && feature.properties.site_name === "SAL CRESCENT") {
+      layer.setIcon(
+        L.icon({
+          iconUrl: "Pictures/hubs/SAL%20CRESCENT.png",
           iconSize: [20, 20],
         })
       );
