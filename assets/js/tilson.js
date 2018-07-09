@@ -913,6 +913,21 @@ var gisStructuresProperties = [{
   }
 },
 {
+  value: "label_id_text",
+  label: "Type",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "radio",
+    vertical: true,
+    multiple: true,
+    operators: ["equal", "not_equal"],
+    values: []
+  }
+},
+{
   value: "material",
   label: "Material",
   table: {
@@ -3455,7 +3470,7 @@ var gisStructures = L.geoJson(null, {
           $(".info-control").hide();
         }
       });
-      if (feature.properties.objectid) {
+      if (feature.properties.label_id_text === "PLACE") {
         layer.setIcon(
           L.icon({
             iconUrl: "Pictures/structure.png",
@@ -3527,31 +3542,31 @@ var gisSegments = L.geoJson(null, {
     };
   },
   style: function (feature, layer) {
-    if (feature.properties.oofstatus === "Cable Placed") {
+    if (feature.properties.oofdatecableplaced > 0) {
       return {
         color: "#2AE100",
         weight: 6,
         opacity: 0.7
       };
-    } else if (feature.properties.oofstatus === "Construction Started") {
+    } else if (feature.properties.oofdateconstructionstarted > 0) {
       return {
         color: "#FF1ED9",
         weight: 6,
         opacity: 0.7
       };
-    } else if (feature.properties.oofstatus === "Permits Received") {
+    } else if (feature.properties.permit_received > 0) {
       return { 
         color: "#F47200",
         weight: 6,
         opacity: 0.7
       };
-    } else if (feature.properties.oofstatus === "Permits Submitted") {
+    } else if (feature.properties.oofdatepermitsubmitted > 0) {
       return {
         color: "#1BE8F3",
         weight: 6,
         opacity: 0.7
       };
-    } else if (feature.properties.oofstatus === "In Design") {
+    } else if (feature.properties.oofdateindesign > 0) {
       return {
         color: "#828282",
         weight: 6,
