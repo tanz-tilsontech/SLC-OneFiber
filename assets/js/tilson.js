@@ -2838,7 +2838,6 @@ function gisVES2kBuildConfig() {
   });
 
   gisVES2kBuildFilter();
-  map.fitBounds(gisVES2k.getBounds());
   //fulcrumRoutesBuildTable();
 }
 
