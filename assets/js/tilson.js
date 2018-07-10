@@ -3270,7 +3270,7 @@ var gisDemandPoints = L.geoJson(null, {
           iconSize: [20, 20],
         })
       );
-    } else if (feature.properties.clustername === "SAL SOUTH SALT LAKE" && feature.properties.site_name === "SAL SOUTH SALT LAKE") {
+    } else if (feature.properties.clustername === "SAL SOUTH SALT LAKE CITY" && feature.properties.site_name === "SAL SOUTH SALT LAKE CITY") {
       layer.setIcon(
         L.icon({
           iconUrl: "Pictures/hubs/SAL%20SOUTH%20SALT%20LAKE.png",
