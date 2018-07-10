@@ -67,7 +67,7 @@
           <div class="modal-body">
             <p>The <em>Tilson DataMap</em> is a tool for viewing and analyzing real-time data collected. The list below is data imported from Tilson Tecnhology. All data imported is property of Tilson Technology.</p>
             <ul style="list-style-type:square">
-              <li><b>Demand Points</b></li>
+              <li><b>Demand Points and VES2k</b></li>
                 <p> Locations where Fiber Cables Connect to the Equipment. </p>
               <li><b>Construction Routes</b></li>
                 <p> Fulcrum Collected Data for Construction on Underground & Aerial Routes </p>
@@ -158,10 +158,11 @@
             <li class="dropdown">
               <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-filter fa-white"></i> <span id="filterdata"> Filter </span><b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href="#" id="gisDemandPoints-Filter_BTN" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Demand Points</a></li>
                 <li><a href="#" id="fulcrumRoutes-Filter_BTN" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Construction Routes</a></li>
                 <li><a href="#" id="fulcrumResto-Filter_BTN" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Construction Resto</a></li>
                 <li><a href="#" id="fulcrumHardscape-Filter_BTN" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Construction Hardscape</a></li>
+                <li><a href="#" id="gisDemandPoints-Filter_BTN" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Demand Points</a></li>
+                <li><a href="#" id="gisVES2k-Filter_BTN" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> VES2k</a></li>
                 <li><a href="#" id="gisStructures-Filter_BTN" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Engineered Structures</a></li>
                 <li><a href="#" id="gisRoutes-Filter_BTN" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Engineered Routes</a></li>
                 <li><a href="#" id="gisSegments-Filter_BTN" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-filter"></i> Engineered Segments</a></li>
@@ -333,24 +334,6 @@
       </div>
     </div>
 
-    <div class="modal fade" id="gisDemandPoints-Filter_MODAL" tabindex="-1" role="dialog">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Demand Points<span id="record-count" class="badge pull-right" style="margin-right: 15px; margin-top: 2px;"></span></h4>
-          </div>
-          <div class="modal-body">
-            <div id="gisDemandPoints-Filter_DATA"></div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-info" id="gisDemandPoints-ResetFilter_BTN"><i class="fa fa-undo"></i> Reset Filter</button>
-            <button type="button" class="btn btn-primary" id="gisDemandPoints-ApplyFilter_BTN"><i class="fa fa-filter"></i> Apply Filter</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <div class="modal fade" id="fulcrumRoutes-Filter_MODAL" tabindex="-1" role="dialog">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -400,6 +383,42 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-info" id="fulcrumHardscape-ResetFilter_BTN"><i class="fa fa-undo"></i> Reset Filter</button>
             <button type="button" class="btn btn-primary" id="fulcrumHardscape-ApplyFilter_BTN"><i class="fa fa-filter"></i> Apply Filter</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="gisDemandPoints-Filter_MODAL" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Demand Points<span id="record-count" class="badge pull-right" style="margin-right: 15px; margin-top: 2px;"></span></h4>
+          </div>
+          <div class="modal-body">
+            <div id="gisDemandPoints-Filter_DATA"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-info" id="gisDemandPoints-ResetFilter_BTN"><i class="fa fa-undo"></i> Reset Filter</button>
+            <button type="button" class="btn btn-primary" id="gisDemandPoints-ApplyFilter_BTN"><i class="fa fa-filter"></i> Apply Filter</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="gisVES2k-Filter_MODAL" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">VES2k<span id="record-count" class="badge pull-right" style="margin-right: 15px; margin-top: 2px;"></span></h4>
+          </div>
+          <div class="modal-body">
+            <div id="gisVES2k-Filter_DATA"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-info" id="gisVES2k-ResetFilter_BTN"><i class="fa fa-undo"></i> Reset Filter</button>
+            <button type="button" class="btn btn-primary" id="gisVES2k-ApplyFilter_BTN"><i class="fa fa-filter"></i> Apply Filter</button>
           </div>
         </div>
       </div>
@@ -495,21 +514,6 @@
       </div>
     </div>
 
-    <div class="modal fade" id="gisDemandPoints-Info_MODAL" tabindex="-1" role="dialog">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Demand Points</h4>
-          </div>
-          <div class="modal-body" id="gisDemandPoints-Info_DATA"></div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <div class="modal fade" id="fulcrumRoutes-Info_MODAL" tabindex="-1" role="dialog">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -552,6 +556,36 @@
             <button type="button" class="btn btn-warning" id="fulcrumHardscape-Pictures_BTN">Pictures</button>
           </div>
           <div class="modal-body" id="fulcrumHardscape-Info_DATA"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="gisDemandPoints-Info_MODAL" tabindex="-1" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Demand Points</h4>
+          </div>
+          <div class="modal-body" id="gisDemandPoints-Info_DATA"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="gisVES2k-Info_MODAL" tabindex="-1" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">VES2k</h4>
+          </div>
+          <div class="modal-body" id="gisVES2k-Info_DATA"></div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           </div>
