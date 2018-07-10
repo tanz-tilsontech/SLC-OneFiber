@@ -800,22 +800,6 @@ var gisDemandPointsProperties = [{
   }
 },
 {
-  value: "workorderid",
-  label: "Work Order ID",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string",
-    input: "radio",
-    vertical: true,
-    multiple: true,
-    operators: ["equal", "not_equal", "contains"],
-    values: []
-  }
-},
-{
   value: "spoke",
   label: "Spoke",
   table: {
@@ -883,53 +867,6 @@ var gisDemandPointsProperties = [{
 // VES2k PROPERTIES
 
 var gisVES2kProperties = [{
-  value: "type",
-  label: "Type",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string",
-    input: "radio",
-    vertical: true,
-    multiple: true,
-    operators: ["equal", "not_equal"],
-    values: []
-  }
-},
-{
-  value: "tower_type ",
-  label: "Tower Type",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string",
-    input: "radio",
-    vertical: true,
-    multiple: true,
-    operators: ["equal", "not_equal"],
-    values: []
-  }
-},
-{
-  value: "carrier_sector_count ",
-  label: "Sector Count",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string",
-    vertical: true,
-    multiple: true,
-    operators: ["equal", "not_equal"],
-    values: []
-  }
-},
-{
   value: "city",
   label: "City",
   table: {
@@ -938,22 +875,6 @@ var gisVES2kProperties = [{
   },
   filter: {
     type: "string",
-    vertical: true,
-    multiple: true,
-    operators: ["equal", "not_equal", "contains"],
-    values: []
-  }
-},
-{
-  value: "workorderid",
-  label: "Work Order ID",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string",
-    input: "radio",
     vertical: true,
     multiple: true,
     operators: ["equal", "not_equal", "contains"],
