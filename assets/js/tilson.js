@@ -3742,7 +3742,7 @@ var gisStructures = L.geoJson(null, {
           $(".info-control").hide();
         }
       });
-      if (feature.properties.label_id_text !=== "EXISTING") {
+      if (feature.properties.label_id_text !== "EXISTING") {
         layer.setIcon(
           L.icon({
             iconUrl: "Pictures/structure.png",
