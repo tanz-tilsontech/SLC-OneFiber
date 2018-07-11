@@ -3749,6 +3749,13 @@ var gisStructures = L.geoJson(null, {
             iconSize: [14, 14],
           })
         );
+      } else if (feature.properties.label_id_text === "EXISTING") {
+        layer.setIcon(
+          L.icon({
+            iconUrl: "Pictures/structure_exist.png",
+            iconSize: [14, 14],
+          })
+        );
       }
     }
   }
