@@ -70,15 +70,6 @@ var gisDemandPointsConfig = {
 };
 
 
-// GIS VES2K CONFIG
-
-var gisVES2kConfig = {
-  geojson: "https://tilsonwebdraco.3-gislive.com/arcgis/rest/services/SLClld/Tilsonslc_lld/MapServer/49/query?where=objectid+IS+NOT+NULL+AND+nfid+IS+NOT+NULL&outFields=*&f=geojson",
-  layerName: "GIS VES2k",
-  hoverProperty: "site_name"
-};
-
-
 // GIS STRUCTURES CONFIG
 
 var gisStructuresConfig = {
@@ -861,89 +852,6 @@ var gisDemandPointsProperties = [{
     values: []
   }
 }];
-
-
-
-// VES2k PROPERTIES
-
-var gisVES2kProperties = [{
-  value: "city",
-  label: "City",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string",
-    vertical: true,
-    multiple: true,
-    operators: ["equal", "not_equal", "contains"],
-    values: []
-  }
-},
-{
-  value: "spoke",
-  label: "Spoke",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "integer",
-    input: "radio",
-    vertical: true,
-    multiple: true,
-    operators: ["equal", "not_equal"],
-    values: []
-  }
-},
-{
-  value: "clustername",
-  label: "Cluster Name",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string",
-    input: "radio",
-    vertical: true,
-    multiple: true,
-    operators: ["equal", "not_equal"],
-    values: []
-  }
-},
-{
-  value: "site_name",
-  label: "Site Name",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string",
-    vertical: true,
-    multiple: true,
-    operators: ["equal", "not_equal", "contains"],
-    values: []
-  }
-},
-{
-  value: "nfid",
-  label: "Site NFID",
-  table: {
-    visible: true,
-    sortable: true
-  },
-  filter: {
-    type: "string",
-    vertical: true,
-    multiple: true,
-    operators: ["equal", "not_equal", "contains"],
-    values: []
-  }
-}];
-
 
 
 // GIS STRUCTURES PROPERTIES
@@ -2688,81 +2596,6 @@ function gisDemandPointsBuildConfig() {
 }
 
 
-function gisVES2kBuildConfig() {
-  filters = [];
-  table = [{
-    field: "action",
-    title: "<i class='fa fa-gear'></i>&nbsp;Action",
-    align: "center",
-    valign: "middle",
-    width: "75px",
-    cardVisible: false,
-    switchable: false,
-    formatter: function(value, row, index) {
-      return [
-        '<a class="zoom" href="javascript:void(0)" title="Zoom" style="margin-right: 10px;">',
-          '<i class="fa fa-search-plus"></i>',
-        '</a>',
-        '<a class="identify" href="javascript:void(0)" title="Identify" style="margin-right: 10px;">',
-          '<i class="fa fa-info-circle"></i>',
-        '</a>'
-      ].join("");
-    },
-  }];
-
-  $.each(gisVES2kProperties, function(index, value) {
-    // Filter config
-    if (value.filter) {
-      var id;
-      if (value.filter.type == "integer") {
-        id = "cast(properties->"+ value.value +" as int)";
-      }
-      else if (value.filter.type == "double") {
-        id = "cast(properties->"+ value.value +" as double)";
-      }
-      else {
-        id = "properties->" + value.value;
-      }
-      filters.push({
-        id: id,
-        label: value.label
-      });
-      $.each(value.filter, function(key, val) {
-        if (filters[index]) {
-          // If values array is empty, fetch all distinct values
-          if (key == "values" && val.length === 0) {
-            alasql("SELECT DISTINCT(properties->"+value.value+") AS field FROM ? ORDER BY field ASC", [gisVES2kGeojson.features], function(results){
-              distinctValues = [];
-              $.each(results, function(index, value) {
-                distinctValues.push(value.field);
-              });
-            });
-            filters[index].values = distinctValues;
-          } else {
-            filters[index][key] = val;
-          }
-        }
-      });
-    }
-    // Table config
-    if (value.table) {
-      table.push({
-        field: value.value,
-        title: value.label
-      });
-      $.each(value.table, function(key, val) {
-        if (table[index+1]) {
-          table[index+1][key] = val;
-        }
-      });
-    }
-  });
-
-  gisVES2kBuildFilter();
-  //fulcrumRoutesBuildTable();
-}
-
-
 function gisStructuresBuildConfig() {
   filters = [];
   table = [{
@@ -3593,136 +3426,6 @@ var gisDemandPoints = L.geoJson(null, {
 });
 
 
-var gisVES2k = L.geoJson(null, {
-  onEachFeature: function (feature, layer) {
-    if (feature.properties) {
-      layer.on({
-        click: function (e) {
-          gisVES2kInfo(L.stamp(layer));
-          highlightLayer.clearLayers();
-          highlightLayer.addData(gisVES2k.getLayer(L.stamp(layer)).toGeoJSON());
-        },
-        mouseover: function (e) {
-          if (gisVES2kConfig.hoverProperty) {
-            $(".info-control").html(feature.properties[gisVES2kConfig.hoverProperty]);
-            $(".info-control").show();
-          }
-        },
-        dblclick: function (e) {
-          highlightLayer.clearLayers();
-        }
-      });
-    }
-    if (feature.properties.clustername === "REMOVE") {
-      layer.setIcon(
-        L.icon({
-          iconUrl: "Pictures/demandPoints/removed.png",
-          iconSize: [20, 20],
-        })
-      );
-    } else if (feature.properties.clustername === "SAL BROADWAY") {
-      layer.setIcon(
-        L.icon({
-          iconUrl: "Pictures/ves2k/SAL%20BROADWAY.png",
-          iconSize: [20, 20],
-        })
-      );
-    } else if (feature.properties.clustername === "SAL CRESCENT") {
-      layer.setIcon(
-        L.icon({
-          iconUrl: "Pictures/ves2k/SAL%20CRESCENT.png",
-          iconSize: [20, 20],
-        })
-      );
-    } else if (feature.properties.clustername === "SAL HOLLADAY") {
-      layer.setIcon(
-        L.icon({
-          iconUrl: "Pictures/ves2k/SAL%20HOLLADAY.png",
-          iconSize: [20, 20],
-        })
-      );
-    } else if (feature.properties.clustername === "SAL HONEY") {
-      layer.setIcon(
-        L.icon({
-          iconUrl: "Pictures/ves2k/SAL%20HONEY.png",
-          iconSize: [20, 20],
-        })
-      );
-    } else if (feature.properties.clustername === "SAL RED HANGER") {
-      layer.setIcon(
-        L.icon({
-          iconUrl: "Pictures/ves2k/SAL%20RED%20HANGER.png",
-          iconSize: [20, 20],
-        })
-      );
-    } else if (feature.properties.clustername === "SAL RELIEVER") {
-      layer.setIcon(
-        L.icon({
-          iconUrl: "Pictures/ves2k/SAL%20RELIEVER.png",
-          iconSize: [20, 20],
-        })
-      );
-    } else if (feature.properties.clustername === "SAL ROXANNE") {
-      layer.setIcon(
-        L.icon({
-          iconUrl: "Pictures/ves2k/SAL%20ROXANNE.png",
-          iconSize: [20, 20],
-        })
-      );
-    } else if (feature.properties.clustername === "SAL SAND JUMP") {
-      layer.setIcon(
-        L.icon({
-          iconUrl: "Pictures/ves2k/SAL%20SAND%20JUMP.png",
-          iconSize: [20, 20],
-        })
-      );
-    } else if (feature.properties.clustername === "SAL SANDY") {
-      layer.setIcon(
-        L.icon({
-          iconUrl: "Pictures/ves2k/SAL%20SANDY.png",
-          iconSize: [20, 20],
-        })
-      );
-    } else if (feature.properties.clustername === "SAL SHERWOOD PARK") {
-      layer.setIcon(
-        L.icon({
-          iconUrl: "Pictures/ves2k/SAL%20SHERWOOD%20PARK.png",
-          iconSize: [20, 20],
-        })
-      );
-    } else if (feature.properties.clustername === "SAL SOUTH JORDAN") {
-      layer.setIcon(
-        L.icon({
-          iconUrl: "Pictures/ves2k/SAL%20SOUTH%20JORDAN.png",
-          iconSize: [20, 20],
-        })
-      );
-    } else if (feature.properties.clustername === "SAL SOUTH SALT LAKE CITY") {
-      layer.setIcon(
-        L.icon({
-          iconUrl: "Pictures/ves2k/SAL%20SOUTH%20SALT%20LAKE.png",
-          iconSize: [20, 20],
-        })
-      );
-    } else if (feature.properties.clustername === "SAL SUGARHOUSE") {
-      layer.setIcon(
-        L.icon({
-          iconUrl: "Pictures/ves2k/SAL%20SUGARHOUSE.png",
-          iconSize: [20, 20],
-        })
-      );
-    } else if (feature.properties.clustername === "UTSL-KEARNS MTSO") {
-      layer.setIcon(
-        L.icon({
-          iconUrl: "Pictures/ves2k/SAL%20KEARNS.png",
-          iconSize: [20, 20],
-        })
-      );
-    }
-  }
-});
-
-
 var gisStructures = L.geoJson(null, {
   onEachFeature: function (feature, layer) {
     if (feature.properties) {
@@ -4013,19 +3716,6 @@ $.getJSON(gisDemandPointsConfig.geojson, function (data) {
 });
 
 
-// GIS VES2k GEOJSON
-
-$.getJSON(gisVES2kConfig.geojson, function (data) {
-  gisVES2kGeojson = data;
-  gisVES2kFeatures = $.map(gisVES2kGeojson.features, function(feature) {
-    return feature.properties;
-  });
-  gisVES2k.addData(data);
-  gisVES2kBuildConfig();
-  $("#loading-mask").hide();
-});
-
-
 // GIS STRUCTURES GEOJSON
 
 $.getJSON(gisStructuresConfig.geojson, function (data) {
@@ -4095,7 +3785,7 @@ $.getJSON(gisSplicesConfig.geojson, function (data) {
 
 
 var map = L.map("map", {
-  layers: [mapboxOSM, gisDemandPoints, gisVES2k, highlightLayer, fuclrumRoutesHighlight, highlightLayer3, highlightLayer4]
+  layers: [mapboxOSM, gisDemandPoints, highlightLayer, fuclrumRoutesHighlight, highlightLayer3, highlightLayer4]
 }).fitWorld();
 
 
@@ -4138,7 +3828,6 @@ var overlayLayers = {
   "<span id='layer-name1'>Construction Resto</span>": fulcrumResto,
   "<span id='layer-name1'>Construction Hardscape</span>": fulcrumHardscape,
   "<span id='layer-name'>Demand Points</span>": gisDemandPoints,
-  "<span id='layer-name'>VES2k</span>": gisVES2k,
   "<span id='layer-name'>Engineered Structures</span>": gisStructures,
   "<span id='layer-name6'>Engineered Routes</span>": gisRoutes,
   "<span id='layer-name3'>Engineered Segments</span>": gisSegments,
@@ -4196,13 +3885,6 @@ function fulcrumHardscapeBuildFilter() {
 
 function gisDemandPointsBuildFilter() {
   $("#gisDemandPoints-Filter_DATA").queryBuilder({
-    allow_empty: true,
-    filters: filters
-  });
-}
-
-function gisVES2kBuildFilter() {
-  $("#gisVES2k-Filter_DATA").queryBuilder({
     allow_empty: true,
     filters: filters
   });
@@ -4299,21 +3981,6 @@ function gisDemandPointsApplyFilter() {
     gisDemandPoints.addData(features);
     //syncRoutesTable();
     map.fitBounds(gisDemandPoints.getBounds());
-  });
-}
-
-
-function gisVES2kApplyFilter() {
-  var query = "SELECT * FROM ?";
-  var sql = $("#gisVES2k-Filter_DATA").queryBuilder("getSQL", false, false).sql;
-  if (sql.length > 0) {
-    query += " WHERE " + sql;
-  }
-  alasql(query, [gisVES2kGeojson.features], function(features){
-    gisVES2k.clearLayers();
-    gisVES2k.addData(features);
-    //syncRoutesTable();
-    map.fitBounds(gisVES2k.getBounds());
   });
 }
 
@@ -4768,28 +4435,6 @@ function gisDemandPointsInfo(id) {
   $("#gisDemandPoints-Info_MODAL").modal("show");
 }
 
-
-function gisVES2kInfo(id) {
-  var featureProperties = gisVES2k.getLayer(id).feature.properties;
-  var content = "<table class='table table-striped table-bordered table-condensed'>";
-  $.each(featureProperties, function(key, value) {
-    if (!value) {
-      value = "";
-    }
-    $.each(gisVES2kProperties, function(index, property) {
-      if (key == property.value) {
-        if (property.info !== false) {
-          content += "<tr><th>" + property.label + "</th><td>" + value + "</td></tr>";
-        }
-      }
-    });
-  });
-  content += "<table>";
-  $("#gisVES2k-Info_DATA").html(content);
-  $("#gisVES2k-Info_MODAL").modal("show");
-}
-
-
 function gisStructuresInfo(id) {
   var featureProperties = gisStructures.getLayer(id).feature.properties;
   var content = "<table class='table table-striped table-bordered table-condensed'>";
@@ -5203,7 +4848,6 @@ $("#refresh_BTN").click(function() {
   fulcrumResto.clearLayers();
   fulcrumHardscape.clearLayers();
   gisDemandPoints.clearLayers();
-  gisVES2k.clearLayers();
   gisStructures.clearLayers();
   gisRoutes.clearLayers();
   gisSegments.clearLayers();
@@ -5247,16 +4891,6 @@ $("#refresh_BTN").click(function() {
     });
     gisDemandPoints.addData(data);
     gisDemandPointsBuildConfig();
-    $("#loading-mask").hide();
-  });
-
-  $.getJSON(gisVES2kConfig.geojson, function (data) {
-    gisVES2kGeojson = data;
-    gisVES2kFeatures = $.map(gisVES2kGeojson.features, function(feature) {
-      return feature.properties;
-    });
-    gisVES2k.addData(data);
-    gisVES2kBuildConfig();
     $("#loading-mask").hide();
   });
 
@@ -5315,7 +4949,6 @@ $("#refresh_BTN").click(function() {
   fulcrumRestoBuildFilter();
   fulcrumHardscapeBuildFilter();
   gisDemandPointsBuildFilter();
-  gisVES2kBuildFilter();
   gisStructuresBuildFilter();
   gisRoutesBuildFilter();
   gisSegmentsBuildFilter();
@@ -5360,12 +4993,6 @@ $("#fulcrumHardscape-Filter_BTN").click(function() {
 
 $("#gisDemandPoints-Filter_BTN").click(function() {
   $("#gisDemandPoints-Filter_MODAL").modal("show");
-  $(".navbar-collapse.in").collapse("hide");
-  return false;
-});
-
-$("#gisVES2k-Filter_BTN").click(function() {
-  $("#gisVES2k-Filter_MODAL").modal("show");
   $(".navbar-collapse.in").collapse("hide");
   return false;
 });
@@ -5430,13 +5057,6 @@ $("#fulcrumHardscape-ApplyFilter_BTN").click(function() {
 $("#gisDemandPoints-ApplyFilter_BTN").click(function() {
   gisDemandPointsApplyFilter();
   $('#gisDemandPoints-Filter_MODAL').modal('hide');
-  $(".navbar-collapse.in").collapse("hide");
-  return false;
-});
-
-$("#gisVES2k-ApplyFilter_BTN").click(function() {
-  gisVES2kApplyFilter();
-  $('#gisVES2k-Filter_MODAL').modal('hide');
   $(".navbar-collapse.in").collapse("hide");
   return false;
 });
@@ -5516,13 +5136,6 @@ $("#gisDemandPoints-ResetFilter_BTN").click(function() {
   $(".navbar-collapse.in").collapse("hide");
 });
 
-$("#gisVES2k-ResetFilter_BTN").click(function() {
-  $("#gisVES2k-Filter_DATA").queryBuilder("reset");
-  gisVES2kApplyFilter();
-  $('#gisVES2k-Filter_MODAL').modal('hide');
-  $(".navbar-collapse.in").collapse("hide");
-});
-
 $("#gisStructures-ResetFilter_BTN").click(function() {
   $("#gisStructures-Filter_DATA").queryBuilder("reset");
   gisStructuresApplyFilter();
@@ -5569,8 +5182,6 @@ $("#allLayers-ResetFilter_BTN").click(function() {
   fulcrumHardscapeApplyFilter();
   $("#gisDemandPoints-Filter_DATA").queryBuilder("reset");
   gisDemandPointsApplyFilter();
-  $("#gisVES2k-Filter_DATA").queryBuilder("reset");
-  gisVES2kApplyFilter();
   $("#gisRoutes-Filter_DATA").queryBuilder("reset");
   gisRoutesApplyFilter();
   $("#gisStructures-Filter_DATA").queryBuilder("reset");
