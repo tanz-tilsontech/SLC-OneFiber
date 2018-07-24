@@ -4842,9 +4842,7 @@ L.easyPrint({
 }).addTo(map)
 
 
-L.control.polylineMeasure(measureOptions).addTo(map);
-
-measureOptions = {
+L.control.polylineMeasure({
     position: 'topleft',            // Position to show the control. Values: 'topright', 'topleft', 'bottomright', 'bottomleft'
     unit: 'landmiles',                 // Show imperial or metric distances. Values: 'metres', 'landmiles', 'nauticalmiles'
     clearMeasurementsOnStop: true,  // Clear all the measurements when the control is unselected
@@ -4913,7 +4911,7 @@ measureOptions = {
         fillOpacity: 1,             // Fill opacity of the circle
         radius: 3                   // Radius of the circle
     },
-};
+}).addTo(map);
 
 
 $("#refresh_BTN").click(function() {
