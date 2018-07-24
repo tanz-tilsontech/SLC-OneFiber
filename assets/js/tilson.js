@@ -4842,7 +4842,6 @@ L.easyPrint({
 }).addTo(map)
 
 
-L.control.polylineMeasure(options).addTo(map);
 
 
 $("#refresh_BTN").click(function() {
