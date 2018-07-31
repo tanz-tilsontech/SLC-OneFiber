@@ -4844,16 +4844,10 @@ L.easyPrint({
 
 
 
-$("#refresh_BTN").click(function() {
+$("#construction_refresh_BTN").click(function() {
   fulcrumRoutes.clearLayers();
   fulcrumResto.clearLayers();
   fulcrumHardscape.clearLayers();
-  gisDemandPoints.clearLayers();
-  gisStructures.clearLayers();
-  gisRoutes.clearLayers();
-  gisSegments.clearLayers();
-  gisSections.clearLayers();
-  gisSplices.clearLayers();
 
   $.getJSON(fulcrumRoutesConfig.geojson, function (data) {
     fulcrumRoutesGeojson = data;
@@ -4884,6 +4878,26 @@ $("#refresh_BTN").click(function() {
     fulcrumHardscapeBuildConfig();
     $("#loading-mask").hide();
   });
+
+  
+  fulcrumRoutesBuildFilter();
+  fulcrumRestoBuildFilter();
+  fulcrumHardscapeBuildFilter();
+
+  map.fitBounds(gisDemandPoints.getBounds());
+  $(".navbar-collapse.in").collapse("hide");
+  return false;
+});
+
+
+$("#engineering_refresh_BTN").click(function() {
+  gisDemandPoints.clearLayers();
+  gisStructures.clearLayers();
+  gisRoutes.clearLayers();
+  gisSegments.clearLayers();
+  gisSections.clearLayers();
+  gisSplices.clearLayers();
+
 
   $.getJSON(gisDemandPointsConfig.geojson, function (data) {
     gisDemandPointsGeojson = data;
@@ -4945,10 +4959,7 @@ $("#refresh_BTN").click(function() {
     $("#loading-mask").hide();
   });
 
-  
-  fulcrumRoutesBuildFilter();
-  fulcrumRestoBuildFilter();
-  fulcrumHardscapeBuildFilter();
+
   gisDemandPointsBuildFilter();
   gisStructuresBuildFilter();
   gisRoutesBuildFilter();
@@ -4960,7 +4971,6 @@ $("#refresh_BTN").click(function() {
   $(".navbar-collapse.in").collapse("hide");
   return false;
 });
-
 
 
 //ABOUT MODAL
@@ -5401,3 +5411,122 @@ $("#fiber-download-pdf-btn").click(function() {
 });
 
 */
+
+
+
+
+
+
+
+if(!ISBLANK($start_date_cx)) {
+  if(MONTH($start_date_cx) == '1') {
+    SETRESULT( 'January' + ' ' + DAY($start_date_cx) + ',' + ' ' + YEAR($start_date_cx));
+  } else if(MONTH($start_date_cx) == '2') {
+    SETRESULT( 'February' + ' ' + DAY($start_date_cx) + ',' + ' ' + YEAR($start_date_cx));
+  } else if(MONTH($start_date_cx) == '3') {
+    SETRESULT( 'March' + ' ' + DAY($start_date_cx) + ',' + ' ' + YEAR($start_date_cx));
+  } else if(MONTH($start_date_cx) == '4') {
+    SETRESULT( 'April' + ' ' + DAY($start_date_cx) + ',' + ' ' + YEAR($start_date_cx));
+  } else if(MONTH($start_date_cx) == '5') {
+    SETRESULT( 'May' + ' ' + DAY($start_date_cx) + ',' + ' ' + YEAR($start_date_cx));
+  } else if(MONTH($start_date_cx) == '6') {
+    SETRESULT( 'June' + ' ' + DAY($start_date_cx) + ',' + ' ' + YEAR($start_date_cx));
+  } else if(MONTH($start_date_cx) == '7') {
+    SETRESULT( 'July' + ' ' + DAY($start_date_cx) + ',' + ' ' + YEAR($start_date_cx));
+  } else if(MONTH($start_date_cx) == '8') {
+    SETRESULT( 'August' + ' ' + DAY($start_date_cx) + ',' + ' ' + YEAR($start_date_cx));
+  } else if(MONTH($start_date_cx) == '9') {
+    SETRESULT( 'September' + ' ' + DAY($start_date_cx) + ',' + ' ' + YEAR($start_date_cx));
+  } else if(MONTH($start_date_cx) == '10') {
+    SETRESULT( 'October' + ' ' + DAY($start_date_cx) + ',' + ' ' + YEAR($start_date_cx));
+  } else if(MONTH($start_date_cx) == '11') {
+    SETRESULT( 'November' + ' ' + DAY($start_date_cx) + ',' + ' ' + YEAR($start_date_cx));
+  } else if(MONTH($start_date_cx) == '12') {
+    SETRESULT( 'December' + ' ' + DAY($start_date_cx) + ',' + ' ' + YEAR($start_date_cx));
+  }
+} else if(VALUE('aerial_cp') === 'Yes' || VALUE('existing_duct_cp') === 'Yes') {
+  if(!ISBLANK($complete_date_cp)) {
+    if(MONTH($complete_date_cp) == '1') {
+      SETRESULT( 'January' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
+    } else if(MONTH($complete_date_cp) == '2') {
+      SETRESULT( 'February' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
+    } else if(MONTH($complete_date_cp) == '3') {
+      SETRESULT( 'March' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
+    } else if(MONTH($complete_date_cp) == '4') {
+      SETRESULT( 'April' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
+    } else if(MONTH($complete_date_cp) == '5') {
+      SETRESULT( 'May' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
+    } else if(MONTH($complete_date_cp) == '6') {
+      SETRESULT( 'June' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
+    } else if(MONTH($complete_date_cp) == '7') {
+      SETRESULT( 'July' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
+    } else if(MONTH($complete_date_cp) == '8') {
+      SETRESULT( 'August' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
+    } else if(MONTH($complete_date_cp) == '9') {
+      SETRESULT( 'September' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
+    } else if(MONTH($complete_date_cp) == '10') {
+      SETRESULT( 'October' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
+    } else if(MONTH($complete_date_cp) == '11') {
+      SETRESULT( 'November' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
+    } else if(MONTH($complete_date_cp) == '12') {
+      SETRESULT( 'December' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
+    }
+  }
+}
+
+
+if(!ISBLANK($contractor_signature_construction_pass)) {
+  if(MONTH($complete_date_cx) == '1') {
+    SETRESULT( 'January' + ' ' + DAY($complete_date_cx) + ',' + ' ' + YEAR($complete_date_cx));
+  } else if(MONTH($complete_date_cx) == '2') {
+    SETRESULT( 'February' + ' ' + DAY($complete_date_cx) + ',' + ' ' + YEAR($complete_date_cx));
+  } else if(MONTH($complete_date_cx) == '3') {
+    SETRESULT( 'March' + ' ' + DAY($complete_date_cx) + ',' + ' ' + YEAR($complete_date_cx));
+  } else if(MONTH($complete_date_cx) == '4') {
+    SETRESULT( 'April' + ' ' + DAY($complete_date_cx) + ',' + ' ' + YEAR($complete_date_cx));
+  } else if(MONTH($complete_date_cx) == '5') {
+    SETRESULT( 'May' + ' ' + DAY($complete_date_cx) + ',' + ' ' + YEAR($complete_date_cx));
+  } else if(MONTH($complete_date_cx) == '6') {
+    SETRESULT( 'June' + ' ' + DAY($complete_date_cx) + ',' + ' ' + YEAR($complete_date_cx));
+  } else if(MONTH($complete_date_cx) == '7') {
+    SETRESULT( 'July' + ' ' + DAY($complete_date_cx) + ',' + ' ' + YEAR($complete_date_cx));
+  } else if(MONTH($complete_date_cx) == '8') {
+    SETRESULT( 'August' + ' ' + DAY($complete_date_cx) + ',' + ' ' + YEAR($complete_date_cx));
+  } else if(MONTH($complete_date_cx) == '9') {
+    SETRESULT( 'September' + ' ' + DAY($complete_date_cx) + ',' + ' ' + YEAR($complete_date_cx));
+  } else if(MONTH($complete_date_cx) == '10') {
+    SETRESULT( 'October' + ' ' + DAY($complete_date_cx) + ',' + ' ' + YEAR($complete_date_cx));
+  } else if(MONTH($complete_date_cx) == '11') {
+    SETRESULT( 'November' + ' ' + DAY($complete_date_cx) + ',' + ' ' + YEAR($complete_date_cx));
+  } else if(MONTH($complete_date_cx) == '12') {
+    SETRESULT( 'December' + ' ' + DAY($complete_date_cx) + ',' + ' ' + YEAR($complete_date_cx));
+  }
+} else if(VALUE('aerial_cp') === 'Yes' || VALUE('existing_duct_cp') === 'Yes') {
+  if(!ISBLANK($contractor_signature_cable_placement_pass)) {
+    if(MONTH($complete_date_cp) == '1') {
+      SETRESULT( 'January' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
+    } else if(MONTH($complete_date_cp) == '2') {
+      SETRESULT( 'February' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
+    } else if(MONTH($complete_date_cp) == '3') {
+      SETRESULT( 'March' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
+    } else if(MONTH($complete_date_cp) == '4') {
+      SETRESULT( 'April' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
+    } else if(MONTH($complete_date_cp) == '5') {
+      SETRESULT( 'May' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
+    } else if(MONTH($complete_date_cp) == '6') {
+      SETRESULT( 'June' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
+    } else if(MONTH($complete_date_cp) == '7') {
+      SETRESULT( 'July' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
+    } else if(MONTH($complete_date_cp) == '8') {
+      SETRESULT( 'August' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
+    } else if(MONTH($complete_date_cp) == '9') {
+      SETRESULT( 'September' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
+    } else if(MONTH($complete_date_cp) == '10') {
+      SETRESULT( 'October' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
+    } else if(MONTH($complete_date_cp) == '11') {
+      SETRESULT( 'November' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
+    } else if(MONTH($complete_date_cp) == '12') {
+      SETRESULT( 'December' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
+    }
+  }
+}
