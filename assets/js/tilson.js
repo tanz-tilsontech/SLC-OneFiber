@@ -2803,7 +2803,19 @@ function gisSegmentsBuildConfig() {
       });
     }
     // Table config
-    if (value.table) {
+    if (value.table) && (value.filter.type == "date") {
+      date = new Date(value.value);
+      value = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
+      table.push({
+        field: value,
+        title: value.label
+      });
+      $.each(value.table, function(key, val) {
+        if (table[index+1]) {
+          table[index+1][key] = val;
+        }
+      });
+    } else if (value.table) {
       table.push({
         field: value.value,
         title: value.label
