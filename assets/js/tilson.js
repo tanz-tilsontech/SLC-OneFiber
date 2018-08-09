@@ -1436,7 +1436,7 @@ var gisSegmentsProperties = [{
     type: "string",
     vertical: true,
     multiple: true,
-    operators: ["equal", "not_equal", "contains"],
+    operators: ["is_not_null"],
     values: []
   }
 },
@@ -1452,7 +1452,7 @@ var gisSegmentsProperties = [{
     type: "string",
     vertical: true,
     multiple: true,
-    operators: ["equal", "not_equal", "contains"],
+    operators: ["is_not_null"],
     values: []
   }
 },
@@ -1468,7 +1468,7 @@ var gisSegmentsProperties = [{
     type: "string",
     vertical: true,
     multiple: true,
-    operators: ["equal", "not_equal", "contains"],
+    operators: ["is_not_null"],
     values: []
   }
 },
@@ -1484,7 +1484,7 @@ var gisSegmentsProperties = [{
     type: "string",
     vertical: true,
     multiple: true,
-    operators: ["equal", "not_equal", "contains"],
+    operators: ["is_not_null"],
     values: []
   }
 },
@@ -1500,7 +1500,7 @@ var gisSegmentsProperties = [{
     type: "string",
     vertical: true,
     multiple: true,
-    operators: ["equal", "not_equal", "contains"],
+    operators: ["is_not_null"],
     values: []
   }
 }];
@@ -2770,26 +2770,7 @@ function gisSegmentsBuildConfig() {
 
   $.each(gisSegmentsProperties, function(index, value) {
     // Filter config
-    if (value.filter.type == "date") {
-      $.each(value.filter, function(key, val) {
-        if (filters[index]) {
-          // If values array is empty, fetch all distinct values
-          if (key == "values" && val.length === 0) {
-            alasql("SELECT DISTINCT(properties->"+value.value+") AS field FROM ? ORDER BY field ASC", [gisSegmentsGeojson.features], function(results){
-              distinctValues = [];
-              $.each(results, function(index, value) {
-                date = new Date(value);
-                newDate = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
-                newDate.push(value.field);
-              });
-            });
-            filters[index].values = distinctValues;
-          } else {
-            filters[index][key] = val;
-          }
-        }
-      });
-    } else if (value.filter) {
+    if (value.filter) {
       var id;
       if (value.filter.type == "integer") {
         id = "cast(properties->"+ value.value +" as int)";
@@ -2822,19 +2803,7 @@ function gisSegmentsBuildConfig() {
       });
     }
     // Table config
-    if (value.table && value.filter.type == "date") {
-      date = new Date(value.value);
-      newDate = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
-      table.push({
-        field: newDate,
-        title: value.label
-      });
-      $.each(value.table, function(key, val) {
-        if (table[index+1]) {
-          table[index+1][key] = val;
-        }
-      });
-    } else if (value.table) {
+    if (value.table) {
       table.push({
         field: value.value,
         title: value.label
@@ -5442,122 +5411,3 @@ $("#fiber-download-pdf-btn").click(function() {
 });
 
 */
-
-
-
-
-
-
-
-if(!ISBLANK($start_date_cx)) {
-  if(MONTH($start_date_cx) == '1') {
-    SETRESULT( 'January' + ' ' + DAY($start_date_cx) + ',' + ' ' + YEAR($start_date_cx));
-  } else if(MONTH($start_date_cx) == '2') {
-    SETRESULT( 'February' + ' ' + DAY($start_date_cx) + ',' + ' ' + YEAR($start_date_cx));
-  } else if(MONTH($start_date_cx) == '3') {
-    SETRESULT( 'March' + ' ' + DAY($start_date_cx) + ',' + ' ' + YEAR($start_date_cx));
-  } else if(MONTH($start_date_cx) == '4') {
-    SETRESULT( 'April' + ' ' + DAY($start_date_cx) + ',' + ' ' + YEAR($start_date_cx));
-  } else if(MONTH($start_date_cx) == '5') {
-    SETRESULT( 'May' + ' ' + DAY($start_date_cx) + ',' + ' ' + YEAR($start_date_cx));
-  } else if(MONTH($start_date_cx) == '6') {
-    SETRESULT( 'June' + ' ' + DAY($start_date_cx) + ',' + ' ' + YEAR($start_date_cx));
-  } else if(MONTH($start_date_cx) == '7') {
-    SETRESULT( 'July' + ' ' + DAY($start_date_cx) + ',' + ' ' + YEAR($start_date_cx));
-  } else if(MONTH($start_date_cx) == '8') {
-    SETRESULT( 'August' + ' ' + DAY($start_date_cx) + ',' + ' ' + YEAR($start_date_cx));
-  } else if(MONTH($start_date_cx) == '9') {
-    SETRESULT( 'September' + ' ' + DAY($start_date_cx) + ',' + ' ' + YEAR($start_date_cx));
-  } else if(MONTH($start_date_cx) == '10') {
-    SETRESULT( 'October' + ' ' + DAY($start_date_cx) + ',' + ' ' + YEAR($start_date_cx));
-  } else if(MONTH($start_date_cx) == '11') {
-    SETRESULT( 'November' + ' ' + DAY($start_date_cx) + ',' + ' ' + YEAR($start_date_cx));
-  } else if(MONTH($start_date_cx) == '12') {
-    SETRESULT( 'December' + ' ' + DAY($start_date_cx) + ',' + ' ' + YEAR($start_date_cx));
-  }
-} else if(VALUE('aerial_cp') === 'Yes' || VALUE('existing_duct_cp') === 'Yes') {
-  if(!ISBLANK($complete_date_cp)) {
-    if(MONTH($complete_date_cp) == '1') {
-      SETRESULT( 'January' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
-    } else if(MONTH($complete_date_cp) == '2') {
-      SETRESULT( 'February' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
-    } else if(MONTH($complete_date_cp) == '3') {
-      SETRESULT( 'March' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
-    } else if(MONTH($complete_date_cp) == '4') {
-      SETRESULT( 'April' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
-    } else if(MONTH($complete_date_cp) == '5') {
-      SETRESULT( 'May' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
-    } else if(MONTH($complete_date_cp) == '6') {
-      SETRESULT( 'June' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
-    } else if(MONTH($complete_date_cp) == '7') {
-      SETRESULT( 'July' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
-    } else if(MONTH($complete_date_cp) == '8') {
-      SETRESULT( 'August' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
-    } else if(MONTH($complete_date_cp) == '9') {
-      SETRESULT( 'September' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
-    } else if(MONTH($complete_date_cp) == '10') {
-      SETRESULT( 'October' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
-    } else if(MONTH($complete_date_cp) == '11') {
-      SETRESULT( 'November' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
-    } else if(MONTH($complete_date_cp) == '12') {
-      SETRESULT( 'December' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
-    }
-  }
-}
-
-
-if(!ISBLANK($contractor_signature_construction_pass)) {
-  if(MONTH($complete_date_cx) == '1') {
-    SETRESULT( 'January' + ' ' + DAY($complete_date_cx) + ',' + ' ' + YEAR($complete_date_cx));
-  } else if(MONTH($complete_date_cx) == '2') {
-    SETRESULT( 'February' + ' ' + DAY($complete_date_cx) + ',' + ' ' + YEAR($complete_date_cx));
-  } else if(MONTH($complete_date_cx) == '3') {
-    SETRESULT( 'March' + ' ' + DAY($complete_date_cx) + ',' + ' ' + YEAR($complete_date_cx));
-  } else if(MONTH($complete_date_cx) == '4') {
-    SETRESULT( 'April' + ' ' + DAY($complete_date_cx) + ',' + ' ' + YEAR($complete_date_cx));
-  } else if(MONTH($complete_date_cx) == '5') {
-    SETRESULT( 'May' + ' ' + DAY($complete_date_cx) + ',' + ' ' + YEAR($complete_date_cx));
-  } else if(MONTH($complete_date_cx) == '6') {
-    SETRESULT( 'June' + ' ' + DAY($complete_date_cx) + ',' + ' ' + YEAR($complete_date_cx));
-  } else if(MONTH($complete_date_cx) == '7') {
-    SETRESULT( 'July' + ' ' + DAY($complete_date_cx) + ',' + ' ' + YEAR($complete_date_cx));
-  } else if(MONTH($complete_date_cx) == '8') {
-    SETRESULT( 'August' + ' ' + DAY($complete_date_cx) + ',' + ' ' + YEAR($complete_date_cx));
-  } else if(MONTH($complete_date_cx) == '9') {
-    SETRESULT( 'September' + ' ' + DAY($complete_date_cx) + ',' + ' ' + YEAR($complete_date_cx));
-  } else if(MONTH($complete_date_cx) == '10') {
-    SETRESULT( 'October' + ' ' + DAY($complete_date_cx) + ',' + ' ' + YEAR($complete_date_cx));
-  } else if(MONTH($complete_date_cx) == '11') {
-    SETRESULT( 'November' + ' ' + DAY($complete_date_cx) + ',' + ' ' + YEAR($complete_date_cx));
-  } else if(MONTH($complete_date_cx) == '12') {
-    SETRESULT( 'December' + ' ' + DAY($complete_date_cx) + ',' + ' ' + YEAR($complete_date_cx));
-  }
-} else if(VALUE('aerial_cp') === 'Yes' || VALUE('existing_duct_cp') === 'Yes') {
-  if(!ISBLANK($contractor_signature_cable_placement_pass)) {
-    if(MONTH($complete_date_cp) == '1') {
-      SETRESULT( 'January' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
-    } else if(MONTH($complete_date_cp) == '2') {
-      SETRESULT( 'February' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
-    } else if(MONTH($complete_date_cp) == '3') {
-      SETRESULT( 'March' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
-    } else if(MONTH($complete_date_cp) == '4') {
-      SETRESULT( 'April' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
-    } else if(MONTH($complete_date_cp) == '5') {
-      SETRESULT( 'May' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
-    } else if(MONTH($complete_date_cp) == '6') {
-      SETRESULT( 'June' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
-    } else if(MONTH($complete_date_cp) == '7') {
-      SETRESULT( 'July' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
-    } else if(MONTH($complete_date_cp) == '8') {
-      SETRESULT( 'August' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
-    } else if(MONTH($complete_date_cp) == '9') {
-      SETRESULT( 'September' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
-    } else if(MONTH($complete_date_cp) == '10') {
-      SETRESULT( 'October' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
-    } else if(MONTH($complete_date_cp) == '11') {
-      SETRESULT( 'November' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
-    } else if(MONTH($complete_date_cp) == '12') {
-      SETRESULT( 'December' + ' ' + DAY($complete_date_cp) + ',' + ' ' + YEAR($complete_date_cp));
-    }
-  }
-}
