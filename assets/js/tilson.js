@@ -2770,7 +2770,26 @@ function gisSegmentsBuildConfig() {
 
   $.each(gisSegmentsProperties, function(index, value) {
     // Filter config
-    if (value.filter) {
+    if (value.filter.type == "date") {
+      $.each(value.filter, function(key, val) {
+        if (filters[index]) {
+          // If values array is empty, fetch all distinct values
+          if (key == "values" && val.length === 0) {
+            alasql("SELECT DISTINCT(properties->"+value.value+") AS field FROM ? ORDER BY field ASC", [gisSegmentsGeojson.features], function(results){
+              distinctValues = [];
+              $.each(results, function(index, value) {
+                date = new Date(value);
+                newDate = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
+                newDate.push(value.field);
+              });
+            });
+            filters[index].values = distinctValues;
+          } else {
+            filters[index][key] = val;
+          }
+        }
+      });
+    } else if (value.filter) {
       var id;
       if (value.filter.type == "integer") {
         id = "cast(properties->"+ value.value +" as int)";
