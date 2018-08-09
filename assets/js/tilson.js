@@ -1436,7 +1436,7 @@ var gisSegmentsProperties = [{
     type: "string",
     vertical: true,
     multiple: true,
-    operators: ["is_not_null"],
+    operators: ["equal", "not_equal", "contains"],
     values: []
   }
 },
@@ -1452,7 +1452,7 @@ var gisSegmentsProperties = [{
     type: "string",
     vertical: true,
     multiple: true,
-    operators: ["is_not_null"],
+    operators: ["equal", "not_equal", "contains"],
     values: []
   }
 },
@@ -1468,7 +1468,7 @@ var gisSegmentsProperties = [{
     type: "string",
     vertical: true,
     multiple: true,
-    operators: ["is_not_null"],
+    operators: ["equal", "not_equal", "contains"],
     values: []
   }
 },
@@ -1484,7 +1484,7 @@ var gisSegmentsProperties = [{
     type: "string",
     vertical: true,
     multiple: true,
-    operators: ["is_not_null"],
+    operators: ["equal", "not_equal", "contains"],
     values: []
   }
 },
@@ -1500,7 +1500,7 @@ var gisSegmentsProperties = [{
     type: "string",
     vertical: true,
     multiple: true,
-    operators: ["is_not_null"],
+    operators: ["equal", "not_equal", "contains"],
     values: []
   }
 }];
