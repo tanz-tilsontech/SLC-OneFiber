@@ -2803,11 +2803,11 @@ function gisSegmentsBuildConfig() {
       });
     }
     // Table config
-    if (value.table) && (value.filter.type == "date") {
+    if (value.table && value.filter.type == "date") {
       date = new Date(value.value);
-      value = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
+      newDate = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
       table.push({
-        field: value,
+        field: newDate,
         title: value.label
       });
       $.each(value.table, function(key, val) {
