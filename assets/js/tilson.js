@@ -1023,10 +1023,9 @@ var gisRoutesProperties = [{
   },
   filter: {
     type: "string",
-    input: "radio",
     vertical: true,
     multiple: true,
-    operators: ["equal", "not_equal"],
+    operators: ["equal", "not_equal", "contains"],
     values: []
   },
   info: false
@@ -1323,10 +1322,9 @@ var gisSegmentsProperties = [{
   },
   filter: {
     type: "string",
-    input: "radio",
     vertical: true,
     multiple: true,
-    operators: ["equal", "not_equal"],
+    operators: ["equal", "not_equal", "contains"],
     values: []
   }
 },
@@ -1354,10 +1352,9 @@ var gisSegmentsProperties = [{
   },
   filter: {
     type: "string",
-    input: "radio",
     vertical: true,
     multiple: true,
-    operators: ["equal", "not_equal"],
+    operators: ["equal", "not_equal", "contains"],
     values: []
   }
 },
