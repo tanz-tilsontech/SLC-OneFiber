@@ -4488,7 +4488,7 @@ function gisSegmentsInfo(id) {
     }
     $.each(gisSegmentsProperties, function(index, property) {
       if (key == property.value) {
-        if (value && property.filter.value == "date") {
+        if (value > 0 && property.filter.value == "date") {
           date = new Date(value);
           value = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
         }
