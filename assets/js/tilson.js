@@ -4458,7 +4458,7 @@ function gisRoutesInfo(id) {
   var featureProperties = gisRoutes.getLayer(id).feature.properties;
   var content = "<table class='table table-striped table-bordered table-condensed'>";
   $.each(featureProperties, function(key, value) {
-    if (!value || value === null) {
+    if (!value) {
       value = "";
     }
     $.each(gisRoutesProperties, function(index, property) {
@@ -4483,24 +4483,20 @@ function gisSegmentsInfo(id) {
   var featureProperties = gisSegments.getLayer(id).feature.properties;
   var content = "<table class='table table-striped table-bordered table-condensed'>";
   $.each(featureProperties, function(key, value) {
-    if (!value || value === null || value === 0 || value === "" || value < 0) {
+    if (!value) {
       value = "";
-    } else {
-      $.each(gisSegmentsProperties, function(index, property) {
-        if (key == property.value) {
-          if (property.filter.value == "date") {
-            date = new Date(value);
-            value = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
-          }
-          if (property.info !== false && value == "12/31/1969") {
-            value = "";
-            content += "<tr><th>" + property.label + "</th><td>" + value + "</td></tr>";
-          } else if (property.info !== false) {
-            content += "<tr><th>" + property.label + "</th><td>" + value + "</td></tr>";
-          }
-        }
-      });
     }
+    $.each(gisSegmentsProperties, function(index, property) {
+      if (key == property.value) {
+        if (value && property.filter.value == "date") {
+          date = new Date(value);
+          value = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
+        }
+        if (property.info !== false) {
+          content += "<tr><th>" + property.label + "</th><td>" + value + "</td></tr>";
+        }
+      }
+    });
   });
   content += "<table>";
   $("#gisSegments-Info_DATA").html(content);
