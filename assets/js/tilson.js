@@ -3551,10 +3551,12 @@ var gisSegments = L.geoJson(null, {
         weight: 6,
         opacity: 0.7
       };
-    } else {
-      color: "#334BFF",
-      weight: 6,
-      opacity: 0.7
+    } else if (feature.properties.oofdateindesign = 0 || feature.properties.oofdateindesign === null) {
+      return {
+        color: "#334BFF",
+        weight: 6,
+        opacity: 0.7
+      };
     }
   },
   onEachFeature: function (feature, layer) {
