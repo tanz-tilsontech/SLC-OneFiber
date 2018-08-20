@@ -4458,7 +4458,7 @@ function gisRoutesInfo(id) {
   var featureProperties = gisRoutes.getLayer(id).feature.properties;
   var content = "<table class='table table-striped table-bordered table-condensed'>";
   $.each(featureProperties, function(key, value) {
-    if (!value) {
+    if (!value || value === null) {
       value = "";
     }
     $.each(gisRoutesProperties, function(index, property) {
@@ -4483,9 +4483,9 @@ function gisSegmentsInfo(id) {
   var featureProperties = gisSegments.getLayer(id).feature.properties;
   var content = "<table class='table table-striped table-bordered table-condensed'>";
   $.each(featureProperties, function(key, value) {
-    if (!value) {
+    if (!value || value === null) {
       value = "";
-    } else if (value) {
+    } else if (value !== null) {
       $.each(gisSegmentsProperties, function(index, property) {
         if (key == property.value) {
           if (value && property.filter.value == "date") {
