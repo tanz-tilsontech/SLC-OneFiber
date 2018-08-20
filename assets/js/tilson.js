@@ -3551,6 +3551,12 @@ var gisSegments = L.geoJson(null, {
         weight: 6,
         opacity: 0.7
       };
+    } else (feature.properties.oofdateindesign = 0) {
+      return {
+        color: "#334BFF",
+        weight: 6,
+        opacity: 0.7
+      }
     }
   },
   onEachFeature: function (feature, layer) {
