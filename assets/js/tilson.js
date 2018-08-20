@@ -4492,7 +4492,10 @@ function gisSegmentsInfo(id) {
             date = new Date(value);
             value = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
           }
-          if (property.info !== false) {
+          if (property.info !== false && value == "12/31/1969") {
+            value = "";
+            content += "<tr><th>" + property.label + "</th><td>" + value + "</td></tr>";
+          } else if (property.info !== false) {
             content += "<tr><th>" + property.label + "</th><td>" + value + "</td></tr>";
           }
         }
