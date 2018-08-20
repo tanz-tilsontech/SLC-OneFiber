@@ -4483,12 +4483,12 @@ function gisSegmentsInfo(id) {
   var featureProperties = gisSegments.getLayer(id).feature.properties;
   var content = "<table class='table table-striped table-bordered table-condensed'>";
   $.each(featureProperties, function(key, value) {
-    if (!value || value === null || value = 0 || value === 0 || value === "" || value < 0) {
+    if (!value || value === null || value === 0 || value === "" || value < 0) {
       value = "";
     } else {
       $.each(gisSegmentsProperties, function(index, property) {
         if (key == property.value) {
-          if (value && property.filter.value == "date") {
+          if (property.filter.value == "date") {
             date = new Date(value);
             value = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
           }
