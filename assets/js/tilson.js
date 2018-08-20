@@ -4485,18 +4485,19 @@ function gisSegmentsInfo(id) {
   $.each(featureProperties, function(key, value) {
     if (!value) {
       value = "";
+    } else if (value) {
+      $.each(gisSegmentsProperties, function(index, property) {
+        if (key == property.value) {
+          if (value && property.filter.value == "date") {
+            date = new Date(value);
+            value = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
+          }
+          if (property.info !== false) {
+            content += "<tr><th>" + property.label + "</th><td>" + value + "</td></tr>";
+          }
+        }
+      });
     }
-    $.each(gisSegmentsProperties, function(index, property) {
-      if (key == property.value) {
-        if (value > 0 && property.filter.value == "date") {
-          date = new Date(value);
-          value = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
-        }
-        if (property.info !== false) {
-          content += "<tr><th>" + property.label + "</th><td>" + value + "</td></tr>";
-        }
-      }
-    });
   });
   content += "<table>";
   $("#gisSegments-Info_DATA").html(content);
